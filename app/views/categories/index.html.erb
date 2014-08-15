@@ -1,0 +1,71 @@
+<H2 class="myh2cats"> <%= "Election Cost Categories for " + @election_year[:year].to_s %> </H2>
+
+<H3 class = "myh3"> Salaries </H3>
+<div class = "info_table">
+<table class = "mytable_new">
+  <thead>
+    <tr>
+      <th class="mytable_first"><%= "Category".upcase  %></th>
+      <th class="mytable"><%= "Started".upcase  %></th>
+      <th class="mytable"><%="Complete".upcase  %></th>
+      <th class="mytable"><%="Total".upcase  %></th>
+    </tr>
+</thead>
+  <tbody>
+    <% @salary_categories.each do |category| %>
+      <tr>
+        <td class="mytable_first"><%= eval(category[:linkto])  %></td>
+        <td class="mytable"><%= category[:started].html_safe %></td>
+        <td class="mytable"><%=  category[:complete].html_safe %></td>
+          <td class="mytable"><%= "$" + category[:model_total].to_s %></td>
+      </tr>
+    <% end %>
+    <tr>
+     <td class="mytable_first"> SALARY TOTAL </td>
+      <td class="mytable"></td>
+      <td class="mytable"></td>
+     <td class="mytable"><%= "$" + @salary_total.to_s %></td>
+     </tr>
+  </tbody>
+</table>
+</div>
+
+<div id="mycategory_space"></div>
+<H3 class = "myh3"> Services and Supplies </H3>
+<div class = "info_table">
+<table class = "mytable_new">
+  <thead>
+    <tr>
+      <th class="mytable_first"><%= "Category".upcase  %></th>
+      <th class="mytable"><%= "Started".upcase  %></th>
+      <th class="mytable"><%="Complete".upcase  %></th>
+        <th class="mytable"><%="Total".upcase  %></th>
+    </tr>
+</thead>
+  <tbody>
+    <% @supply_categories.each do |category| %>
+      <tr>
+        <td class="mytable_first"><%= eval(category[:linkto])  %></td>
+        <td class="mytable"><%= category[:started].html_safe %></td>
+        <td class="mytable"><%=  category[:complete].html_safe %></td>
+        <td class="mytable"><%= "$" + category[:model_total].to_s %></td>
+      </tr>
+    <% end %>
+       <tr>
+     <td class="mytable_first"> SUPPLY TOTAL </td>
+      <td class="mytable"></td>
+      <td class="mytable"></td>
+     <td class="mytable"><%= "$" + @supply_total.to_s %></td>
+     </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="category_break"></div>
+<H3 class = "total"> <%= "TOTAL ELECTION COSTS FOR " + @election_year[:year].to_s + ": $" +  @year_total.to_s %>  </H3>
+
+
+<div class="category_end_link">
+<%= link_to "Cost Category Home", home_path  %>
+</div>
+

@@ -1,0 +1,17 @@
+     <h2 class ="myh2yr"><%= "Edit " + @category_name  + " Costs for " + @election_year[:year].to_s %>
+&rarr;  Step <%= @salvbm.current_step + 1 %> of <%= @salvbm.total_steps %></h2>
+
+
+
+
+<%= render 'form' %>
+<%= render 'modal_info' %>
+
+
+
+<div class="end_link">
+<%= link_to "Back ", salvbm_path(@salvbm[:id]) %>|
+<%= eval(  @categories_path) %> |
+<%= link_to "Cost Category Home", home_path  %>
+</div>
+

@@ -1,0 +1,17 @@
+<h2 class="myh2">Security Question: This will be used to reset your password in the future</h2>
+
+
+    <%= simple_form_for(:user, :url => {:controller => 'users', :action => 'securityquestion_submit'}) do |f| %>
+     <%= f.input :security_question , :as => :select,
+               :label => "Security Question: Select a Challenge Question", :include_blank => false,
+               :collection => [["First Pet's Name", 1], ["High School Mascot", 2], ["Mother's Maiden Name", 3]], :label_html => { :class => "form_item" } %>
+
+    <%= f.input  :security_answer,  label: "Please enter an answer to your security question",  :label_html => { :class => "form_item" } %>
+
+
+ <div class="form-actions">
+    <%= f.submit :Submit %>
+</div>
+  <% end %>
+
+

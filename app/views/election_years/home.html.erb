@@ -1,0 +1,25 @@
+<h2 class ="myh2yr">Cost Categories Year Overview For <%= @county_name[0] %></h2>
+<div class ="info_table" >
+<table class="mytable">
+  <thead>
+    <tr>
+      <th class="yr_mytable_first">Year</th>
+      <th class="yr_mytable">Started</th>
+      <th class="yr_mytable">Complete</th>
+      <th class="yr_mytable_cash">Election Year Costs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @years.each do  |y| %>
+    <td class ="yr_mytable_first"><%=link_to y[:year], election_year_categories_path(y[:id]) %> </td>
+    <td class="yr_mytable"> <%= y[:started].html_safe %></td>
+    <td class="yr_mytable"> <%= y[:done].html_safe %></td>
+    <td class="yr_mytable_cash"> <%= "$" + y[:total_year_costs].to_s %></td>
+  </tr>
+  <% end %>
+</tbody>
+</table>
+</div>
+
+<h2 class ="myh2yr_tot"> TOTAL ELECTION COSTS FOR ALL YEARS: $<%= @total_election_year_costs %></h2>
+
