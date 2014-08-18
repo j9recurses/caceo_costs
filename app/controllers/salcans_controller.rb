@@ -109,7 +109,7 @@ before_action :get_filtered, only:[:show]
     # Never trust parameters from the scary internet, only allow the white list through.
     def salcan_params
       params.require(:salcan).permit(
-      :salcanprep, :salcanproc, :slacanoth, :salcantot, :salcanpsrp, :salcanpsop, :salcantsrp, :salcantsop, :salcanbe, :salcanbep, :salcanbeps, :salcanbepsp, :salcanbets, :salcanbetsp, :salcantothrs, :salcanhrsps, :salcanhrsts, :salcancomment,  :election_year_id, :county, :current_step
+      :salcanprep, :salcanproc, :slacanoth, :salcanpsrp, :salcanpsop, :salcantsrp, :salcantsop, :salcanbe, :salcanbep, :salcanbeps, :salcanbepsp, :salcanbets, :salcanbetsp, :salcantothrs, :salcanhrsps, :salcanhrsts, :salcancomment,  :election_year_id, :county, :current_step
       )
     end
 end

@@ -1,7 +1,7 @@
      <% if @ssmed.errors.any? %>
     <div id="error_explanation">
       <ul>
-      <% @ssmed.errors.full_messages.each do |msg| %>
+      <% @ssmed.errors.each do |field, msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

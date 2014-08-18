@@ -1,7 +1,7 @@
      <% if @salcan.errors.any? %>
     <div id="error_explanation">
       <ul>
-      <% @salcan.errors.full_messages.each do |msg| %>
+      <% @salcan.errors.each do |field, msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

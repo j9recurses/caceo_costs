@@ -5,12 +5,12 @@ accepts_nested_attributes_for :year_element
 has_one :election_year, :through => :year_elements
 validates :county, presence: true
 validates :election_year_id, presence: true
-validates   :salbaldesign, :salbaltrans, :salbalorder, :salbalmail, :salbalother, :salbaltotal, :salbalpsrp, :salbalpsop, :salbaltsrp, :salbaltsop, :salbaltothrs, :salbalhrsps, :salbalhrsts,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 10000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
-validates :salbaltotbe, :salbaltotbep, :salbalbeps, :salbalbepsp, :salbalbets, :salbalbetsp, numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 100,  :allow_nil => true, :allow_blank => false,  message: 'Entry is not valid. Please check your entry'  }
+validates   :salbaldesign, :salbaltrans, :salbalorder, :salbalmail, :salbalother, :salbalpsrp, :salbalpsop, :salbaltsrp, :salbaltsop, :salbaltotbe, :salbaltotbep, :salbalbeps, :salbalbepsp, :salbalbets, :salbalbetsp, :salbaltothrs, :salbalhrsps, :salbalhrsts,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 10000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
+
 
   def self.total_steps
    c = CategoryDescription.where(model_name: "salbals").pluck(:field, :label)
-  cfchunks = c.in_groups_of(3)
+  cfchunks = c.in_groups_of(6)
   numb_of_steps = cfchunks.size
   end
 
@@ -24,7 +24,7 @@ end
 
 def self.make_chunks(model_name)
   c = CategoryDescription.where(model_name: model_name).pluck(:field, :label)
-  cfchunks = c.in_groups_of(3)
+  cfchunks = c.in_groups_of(6)
   numb_of_steps = cfchunks.size
   form_chunks = Array.new()
   cfchunks.each do | chunk |

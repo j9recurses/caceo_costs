@@ -1,7 +1,7 @@
      <% if @sspp.errors.any? %>
     <div id="error_explanation">
       <ul>
-      <% @sspp.errors.full_messages.each do |msg| %>
+      <% @sspp.errors.each do |field, msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

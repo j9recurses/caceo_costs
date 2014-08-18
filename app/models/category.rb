@@ -2,7 +2,7 @@ class Category < ActiveRecord::Base
   has_many :election_years, :as => :yearable
 
   def self.get_completed_or_started(election_year_id, county, cost_type)
-    @categories = Category.where(election_year_id: election_year_id, county: county, cost_type: cost_type )
+    @categories = Category.where(election_year_id: election_year_id, county: county, cost_type: cost_type ).uniq
     @checked_categories = Array.new()
     @total = 0
     @categories.each do | c|
@@ -17,7 +17,8 @@ class Category < ActiveRecord::Base
       else
         @category[:complete] = "<span style=\"color:red\">&#x2717</span>"
       end
-      @category[:linkto] =   "link_to '" + c[:name] +"'," + c[:model_name] + "_path(:election_year_id => " +  election_year_id.to_s  + ",:category_id => "  + c[:id].to_s + ")"
+      cname = c[:name].sub("Salaries related to", '').titleize
+      @category[:linkto] =   "link_to '" +  cname   +"'," + c[:model_name] + "_path(:election_year_id => " +  election_year_id.to_s  + ",:category_id => "  + c[:id].to_s + ")"
        if  c[:model_total].nil?
         @category[:model_total] = 0
         @total = @total +@category[:model_total]

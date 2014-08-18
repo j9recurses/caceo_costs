@@ -1,15 +1,15 @@
-class Ssveh < ActiveRecord::Base
+class Model_name < ActiveRecord::Base
  include MultiStepModel
 has_one :year_element, :as =>:element, dependent: :destroy
 accepts_nested_attributes_for :year_element
 has_one :election_year, :through => :year_elements
 validates :county, presence: true
 validates :election_year_id, presence: true
-validates   :ssvehrent, :ssvehcount, :ssvehfuel, :ssvehins,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 10000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
+validates   :field,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 10000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
 
 
   def self.total_steps
-   c = CategoryDescription.where(model_name: "ssvehs").pluck(:field, :label)
+   c = CategoryDescription.where(model_name: "model_names").pluck(:field, :label)
   cfchunks = c.in_groups_of(6)
   numb_of_steps = cfchunks.size
   end
@@ -72,7 +72,7 @@ end
 
 #update the category table to indicate that something was started or completed
 def self.category_status(category_id, model_stuff)
-  model_fields = Ssveh.column_names
+  model_fields = Model_name.column_names
   complete = true
   started  = true
   model_fields.each do |c |

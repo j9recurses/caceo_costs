@@ -109,7 +109,7 @@ before_action :get_filtered, only:[:show]
     # Never trust parameters from the scary internet, only allow the white list through.
     def salvbm_params
       params.require(:salvbm).permit(
-      :salvbmoutr, :salvbmappro, :salvbmuoapp, :salvbmusps, :salvbmproces, :salvbmoth, :salvbmtot, :salvbmpsrp, :salvbmpsop, :salvbmtsrp, :salvbmtsop, :salvbmtotbe, :salvbmtotbep, :salvbmbeps, :salvbmbepsp, :salvbmbets, :salvbmbetsp, :salvbmtothrs, :salvbmhrsps, :salvbmhrsts, :salvbmcomment,  :election_year_id, :county, :current_step
+      :salvbmoutr, :salvbmappro, :salvbmuoapp, :salvbmusps, :salvbmproces, :salvbmoth, :salvbmpsrp, :salvbmpsop, :salvbmtsrp, :salvbmtsop, :salvbmtotbe, :salvbmtotbep, :salvbmbeps, :salvbmbepsp, :salvbmbets, :salvbmbetsp, :salvbmtothrs, :salvbmhrsps, :salvbmhrsts, :salvbmcomment,  :election_year_id, :county, :current_step
       )
     end
 end

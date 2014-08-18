@@ -10,7 +10,6 @@ def change
  t.integer :salbalorder
  t.integer :salbalmail
  t.integer :salbalother
- t.integer :salbaltotal
  t.integer :salbalpsrp
  t.integer :salbalpsop
  t.integer :salbaltsrp
@@ -39,7 +38,6 @@ create_table :salpps do |t|
  t.integer :salpppay
  t.integer :salpppubnot
  t.integer :salppoth
- t.integer :salpptot
  t.integer :salpppsrp
  t.integer :salpppsop
  t.integer :salpptsrp
@@ -66,7 +64,6 @@ create_table :salpws do |t|
  t.integer :salpwtrain
  t.integer :salpwpay
  t.integer :salpwoth
- t.integer :salpwtot
  t.integer :salpwpsrp
  t.integer :salpwpsop
  t.integer :salpwtsrp
@@ -94,7 +91,6 @@ create_table :salvbms do |t|
  t.integer :salvbmusps
  t.integer :salvbmproces
  t.integer :salvbmoth
- t.integer :salvbmtot
  t.integer :salvbmpsrp
  t.integer :salvbmpsop
  t.integer :salvbmtsrp
@@ -121,7 +117,6 @@ create_table :salbcs do |t|
  t.integer :salbcchca
  t.integer :salbcsec
  t.integer :sabcoth
- t.integer :salbctot
  t.integer :salbcpsrp
  t.integer :salbcpsop
  t.integer :salbctsrp
@@ -146,7 +141,6 @@ create_table :salbcs do |t|
  t.integer :salcanprep
  t.integer :salcanproc
  t.integer :slacanoth
- t.integer :salcantot
  t.integer :salcanpsrp
  t.integer :salcanpsop
  t.integer :salcantsrp
@@ -170,7 +164,6 @@ create_table :salbcs do |t|
  t.integer :county
  t.integer :salmedprep
  t.integer :salmedhandl
- t.integer :salmedtot
  t.integer :salmedpsrp
  t.integer :salmedpsop
  t.integer :salmedtsrp
@@ -193,7 +186,6 @@ create_table :saldojos do |t|
  t.integer :election_year_id
  t.integer :county
  t.integer :saldojomc
- t.integer :saldojotot
  t.integer :saldojopsrp
  t.integer :saldojopsop
  t.integer :saldojotsrp
@@ -221,7 +213,6 @@ create_table :saloths do |t|
  t.integer :salothstind
  t.integer :salothvoros
  t.integer :salother
- t.integer :salothtot
  t.integer :salothpsrp
  t.integer :salothpsop
  t.integer :salothtsrp

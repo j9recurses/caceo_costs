@@ -1,7 +1,7 @@
      <% if @saldojo.errors.any? %>
     <div id="error_explanation">
       <ul>
-      <% @saldojo.errors.full_messages.each do |msg| %>
+      <% @saldojo.errors.each do |field, msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

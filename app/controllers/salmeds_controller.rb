@@ -109,7 +109,7 @@ before_action :get_filtered, only:[:show]
     # Never trust parameters from the scary internet, only allow the white list through.
     def salmed_params
       params.require(:salmed).permit(
-      :salmedprep, :salmedhandl, :salmedtot, :salmedpsrp, :salmedpsop, :salmedtsrp, :salmedtsop, :salmedbe, :salmedbep, :salmedbeps, :salmedbepsp, :salmedbets, :salmedbetsp, :salmedhrs, :salmedhrsps, :salmedhrsts, :salmedcomment,  :election_year_id, :county, :current_step
+      :salmedprep, :salmedhandl, :salmedpsrp, :salmedpsop, :salmedtsrp, :salmedtsop, :salmedbe, :salmedbep, :salmedbeps, :salmedbepsp, :salmedbets, :salmedbetsp, :salmedhrs, :salmedhrsps, :salmedhrsts, :salmedcomment,  :election_year_id, :county, :current_step
       )
     end
 end

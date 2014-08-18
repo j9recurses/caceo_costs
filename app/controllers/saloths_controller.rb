@@ -109,7 +109,7 @@ before_action :get_filtered, only:[:show]
     # Never trust parameters from the scary internet, only allow the white list through.
     def saloth_params
       params.require(:saloth).permit(
-      :salothvoed, :salothvore, :salothelcal, :salothstind, :salothvoros, :salother, :salothtot, :salothpsrp, :salothpsop, :salothtsrp, :salothtsop, :salothbe, :salothbep, :salothbeps, :salothbepsp, :salothbets, :salothbetsp, :salothhrs, :salothhrsps, :salothhrsts, :salothcomment,  :election_year_id, :county, :current_step
+      :salothvoed, :salothvore, :salothelcal, :salothstind, :salothvoros, :salother, :salothpsrp, :salothpsop, :salothtsrp, :salothtsop, :salothbe, :salothbep, :salothbeps, :salothbepsp, :salothbets, :salothbetsp, :salothhrs, :salothhrsps, :salothhrsts, :salothcomment,  :election_year_id, :county, :current_step
       )
     end
 end

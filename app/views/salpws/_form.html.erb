@@ -1,7 +1,7 @@
      <% if @salpw.errors.any? %>
     <div id="error_explanation">
       <ul>
-      <% @salpw.errors.full_messages.each do |msg| %>
+      <% @salpw.errors.each do |field, msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

@@ -109,7 +109,7 @@ before_action :get_filtered, only:[:show]
     # Never trust parameters from the scary internet, only allow the white list through.
     def saldojo_params
       params.require(:saldojo).permit(
-      :saldojomc, :saldojotot, :saldojopsrp, :saldojopsop, :saldojotsrp, :saldojotsop, :saldojobe, :saldojobep, :saldojobeps, :saldojobepsp, :saldojobets, :saldojobetsp, :saldojohrs, :saldojohrsps, :saldojohrsts, :saldojocomment,  :election_year_id, :county, :current_step
+      :saldojomc, :saldojopsrp, :saldojopsop, :saldojotsrp, :saldojotsop, :saldojobe, :saldojobep, :saldojobeps, :saldojobepsp, :saldojobets, :saldojobetsp, :saldojohrs, :saldojohrsps, :saldojohrsts, :saldojocomment,  :election_year_id, :county, :current_step
       )
     end
 end

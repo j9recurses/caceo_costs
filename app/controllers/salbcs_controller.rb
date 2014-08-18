@@ -109,7 +109,7 @@ before_action :get_filtered, only:[:show]
     # Never trust parameters from the scary internet, only allow the white list through.
     def salbc_params
       params.require(:salbc).permit(
-      :salbcinh, :salbcamor, :salbcchca, :salbcsec, :sabcoth, :salbctot, :salbcpsrp, :salbcpsop, :salbctsrp, :salbctsop, :salbctotbe, :salbctotbep, :salbcbeps, :salbcbepsp, :salbcbets, :salbcbetsp, :salbctothrs, :salbchrsps, :salbchrsts, :salbccomment,  :election_year_id, :county, :current_step
+      :salbcinh, :salbcamor, :salbcchca, :salbcsec, :sabcoth, :salbcpsrp, :salbcpsop, :salbctsrp, :salbctsop, :salbctotbe, :salbctotbep, :salbcbeps, :salbcbepsp, :salbcbets, :salbcbetsp, :salbctothrs, :salbchrsps, :salbchrsts, :salbccomment,  :election_year_id, :county, :current_step
       )
     end
 end

@@ -1,7 +1,7 @@
      <% if @salpp.errors.any? %>
     <div id="error_explanation">
       <ul>
-      <% @salpp.errors.full_messages.each do |msg| %>
+      <% @salpp.errors.each do |field, msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

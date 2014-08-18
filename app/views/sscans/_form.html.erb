@@ -1,7 +1,7 @@
      <% if @sscan.errors.any? %>
     <div id="error_explanation">
       <ul>
-      <% @sscan.errors.full_messages.each do |msg| %>
+      <% @sscan.errors.each do |field, msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

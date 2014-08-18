@@ -10,7 +10,7 @@ validates   :sscanprint,   numericality:{only_integer: true, :greater_than_or_eq
 
   def self.total_steps
    c = CategoryDescription.where(model_name: "sscans").pluck(:field, :label)
-  cfchunks = c.in_groups_of(3)
+  cfchunks = c.in_groups_of(6)
   numb_of_steps = cfchunks.size
   end
 
@@ -24,7 +24,7 @@ end
 
 def self.make_chunks(model_name)
   c = CategoryDescription.where(model_name: model_name).pluck(:field, :label)
-  cfchunks = c.in_groups_of(3)
+  cfchunks = c.in_groups_of(6)
   numb_of_steps = cfchunks.size
   form_chunks = Array.new()
   cfchunks.each do | chunk |
