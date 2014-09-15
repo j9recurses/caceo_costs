@@ -78,14 +78,29 @@ th.mytable_first {
 }
 
 .show_item{
-  font_size: 13px;
+  font_size: 14px;
 }
 
 .show_item_title{
   padding-top:13px;
-  font-size:11px;
+  font-size:14px;
  font-weight:bold;
 }
+
+.show_item_title_main{
+  padding-top:13px;
+  font-size:14px;
+ font-weight:bold;
+}
+
+
+.show_item_title_sub{
+  padding-top:5px;
+  font-size:12px;
+ font-weight:bold;
+ padding-left: 50px;
+}
+
 
 .show_item_total{
   padding-top:2px;
@@ -147,6 +162,7 @@ padding-bottom:15px;
 
 .mynav_li {
 height:35px;
+font-size:12px;
 }
 
 .info {

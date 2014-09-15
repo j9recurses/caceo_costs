@@ -5,7 +5,7 @@ accepts_nested_attributes_for :year_element
 has_one :election_year, :through => :year_elements
 validates :county, presence: true
 validates :election_year_id, presence: true
-validates   :salbcinh, :salbcamor, :salbcchca, :salbcsec, :sabcoth, :salbcpsrp, :salbcpsop, :salbctsrp, :salbctsop, :salbctotbe, :salbctotbep, :salbcbeps, :salbcbepsp, :salbcbets, :salbcbetsp, :salbctothrs, :salbchrsps, :salbchrsts,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 10000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
+validates   :salbcinh, :salbcamor, :salbcchca, :salbcsec, :sabcoth, :salbcpsrp, :salbcpsop, :salbctsrp, :salbctsop, :salbcbeps, :salbcbepsp, :salbcbets, :salbcbetsp, :salbchrsps, :salbchrsts,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 10000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
 
 
   def self.total_steps
@@ -72,13 +72,20 @@ end
 
 #update the category table to indicate that something was started or completed
 def self.category_status(category_id, model_stuff)
-  model_fields = Salbc.column_names
+  model_fields =  Salbc.column_names
+  model_fields_size = model_fields.size
+  model_fields_size = model_fields_size -1
+  fields_complete = model_fields_size
   complete = true
   started  = true
   model_fields.each do |c |
   if eval("model_stuff[:" + c+ "]").nil?
-     complete = false
+    fields_complete = fields_complete -1
     end
+  end
+  amt_complete = fields_complete.to_f / model_fields_size.to_f
+  if amt_complete < 0.75
+    complete = false
   end
   Category.update( category_id , started: started)
   Category.update( category_id , complete: complete)

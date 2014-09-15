@@ -12,7 +12,8 @@ class ElectionYear < ActiveRecord::Base
     years.each do |y|
       #grab the category statuses
        category_started = Category.where(election_year_id: y, county: user[:county], started: 1)
-       category_complete = Category.where(election_year_id: y, county: user[:county], complete: 0)
+       category_total =  Category.where(election_year_id: y, county: user[:county])
+       category_complete = Category.where(election_year_id: y, county: user[:county], complete: 1)
       single = Hash.new()
       single[:id] = y[:id]
       single[:year] = y[:year]
@@ -21,7 +22,12 @@ class ElectionYear < ActiveRecord::Base
       else
         single[:started] ="<span style=\"color:red\">&#x2717</span>"
       end
-      if category_complete.size == 0
+      #if category_complete.size == 0
+      puts "*******complete**********"
+      puts  category_complete.size
+      puts "*******total**********"
+      puts  category_total.size
+     if  category_total.size ==  category_complete.size
         single[:done] = "<span style=\"color:blue\"> &#10004</span>"
       else
         single[:done] =  "<span style=\"color:red\">&#x2717</span>"

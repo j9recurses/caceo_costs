@@ -73,16 +73,26 @@ end
 #update the category table to indicate that something was started or completed
 def self.category_status(category_id, model_stuff)
   model_fields = Postage.column_names
+  #neeed to take off comments, because that's not a required field
+  model_fields_size = model_fields.size
+  model_fields_size = model_fields_size -1
+  fields_complete = model_fields_size
   complete = true
   started  = true
   model_fields.each do |c |
   if eval("model_stuff[:" + c+ "]").nil?
-     complete = false
+    fields_complete = fields_complete -1
     end
+  end
+  #if the results are greater than 80%, then its done
+  amt_complete = fields_complete.to_f / model_fields_size.to_f
+  if amt_complete < 0.75
+    complete = false
   end
   Category.update( category_id , started: started)
   Category.update( category_id , complete: complete)
 end
+
 
 def self.remove_category_status(category_id)
     Category.update(category_id, started: false)
