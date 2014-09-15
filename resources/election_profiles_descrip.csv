@@ -1,0 +1,57 @@
+epems	election management system used	election_profiles	Which election management system was in use at that election?
+eppphwscan	election hardware in polling place: scanners	election_profiles	Were scanners used in polling places for this election?
+eppphwdre	election hardware in polling place: DRE	election_profiles	Were DREs used in polling places for this election?
+eppphwmarkd	election hardware in polling place: Marking Devices	election_profiles	Were Marking Devices used in polling places for this election?
+eppphwpollbk	election hardware in polling place: poll book	election_profiles	Were Poll Books used in polling places for this election?
+eppphwoth	election hardware in polling place: other	election_profiles	Was there a different type of election hardware used in the polling place?
+epetallysys	election tally system used	election_profiles	Which tally system was used?
+epppbalpap	number of ballots cast on paper at the polls	election_profiles	What was the total number of ballots cast ON PAPER at the polls?
+epppbalaccsd	number of ballots cast on accessible device (excluding automark)	election_profiles	How many ballots were cast on an accessible device? Please don't include ballots marked on the Automark.
+eprv	number of registered voters 	election_profiles	What was the number of registered voters for this election?
+eppploc	number of polling place locations 	election_profiles	How many buildings/sites were used to locate polling places? If there were 2 polling places in one building, please count this as 1.
+epprecwpp	number of voting precincts assigned to polling place locations	election_profiles	How many of your precincts had a polling place allocated to it?
+epprecvbm	number of mail ballot precincts	election_profiles	How many mail-ballot only precincts did you have (that did not have polling places)?
+epbaltype	number of ballot types	election_profiles	How many ballot types did you have in this election?
+epbalpage	number of pages or range of pages printed in Sample Ballot and voter information pamphlets 	election_profiles	What was the number of pages in your sample ballot booklet (if more than one booklet please give the range from smallest to largest)
+epbalsampvip	number of Sample Ballot and voter information pamphlets printed	election_profiles	Please include all printed sample ballot and voter information pamphlets in all languages.
+epvipinsrt	number of voter information pamphlet inserts printed	election_profiles	If a voter information pamphlet insert was sent with VBM ballots instead of a Sample Ballot book, how many were printed? Please include all languages.
+epbalofficl	number of official ballots ordered	election_profiles	How many official ballots were ordered (include all languages)?
+epvbmmail	total number of VBM ballots mailed 	election_profiles	Please include all VBM ballots - perms, requests, seconds, UOCAVA, and those for mail ballot precincts.
+epvbmmailprm	     of those, how many were mailed to permanent vote-by-mail voters	election_profiles	How many of those were mailed to permanent VBM voters?
+epvbmmailmbp	     of those, how many were mailed to voters in mail ballot precincts	election_profiles	How many of those were mailed to VMB voters that live in all mail-ballot precincts?
+epvbmmailuo	     of those, how many were mailed to UOCAVA voters	election_profiles	How many of those were mailed to UOCAVA voters?
+epvbmotc	number of VBM ballots issued over the counter	election_profiles	How many mail-ballots were issued over the counter?
+epvbmret	total number of VBM ballots counted	election_profiles	Also known as "good" VBMs, how many were returned and counted? Please include all VBM from all sources
+epvbmretprm	    of those, how many were returned by permanent vote-by-mail voters	election_profiles	Of the counted VBMs, how many came from permanent VBM voters?
+epvbmretmbp	     of those, how many were returned from voters in mail ballot precincts	election_profiles	Of the counted VBMs, how many came from voters in Mail-Ballot precincts?
+epvbmretuo	     of those, how many were returned from UOCAVA voters	election_profiles	Of the counted VBMs, how many came from UOCAVA voters?
+epvbmundel	total number of VBMs returned undeliverable	election_profiles	How many VBMs were returned by the post office as undeliverable?
+epvbmchal	total number of VBM ballots challenged	election_profiles	What was the total number of total VBMs challenged?
+epvbmprovc	total number of provisional ballots counted or partially counted	election_profiles	What was the number of provisional ballots that were completely or partially counted?
+epvbmprovnc	total number of provisional ballots not counted	election_profiles	What was the total number of provisional ballots that were not counted?
+eplangnoeng	number of languages other than English	election_profiles	In how many languages other than English did you provide Election materials?
+epcand	number of candidates on the ballot	election_profiles	What was the total number of candidates on the ballot?
+epcandfsc	number of candidates for federal/state/county 	election_profiles	Of the total number of candidates on the ballot, how many were running for federal/state/county offices?
+epcandcd	number of candidates for cities/districts 	election_profiles	Of the total number of candidates on the ballot, how many were running for city/district offices?
+epcandwi	number of write-in candidates	election_profiles	What was the total number of qualified write-in candidates?
+epcandwifsc	number of write-in candidates for federal/state/county 	election_profiles	Of the total number of write-in candidates, how many were running for federal/state/county offices?
+epcandwicd	number of write-in candidates for cities/districts 	election_profiles	Of the total number of write-in candidates, how many were running for city/district offices?
+epmeasr	number of measures on the ballot	election_profiles	What was the total number of measures on the ballot?
+epmeasrfsc	number of measures for federal/state/county 	election_profiles	Of the total number of measures on the ballot, how many were for federal/state/county?
+epmeasrcd	number of measures for cities/districts 	election_profiles	Of the total number of measures on the ballot, how many were for cities and districts?
+epicrp	indirect cost rate (ICRP) 	election_profiles	Please give the percent Indirect Cost rate that was used in this election.
+epicrpfed	indirect cost rate method used: federal indirect cost allocation plan	election_profiles	Which method did you use to arrive at your indirect cost rate- id you use the Federal Indirect Cost Allocation Plan to arrive at the Indirect Cost rate?
+epicrpcounty	indirect cost rate method used: county auditor	election_profiles	Which method did you use to arrive at your indirect cost rate- id you use the County Auditor's rate?
+epicrpown	indirect cost rate method used: construct own rate	election_profiles	Which method did you use to arrive at your indirect cost rate – id you construct your own rate?
+epicrpoth	indirect cost rate method used: other	election_profiles	Which method did you use to arrive at your indirect cost rate-id you use arrive at your rate differently from the methods above?
+eptotindirc	total indirect cost amount	election_profiles	What was your total indirect cost amount?
+eptotelectc	total election costs 	election_profiles	What were your total election costs for this election?
+epcostallrg	method of allocating costs to cities and districts: cost allocation by number of registered voters	election_profiles	How did you allocate your costs to cities and districts- Did you use the number of registered voters to allocate your costs to cities and districts?
+epcostallpre	method of allocating costs to cities and districts: cost allocation by number of precincts	election_profiles	How did you allocate your costs to cities and districts- Did you use the number of precincts to allocate your costs to cities and districts?
+epcostallopp	method of allocating costs to cities and districts: cost allocation by number of polling places	election_profiles	How did you allocate your costs to cities and districts- Did you use the number of polling places to allocate your costs to cities and districts?
+epcostalloth	method of allocating costs to cities and districts: cost allocation by other method	election_profiles	How did you allocate your costs to cities and districts- Did you use some other method not mentioned above to allocate your costs to cities and districts?
+eptotbilled	total amount billed to jurisdictions 	election_profiles	What was the total amount that was billed to all jurisdictions?
+eptotcounty	total costs absorbed by the county	election_profiles	What was the total amount of costs that the county absorbed?
+eptotsb90c	total SB90 costs	election_profiles	What were the total SB90 costs?
+eptotsb90r	total SB90 reimbursements	election_profiles	What were the total SB90 reimbursements?
+epmandates	any mandate that increased costs?	election_profiles	Were there federal or state mandates that increased costs in this specific election? Add previous mandates that were not implemented until this election. (open ended field for respondents to fill out)

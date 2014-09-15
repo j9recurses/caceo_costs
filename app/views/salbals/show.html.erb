@@ -1,4 +1,4 @@
-     <h2 class ="myh2show"><%= @category_name  + " Costs Summary for " + @election_year[:year].to_s %></h2>
+          <h2 class ="myh2show"><%= @category_name  + " Costs Summary for " + @election_year[:year].to_s %></h2>
 
 <% total = 0 %>
 <% salaries_dict = Hash.new() %>
@@ -11,33 +11,34 @@
 <% @category_description.each do |pd| %>
   <% if pd[:cost_type] == 'salaries' %>
     <%  salaries_or_other  = 'salaries' %>
+    <%valpd = eval("@salbal[:" + pd[:field]+"]" ) %>
 
      <% if pd[:label]  =~ /Salaries/ %>
-         <% if  pd[:field].nil? %>
+         <% if valpd.nil? %>
        <%salaries_dict[pd[:label].to_s.upcase ] = 0 %>
         <% else %>
         <%salaries_dict[pd[:label].to_s.upcase ] = eval("@salbal[:" + pd[:field]+"]" ) %>
          <% end %>
      <% elsif pd[:label]  =~ /Benefits.*dollars/ %>
-         <% if  pd[:field].nil? %>
+         <% if  valpd.nil? %>
        <%benefits_dollars_dict[pd[:label].to_s.upcase ] = 0 %>
         <% else %>
         <%benefits_dollars_dict[pd[:label].to_s.upcase ] = eval("@salbal[:" + pd[:field]+"]" ) %>
          <% end %>
       <% elsif pd[:label]  =~ /Benefits.*percent/ %>
-         <% if  pd[:field].nil? %>
+         <% if  valpd.nil? %>
        <% benefits_percent_dict[pd[:label].to_s.upcase ] = 0 %>
         <% else %>
         <% benefits_percent_dict[pd[:label].to_s.upcase ] = eval("@salbal[:" + pd[:field]+"]" ) %>
          <% end %>
       <% elsif pd[:label]  =~ /Hours/ %>
-         <% if  pd[:field].nil? %>
+         <% if valpd.nil? %>
        <% hours_worked_dict[pd[:label].to_s.upcase ] = 0 %>
         <% else %>
         <% hours_worked_dict[pd[:label].to_s.upcase ] = eval("@salbal[:" + pd[:field]+"]" )%>
          <% end %>
       <%else%>
-         <% if  pd[:field].nil? %>
+         <% if  valpd.nil? %>
        <% other_dict[pd[:label].to_s.upcase ] = 0 %>
         <% else %>
         <% other_dict[pd[:label].to_s.upcase ] = eval("@salbal[:" + pd[:field]+"]" ) %>
@@ -117,6 +118,7 @@
   </div>
   <%else%>
 
+<% @category_description.each do |pd| %>
 <div class="show_item_title">
   <%= pd[:label ].to_s.upcase %>
 </div>
@@ -131,16 +133,12 @@
 <%  @itemamt =  eval("@salbal[:" + pd[:field]+"]" )  %>
 <% if @filtercomments.include?  pd[:field] %>
     <%=@itemamt.to_s %>
-<% elsif @filterpercents.include? pd[:field] %>
-     <%= @itemamt.to_s + "%" %>
-    <% elsif @filterhours.include? pd[:field] %>
-     <%= @itemamt.to_s + " hrs" %>
   <%else %>
   <% total = total + @itemamt.to_i %>
   <%="$" + @itemamt.to_s %>
    <%end %>
 <%end %>
-
+<%end%>
 <%end%>
 </div>
 
