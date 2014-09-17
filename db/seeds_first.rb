@@ -64,7 +64,7 @@ ElectionYear.create(:year => 2012)
 ##cost category table....from file
 ##make a resources dir if it doesn't exist
 CategoryDescription.delete_all
-costcategoriesfname = Rails.root.join("resources", "cost_categories_list4.csv").to_s
+costcategoriesfname = Rails.root.join("resources", "cost_categories_list5.csv").to_s
 text=File.open(costcategoriesfname).read
 text.gsub!(/\r\n?/, "\n")
 text.next

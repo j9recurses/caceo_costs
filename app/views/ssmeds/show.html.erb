@@ -1,10 +1,11 @@
-          <h2 class ="myh2show"><%= @category_name  + " Costs Summary for " + @election_year[:year].to_s %></h2>
+     <h2 class ="myh2show"><%= @category_name  + " Costs Summary for " + @election_year[:year].to_s %></h2>
 
 <% total = 0 %>
 <% salaries_dict = Hash.new() %>
 <% benefits_dollars_dict = Hash.new() %>
 <% benefits_percent_dict = Hash.new() %>
 <% hours_worked_dict = Hash.new()  %>
+<% comment_dict = Hash.new()  %>
 <% other_dict = Hash.new()  %>
 <% salaries_or_other = '' %>
 
@@ -37,6 +38,8 @@
         <% else %>
         <% hours_worked_dict[pd[:label].to_s.upcase ] = eval("@ssmed[:" + pd[:field]+"]" )%>
          <% end %>
+      <% elsif pd[:label]  =~  /General/  %>
+        <% comment_dict[pd[:label].to_s.upcase ] = eval("@ssmed[:" + pd[:field]+"]" )%>
       <%else%>
          <% if  valpd.nil? %>
        <% other_dict[pd[:label].to_s.upcase ] = 0 %>
@@ -54,6 +57,13 @@
        <% saltot = salaryvals.inject{|sum,x| sum + x } %>
         <%= 'Total Salaries: '  + "$" + saltot.to_s  %>
        </div>
+
+        <%other_dict.each do |k, v| %>
+         <div class="show_item_title_sub">
+         <%=  k.titleize + ": $" + v.to_s %>
+         </div>
+        <% end %>
+
        <% salaries_dict.each do |k, v| %>
        <div class="show_item_title_sub">
        <%= k.titleize + ": $"+v.to_s  %>
@@ -66,6 +76,7 @@
        <% bendoltot = bendolvals.inject{|sum,x| sum + x } %>
         <%= 'Total Benefits - in Dollars: '  + "$" + bendoltot.to_s  %>
        </div>
+
        <% benefits_dollars_dict.each do |k, v| %>
        <div class="show_item_title_sub">
        <%= k.titleize + ": $"+v.to_s  %>
@@ -86,7 +97,7 @@
 
 
       <div class="show_item_title_main">
-        <% hrswkedtot = 0 %>
+      <% hrswkedtot = 0 %>
       <% hrsvals = hours_worked_dict.values() %>
        <% hrswkedtot = hrsvals.inject{|sum,x| sum + x } %>
         <%= 'Total Hours Worked: '  +  hrswkedtot.to_s + "hrs" %>
@@ -97,24 +108,7 @@
        </div>
        <% end %>
 
-
-      <% othertot = 0 %>
-       <%other_dict.each do |k, v| %>
-        <% if k =~ /COMMENTS/ %>
-        <div class="show_item_title">
-           <%= k.titleize %>
-          </div>
-          <div class="show_item">
-        <%= v.to_s %>
-        </div>
-        <% else %>
-        <div class="show_item_title">
-         <% othertot = othertot + v %>
-         <%=  k.titleize + ": $" + v.to_s %>
-         </div>
-       <% end %>
-   <% end %>
-  <% total = othertot + bendoltot + saltot %>
+  <% total =  bendoltot + saltot %>
   </div>
   <%else%>
 
@@ -152,10 +146,20 @@
 <% Postage.category_total(@category_id, total) %>
 </div>
 
+<%comment_dict.each do |k, v| %>
+<div class="show_item_title">
+<%= k.titleize %>
+  </div>
+  <div class="show_item">
+ <%= v.to_s %>
+  </div>
+<% end %>
+
 <div class="end_link">
-<%= link_to 'Edit',  edit_salbal_path(@ssmed[:id]) %> |
-<%= link_to 'Delete This Page', salbal_path, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Edit',  edit_ssmed_path(@ssmed[:id]) %> |
+<%= link_to 'Delete This Page', ssmed_path, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= eval(  @categories_path) %> |
 <%= link_to "Cost Category Home", home_path  %>
 </div>
+
 

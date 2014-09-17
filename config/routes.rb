@@ -17,11 +17,15 @@ CaceoCosts::Application.routes.draw do
      post :updatepassword_submit , :on => :member
   end
 
+  #resources :election_year_profiles
   get "home", :to => "election_years#home", as: "home"
+  get "election_profile_home", :to => "election_year_profiles#election_profile_home", as: "election_profile_home"
   get "home/:id", :to => "election_years#view_year",  as: "show_election_year"
   resources :election_years do
         resources :categories
     end
+  resources :election_profiles
+  resources :election_year_profiles
   resources :salbals
   resources :salpps
   resources :salpws

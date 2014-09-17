@@ -1,0 +1,24 @@
+<h2 class ="myh2show"><%= "Election Profile Summary for the " + @election_year_profile[:year].to_s %></h2>
+
+ <% @category_description.each do |pd| %>
+<div class="show_item_title">
+  <%= pd[:label ].to_s.upcase %>
+</div>
+
+<div class="show_item">
+<% response =  eval("@election_profile[:" + pd[:field]+"]" ) %>
+<% if  pd[:fieldtype] = 'boolean' and response == true %>
+      <%= "Yes" %>
+<%elsif  pd[:fieldtype] = 'boolean' and response == false%>
+     <%= "No" %>
+<% else %>
+   <%=  response %>
+<% end %>
+<% end %>
+
+
+<div class="end_link">
+<%= link_to 'Edit',  edit_election_profile_path(@election_profile[:id]) %> |
+<%= link_to 'Delete This Page', election_profile_path, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to "Election Profile Home", election_profile_home_path  %>
+</div>

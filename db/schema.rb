@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140915103243) do
+ActiveRecord::Schema.define(version: 20140917094405) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20140915103243) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "fieldtype"
   end
 
   create_table "election_profiles", force: true do |t|
@@ -101,7 +102,7 @@ ActiveRecord::Schema.define(version: 20140915103243) do
     t.integer  "epmeasr"
     t.integer  "epmeasrfsc"
     t.integer  "epmeasrcd"
-    t.float    "epicrp"
+    t.integer  "epicrp"
     t.boolean  "epicrpfed"
     t.boolean  "epicrpcounty"
     t.boolean  "epicrpown"
@@ -139,6 +140,9 @@ ActiveRecord::Schema.define(version: 20140915103243) do
     t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "election_dt"
+    t.integer  "year_dt"
+    t.string   "el_typ"
   end
 
   create_table "filter_costs", force: true do |t|

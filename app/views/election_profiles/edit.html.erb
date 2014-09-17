@@ -1,0 +1,13 @@
+     <h2 class ="myh2yr"><%= "Edit Information Election Profile for the " +  @election_year_profile[:year]%>
+&rarr;  Step <%= @election_profile.current_step + 1 %> of <%= @election_profile.total_steps %></h2>
+
+
+<%= render 'form' %>
+<%= render 'modal_info' %>
+
+
+
+<div class="end_link">
+<%= link_to "Election Profile Home", election_profile_home_path  %>
+</div>
+

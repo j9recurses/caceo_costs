@@ -1,15 +1,12 @@
-class Salcan < ActiveRecord::Base
+class ElectionProfile< ActiveRecord::Base
  include MultiStepModel
-has_one :year_element, :as =>:element, dependent: :destroy
-accepts_nested_attributes_for :year_element
-has_one :election_year, :through => :year_elements
 validates :county, presence: true
-validates :election_year_id, presence: true
-validates   :salcanprep, :salcanproc, :slacanoth, :salcanpsrp, :salcanpsop, :salcantsrp, :salcantsop, :salcanbeps, :salcanbepsp, :salcanbets, :salcanbetsp, :salcanhrsps, :salcanhrsts,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 10000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
+validates :election_year_profile_id, presence: true
+validates :epicrp, :epppbalpap, :epppbalaccsd, :eprv, :eppploc,:epprecwpp,:epbaltype,:epbalpage,:epbalsampvip,:epvipinsrt,:epbalofficl,:epvbmmail,:epvbmmailprm,:epvbmmailmbp,:epvbmmailuo,:epvbmotc,:epvbmret,:epvbmretprm,:epvbmretmbp,:epvbmretuo,:epvbmundel,:epvbmchal,:epvbmprovc,:epvbmprovnc,:eplangnoeng,:epcand,:epcandfsc,:epcandcd,:epcandwi,:epcandwifsc,:epcandwicd,:epmeasr,:epmeasrfsc,:epmeasrcd,:eptotindirc,:eptotelectc,:eptotbilled,:eptotcounty,:eptotsb90c,:eptotsb90r,:epetallysys, numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 10000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
 
 
   def self.total_steps
-   c = CategoryDescription.where(model_name: "salcans").pluck(:field, :label)
+   c = ElectionProfileDescription.where(model_name: "election_profiles").pluck(:field, :label)
   cfchunks = c.in_groups_of(6)
   numb_of_steps = cfchunks.size
   end
@@ -23,7 +20,7 @@ validates   :salcanprep, :salcanproc, :slacanoth, :salcanpsrp, :salcanpsop, :sal
 end
 
 def self.make_chunks(model_name)
-  c = CategoryDescription.where(model_name: model_name).pluck(:field, :label)
+  c = ElectionProfileDescription.where(model_name: model_name).pluck(:field, :label)
   cfchunks = c.in_groups_of(6)
   numb_of_steps = cfchunks.size
   form_chunks = Array.new()
@@ -71,8 +68,8 @@ end
 end
 
 #update the category table to indicate that something was started or completed
-def self.category_status(category_id, model_stuff)
-  model_fields =  Salcan.column_names
+def self.category_status(election_profile_id, model_stuff)
+  model_fields =  ElectionProfile.column_names
   model_fields_size = model_fields.size
   model_fields_size = model_fields_size -1
   fields_complete = model_fields_size
@@ -84,22 +81,14 @@ def self.category_status(category_id, model_stuff)
     end
   end
   amt_complete = fields_complete.to_f / model_fields_size.to_f
-  if amt_complete < 0.75
-    complete = false
-  end
-  Category.update( category_id , started: started)
-  Category.update( category_id , complete: complete)
+  if amt_complete < 0.50
+   complete = false
+    ElectionProfile.update(election_profile_id, complete: complete)
+ else
+    ElectionProfile.update(election_profile_id, complete: true)
 end
+ ElectionProfile.update(election_profile_id, started: started)
 
-def self.remove_category_status(category_id)
-    Category.update(category_id, started: false)
-    Category.update(category_id, complete: false)
-    Category.update(category_id, model_total: '')
 end
-
-def self.category_total(category_id, total)
-   Category.update(category_id, model_total: total)
-end
-
 
 end
