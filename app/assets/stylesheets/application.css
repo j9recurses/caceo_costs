@@ -15,8 +15,33 @@
 
 #mybody {  font-family: 'Muli', sans-serif; }
 
+
+.hiddenRow {
+    padding: 0 !important;
+}
+
 .mynavbar{
   height:80px;
+}
+
+
+.myaccordion a:link {
+    color: blue;
+}
+
+.myaccordion {
+  padding-left:30px;
+}
+
+.checkline {
+  padding-left:3px;
+}
+
+/* mouse over link */
+.myaccordion a:hover {
+    color: blue;
+    background-color:yellow;
+   text-decoration: none
 }
 
 th.mytable {

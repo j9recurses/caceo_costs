@@ -1,23 +1,40 @@
+<% include_javascript 'election_year_profiles/accordion.js' %>
 <h2 class ="myh2yr">Election Profile Year Overview For <%= @county_name[0] %></h2>
-<div class ="info_table" >
-<table class="mytable">
+
+<table class="table table-condensed" style="border-collapse:collapse;">
   <thead>
     <tr>
-      <th class="yr_mytable_first">Year</th>
-      <th class="yr_mytable">Started</th>
-      <th class="yr_mytable">Complete</th>
+      <th> Year</th>
+      <th>Started</th>
+     <th>Complete</th>
     </tr>
   </thead>
-  <tbody>
-    <% @profile_years.each do  |y| %>
-    <% electionyrid = y[:id] %>
-    <td class ="yr_mytable_first"><%=link_to y[:year], election_profiles_path(:election_year_profile_id => electionyrid  ) %> </td>
-    <td class="yr_mytable"> <%= y[:started].html_safe %></td>
-    <td class="yr_mytable"> <%= y[:done].html_safe %></td>
-  </tr>
-  <% end %>
-</tbody>
+    <tbody>
+    <%counter = 1 %>
+    <% @profile_years.each do  |yr| %>
+        <tr data-toggle="collapse" data-target=".demo<%= counter.to_s %>" class="accordion-toggle">
+            <td> <%=  yr[:year_dt] %> </td>
+            <td>  <%=  yr[:started].html_safe  %> </td>
+            <td><%=  yr[:done].html_safe  %> </td>
+        </tr>
+        <% yr[:all_years_electionz].each do |y| %>
+            <% electionyrid = y[0] %>
+        <tr>
+           <td class="hiddenRow">
+                <div class="accordian-body collapse demo<%= counter.to_s%>">
+                 <div class= "myaccordion"> <%=link_to y[1], election_profiles_path( :election_year_profile_id => y[0]  ) %></div></div>
+            </td>
+            <td class="hiddenRow">
+                <div class="accordian-body collapse demo<%= counter.to_s %>">
+                <div class= "checkline"> <%= y[2] .html_safe %></div></div>
+            </td>
+            <td class="hiddenRow">
+                   <div class="accordian-body collapse demo<%= counter.to_s %>">
+                    <div class= "checkline"> <%=y[3] .html_safe %></div></div>
+            </td>
+        </tr>
+         <% end %>
+        <%counter = counter + 1 %>
+        <% end %>
+    </tbody>
 </table>
-</div>
-
-

@@ -1,12 +1,12 @@
 class ElectionProfilesController < ApplicationController
 before_action :authenticate_user
 before_action :get_user, :get_model_name
-before_action :set_session_election_year_profile_new, only: [:new]
-before_action :set_session_election_year_profile_edit, only: [:edit]
-before_action :get_session_election_year_profile, only: [:create, :update, :show]
 before_action :get_election_profile_description, :make_chunks,  except: [:destroy]
 before_action :load_product, :set_election_profile, only: [:show, :update, :edit, :destroy]
 before_action :load_wizard, only: [:new, :edit, :create, :update]
+before_action :set_session_election_year_profile_index, only: [:index]
+#before_action :set_session_election_year_profile_edit, only: [:edit]
+before_action :get_session_election_year_profile, only: [:create, :update, :show, :new, :edit]
 
 def index
   @election_profile_stuff = ElectionProfile.where(county: @user[:county], election_year_profile_id: params[:election_year_profile_id]).pluck(:id)
@@ -56,8 +56,8 @@ end
 
   private
 
-  def set_session_election_year_profile_new
-     @election_year_profile = ElectionYearProfile.find(params[:format])
+  def set_session_election_year_profile_index
+     @election_year_profile = ElectionYearProfile.find(params[:election_year_profile_id])
      session[:election_profile_year] = @election_year_profile[:id]
     end
 
@@ -67,12 +67,6 @@ end
        else
         redirect_to election_profile_home_path
       end
-    end
-
-  def set_session_election_year_profile_edit
-     @election_profile = ElectionProfile.find(params[:id])
-     @election_year_profile = ElectionYearProfile.find(@election_profile[:election_year_profile_id])
-     session[:election_profile_year] = @election_year_profile[:id]
     end
 
 
