@@ -5,42 +5,58 @@ class ElectionYear < ActiveRecord::Base
 
 
   #find all the election years and make show if they have been worked on or are finished
+
+  #find all the election years and make show if they have been worked on or are finished
   def self.get_all_years(user)
-    years = ElectionYear.all.order('year DESC')
-    myyears = Array.new()
     total_election_year_costs = 0
+    years = ElectionYear.all.order('election_dt DESC').pluck(:year_dt).uniq
+    myyears = Array.new()
     years.each do |y|
-      #grab the category statuses
-       category_started = Category.where(election_year_id: y, county: user[:county], started: 1)
-       category_total =  Category.where(election_year_id: y, county: user[:county])
-       category_complete = Category.where(election_year_id: y, county: user[:county], complete: 1)
-      single = Hash.new()
-      single[:id] = y[:id]
-      single[:year] = y[:year]
-      if category_started.size > 0
-        single[:started] ="<span style=\"color:blue\"> &#10004</span>"
+       election_yr_overview = Hash.new()
+        election_yr_overview[:year_dt] = y.to_s
+        year_elections_ids =  ElectionYear.where(year_dt: y).pluck(:id)
+       election_year_started_yr = Category.where( county: user[:county], started: 1, election_year_id: year_elections_ids)
+       election_year_complete_yr = Category.where( county: user[:county], complete: 1,  election_year_id: year_elections_ids)
+      if election_year_started_yr.size > 0
+        election_yr_overview[:started] ="<span style=\"color:blue\"> &#10004</span>"
       else
-        single[:started] ="<span style=\"color:red\">&#x2717</span>"
+        election_yr_overview[:started] ="<span style=\"color:red\">&#x2717</span>"
       end
-      #if category_complete.size == 0
-      puts "*******complete**********"
-      puts  category_complete.size
-      puts "*******total**********"
-      puts  category_total.size
-     if  category_total.size ==  category_complete.size
-        single[:done] = "<span style=\"color:blue\"> &#10004</span>"
+     if election_year_complete_yr.size > 0
+        election_yr_overview[:done] = "<span style=\"color:blue\"> &#10004</span>"
       else
-        single[:done] =  "<span style=\"color:red\">&#x2717</span>"
+        election_yr_overview[:done] =  "<span style=\"color:red\">&#x2717</span>"
       end
-      #grab the costs for each category type
-       costs_ary =  Category.where(election_year_id: y, county: user[:county]).pluck(:model_total)
+     year_elections =  ElectionYear.where(year_dt: y)
+       all_years_electionz = Array.new
+    year_elections.each do |ye|
+      single = Array.new()
+      single << ye[:id]
+      single <<  ye[:year]
+      election_year_started= Category.where( county: user[:county], started: 1, election_year_id: ye[:id])
+      election_year_complete= Category.where( county: user[:county], complete: 1, election_year_id: ye[:id])
+      if election_year_started.size > 0
+        single<< "<span style=\"color:blue\"> &#10004</span>"
+      else
+        single<<"<span style=\"color:red\">&#x2717</span>"
+      end
+     if election_year_complete.size > 0
+         single<<"<span style=\"color:blue\"> &#10004</span>"
+      else
+         single<<   "<span style=\"color:red\">&#x2717</span>"
+      end
+       costs_ary =  Category.where(election_year_id: ye, county: user[:county]).pluck(:model_total)
        #convert the nils to 0, then add
        category_costs = costs_ary.map {|e| e ? e : 0}
-       single[:total_year_costs]  = category_costs.sum
-       total_election_year_costs = total_election_year_costs + (category_costs.sum)
-      myyears  << single
+       yearlytotalcosts =  category_costs.sum
+        total_election_year_costs = total_election_year_costs + (category_costs.sum)
+       single << yearlytotalcosts
+       all_years_electionz << single
     end
-    return myyears,   total_election_year_costs
+    election_yr_overview[:all_years_electionz] = all_years_electionz
+    myyears  << election_yr_overview
+  end
+    return myyears,  total_election_year_costs
   end
 
 

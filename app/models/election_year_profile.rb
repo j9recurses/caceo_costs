@@ -44,7 +44,6 @@ class ElectionYearProfile < ActiveRecord::Base
     election_yr_overview[:all_years_electionz] = all_years_electionz
     myyears  << election_yr_overview
   end
-    puts myyears.inspect
     return myyears
   end
 end

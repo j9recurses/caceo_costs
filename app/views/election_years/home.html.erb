@@ -1,25 +1,47 @@
-<h2 class ="myh2yr">Cost Categories Year Overview For <%= @county_name[0] %></h2>
-<div class ="info_table" >
-<table class="mytable">
+
+<h2 class ="myh2yr">Direct Cost Categories Overview For <%= @county_name[0] %></h2>
+
+<table class="table table-condensed" style="border-collapse:collapse;">
   <thead>
     <tr>
-      <th class="yr_mytable_first">Year</th>
-      <th class="yr_mytable">Started</th>
-      <th class="yr_mytable">Complete</th>
-      <th class="yr_mytable_cash">Election Year Costs</th>
+      <th> Year</th>
+      <th>Started</th>
+     <th>Complete</th>
+     <th>Direct Costs</th>
     </tr>
   </thead>
-  <tbody>
-    <% @years.each do  |y| %>
-    <td class ="yr_mytable_first"><%=link_to y[:year], election_year_categories_path(y[:id]) %> </td>
-    <td class="yr_mytable"> <%= y[:started].html_safe %></td>
-    <td class="yr_mytable"> <%= y[:done].html_safe %></td>
-    <td class="yr_mytable_cash"> <%= "$" + y[:total_year_costs].to_s %></td>
-  </tr>
-  <% end %>
-</tbody>
+    <tbody>
+    <%counter = 1 %>
+    <% @years.each do  |yr| %>
+        <tr data-toggle="collapse" data-target=".demo<%= counter.to_s %>" class="accordion-toggle">
+            <td> <%=  yr[:year_dt] %> Statewide  Elections </td>
+            <td>  <%=  yr[:started].html_safe  %> </td>
+            <td><%=  yr[:done].html_safe  %> </td>
+            <td></td>
+        </tr>
+        <% yr[:all_years_electionz].each do |y| %>
+        <tr>
+           <td class="hiddenRow">
+                <div class="accordian-body collapse demo<%= counter.to_s%>">
+                 <div class= "myaccordion"> <%=link_to y[1],  election_year_categories_path(y[0])  %></div></div>
+            </td>
+            <td class="hiddenRow">
+                <div class="accordian-body collapse demo<%= counter.to_s %>">
+                <div class= "checkline"> <%= y[2].html_safe %></div></div>
+            </td>
+            <td class="hiddenRow">
+                   <div class="accordian-body collapse demo<%= counter.to_s %>">
+                    <div class= "checkline"> <%=y[3].html_safe %></div></div>
+            </td>
+            <td class="hiddenRow">
+                   <div class="accordian-body collapse demo<%= counter.to_s %>">
+                  <div class= "checkline">$ <%=y[4].to_s %></div></div>
+            </td>
+        </tr>
+         <% end %>
+        <%counter = counter + 1 %>
+        <% end %>
+    </tbody>
 </table>
-</div>
 
-<h2 class ="myh2yr_tot"> TOTAL ELECTION COSTS FOR ALL YEARS: $<%= @total_election_year_costs %></h2>
-
+<h2 class ="myh2yr_tot"> TOTAL DIRECT COSTS FOR ALL ELECTIONS: $<%= @total_election_year_costs %></h2>

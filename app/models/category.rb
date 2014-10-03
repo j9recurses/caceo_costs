@@ -18,6 +18,8 @@ class Category < ActiveRecord::Base
         @category[:complete] = "<span style=\"color:red\">&#x2717</span>"
       end
       cname = c[:name].sub("Salaries related to", '').titleize
+      cname = cname.gsub('Vbm', "VBM")
+     cname = cname.gsub('Doj', "DOJ")
       @category[:linkto] =   "link_to '" +  cname   +"'," + c[:model_name] + "_path(:election_year_id => " +  election_year_id.to_s  + ",:category_id => "  + c[:id].to_s + ")"
        if  c[:model_total].nil?
         @category[:model_total] = 0

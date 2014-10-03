@@ -1,4 +1,4 @@
-<H2 class="myh2cats"> <%= "Election Cost Categories for " + @election_year[:year].to_s %> </H2>
+<H2 class="myh2cats"> <%= "Direct Cost Categories Summary for " + @election_year[:year].to_s %> </H2>
 
 <H3 class = "myh3"> Salaries </H3>
 <div class = "info_table">
@@ -62,10 +62,10 @@
 </div>
 
 <div class="category_break"></div>
-<H3 class = "total"> <%= "TOTAL ELECTION COSTS FOR " + @election_year[:year].to_s + ": $" +  @year_total.to_s %>  </H3>
+<H3 class = "total"> <%= "TOTAL DIRECT COSTS FOR  " + @election_year[:year].to_s + ": $" +  @year_total.to_s %>  </H3>
 
 
 <div class="category_end_link">
-<%= link_to "Cost Category Home", home_path  %>
+<%= link_to "Direct Cost Categories Home", home_path  %>
 </div>
 

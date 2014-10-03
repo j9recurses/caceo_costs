@@ -1,4 +1,4 @@
-<% include_javascript 'election_year_profiles/accordion.js' %>
+
 <h2 class ="myh2yr">Election Profile Year Overview For <%= @county_name[0] %></h2>
 
 <table class="table table-condensed" style="border-collapse:collapse;">
@@ -13,12 +13,11 @@
     <%counter = 1 %>
     <% @profile_years.each do  |yr| %>
         <tr data-toggle="collapse" data-target=".demo<%= counter.to_s %>" class="accordion-toggle">
-            <td> <%=  yr[:year_dt] %> </td>
+            <td> <%=  yr[:year_dt] %> Statewide Elections </td>
             <td>  <%=  yr[:started].html_safe  %> </td>
             <td><%=  yr[:done].html_safe  %> </td>
         </tr>
         <% yr[:all_years_electionz].each do |y| %>
-            <% electionyrid = y[0] %>
         <tr>
            <td class="hiddenRow">
                 <div class="accordian-body collapse demo<%= counter.to_s%>">

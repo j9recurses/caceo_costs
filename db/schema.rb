@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140917094405) do
+ActiveRecord::Schema.define(version: 20141003080226) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 20140917094405) do
     t.integer  "epprecwpp"
     t.integer  "epprecvbm"
     t.integer  "epbaltype"
-    t.integer  "epbalpage"
+    t.string   "epbalpage"
     t.integer  "epbalsampvip"
     t.integer  "epvipinsrt"
     t.integer  "epbalofficl"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20140917094405) do
     t.integer  "epmeasr"
     t.integer  "epmeasrfsc"
     t.integer  "epmeasrcd"
-    t.integer  "epicrp"
+    t.decimal  "epicrp",                   precision: 10, scale: 0
     t.boolean  "epicrpfed"
     t.boolean  "epicrpcounty"
     t.boolean  "epicrpown"
@@ -118,8 +118,8 @@ ActiveRecord::Schema.define(version: 20140917094405) do
     t.integer  "eptotsb90c"
     t.integer  "eptotsb90r"
     t.text     "epmandates"
-    t.boolean  "started",                  default: false
-    t.boolean  "complete",                 default: false
+    t.boolean  "started",                                           default: false
+    t.boolean  "complete",                                          default: false
     t.string   "current_step"
     t.integer  "county"
     t.integer  "election_year_profile_id"
@@ -134,15 +134,17 @@ ActiveRecord::Schema.define(version: 20140917094405) do
     t.string   "election_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "edate_full"
   end
 
   create_table "election_years", force: true do |t|
-    t.integer  "year"
+    t.string   "year"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "election_dt"
     t.integer  "year_dt"
-    t.string   "el_typ"
+    t.string   "election_type"
+    t.string   "edate_full"
   end
 
   create_table "filter_costs", force: true do |t|

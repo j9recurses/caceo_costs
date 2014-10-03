@@ -2,12 +2,12 @@ class ElectionProfile< ActiveRecord::Base
  include MultiStepModel
 validates :county, presence: true
 validates :election_year_profile_id, presence: true
-validates :epicrp, :epppbalpap, :epppbalaccsd, :eprv, :eppploc,:epprecwpp,:epbaltype,:epbalpage,:epbalsampvip,:epvipinsrt,:epbalofficl,:epvbmmail,:epvbmmailprm,:epvbmmailmbp,:epvbmmailuo,:epvbmotc,:epvbmret,:epvbmretprm,:epvbmretmbp,:epvbmretuo,:epvbmundel,:epvbmchal,:epvbmprovc,:epvbmprovnc,:eplangnoeng,:epcand,:epcandfsc,:epcandcd,:epcandwi,:epcandwifsc,:epcandwicd,:epmeasr,:epmeasrfsc,:epmeasrcd,:eptotindirc,:eptotelectc,:eptotbilled,:eptotcounty,:eptotsb90c,:eptotsb90r, numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 10000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
-
+validates  :epppbalpap, :epppbalaccsd, :eprv, :eppploc,:epprecwpp,:epbaltype,:epbalsampvip,:epvipinsrt,:epbalofficl,:epvbmmail,:epvbmmailprm,:epvbmmailmbp,:epvbmmailuo,:epvbmotc,:epvbmret,:epvbmretprm,:epvbmretmbp,:epvbmretuo,:epvbmundel,:epvbmchal,:epvbmprovc,:epvbmprovnc,:eplangnoeng,:epcand,:epcandfsc,:epcandcd,:epcandwi,:epcandwifsc,:epcandwicd,:epmeasr,:epmeasrfsc,:epmeasrcd,:eptotindirc,:eptotelectc,:eptotbilled,:eptotcounty,:eptotsb90c,:eptotsb90r, numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 10000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
+validates  :epicrp, :numericality => { :with => /^\d{1,5}(\.\d{0,3})?$/ , :allow_nil => true, :allow_blank => false}
 
   def self.total_steps
    c = ElectionProfileDescription.where(model_name: "election_profiles").pluck(:field, :label)
-  cfchunks = c.in_groups_of(6)
+  cfchunks = c.in_groups_of(12)
   numb_of_steps = cfchunks.size
   end
 
@@ -21,7 +21,7 @@ end
 
 def self.make_chunks(model_name)
   c = ElectionProfileDescription.where(model_name: model_name).pluck(:field, :label)
-  cfchunks = c.in_groups_of(6)
+  cfchunks = c.in_groups_of(12)
   numb_of_steps = cfchunks.size
   form_chunks = Array.new()
   cfchunks.each do | chunk |
@@ -37,7 +37,14 @@ def self.make_form_items(chunk)
     if hunk.nil?
       next
     else
-      formline = "f.input :" + hunk[0] +", label: \'" + hunk[1].titleize + "\ <span class=\"info\"\>\<a href=\"#" +  hunk[0] + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
+      hunktofix =  hunk[1].titleize
+      hunktofix = hunktofix.gsub("Uocava","UOCAVA")
+      hunktofix = hunktofix.gsub("Vbm","VBM")
+      hunktofix = hunktofix.gsub("Dre","DRE")
+      hunktofix = hunktofix.gsub("Sb90","SB90")
+      hunktofix  = hunktofix.gsub("Vb Ms", "VBMs")
+      hunktofix  = hunktofix.gsub("Icrp", "ICRP")
+      formline = "f.input :" + hunk[0] +", label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" +  hunk[0] + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
        chunkfields << formline
     end
      end
