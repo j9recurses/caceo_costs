@@ -1,5 +1,7 @@
 CaceoCosts::Application.routes.draw do
 
+  resources :tech_voting_machines
+
   root :to => "users#login"
   get "signup", :to => "users#new" , as: "signup"
   get "login" , :to => "users#login", as: "login"

@@ -33,7 +33,7 @@
 
     <%# all the fields on one page... %>
     <%= hidden_field_tag :all, 1 %>
-    <% Postage.total_steps.times do |step| %>
+    <% Ssmeds.total_steps.times do |step| %>
       <%= render "ssmeds/steps/page#{step + 1}", f: f %>
     <% end %>
     <%= f.submit %>
@@ -41,4 +41,4 @@
   <% end %>
 
 <% end %>
-
+.

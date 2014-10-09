@@ -1,0 +1,46 @@
+
+
+<h1>Listing people</h1>
+
+<table class='table' id='people_table'>
+  <thead>
+    <tr>
+      <th>Voting equip type</th>
+      <th>Equip make</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tech_voting_machines.each do |machine| %>
+      <%# Render table row partial for each person object %>
+      <%= render partial: 'table_row', locals: {tech_voting_machine: machine} %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%# Added Bootstrap data modal attribute %>
+<%= link_to 'New TechVotingMachines', '#new_person_modal', 'data-toggle' => 'modal' %>
+
+<%# Bootstrap modal markup. @see: http://getbootstrap.com/javascript/#modals %>
+<div class="modal fade" id="new_person_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Create new person</h4>
+      </div>
+      <div class="modal-body">
+        <%# Render the new person form (passing modal => true to enable remote => true) %>
+        <%= render 'form', modal: true %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

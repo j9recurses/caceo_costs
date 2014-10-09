@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141003080226) do
+ActiveRecord::Schema.define(version: 20141009101102) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -92,7 +92,6 @@ ActiveRecord::Schema.define(version: 20141003080226) do
     t.integer  "epvbmchal"
     t.integer  "epvbmprovc"
     t.integer  "epvbmprovnc"
-    t.integer  "eplangnoeng"
     t.integer  "epcand"
     t.integer  "epcandfsc"
     t.integer  "epcandcd"
@@ -125,6 +124,28 @@ ActiveRecord::Schema.define(version: 20141003080226) do
     t.integer  "election_year_profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "epppbalpapar"
+    t.boolean  "epppbalpapbu"
+    t.boolean  "epppbalpapot"
+    t.integer  "epvbmretpp"
+    t.integer  "epvbmirevl"
+    t.integer  "epvbmrrevl"
+    t.integer  "epprovcwbt"
+    t.integer  "epprovcwp"
+    t.integer  "epprovncvnr"
+    t.integer  "epprovncbrva"
+    t.integer  "epprovncoth"
+    t.integer  "epprovvbm"
+    t.integer  "epprovnor"
+    t.integer  "epprovhava"
+    t.integer  "epprovunivs"
+    t.integer  "epprovoutr"
+    t.integer  "epcanvdrere"
+    t.string   "eplangvra"
+    t.string   "eplangcaec"
+    t.string   "eplangloc"
+    t.integer  "eptotcandca"
+    t.integer  "eptotvolunth"
   end
 
   create_table "election_year_profiles", force: true do |t|
@@ -509,6 +530,18 @@ ActiveRecord::Schema.define(version: 20141003080226) do
     t.integer  "ssvehins"
     t.text     "ssvehcomment"
     t.string   "current_step"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tech_voting_machines", force: true do |t|
+    t.string   "voting_equip_type"
+    t.date     "purchase_dt"
+    t.string   "equip_make"
+    t.integer  "purchase_price"
+    t.integer  "quantity"
+    t.string   "offset_funds_src"
+    t.integer  "offset_amount"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

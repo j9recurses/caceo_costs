@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  voting_equip_type: MyString
+  purchase_dt: 2014-10-06
+  equip_make: MyString
+  purchase_price: 1
+  quantity: 1
+  offset_funds_type: MyString
+  offset_amount: 1
+
+two:
+  voting_equip_type: MyString
+  purchase_dt: 2014-10-06
+  equip_make: MyString
+  purchase_price: 1
+  quantity: 1
+  offset_funds_type: MyString
+  offset_amount: 1

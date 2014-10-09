@@ -5,12 +5,12 @@ accepts_nested_attributes_for :year_element
 has_one :election_year, :through => :year_elements
 validates :county, presence: true
 validates :election_year_id, presence: true
-validates   :sspossbal, :ssposuo, :ssposvbmo, :ssposvbmi, :ssposvbmoth, :ssposoth,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 10000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
+validates   :sspossbal, :ssposuo, :ssposvbmo, :ssposvbmi, :ssposvbmoth, :ssposoth,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 30000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
 
 
   def self.total_steps
    c = CategoryDescription.where(model_name: "postages").pluck(:field, :label)
-  cfchunks = c.in_groups_of(6)
+  cfchunks = c.in_groups_of(12)
   numb_of_steps = cfchunks.size
   end
 
@@ -24,7 +24,7 @@ end
 
 def self.make_chunks(model_name)
   c = CategoryDescription.where(model_name: model_name).pluck(:field, :label)
-  cfchunks = c.in_groups_of(6)
+  cfchunks = c.in_groups_of(12)
   numb_of_steps = cfchunks.size
   form_chunks = Array.new()
   cfchunks.each do | chunk |
@@ -40,7 +40,14 @@ def self.make_form_items(chunk)
     if hunk.nil?
       next
     else
-      formline = "f.input :" + hunk[0] +", label: \'" + hunk[1].titleize + "\ <span class=\"info\"\>\<a href=\"#" +  hunk[0] + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
+      hunktofix =  hunk[1].titleize
+      hunktofix = hunktofix.gsub("Uocava","UOCAVA")
+      hunktofix = hunktofix.gsub("Vbm","VBM")
+      hunktofix = hunktofix.gsub("Dre","DRE")
+      hunktofix = hunktofix.gsub("Sb90","SB90")
+      hunktofix  = hunktofix.gsub("Vb Ms", "VBMs")
+      hunktofix  = hunktofix.gsub("Icrp", "ICRP")
+      formline = "f.input :" + hunk[0] +", label: \'" + hunktofix + "\ <span class=\"info\"\>\<a href=\"#" +  hunk[0] + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
        chunkfields << formline
     end
      end
@@ -72,8 +79,7 @@ end
 
 #update the category table to indicate that something was started or completed
 def self.category_status(category_id, model_stuff)
-  model_fields = Postage.column_names
-  #neeed to take off comments, because that's not a required field
+  model_fields =  Postage.column_names
   model_fields_size = model_fields.size
   model_fields_size = model_fields_size -1
   fields_complete = model_fields_size
@@ -84,7 +90,6 @@ def self.category_status(category_id, model_stuff)
     fields_complete = fields_complete -1
     end
   end
-  #if the results are greater than 80%, then its done
   amt_complete = fields_complete.to_f / model_fields_size.to_f
   if amt_complete < 0.75
     complete = false
@@ -92,7 +97,6 @@ def self.category_status(category_id, model_stuff)
   Category.update( category_id , started: started)
   Category.update( category_id , complete: complete)
 end
-
 
 def self.remove_category_status(category_id)
     Category.update(category_id, started: false)

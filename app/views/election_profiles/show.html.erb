@@ -11,6 +11,10 @@
       <%= "Yes" %>
 <%elsif  pd[:fieldtype] = 'boolean' and response == false%>
      <%= "No" %>
+<%elsif  pd[:fieldtype] = 'string' %>
+  <%response = response.to_s%>
+   <%response.tr('-', '') %>
+    <%= response %>
 <% else %>
    <%=  response %>
 <% end %>

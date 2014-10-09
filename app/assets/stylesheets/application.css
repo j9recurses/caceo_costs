@@ -170,10 +170,13 @@ h2.myh2yr {
 clear:both;
 text-decoration: none;
 font-size:25px;
-padding-bottom:15px;
+padding-bottom:0px;
 }
 
-
+.instructs{
+  font-size:14px;
+  padding-bottom:10px;
+}
 
 #mynav {
   padding-top:50px;
@@ -387,3 +390,8 @@ font-size:25px;
 padding-top:20px;
 }
 
+.myh5{
+  font-size:15px;
+  float:right;
+  padding-left:100px;
+}

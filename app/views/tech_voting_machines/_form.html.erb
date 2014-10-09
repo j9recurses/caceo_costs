@@ -1,0 +1,27 @@
+
+<%# Conditionally set remote: true. Also, passing model name as data attribute %>
+<% modal ||= false %>
+<% remote = modal ? true : false %>
+<%= form_for(@tech_voting_machine, remote: remote, html: {role: :form, 'data-model' => 'tech_voting_machine'}) do |f| %>
+
+
+  <%# Added Bootstrap classes, and help-block container for error messages %>
+  <div class="form-group">
+    <%= f.label :voting_equip_type, class: 'control-label' %><br>
+    <%= f.text_field :voting_equip_type, class: 'form-control' %>
+    <span class="help-block"></span>
+  </div>
+
+  <%# Added Bootstrap classes, and help-block container for error messages %>
+  <div class="form-group">
+    <%= f.label :equip_make, class: 'control-label' %><br>
+    <%= f.text_field :equip_make, class: 'form-control' %>
+    <span class="help-block"></span>
+  </div>
+
+  <%# Added Bootstrap classes %>
+  <div class="actions">
+    <%= f.submit 'Submit', class: 'btn btn-default' %>
+  </div>
+
+<% end %>
