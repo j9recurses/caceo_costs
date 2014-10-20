@@ -30,6 +30,7 @@ CaceoCosts::Application.routes.draw do
   resources :election_year_profiles
   resources :salbals
   resources :salpps
+  resources :ssbcs
   resources :salpws
   resources :salvbms
   resources :salbcs

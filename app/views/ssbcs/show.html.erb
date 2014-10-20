@@ -1,4 +1,4 @@
-     <h2 class ="myh2show"><%= @category_name.gsub("Salaries Related To", "")   + " Salaries Summary for the " + @election_year[:year].to_s %></h2>
+     <h2 class ="myh2show"><%= @category_name  + " Salaries Summary for the " + @election_year[:year].to_s %></h2>
 
 <% total = 0 %>
 <% salaries_dict = Hash.new() %>
@@ -12,39 +12,39 @@
 <% @category_description.each do |pd| %>
   <% if pd[:cost_type] == 'salaries' %>
     <%  salaries_or_other  = 'salaries' %>
-    <%valpd = eval("@salpw[:" + pd[:field]+"]" ) %>
+    <%valpd = eval("@ssbc[:" + pd[:field]+"]" ) %>
 
      <% if pd[:label]  =~ /Salaries/ %>
          <% if valpd.nil? %>
        <%salaries_dict[pd[:label].to_s.upcase ] = 0 %>
         <% else %>
-        <%salaries_dict[pd[:label].to_s.upcase ] = eval("@salpw[:" + pd[:field]+"]" ) %>
+        <%salaries_dict[pd[:label].to_s.upcase ] = eval("@ssbc[:" + pd[:field]+"]" ) %>
          <% end %>
      <% elsif pd[:label]  =~ /Benefits.*dollars/ %>
          <% if  valpd.nil? %>
        <%benefits_dollars_dict[pd[:label].to_s.upcase ] = 0 %>
         <% else %>
-        <%benefits_dollars_dict[pd[:label].to_s.upcase ] = eval("@salpw[:" + pd[:field]+"]" ) %>
+        <%benefits_dollars_dict[pd[:label].to_s.upcase ] = eval("@ssbc[:" + pd[:field]+"]" ) %>
          <% end %>
       <% elsif pd[:label]  =~ /Benefits.*percent/ %>
          <% if  valpd.nil? %>
        <% benefits_percent_dict[pd[:label].to_s.upcase ] = 0 %>
         <% else %>
-        <% benefits_percent_dict[pd[:label].to_s.upcase ] = eval("@salpw[:" + pd[:field]+"]" ) %>
+        <% benefits_percent_dict[pd[:label].to_s.upcase ] = eval("@ssbc[:" + pd[:field]+"]" ) %>
          <% end %>
       <% elsif pd[:label]  =~ /Hours/ %>
          <% if valpd.nil? %>
        <% hours_worked_dict[pd[:label].to_s.upcase ] = 0 %>
         <% else %>
-        <% hours_worked_dict[pd[:label].to_s.upcase ] = eval("@salpw[:" + pd[:field]+"]" )%>
+        <% hours_worked_dict[pd[:label].to_s.upcase ] = eval("@ssbc[:" + pd[:field]+"]" )%>
          <% end %>
       <% elsif pd[:label]  =~  /General/  %>
-        <% comment_dict[pd[:label].to_s.upcase ] = eval("@salpw[:" + pd[:field]+"]" )%>
+        <% comment_dict[pd[:label].to_s.upcase ] = eval("@ssbc[:" + pd[:field]+"]" )%>
       <%else%>
          <% if  valpd.nil? %>
        <% other_dict[pd[:label].to_s.upcase ] = 0 %>
         <% else %>
-        <% other_dict[pd[:label].to_s.upcase ] = eval("@salpw[:" + pd[:field]+"]" ) %>
+        <% other_dict[pd[:label].to_s.upcase ] = eval("@ssbc[:" + pd[:field]+"]" ) %>
          <% end %>
       <% end %>
   <% end %>
@@ -124,7 +124,7 @@
   <%="$" + @itemamt %>
   <% total = total +@itemamt.to_i %>
 <% else %>
-<%  @itemamt =  eval("@salpw[:" + pd[:field]+"]" )  %>
+<%  @itemamt =  eval("@ssbc[:" + pd[:field]+"]" )  %>
 <% if @filtercomments.include?  pd[:field] %>
     <%=@itemamt.to_s %>
   <%else %>
@@ -139,9 +139,9 @@
 
 
 <div class="show_item_title_total">
-<% c = CategoryDescription.where(model_name: "salpws").pluck(:cost_type).uniq %>
+<% c = CategoryDescription.where(model_name: "ssbcs").pluck(:cost_type).uniq %>
 <%  if c[0] == 'salaries' %>
-      <%="TOTAL SALARIES INCLUDING BENEFITS" %>
+    <%="TOTAL INCLUDING BENEFITS" %>
   <% else %>
    <%="TOTAL" %>
     <%end%>
@@ -149,7 +149,7 @@
 
 <div class="show_item_total">
 <%="$" + total.to_s %>
-<% Salpw.category_total(@category_id, total) %>
+<% Ssbc.category_total(@category_id, total) %>
 </div>
 
 <%comment_dict.each do |k, v| %>
@@ -162,8 +162,8 @@
 <% end %>
 
 <div class="end_link">
-<%= link_to 'Edit',  edit_salpw_path(@salpw[:id]) %> |
-<%= link_to 'Delete This Page', salpw_path, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Edit',  edit_ssbc_path(@ssbc[:id]) %> |
+<%= link_to 'Delete This Page', ssbc_path, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= eval(  @categories_path) %> |
 <%= link_to "Cost Category Home", home_path  %>
 </div>

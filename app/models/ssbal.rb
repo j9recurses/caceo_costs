@@ -5,7 +5,7 @@ accepts_nested_attributes_for :year_element
 has_one :election_year, :through => :year_elements
 validates :county, presence: true
 validates :election_year_id, presence: true
-validates   :ssballayout, :ssbaltransl, :ssbalpri, :ssbalprisb, :ssbalprisben, :ssbalprisbch, :ssbalprisbko, :ssbalprisbsp, :ssbalrpisbvi, :ssbalprisbja, :ssbalprisbta, :ssbalprisbkh, :ssbalprisbhi, :ssbalprisbth, :ssbalprisbfi, :ssbalprisbml, :ssbalpriob, :ssbalprioben, :ssbalpriobch, :ssbalpriobko, :ssbalpriobsp, :ssbalpriobvi, :ssbalpriobja, :ssbalpriobta, :ssbalpriobkh, :ssbalpriobhi, :ssbalpriobth, :ssbalpriobfi, :ssbalpriobml, :ssbalprivbm, :ssbalpriuo, :ssbalpriprot, :ssbalpriprou, :ssbalpriship, :ssbalprioth,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 30000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
+validates   :ssballayout, :ssbaltransl, :ssbalpri, :ssbalprisb, :ssbalprisben, :ssbalprisbch, :ssbalprisbko, :ssbalprisbsp, :ssbalrpisbvi, :ssbalprisbja, :ssbalprisbta, :ssbalprisbkh, :ssbalprisbhi, :ssbalprisbth, :ssbalprisbfi, :ssbalpriob, :ssbalprioben, :ssbalpriobch, :ssbalpriobko, :ssbalpriobsp, :ssbalpriobvi, :ssbalpriobja, :ssbalpriobta, :ssbalpriobkh, :ssbalpriobhi, :ssbalpriobth, :ssbalpriobfi, :ssbalprivbm, :ssbalpriuo, :ssbalpriprot, :ssbalpriprou, :ssbalpriship, :ssbalprioth,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 30000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
 
 
   def self.total_steps
@@ -47,11 +47,24 @@ def self.make_form_items(chunk)
       hunktofix = hunktofix.gsub("Sb90","SB90")
       hunktofix  = hunktofix.gsub("Vb Ms", "VBMs")
       hunktofix  = hunktofix.gsub("Icrp", "ICRP")
-      formline = "f.input :" + hunk[0] +", label: \'" + hunktofix + "\ <span class=\"info\"\>\<a href=\"#" +  hunk[0] + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
+     # formline = "f.input :" + hunk[0] +", label: \'" + hunktofix + "\ <span class=\"info\"\>\<a href=\"#" +  hunk[0] + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
+        formline = makeformline(hunk[0], hunktofix)
        chunkfields << formline
     end
      end
   return chunkfields
+end
+
+
+def self.makeformline(firsthunk, hunktofix)
+  if firsthunk == 'ssbalprisbml'
+    formline = "f.input :" + firsthunk +", collection: [ \"Spanish\", \"Chinese\",  \"Vietnamese\", \"English\", \"Korean\", \"Tagalog (Filipino)\", \"Hindi\" \"Khmer\", \"Thai\"],  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
+  elsif  firsthunk == 'ssbalpriobml'
+    formline = "f.input :" + firsthunk +", collection: [ 'Spanish', 'Chinese',  'Vietnamese', 'English', 'Korean', 'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ],  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
+  else
+    formline = "f.input :" + firsthunk +", label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
+  end
+   return formline
 end
 
   def self.make_modals(category_description)

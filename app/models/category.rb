@@ -17,10 +17,13 @@ class Category < ActiveRecord::Base
       else
         @category[:complete] = "<span style=\"color:red\">&#x2717</span>"
       end
-      cname = c[:name].sub("Salaries related to", '').titleize
-      cname = c[:name].sub(" services and supplies", '').titleize
+      #cname = c[:name].sub("Salaries related to", '').titleize
+      cname = c[:name].titleize
       cname = cname.gsub('Vbm', "VBM")
      cname = cname.gsub('Doj', "DOJ")
+     cname = cname.gsub("Salaries Related To ", '')
+     cname = cname.gsub("Salaries For", "")
+      cname = cname.gsub(" Services And Supplies", '')
       @category[:linkto] =   "link_to '" +  cname   +"'," + c[:model_name] + "_path(:election_year_id => " +  election_year_id.to_s  + ",:category_id => "  + c[:id].to_s + ")"
        if  c[:model_total].nil?
         @category[:model_total] = 0

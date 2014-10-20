@@ -1,15 +1,15 @@
-class Salbal < ActiveRecord::Base
+class Ssbc < ActiveRecord::Base
  include MultiStepModel
 has_one :year_element, :as =>:element, dependent: :destroy
 accepts_nested_attributes_for :year_element
 has_one :election_year, :through => :year_elements
 validates :county, presence: true
 validates :election_year_id, presence: true
-validates   :salbaldesign, :salbaltrans, :salbalorder, :salbalmail, :salbalother, :salbalpsrp, :salbalpsop, :salbaltsrp, :salbaltsop, :salbalbeps, :salbalbepsp, :salbalbets, :salbalbetsp, :salbalhrsps, :salbalhrsts,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 30000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
+validates   :ssbcprocvbh, :ssbcprocpbh, :ssbcprocs, :ssbcbcounth, :ssbcbcounts, :ssbccanvh, :ssbccanvs, :ssbcpcsec, :ssbccomment,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 30000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
 
 
   def self.total_steps
-   c = CategoryDescription.where(model_name: "salbals").pluck(:field, :label)
+   c = CategoryDescription.where(model_name: "ssbcs").pluck(:field, :label)
   cfchunks = c.in_groups_of(12)
   numb_of_steps = cfchunks.size
   end
@@ -47,23 +47,11 @@ def self.make_form_items(chunk)
       hunktofix = hunktofix.gsub("Sb90","SB90")
       hunktofix  = hunktofix.gsub("Vb Ms", "VBMs")
       hunktofix  = hunktofix.gsub("Icrp", "ICRP")
-     # formline = "f.input :" + hunk[0] +", label: \'" + hunktofix + "\ <span class=\"info\"\>\<a href=\"#" +  hunk[0] + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
-       formline = makeformline(hunk[0], hunktofix)
+      formline = "f.input :" + hunk[0] +", label: \'" + hunktofix + "\ <span class=\"info\"\>\<a href=\"#" +  hunk[0] + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
        chunkfields << formline
     end
      end
   return chunkfields
-end
-
-def self.makeformline(firsthunk, hunktofix)
-  if firsthunk == 'ssbalprisbml'
-    formline = "f.input :" + firsthunk +", collection: [ 'Spanish', 'Chinese',  'Vietnamese', 'English', 'Korean', 'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ],  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
-  elsif  firsthunk == 'ssbalpriobml'
-    formline = "f.input :" + firsthunk +", collection: [ 'Spanish', 'Chinese',  'Vietnamese', 'English', 'Korean', 'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ],  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
-  else
-    formline = "f.input :" + firsthunk +", label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
-  end
-   return formline
 end
 
   def self.make_modals(category_description)
@@ -91,7 +79,7 @@ end
 
 #update the category table to indicate that something was started or completed
 def self.category_status(category_id, model_stuff)
-  model_fields =  Salbal.column_names
+  model_fields =  Ssbc.column_names
   model_fields_size = model_fields.size
   model_fields_size = model_fields_size -1
   fields_complete = model_fields_size

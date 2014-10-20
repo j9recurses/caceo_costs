@@ -7,7 +7,7 @@ validates  :epicrp, :numericality => {  :allow_nil => true, :allow_blank => fals
 
   def self.total_steps
    c = ElectionProfileDescription.where(model_name: "election_profiles").pluck(:field, :label)
-  cfchunks = c.in_groups_of(12)
+  cfchunks = c.in_groups_of(16)
   numb_of_steps = cfchunks.size
   end
 
@@ -21,7 +21,7 @@ end
 
 def self.make_chunks(model_name)
   c = ElectionProfileDescription.where(model_name: model_name).pluck(:field, :label)
-  cfchunks = c.in_groups_of(12)
+  cfchunks = c.in_groups_of(16)
   numb_of_steps = cfchunks.size
   form_chunks = Array.new()
   cfchunks.each do | chunk |
@@ -45,6 +45,9 @@ def self.make_form_items(chunk)
       hunktofix  = hunktofix.gsub("Vb Ms", "VBMs")
       hunktofix  = hunktofix.gsub("Icrp", "ICRP")
        hunktofix  = hunktofix.gsub("Vra", "VRA")
+       hunktofix = hunktofix.gsub("Dr Es", "DREs")
+        hunktofix = hunktofix.gsub("Hava", "HAVA")
+        hunktofix = hunktofix.gsub("Ca Ec", "CA EC")
      # formline = "f.input :" + hunk[0] +", label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" +  hunk[0] + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
        formline = makeformline(hunk[0], hunktofix)
        chunkfields << formline
@@ -56,11 +59,11 @@ end
 def self.makeformline(firsthunk, hunktofix)
   if firsthunk == 'icrp'
     puts "*****awesome*****"
-     formline = "f.input :" + firsthunk +", step: 0.01, label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
+     formline = "f.input :" + firsthunk +",  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => {value: number_with_precision(f.object.icrp, precision: 2, delimiter: '.')    }"
   elsif  firsthunk == 'eplangcaec'
-    formline = "f.input :" + firsthunk +", collection:  [ 'Spanish', 'Chinese',  'Vietnamese', 'Japanese', 'Korean', 'Tagalog (Filipino)', 'Asian Indian (Hindi)', 'Other Asian - Not Specified (Gujarati, Bengali)', 'American Indian (Central & South American)',  'American Indian (Yuman)'], label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
-   elsif  firsthunk == 'eplangloc'
-    formline = "f.input :" + firsthunk +", collection:  [ 'Spanish', 'Chinese',  'Vietnamese', 'Japanese', 'Korean', 'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ], label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
+    formline = "f.input :" + firsthunk +", collection: [ 'Spanish', 'Chinese',  'Vietnamese', 'Japanese', 'Korean', 'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ],  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
+   elsif  firsthunk == 'eplangvra'
+    formline = "f.input :" + firsthunk +", collection: [ 'Spanish', 'Chinese',  'Vietnamese', 'Japanese', 'Korean', 'Tagalog (Filipino)', 'Asian Indian (Hindi)', 'Other Asian - Not Specified (Gujarati, Bengali)', 'American Indian (Central & South American)',  'American Indian (Yuman)'],  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
    else
     formline = "f.input :" + firsthunk +", label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
   end

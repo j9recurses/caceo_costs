@@ -1,4 +1,4 @@
-     <h2 class ="myh2show"><%= @category_name  + " Summary for the " + @election_year[:year].to_s %></h2>
+     <h2 class ="myh2show"><%= @category_name.gsub("Salaries Related To", "")  + " Salaries Summary for the " + @election_year[:year].to_s %></h2>
 
 <% total = 0 %>
 <% salaries_dict = Hash.new() %>
@@ -141,7 +141,7 @@
 <div class="show_item_title_total">
 <% c = CategoryDescription.where(model_name: "salmeds").pluck(:cost_type).uniq %>
 <%  if c[0] == 'salaries' %>
-    <%="TOTAL INCLUDING BENEFITS" %>
+  <%="TOTAL SALARIES INCLUDING BENEFITS" %>
   <% else %>
    <%="TOTAL" %>
     <%end%>

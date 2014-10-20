@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009101102) do
+ActiveRecord::Schema.define(version: 20141020063939) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.integer  "epmeasr"
     t.integer  "epmeasrfsc"
     t.integer  "epmeasrcd"
-    t.decimal  "epicrp",                   precision: 10, scale: 0
+    t.decimal  "epicrp",                   precision: 10, scale: 2
     t.boolean  "epicrpfed"
     t.boolean  "epicrpcounty"
     t.boolean  "epicrpown"
@@ -188,6 +188,7 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.string   "current_step"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "ssposaddsepm"
   end
 
   create_table "salbals", force: true do |t|
@@ -217,9 +218,6 @@ ActiveRecord::Schema.define(version: 20141009101102) do
   create_table "salbcs", force: true do |t|
     t.integer  "election_year_id"
     t.integer  "county"
-    t.integer  "salbcinh"
-    t.integer  "salbcamor"
-    t.integer  "salbcchca"
     t.integer  "salbcsec"
     t.integer  "sabcoth"
     t.integer  "salbcpsrp"
@@ -236,6 +234,17 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.string   "current_step"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "salbcnvbmp"
+    t.integer  "salbcvbm"
+    t.integer  "salbcprov"
+    t.integer  "salbcprocpb"
+    t.integer  "salbccanvdb"
+    t.integer  "salbccanvone"
+    t.integer  "salbccanvdre"
+    t.integer  "salbccanvpa"
+    t.integer  "salbccanvsa"
+    t.integer  "salbccanvva"
+    t.integer  "salbccanvoth"
   end
 
   create_table "salcans", force: true do |t|
@@ -301,6 +310,7 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.string   "current_step"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "salmedcampm"
   end
 
   create_table "saloths", force: true do |t|
@@ -326,6 +336,11 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.string   "current_step"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "salothvoedm"
+    t.integer  "salothvorepr"
+    t.integer  "salothrevm"
+    t.integer  "salothhotm"
+    t.integer  "salothdatam"
   end
 
   create_table "salpps", force: true do |t|
@@ -352,6 +367,7 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.string   "current_step"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "salppemattr"
   end
 
   create_table "salpws", force: true do |t|
@@ -376,6 +392,7 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.string   "current_step"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "salpwrecm"
   end
 
   create_table "salvbms", force: true do |t|
@@ -384,7 +401,6 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.integer  "salvbmoutr"
     t.integer  "salvbmappro"
     t.integer  "salvbmuoapp"
-    t.integer  "salvbmusps"
     t.integer  "salvbmproces"
     t.integer  "salvbmoth"
     t.integer  "salvbmpsrp"
@@ -428,7 +444,7 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.integer  "ssbalprisbhi"
     t.integer  "ssbalprisbth"
     t.integer  "ssbalprisbfi"
-    t.integer  "ssbalprisbml"
+    t.string   "ssbalprisbml"
     t.integer  "ssbalpriob"
     t.integer  "ssbalprioben"
     t.integer  "ssbalpriobch"
@@ -441,7 +457,7 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.integer  "ssbalpriobhi"
     t.integer  "ssbalpriobth"
     t.integer  "ssbalpriobfi"
-    t.integer  "ssbalpriobml"
+    t.string   "ssbalpriobml"
     t.integer  "ssbalprivbm"
     t.integer  "ssbalpriuo"
     t.integer  "ssbalpriprot"
@@ -452,7 +468,26 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.string   "current_step"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "ssbalprisbmc"
+    t.integer  "ssbalpriobmc"
   end
+
+  create_table "ssbcs", force: true do |t|
+    t.integer "ssbcprocvbh"
+    t.integer "ssbcprocpbh"
+    t.integer "ssbcprocs"
+    t.integer "ssbcbcounth"
+    t.integer "ssbcbcounts"
+    t.integer "ssbccanvh"
+    t.integer "ssbccanvs"
+    t.integer "ssbcpcsec"
+    t.text    "ssbccomment"
+    t.integer "election_year_id"
+    t.integer "county"
+    t.string  "current_step"
+  end
+
+  add_index "ssbcs", ["current_step"], name: "index_ssbcs_on_current_step", using: :btree
 
   create_table "sscans", force: true do |t|
     t.integer  "election_year_id"
@@ -472,14 +507,13 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.string   "current_step"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "ssmedcampm"
   end
 
   create_table "ssoths", force: true do |t|
     t.integer  "election_year_id"
     t.integer  "county"
     t.integer  "ssothoutrea"
-    t.integer  "ssothbcounth"
-    t.integer  "ssothbcsec"
     t.integer  "ssothwareh"
     t.integer  "ssothelcom"
     t.integer  "ssothphbank"
@@ -490,6 +524,11 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.string   "current_step"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "ssothoutream"
+    t.integer  "ssothrevm"
+    t.integer  "ssothhotm"
+    t.integer  "ssothdatam"
+    t.integer  "ssothothm"
   end
 
   create_table "sspps", force: true do |t|
@@ -506,6 +545,7 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.string   "current_step"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "ssppsupm"
   end
 
   create_table "sspws", force: true do |t|
@@ -519,6 +559,8 @@ ActiveRecord::Schema.define(version: 20141009101102) do
     t.string   "current_step"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sspwrecm"
+    t.integer  "sspwcompm"
   end
 
   create_table "ssvehs", force: true do |t|
