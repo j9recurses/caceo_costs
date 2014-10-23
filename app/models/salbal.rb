@@ -31,6 +31,7 @@ def self.make_chunks(model_name)
      chunkfields = self.make_form_items(chunk)
      form_chunks << chunkfields
   end
+  puts form_chunks
   return form_chunks
 end
 
@@ -47,24 +48,15 @@ def self.make_form_items(chunk)
       hunktofix = hunktofix.gsub("Sb90","SB90")
       hunktofix  = hunktofix.gsub("Vb Ms", "VBMs")
       hunktofix  = hunktofix.gsub("Icrp", "ICRP")
-     # formline = "f.input :" + hunk[0] +", label: \'" + hunktofix + "\ <span class=\"info\"\>\<a href=\"#" +  hunk[0] + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
-       formline = makeformline(hunk[0], hunktofix)
-       chunkfields << formline
+      formline = "f.input :" + hunk[0] +", label: \'" + hunktofix + "\ <span class=\"info\"\>\<a href=\"#" +  hunk[0] + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
+       #formline = makeformline(hunk[0], hunktofix)
+      chunkfields << formline
     end
      end
   return chunkfields
 end
 
-def self.makeformline(firsthunk, hunktofix)
-  if firsthunk == 'ssbalprisbml'
-    formline = "f.input :" + firsthunk +", collection: [ 'Spanish', 'Chinese',  'Vietnamese', 'English', 'Korean', 'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ],  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
-  elsif  firsthunk == 'ssbalpriobml'
-    formline = "f.input :" + firsthunk +", collection: [ 'Spanish', 'Chinese',  'Vietnamese', 'English', 'Korean', 'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ],  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
-  else
-    formline = "f.input :" + firsthunk +", label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
-  end
-   return formline
-end
+
 
   def self.make_modals(category_description)
   mymodals = Array.new()

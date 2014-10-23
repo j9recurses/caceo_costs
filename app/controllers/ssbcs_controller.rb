@@ -66,6 +66,9 @@ before_action :get_filtered, only:[:show]
 
      def get_filtered
       c = FilterCost.where(filtertype: "comment").pluck(:fieldlist)
+      c = c << 'ssbccomment'
+      puts "******"
+      puts c
       @filtercomments =  eval(c[0])
       p = FilterCost.where(filtertype: "percent").pluck(:fieldlist)
       @filterpercents = eval(p[0])

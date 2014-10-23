@@ -1,27 +1,73 @@
 
-<%# Conditionally set remote: true. Also, passing model name as data attribute %>
-<% modal ||= false %>
-<% remote = modal ? true : false %>
-<%= form_for(@tech_voting_machine, remote: remote, html: {role: :form, 'data-model' => 'tech_voting_machine'}) do |f| %>
 
+<%= simple_form_for(@tech_voting_machine ) do |f| %>
+  <%= f.error_notification %>
 
-  <%# Added Bootstrap classes, and help-block container for error messages %>
-  <div class="form-group">
-    <%= f.label :voting_equip_type, class: 'control-label' %><br>
-    <%= f.text_field :voting_equip_type, class: 'form-control' %>
-    <span class="help-block"></span>
+<div class="form-inputs">
+<table class="mymutl">
+<th class ="mymult">
+<th class ="mymult">Voting Equipment Type </th>
+<th class ="mymult">Date of Purchase</th>
+<th class ="mymult"> Make and Model of Equipment</th>
+<th class ="mymult">Purchase Price </th>
+<th class ="mymult"> Quantity </th>
+<th class ="mymult">Offsetting funds (HAVA, grants, Prop41, etc) </th>
+<tr class= "mymutl">
+<td class ="mymult_num"> 1. </td>
+<td class ="mymult">   <%= f.input :voting_equip_type, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+ <td class ="mymult">   <%= f.input :purchase_dt,  as: :string, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+  <td class ="mymult"><%= f.input :equip_make, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+ <td class ="mymult"> <%= f.input :purchase_price, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
+<td class ="mymult">  <%= f.input :quantity, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
+<td class ="mymult"><%= f.input   :offset_amount,:label=>false, :input_html => {:style=> 'width: 120px'} %></td>
+<% f.input :mynumber, :as => "hidden", :input_html => { :value => 1}%>
+</tr>
+<tr class= "mymutl">
+<td class ="mymult_num"> 2. </td>
+<td class ="mymult">   <%= f.input :voting_equip_type, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+ <td class ="mymult">   <%= f.input :purchase_dt,  as: :string, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+  <td class ="mymult"><%= f.input :equip_make, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+ <td class ="mymult"> <%= f.input :purchase_price, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
+<td class ="mymult">  <%= f.input :quantity, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
+<td class ="mymult"><%= f.input   :offset_amount,:label=>false, :input_html => {:style=> 'width: 120px'} %></td>
+<% f.input :mynumber, :as => "hidden", :input_html => { :value => 2}%>
+</tr>
+<tr class= "mymutl">
+<td class ="mymult_num"> 3. </td>
+<td class ="mymult">   <%= f.input :voting_equip_type, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+ <td class ="mymult">   <%= f.input :purchase_dt,  as: :string, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+  <td class ="mymult"><%= f.input :equip_make, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+ <td class ="mymult"> <%= f.input :purchase_price, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
+<td class ="mymult">  <%= f.input :quantity, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
+<td class ="mymult"><%= f.input   :offset_amount,:label=>false, :input_html => {:style=> 'width: 120px'} %></td>
+<% f.input :mynumber, :as => "hidden", :input_html => { :value => 3}%>
+</tr>
+<tr class= "mymutl">
+<td class ="mymult_num"> 4. </td>
+<td class ="mymult">   <%= f.input :voting_equip_type, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+ <td class ="mymult">   <%= f.input :purchase_dt,  as: :string, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+  <td class ="mymult"><%= f.input :equip_make, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+ <td class ="mymult"> <%= f.input :purchase_price, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
+<td class ="mymult">  <%= f.input :quantity, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
+<td class ="mymult"><%= f.input   :offset_amount,:label=>false, :input_html => {:style=> 'width: 120px'} %></td>
+<% f.input :mynumber, :as => "hidden", :input_html => { :value => 4}%>
+</tr>
+<tr class= "mymutl">
+<td class ="mymult_num"> 5. </td>
+<td class ="mymult">   <%= f.input :voting_equip_type, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+ <td class ="mymult">   <%= f.input :purchase_dt,  as: :string, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+  <td class ="mymult"><%= f.input :equip_make, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
+ <td class ="mymult"> <%= f.input :purchase_price, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
+<td class ="mymult">  <%= f.input :quantity, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
+<td class ="mymult"><%= f.input   :offset_amount,:label=>false, :input_html => {:style=> 'width: 120px'} %></td>
+<% f.input :mynumber, :as => "hidden", :input_html => { :value => 5}%>
+</tr>
+<table>
+
   </div>
 
-  <%# Added Bootstrap classes, and help-block container for error messages %>
-  <div class="form-group">
-    <%= f.label :equip_make, class: 'control-label' %><br>
-    <%= f.text_field :equip_make, class: 'form-control' %>
-    <span class="help-block"></span>
+  <div class="form-actions">
+    <%= f.submit "Submit"   %>
   </div>
-
-  <%# Added Bootstrap classes %>
-  <div class="actions">
-    <%= f.submit 'Submit', class: 'btn btn-default' %>
-  </div>
-
 <% end %>
+

@@ -34,4 +34,4 @@ electionyears.each do |y|
   end
 end
 
-
+FilterCost.where(filtertype: "comment").update_all(fieldlist: '["salbalcomment", "salppcomment", "salpwhcomment", "salvbmcomment", "salbccomment", "salcancomment", "salmedcomment", "saldojocomment", "salothcomment", "ssbalcomment", "ssposcomment", "sspwcomment", "ssppcomment", "ssvehcomment", "sscancomment", "ssmedcomment", "ssothcomment", "ssbccomment"]')

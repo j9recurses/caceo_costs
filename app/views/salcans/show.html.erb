@@ -149,10 +149,12 @@
 
 <div class="show_item_total">
 <%="$" + total.to_s %>
-<% Salcans.category_total(@category_id, total) %>
+<% Salcan.category_total(@category_id, total) %>
 </div>
 
 <%comment_dict.each do |k, v| %>
+<% puts k %>
+<% puts v %>
 <div class="show_item_title">
 <%= k.titleize %>
   </div>

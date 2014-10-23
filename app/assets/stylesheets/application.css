@@ -395,3 +395,37 @@ padding-top:20px;
   float:right;
   padding-left:100px;
 }
+
+table.mymult{
+  width:800px;
+}
+td.mymult{
+    border: 1px solid #DDDDDD;
+    font-size: 12px;
+    height:10px;
+      text-align: center;
+    padding-right:10px;
+     padding-left:10px;
+     padding-top:13px;
+}
+
+th.mymult{
+    border: 1px solid #DDDDDD;
+    font-size: 12px;
+    height:10px;
+      text-align: center;
+    padding-right:10px;
+     padding-left:10px;
+     padding-top:13px;
+}
+
+td.mymult_num{
+    border: 1px solid #DDDDDD;
+    font-size: 12px;
+    height:10px;
+      text-align: center;
+    padding-right:10px;
+     padding-left:10px;
+     padding-top:13px;
+     padding-bottom:8px;
+}

@@ -6,7 +6,7 @@ class TechVotingMachinesController < ApplicationController
   def index
     @tech_voting_machines = TechVotingMachine.all
   end
-
+#http://stackoverflow.com/questions/4641565/rails-3-submit-a-form-with-multiple-records
   # GET /tech_voting_machines/1
   # GET /tech_voting_machines/1.json
   def show
@@ -14,7 +14,7 @@ class TechVotingMachinesController < ApplicationController
 
   # GET /tech_voting_machines/new
   def new
-    @tech_voting_machine = TechVotingMachine.new(tech_voting_machine_params)
+    @tech_voting_machine = TechVotingMachine.new
     puts @tech_voting_machine.inspect
   end
 
@@ -30,12 +30,8 @@ class TechVotingMachinesController < ApplicationController
     respond_to do |format|
       if @tech_voting_machine.save
         format.html { redirect_to @tech_voting_machine, notice: 'Tech voting machine was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @tech_voting_machine }
-        format.js   { render action: 'show', status: :created, location: @tech_voting_machine }
-      else
+          else
         format.html { render action: 'new' }
-        format.json { render json: @tech_voting_machine.errors, status: :unprocessable_entity }
-        format.js   { render json: @person.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -46,11 +42,9 @@ class TechVotingMachinesController < ApplicationController
     respond_to do |format|
       if @tech_voting_machine.update(tech_voting_machine_params)
         format.html { redirect_to @tech_voting_machine, notice: 'Tech voting machine was successfully updated.' }
-        format.json { head :no_content }
-      else
+       else
         format.html { render action: 'edit' }
-        format.json { render json: @tech_voting_machine.errors, status: :unprocessable_entity }
-      end
+         end
     end
   end
 

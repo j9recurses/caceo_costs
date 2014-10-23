@@ -1,5 +1,7 @@
 CaceoCosts::Application.routes.draw do
 
+  resources :tests
+
   resources :tech_voting_machines
 
   root :to => "users#login"
