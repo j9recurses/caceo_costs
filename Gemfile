@@ -9,6 +9,10 @@ gem 'mysql2'
 
 #gem 'thin'
 
+group :development do
+  gem 'hirb'
+end
+
 gem 'phone_wrangler'
 
 gem 'therubyracer', platforms: :ruby

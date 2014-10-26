@@ -36,6 +36,7 @@ CaceoCosts::Application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.action_mailer.raise_delivery_errors = true
+  Hirb.enable
 
 
 config.action_mailer.smtp_settings = {
