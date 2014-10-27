@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020063939) do
+ActiveRecord::Schema.define(version: 20141027084423) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -444,7 +444,7 @@ ActiveRecord::Schema.define(version: 20141020063939) do
     t.integer  "ssbalprisbhi"
     t.integer  "ssbalprisbth"
     t.integer  "ssbalprisbfi"
-    t.string   "ssbalprisbml"
+    t.integer  "ssbalprisbml"
     t.integer  "ssbalpriob"
     t.integer  "ssbalprioben"
     t.integer  "ssbalpriobch"
@@ -457,11 +457,11 @@ ActiveRecord::Schema.define(version: 20141020063939) do
     t.integer  "ssbalpriobhi"
     t.integer  "ssbalpriobth"
     t.integer  "ssbalpriobfi"
-    t.string   "ssbalpriobml"
+    t.integer  "ssbalpriobml"
     t.integer  "ssbalprivbm"
     t.integer  "ssbalpriuo"
     t.integer  "ssbalpriprot"
-    t.integer  "ssbalpriprou"
+    t.decimal  "ssbalpriprou",     precision: 3, scale: 2
     t.integer  "ssbalpriship"
     t.integer  "ssbalprioth"
     t.text     "ssbalcomment"
