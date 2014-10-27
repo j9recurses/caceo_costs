@@ -5,8 +5,26 @@ accepts_nested_attributes_for :year_element
 has_one :election_year, :through => :year_elements
 validates :county, presence: true
 validates :election_year_id, presence: true
-validates   :ssballayout, :ssbaltransl, :ssbalpri, :ssbalprisb, :ssbalprisben, :ssbalprisbch, :ssbalprisbko, :ssbalprisbsp, :ssbalrpisbvi, :ssbalprisbja, :ssbalprisbta, :ssbalprisbkh, :ssbalprisbhi, :ssbalprisbth, :ssbalprisbfi, :ssbalpriob, :ssbalprioben, :ssbalpriobch, :ssbalpriobko, :ssbalpriobsp, :ssbalpriobvi, :ssbalpriobja, :ssbalpriobta, :ssbalpriobkh, :ssbalpriobhi, :ssbalpriobth, :ssbalpriobfi, :ssbalprivbm, :ssbalpriuo, :ssbalpriprot, :ssbalpriprou, :ssbalpriship, :ssbalprioth,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 30000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
+validates   :ssballayout, :ssbaltransl, :ssbalpri, :ssbalprisb, :ssbalprisben, :ssbalprisbch, :ssbalprisbko, :ssbalprisbsp, :ssbalrpisbvi, :ssbalprisbja, :ssbalprisbta, :ssbalprisbkh, :ssbalprisbhi, :ssbalprisbth, :ssbalprisbfi, :ssbalpriob, :ssbalprioben, :ssbalpriobch, :ssbalpriobko, :ssbalpriobsp, :ssbalpriobvi, :ssbalpriobja, :ssbalpriobta, :ssbalpriobkh, :ssbalpriobhi, :ssbalpriobth, :ssbalpriobfi, :ssbalprivbm, :ssbalpriuo, :ssbalpriprot, :ssbalpriship, :ssbalprioth,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 30000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
+validates :ssbalpriprou, numericality: { less_than: 10, greater_than_or_equal_to: 0.01, :allow_nil => true, :allow_blank => false,  message: 'Unit price expected to be between 9.99 and 0.01' }
 
+  LANGUAGES = ['English', 'Spanish', 'Chinese', 'Vietnamese', 'Korean', 'Tagalog (Filipino)' 'Khmer', 'Hindi', 'Thai']
+
+  def ssbalprisb_multi_lang=(languages)
+    self.ssbalprisbml = (languages & LANGUAGES).map { |l| 2**LANGUAGES.index(l) }.sum
+  end
+
+  def ssbalprisb_multi_lang
+    LANGUAGES.reject { |l| ((ssbalprisbml || 0) & 2**LANGUAGES.index(l)).zero? }
+  end
+
+  def ssbalpriob_multi_lang=(languages)
+    self.ssbalpriobml = (languages & LANGUAGES).map { |l| 2**LANGUAGES.index(l) }.sum
+  end
+
+  def ssbalpriob_multi_lang
+    LANGUAGES.reject { |l| ((ssbalpriobml || 0) & 2**LANGUAGES.index(l)).zero? }
+  end
 
   def self.total_steps
    c = CategoryDescription.where(model_name: "ssbals").pluck(:field, :label)
@@ -58,9 +76,9 @@ end
 
 def self.makeformline(firsthunk, hunktofix)
   if firsthunk == 'ssbalprisbml'
-    formline = "f.input :" + firsthunk +", collection: [ \"Spanish\", \"Chinese\",  \"Vietnamese\", \"English\", \"Korean\", \"Tagalog (Filipino)\", \"Hindi\" \"Khmer\", \"Thai\"],  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
+    formline = "f.input :ssbalprisb_multi_lang, collection: #{Ssbal::LANGUAGES}, as: :check_boxes,  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
   elsif  firsthunk == 'ssbalpriobml'
-    formline = "f.input :" + firsthunk +", collection: [ 'Spanish', 'Chinese',  'Vietnamese', 'English', 'Korean', 'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ],  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
+    formline = "f.input :ssbalpriob_multi_lang, collection: #{Ssbal::LANGUAGES}, as: :check_boxes,  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
   else
     formline = "f.input :" + firsthunk +", label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
   end
