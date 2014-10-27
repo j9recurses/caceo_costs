@@ -7,7 +7,7 @@ validates :county, presence: true
 validates :election_year_id, presence: true
 validates   :ssballayout, :ssbaltransl, :ssbalpri, :ssbalprisb, :ssbalprisben, :ssbalprisbch, :ssbalprisbko, :ssbalprisbsp, :ssbalrpisbvi, :ssbalprisbja, :ssbalprisbta, :ssbalprisbkh, :ssbalprisbhi, :ssbalprisbth, :ssbalprisbfi, :ssbalpriob, :ssbalprioben, :ssbalpriobch, :ssbalpriobko, :ssbalpriobsp, :ssbalpriobvi, :ssbalpriobja, :ssbalpriobta, :ssbalpriobkh, :ssbalpriobhi, :ssbalpriobth, :ssbalpriobfi, :ssbalprivbm, :ssbalpriuo, :ssbalpriprot, :ssbalpriprou, :ssbalpriship, :ssbalprioth,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 30000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
 
-  LANGUAGES = ['English', 'Spanish', 'Chinese', 'Vietnamese', 'Korean', 'Tagalog (Filipino)' 'Khmer', 'Hindi', 'Thai']
+  LANGUAGES = ['English', 'Spanish', 'Chinese', 'Vietnamese', 'Korean', 'Tagalog (Filipino)', 'Khmer', 'Hindi', 'Thai']
 
   def ssbalprisb_multi_lang=(languages)
     self.ssbalprisbml = (languages & LANGUAGES).map { |l| 2**LANGUAGES.index(l) }.sum
