@@ -2,7 +2,9 @@ CaceoCosts::Application.routes.draw do
 
   resources :tests
 
-  resources :tech_voting_machines
+  resources :tech_voting_machines do
+      get "delete"
+  end
 
   root :to => "users#login"
   get "signup", :to => "users#new" , as: "signup"

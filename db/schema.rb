@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020063939) do
+ActiveRecord::Schema.define(version: 20141028075543) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -586,6 +586,7 @@ ActiveRecord::Schema.define(version: 20141020063939) do
     t.integer  "offset_amount"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "county"
   end
 
   create_table "users", force: true do |t|
