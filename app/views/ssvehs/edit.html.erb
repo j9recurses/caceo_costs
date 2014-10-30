@@ -1,4 +1,4 @@
-     
+
 <% c = CategoryDescription.where(model_name: "ssvehs").pluck(:cost_type).uniq %>
 <%  if c[0] == 'salaries' %>
 <%header_item = " for the "  %>
@@ -23,4 +23,4 @@
 <%= eval(  @categories_path) %> |
 <%= link_to "Cost Category Home", home_path  %>
 </div>
-.
+

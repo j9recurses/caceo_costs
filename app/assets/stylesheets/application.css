@@ -435,7 +435,8 @@ td.mymult_num{
 
 .myh3 {
   padding-left: 100px;
-    font-size: 17px;
+    font-size: 20px;
+    padding-bottom:17px;
 }
 .myh3 a:hover {
     color: blue;
@@ -445,6 +446,7 @@ td.mymult_num{
 .myh4{
   padding-top:30px;
   padding-bottom:20px;
+  font-size:17px;
 }
 
 

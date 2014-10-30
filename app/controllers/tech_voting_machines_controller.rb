@@ -59,6 +59,6 @@ class TechVotingMachinesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tech_voting_machine_params
-      params.require(:tech_voting_machine).permit(:county, :voting_equip_type, :purchase_dt, :equip_make, :purchase_price, :quantity, :offset_funds_src, :offset_amount)
+      params.require(:tech_voting_machine).permit(:county, :purchase_price_services, :voting_equip_type, :purchase_dt, :equip_make, :purchase_price, :quantity, :offset_funds_src, :offset_amount)
     end
 end

@@ -127,6 +127,8 @@
 <%  @itemamt =  eval("@ssbal[:" + pd[:field]+"]" )  %>
 <% if @filtercomments.include?  pd[:field] %>
     <%=@itemamt.to_s %>
+<%elsif pd[:field] == 'ssbalpriprou' %>
+ <%="$" + @itemamt.to_s %>
   <%else %>
   <% total = total + @itemamt.to_i %>
   <%="$" + @itemamt.to_s %>
@@ -167,5 +169,3 @@
 <%= eval(  @categories_path) %> |
 <%= link_to "Cost Category Home", home_path  %>
 </div>
-
-.

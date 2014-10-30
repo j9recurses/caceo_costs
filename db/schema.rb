@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141030023157) do
+ActiveRecord::Schema.define(version: 20141030055908) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -466,7 +466,6 @@ ActiveRecord::Schema.define(version: 20141030023157) do
     t.integer  "ssbalprivbm"
     t.integer  "ssbalpriuo"
     t.integer  "ssbalpriprot"
-    t.integer  "ssbalpriprou"
     t.integer  "ssbalpriship"
     t.integer  "ssbalprioth"
     t.text     "ssbalcomment"
@@ -475,6 +474,7 @@ ActiveRecord::Schema.define(version: 20141030023157) do
     t.datetime "updated_at"
     t.integer  "ssbalprisbmc"
     t.integer  "ssbalpriobmc"
+    t.decimal  "ssbalpriprou",     precision: 3, scale: 2
   end
 
   create_table "ssbcs", force: true do |t|
