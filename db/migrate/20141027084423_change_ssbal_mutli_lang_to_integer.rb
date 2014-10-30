@@ -1,6 +1,8 @@
 class ChangeSsbalMutliLangToInteger < ActiveRecord::Migration
   def change
-    change_column :ssbals, :ssbalpriobml, :integer
-    change_column :ssbals, :ssbalprisbml, :integer
+    remove_column :ssbals, :ssbalpriobml
+    remove_column :ssbals, :ssbalprisbml
+    add_column :ssbals, :ssbalpriobml, :integer
+    add_column :ssbals, :ssbalprisbml, :integer
   end
 end

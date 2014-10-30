@@ -449,7 +449,6 @@ ActiveRecord::Schema.define(version: 20141030055908) do
     t.integer  "ssbalprisbhi"
     t.integer  "ssbalprisbth"
     t.integer  "ssbalprisbfi"
-    t.string   "ssbalprisbml"
     t.integer  "ssbalpriob"
     t.integer  "ssbalprioben"
     t.integer  "ssbalpriobch"
@@ -462,7 +461,6 @@ ActiveRecord::Schema.define(version: 20141030055908) do
     t.integer  "ssbalpriobhi"
     t.integer  "ssbalpriobth"
     t.integer  "ssbalpriobfi"
-    t.string   "ssbalpriobml"
     t.integer  "ssbalprivbm"
     t.integer  "ssbalpriuo"
     t.integer  "ssbalpriprot"
@@ -475,6 +473,8 @@ ActiveRecord::Schema.define(version: 20141030055908) do
     t.integer  "ssbalprisbmc"
     t.integer  "ssbalpriobmc"
     t.decimal  "ssbalpriprou",     precision: 3, scale: 2
+    t.integer  "ssbalpriobml"
+    t.integer  "ssbalprisbml"
   end
 
   create_table "ssbcs", force: true do |t|
