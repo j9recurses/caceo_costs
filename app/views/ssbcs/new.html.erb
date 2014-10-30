@@ -1,4 +1,4 @@
-     
+
 
 <% c = CategoryDescription.where(model_name: "ssbcs").pluck(:cost_type).uniq %>
 <%  if c[0] == 'salaries' %>
@@ -22,4 +22,4 @@
 <%= eval(  @categories_path) %> |
 <%= link_to "Cost Category Home", home_path  %>
 </div>
-.
+

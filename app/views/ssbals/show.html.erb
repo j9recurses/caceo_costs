@@ -115,6 +115,7 @@
 <%else%>
 
 <% @category_description.each do |pd| %>
+<<<<<<< HEAD
   <div class="show_item_title">
     <%= pd[:label ].to_s.upcase %>
   </div>
@@ -140,6 +141,29 @@
       <%="$" + @itemamt.to_s %>
     <%end %>
   <%end %>
+=======
+<div class="show_item_title">
+  <%= pd[:label ].to_s.upcase %>
+</div>
+ <% @itemamt = 0 %>
+
+<div class="show_item">
+<% if  pd[:field].nil? %>
+<%  @itemamt = "0" %>
+  <%="$" + @itemamt %>
+  <% total = total +@itemamt.to_i %>
+<% else %>
+<%  @itemamt =  eval("@ssbal[:" + pd[:field]+"]" )  %>
+<% if @filtercomments.include?  pd[:field] %>
+    <%=@itemamt.to_s %>
+<%elsif pd[:field] == 'ssbalpriprou' %>
+ <%="$" + @itemamt.to_s %>
+  <%else %>
+  <% total = total + @itemamt.to_i %>
+  <%="$" + @itemamt.to_s %>
+   <%end %>
+<%end %>
+>>>>>>> electionmachinesdone
 <%end%>
 
 
@@ -171,8 +195,16 @@
 <% end %>
 
 <div class="end_link">
+<<<<<<< HEAD
   <%= link_to 'Edit',  edit_ssbal_path(@ssbal[:id]) %> |
   <%= link_to 'Delete This Page', ssbal_path, method: :delete, data: { confirm: 'Are you sure?' } %> |
   <%= eval(  @categories_path) %> |
   <%= link_to "Cost Category Home", home_path  %>
 </div>
+=======
+<%= link_to 'Edit',  edit_ssbal_path(@ssbal[:id]) %> |
+<%= link_to 'Delete This Page', ssbal_path, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= eval(  @categories_path) %> |
+<%= link_to "Cost Category Home", home_path  %>
+</div>
+>>>>>>> electionmachinesdone

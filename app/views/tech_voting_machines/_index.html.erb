@@ -1,0 +1,19 @@
+<% @tech_voting_machines.each do |tech_voting_machine| %>
+  <tr>
+    <td><%= tech_voting_machine.voting_equip_type  %></td>
+    <td><%= tech_voting_machine.purchase_dt%></td>
+        <td><%= tech_voting_machine.equip_make%></td>
+        <td><%= tech_voting_machine.purchase_price%></td>
+        <%if tech_voting_machine.purchase_price_services %>
+        <% votingmachineservice = "Yes" %>
+        <%end%>
+           <td><%=votingmachineservice %></td>
+            <td><%= tech_voting_machine.quantity%></td>
+         <td><%= tech_voting_machine.offset_funds_src%></td>
+ <td><%= tech_voting_machine.offset_amount%></td>
+
+    <td><%= link_to "Edit", edit_tech_voting_machine_path(tech_voting_machine), remote: true, class: "btn" %></td>
+    <td><%= link_to "Delete", tech_voting_machine_delete_path(tech_voting_machine), remote: true, class: "btn btn-danger" %></td>
+  </tr>
+<% end %>
+

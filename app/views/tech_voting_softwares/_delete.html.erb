@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h3>Delete Tabulation and Other Equipment Purchase</h3>
+</div>
+<div class="modal-body">
+<ul class="errors"></ul>
+Are you sure you wish to delete <b><%= @tech_voting_software.software_item %></b>?
+</div>
+<div class="modal-footer">
+  <%= link_to "Yes, Delete This Item",  tech_voting_software_path(@tech_voting_software), method: :delete, remote: true, class: "btn btn-danger" %>
+  <%= link_to "No, Cancel This Action", "#", class: "btn", data: { dismiss: "modal" } %>
+</div>
+

@@ -1,73 +1,80 @@
 
+<%= form_for @tech_voting_machine, remote: true, html: { class: "form-horizontal", style: "display:inline;" } do |f| %>
+  <div class="modal-body">
+    <ul class="errors"></ul>
 
-<%= simple_form_for(@tech_voting_machine ) do |f| %>
-  <%= f.error_notification %>
+    <div class="control-group">
+      <%= f.label :voting_equip_type, 'Voting Equipment Type <span align="left"  style="font-size: 9px">(EX: DREs, scanners, marking or other devices)</span>'.html_safe,  class:"control-label" %>
+      <div class="controls">
+        <%= f.text_field :voting_equip_type %>
+      </div>
+    </div>
 
-<div class="form-inputs">
-<table class="mymutl">
-<th class ="mymult">
-<th class ="mymult">Voting Equipment Type </th>
-<th class ="mymult">Date of Purchase</th>
-<th class ="mymult"> Make and Model of Equipment</th>
-<th class ="mymult">Purchase Price </th>
-<th class ="mymult"> Quantity </th>
-<th class ="mymult">Offsetting funds (HAVA, grants, Prop41, etc) </th>
-<tr class= "mymutl">
-<td class ="mymult_num"> 1. </td>
-<td class ="mymult">   <%= f.input :voting_equip_type, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
- <td class ="mymult">   <%= f.input :purchase_dt,  as: :string, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
-  <td class ="mymult"><%= f.input :equip_make, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
- <td class ="mymult"> <%= f.input :purchase_price, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
-<td class ="mymult">  <%= f.input :quantity, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
-<td class ="mymult"><%= f.input   :offset_amount,:label=>false, :input_html => {:style=> 'width: 120px'} %></td>
-<% f.input :mynumber, :as => "hidden", :input_html => { :value => 1}%>
-</tr>
-<tr class= "mymutl">
-<td class ="mymult_num"> 2. </td>
-<td class ="mymult">   <%= f.input :voting_equip_type, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
- <td class ="mymult">   <%= f.input :purchase_dt,  as: :string, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
-  <td class ="mymult"><%= f.input :equip_make, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
- <td class ="mymult"> <%= f.input :purchase_price, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
-<td class ="mymult">  <%= f.input :quantity, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
-<td class ="mymult"><%= f.input   :offset_amount,:label=>false, :input_html => {:style=> 'width: 120px'} %></td>
-<% f.input :mynumber, :as => "hidden", :input_html => { :value => 2}%>
-</tr>
-<tr class= "mymutl">
-<td class ="mymult_num"> 3. </td>
-<td class ="mymult">   <%= f.input :voting_equip_type, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
- <td class ="mymult">   <%= f.input :purchase_dt,  as: :string, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
-  <td class ="mymult"><%= f.input :equip_make, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
- <td class ="mymult"> <%= f.input :purchase_price, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
-<td class ="mymult">  <%= f.input :quantity, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
-<td class ="mymult"><%= f.input   :offset_amount,:label=>false, :input_html => {:style=> 'width: 120px'} %></td>
-<% f.input :mynumber, :as => "hidden", :input_html => { :value => 3}%>
-</tr>
-<tr class= "mymutl">
-<td class ="mymult_num"> 4. </td>
-<td class ="mymult">   <%= f.input :voting_equip_type, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
- <td class ="mymult">   <%= f.input :purchase_dt,  as: :string, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
-  <td class ="mymult"><%= f.input :equip_make, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
- <td class ="mymult"> <%= f.input :purchase_price, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
-<td class ="mymult">  <%= f.input :quantity, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
-<td class ="mymult"><%= f.input   :offset_amount,:label=>false, :input_html => {:style=> 'width: 120px'} %></td>
-<% f.input :mynumber, :as => "hidden", :input_html => { :value => 4}%>
-</tr>
-<tr class= "mymutl">
-<td class ="mymult_num"> 5. </td>
-<td class ="mymult">   <%= f.input :voting_equip_type, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
- <td class ="mymult">   <%= f.input :purchase_dt,  as: :string, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
-  <td class ="mymult"><%= f.input :equip_make, :label=>false, :input_html => {:style=> 'width: 120px'}%></td>
- <td class ="mymult"> <%= f.input :purchase_price, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
-<td class ="mymult">  <%= f.input :quantity, :label=>false, :input_html => {:style=> 'width: 50px'} %></td>
-<td class ="mymult"><%= f.input   :offset_amount,:label=>false, :input_html => {:style=> 'width: 120px'} %></td>
-<% f.input :mynumber, :as => "hidden", :input_html => { :value => 5}%>
-</tr>
-<table>
+    <div class="control-group">
+      <%= f.label :purchase_dt, 'Purchase Date', class: "control-label" %>
+      <div class="controls">
+        <%= f.date_field :purchase_dt %>
+      </div>
+    </div>
+
+     <div class="control-group">
+      <%= f.label :equip_make, 'Make and Model',  class:"control-label" %>
+      <div class="controls">
+        <%= f.text_field :equip_make %>
+      </div>
+    </div>
+
+
+     <div class="control-group">
+      <%= f.label :purchase_price, 'Purchase Price',  class:"control-label" %>
+      <div class="controls">
+        <%= f.number_field :purchase_price %>
+      </div>
+    </div>
+
+
+
+     <div class="control-group">
+      <%= f.label :purchase_price_services, 'Purchase Price Includes Equipment and Some Services?',  class:"control-label" %>
+      <div class="controls">
+        <%= f.check_box :purchase_price_services%>
+      </div>
+    </div>
+
+     <div class="control-group">
+      <%= f.label :quantity, 'Quantity',  class:"control-label" %>
+      <div class="controls">
+        <%= f.number_field :quantity %>
+      </div>
+    </div>
+
+
+     <div class="control-group">
+      <%= f.label :offset_funds_src, 'Offsetting Funds Source <span align="left"  style="font-size: 9px">(HAVA, grants, Prop41, etc )</span>'.html_safe,  class:"control-label" %>
+      <div class="controls">
+        <%= f.text_field :offset_funds_src %>
+      </div>
+    </div>
+
+
+     <div class="control-group">
+      <%= f.label :offset_amount, 'Offsetting Funds Amount',  class:"control-label" %>
+      <div class="controls">
+        <%= f.number_field :offset_amount %>
+      </div>
+    </div>
+
+    <%=  f.hidden_field :county,  :value =>  @user[:county] %>
+
+
 
   </div>
-
-  <div class="form-actions">
-    <%= f.submit "Submit"   %>
+  <div class="modal-footer">
+    <%= f.submit  "Save", class: "btn" %>
+    <%= link_to "Cancel", "#", class: "btn", data: {dismiss: "modal"} %>
   </div>
 <% end %>
+
+
+
 
