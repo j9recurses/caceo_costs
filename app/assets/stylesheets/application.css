@@ -432,3 +432,35 @@ td.mymult_num{
     text-align: left;
     padding:10px;
 }
+
+.myh3 {
+  padding-left: 100px;
+    font-size: 17px;
+}
+.myh3 a:hover {
+    color: blue;
+    background-color:yellow;
+   text-decoration: none;
+}
+.myh4{
+  padding-top:30px;
+  padding-bottom:20px;
+}
+
+
+.end_link_tech{
+  padding-bottom:30px;
+  font-size:17px;
+}
+
+
+.end_link_tech a:hover {
+    color: blue;
+    background-color:yellow;
+   text-decoration: none;
+}
+.brand a:hover{
+    color: blue;
+    background-color:yellow;
+   text-decoration: none;
+}

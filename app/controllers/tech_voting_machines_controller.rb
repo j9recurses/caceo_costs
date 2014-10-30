@@ -29,8 +29,6 @@ class TechVotingMachinesController < ApplicationController
   # POST /tech_voting_machines
   # POST /tech_voting_machines.json
   def create
-    puts '*******'
-    puts tech_voting_machine_params.inspect
     @tech_voting_machines = TechVotingMachine.where(county: @user[:county])
     @tech_voting_machine = TechVotingMachine.create(tech_voting_machine_params)
   end

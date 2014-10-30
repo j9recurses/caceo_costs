@@ -1,0 +1,65 @@
+
+<%= form_for @tech_voting_software, remote: true, html: { class: "form-horizontal", style: "display:inline;" } do |f| %>
+  <div class="modal-body">
+    <ul class="errors"></ul>
+
+    <div class="control-group">
+      <%= f.label :software_item, 'Tabulation and other Equipment <span align="left"  style="font-size: 9px"> (EX: GIS/Mapping software) <span>'.html_safe,  class:"control-label" %>
+      <div class="controls">
+        <%= f.text_field :software_item %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :purchase_dt, 'Purchase Date', class: "control-label" %>
+      <div class="controls">
+        <%= f.date_field :purchase_dt %>
+      </div>
+    </div>
+
+     <div class="control-group">
+      <%= f.label :purchase_price_hardware, 'Hardware Purchase Price',  class:"control-label" %>
+      <div class="controls">
+        <%= f.number_field :purchase_price_hardware %>
+      </div>
+    </div>
+
+
+     <div class="control-group">
+      <%= f.label :purchase_price_software, 'Software Purchase Price',  class:"control-label" %>
+      <div class="controls">
+        <%= f.number_field :purchase_price_software %>
+      </div>
+    </div>
+
+
+     <div class="control-group">
+      <%= f.label :mat_charges, 'Ongoing Annual Maintenance Charges for Software',  class:"control-label" %>
+      <div class="controls">
+        <%= f.number_field :mat_charges %>
+      </div>
+    </div>
+
+
+     <div class="control-group">
+      <%= f.label :labor_costs, 'Average Annual Labor Costs <span align="left"  style="font-size: 9px"> (non redistricting years)</span>'.html_safe,  class:"control-label" %>
+      <div class="controls">
+        <%= f.number_field :labor_costs%>
+      </div>
+    </div>
+
+
+    <%=  f.hidden_field :county,  :value =>  @user[:county] %>
+
+
+
+  </div>
+  <div class="modal-footer">
+    <%= f.submit  "Save", class: "btn" %>
+    <%= link_to "Cancel", "#", class: "btn", data: {dismiss: "modal"} %>
+  </div>
+<% end %>
+
+
+
+

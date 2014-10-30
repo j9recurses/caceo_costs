@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028075543) do
+ActiveRecord::Schema.define(version: 20141030023157) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -146,6 +146,11 @@ ActiveRecord::Schema.define(version: 20141028075543) do
     t.string   "eplangloc"
     t.integer  "eptotcandca"
     t.integer  "eptotvolunth"
+  end
+
+  create_table "election_technologies", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "election_year_profiles", force: true do |t|
@@ -587,6 +592,19 @@ ActiveRecord::Schema.define(version: 20141028075543) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "county"
+    t.boolean  "purchase_price_services"
+  end
+
+  create_table "tech_voting_softwares", force: true do |t|
+    t.string   "software_item"
+    t.date     "purchase_dt"
+    t.integer  "purchase_price_hardware"
+    t.integer  "purchase_price_software"
+    t.integer  "mat_charges"
+    t.integer  "labor_costs"
+    t.integer  "county"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

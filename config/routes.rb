@@ -1,8 +1,13 @@
 CaceoCosts::Application.routes.draw do
 
-  resources :tests
+  resources :election_technologies
+
 
   resources :tech_voting_machines do
+      get "delete"
+  end
+
+  resources :tech_voting_softwares do
       get "delete"
   end
 

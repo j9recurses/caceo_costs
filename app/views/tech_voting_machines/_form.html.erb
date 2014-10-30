@@ -4,7 +4,7 @@
     <ul class="errors"></ul>
 
     <div class="control-group">
-      <%= f.label :voting_equip_type, 'Voting Equipment Type ',  class:"control-label" %>
+      <%= f.label :voting_equip_type, 'Voting Equipment Type <span align="left"  style="font-size: 9px">(EX: DREs, scanners, marking or other devices)</span>'.html_safe,  class:"control-label" %>
       <div class="controls">
         <%= f.text_field :voting_equip_type %>
       </div>
@@ -42,7 +42,7 @@
 
 
      <div class="control-group">
-      <%= f.label :offset_funds_src, 'Offsetting Funds Source',  class:"control-label" %>
+      <%= f.label :offset_funds_src, 'Offsetting Funds Source <span align="left"  style="font-size: 9px">(HAVA, grants, Prop41, etc )</span>'.html_safe,  class:"control-label" %>
       <div class="controls">
         <%= f.text_field :offset_funds_src %>
       </div>

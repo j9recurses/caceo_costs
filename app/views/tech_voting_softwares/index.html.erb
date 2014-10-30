@@ -1,21 +1,20 @@
-<h2 class ="myh2yr">Voting Equipment Purchases Since 2003 for <%= @county_name[0] %></h2>
+<h2 class ="myh2yr">Tabulation and Other Equipment Purchases Since 2003 for <%= @county_name[0] %></h2>
 
 
 <div class="container">
   <div class="well">
-    <%=link_to ' New Voting Equipment Item', new_tech_voting_machine_path, remote: true, class: "btn btn-i icon-arrow-right"%>
+    <%=link_to ' New Tabulation or Other Equipment Item', new_tech_voting_software_path, remote: true, class: "btn btn-i icon-arrow-right"%>
   </div>
   <div class="new-tech"></div>
 
   <table class="table table-bordered table-striped">
     <thead>
-      <th>Voting Equipment Type</th>
+      <th>Tabulation and Other Equipment Type</th>
         <th>Purchase Date</th>
-         <th> Make and Model</th>
-        <th> Purchase Price</th>
-            <th>Quantity</th>
-            <th>Offsetting Funds Source</th>
-            <th>Offsetting Funds Amount</th>
+         <th> Hardware Purchase Price</th>
+        <th> Software Purchase Price</th>
+            <th>Annual Maintenance Charges For Software</th>
+            <th>Average Annual Labor Costs</th>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
       </tr>
@@ -25,10 +24,10 @@
     </tbody>
   </table>
 </div>
-
 <div class="end_link_tech">
 <%= link_to "Election Technology Home", election_technologies_path  %>
 </div>
+
 
 <div id="tech-modal" class="modal fade">
 <div class="modal-dialog">
