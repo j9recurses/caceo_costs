@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20141030055908) do
     t.integer  "epmeasr"
     t.integer  "epmeasrfsc"
     t.integer  "epmeasrcd"
-    t.decimal  "epicrp",                   precision: 10, scale: 2
+    t.decimal  "epicrp",                   precision: 3, scale: 2
     t.boolean  "epicrpfed"
     t.boolean  "epicrpcounty"
     t.boolean  "epicrpown"
@@ -117,8 +117,8 @@ ActiveRecord::Schema.define(version: 20141030055908) do
     t.integer  "eptotsb90c"
     t.integer  "eptotsb90r"
     t.text     "epmandates"
-    t.boolean  "started",                                           default: false
-    t.boolean  "complete",                                          default: false
+    t.boolean  "started",                                          default: false
+    t.boolean  "complete",                                         default: false
     t.string   "current_step"
     t.integer  "county"
     t.integer  "election_year_profile_id"
@@ -406,6 +406,7 @@ ActiveRecord::Schema.define(version: 20141030055908) do
     t.integer  "salvbmoutr"
     t.integer  "salvbmappro"
     t.integer  "salvbmuoapp"
+    t.integer  "salvbmusps"
     t.integer  "salvbmproces"
     t.integer  "salvbmoth"
     t.integer  "salvbmpsrp"

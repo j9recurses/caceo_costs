@@ -5,9 +5,7 @@ accepts_nested_attributes_for :year_element
 has_one :election_year, :through => :year_elements
 validates :county, presence: true
 validates :election_year_id, presence: true
-validates   :ssballayout, :ssbaltransl, :ssbalpri, :ssbalprisb, :ssbalprisben, :ssbalprisbch, :ssbalprisbko, :ssbalprisbsp, :ssbalrpisbvi, :ssbalprisbja, :ssbalprisbta, :ssbalprisbkh, :ssbalprisbhi, :ssbalprisbth, :ssbalprisbfi, :ssbalpriob, :ssbalprioben, :ssbalpriobch, :ssbalpriobko, :ssbalpriobsp, :ssbalpriobvi, :ssbalpriobja, :ssbalpriobta, :ssbalpriobkh, :ssbalpriobhi, :ssbalpriobth, :ssbalpriobfi, :ssbalprivbm, :ssbalpriuo, :ssbalpriprot, :ssbalpriship, :ssbalprioth,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 30000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
-validates :ssbalpriprou, numericality: { less_than: 10, greater_than_or_equal_to: 0.01, :allow_nil => true, :allow_blank => false,  message: 'Unit price expected to be between 9.99 and 0.01' }
-
+validates  :salbaldesign, :salbaltrans, :salbalorder, :salbalmail, :salbalother, :salbalpsrp, :salbalpsop, :salbaltsrp, :salbaltsop, :salbalbeps, :salbalbepsp, :salbalbets, :salbalbetsp, :salbalhrsps, :salbalhrsts,   numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 30000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
   def self.total_steps
    c = CategoryDescription.where(model_name: "salbals").pluck(:field, :label)
   cfchunks = c.in_groups_of(12)
@@ -98,6 +96,7 @@ def self.category_status(category_id, model_stuff)
   if amt_complete < 0.75
     complete = false
   end
+  #Category.where(id: category_id).update_all(started: started, complete: complete )
   Category.update( category_id , started: started)
   Category.update( category_id , complete: complete)
 end

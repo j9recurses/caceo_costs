@@ -10,6 +10,8 @@ class ElectionYear < ActiveRecord::Base
   def self.get_all_years(user)
     total_election_year_costs = 0
     years = ElectionYear.all.order('election_dt DESC').pluck(:year_dt).uniq
+    total_categories = CategoryDescription.all.pluck(:name).uniq
+    total_categories = total_categories.size
     myyears = Array.new()
     years.each do |y|
        election_yr_overview = Hash.new()
@@ -22,7 +24,8 @@ class ElectionYear < ActiveRecord::Base
       else
         election_yr_overview[:started] ="<span style=\"color:red\">&#x2717</span>"
       end
-     if election_year_complete_yr.size > 0
+     puts election_year_complete_yr.size
+     if election_year_complete_yr.size == total_categories
         election_yr_overview[:done] = "<span style=\"color:blue\"> &#10004</span>"
       else
         election_yr_overview[:done] =  "<span style=\"color:red\">&#x2717</span>"
@@ -40,7 +43,7 @@ class ElectionYear < ActiveRecord::Base
       else
         single<<"<span style=\"color:red\">&#x2717</span>"
       end
-     if election_year_complete.size > 0
+     if election_year_complete.size == total_categories
          single<<"<span style=\"color:blue\"> &#10004</span>"
       else
          single<<   "<span style=\"color:red\">&#x2717</span>"

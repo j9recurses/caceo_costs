@@ -173,7 +173,7 @@ DEPENDENCIES
   nokogiri
   phone_wrangler
   phony_rails
-  rails (= 4.0.0)
+  rails
   sass-rails (~> 4.0.0)
   sdoc
   simple_form (= 3.0)

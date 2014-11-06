@@ -41,6 +41,8 @@ before_action :get_filtered, only:[:show]
 
   def update
      if @wizard.save
+      puts "***"
+      puts @category_id
       Salbal.category_status( @category_id, @salbal)
       redirect_to @salbal, notice: "The " + @category_name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Updated."
     else
