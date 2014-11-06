@@ -119,7 +119,13 @@
  <% @itemamt = 0 %>
 
 <div class="show_item">
-<% if  pd[:field].nil? %>
+  <% if pd[:field] == 'ssbalprisbml' || pd[:field] == 'ssbalpriobml' %>
+    <% if eval("@ssbal.#{ pd[:field].slice(0..-3) }_multi_lang").blank? %>
+      <div>None selected</div>
+    <% else %>
+      <%= eval("@ssbal.#{ pd[:field].slice(0..-3) }_multi_lang").join(', ') %>
+    <% end %>
+<% elsif  pd[:field].nil? %>
 <%  @itemamt = "0" %>
   <%="$" + @itemamt %>
   <% total = total +@itemamt.to_i %>

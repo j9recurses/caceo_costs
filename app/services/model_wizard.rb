@@ -26,9 +26,7 @@ class ModelWizard
   end
 
   def save
-    if @params[:back_button]
-      @object.step_back
-    elsif @object.current_step_valid?
+    if @object.current_step_valid?
       return process_save
     end
     false
@@ -45,7 +43,9 @@ private
   end
 
   def process_save
-    if @object.last_step?
+    if @params[:back_button]
+      @object.step_back
+    elsif @object.last_step?
       if @object.all_steps_valid?
         success = @object.save
         @session[@session_param] = nil

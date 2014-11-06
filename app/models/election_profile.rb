@@ -2,7 +2,7 @@ class ElectionProfile< ActiveRecord::Base
  include MultiStepModel
 validates :county, presence: true
 validates :election_year_profile_id, presence: true
-validates  :epppbalpap, :epppbalaccsd, :eprv, :eppploc,:epprecwpp,:epbaltype,:epbalsampvip,:epvipinsrt,:epbalofficl,:epvbmmail,:epvbmmailprm,:epvbmmailmbp,:epvbmmailuo,:epvbmotc,:epvbmret,:epvbmretprm,:epvbmretmbp,:epvbmretuo,:epvbmundel,:epvbmchal,:epvbmprovc,:epvbmprovnc,:epcand,:epcandfsc,:epcandcd,:epcandwi,:epcandwifsc,:epcandwicd,:epmeasr,:epmeasrfsc,:epmeasrcd,:eptotindirc,:eptotelectc,:eptotbilled,:eptotcounty,:eptotsb90c,:eptotsb90r, numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 30000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
+validates  :epppbalpap, :epppbalaccsd, :eprv, :eppploc,:epprecwpp,:epbaltype,:epbalsampvip,:epvipinsrt,:epbalofficl,:epvbmmail,:epvbmmailprm,:epvbmmailmbp,:epvbmmailuo,:epvbmotc,:epvbmret,:epvbmretprm,:epvbmretmbp,:epvbmretuo,:epvbmundel,:epvbmchal,:epvbmprovc,:epvbmprovnc,:epcand,:epcandfsc,:epcandcd,:epcandwi,:epcandwifsc,:epcandwicd,:epmeasr,:epmeasrfsc,:epmeasrcd,:eptotindirc,:eptotelectc,:eptotbilled,:eptotcounty,:eptotsb90c,:eptotsb90r, numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 100000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
 validates  :epicrp, :numericality => {  :allow_nil => true, :allow_blank => false}
 
   def self.total_steps
@@ -56,14 +56,41 @@ def self.make_form_items(chunk)
   return chunkfields
 end
 
+  def eplangcaec_multi_lang=(languages)
+    self.eplangcaec = (languages & Ssbal::LANGUAGES).map { |l| 2**Ssbal::LANGUAGES.index(l) }.sum
+  end
+
+  def eplangcaec_multi_lang
+    Ssbal::LANGUAGES.reject { |l| ((eplangcaec || 0) & 2**Ssbal::LANGUAGES.index(l)).zero? }
+  end
+
+  def eplangvra_multi_lang=(languages)
+    self.eplangvra = (languages & Ssbal::LANGUAGES).map { |l| 2**Ssbal::LANGUAGES.index(l) }.sum
+  end
+
+  def eplangvra_multi_lang
+    Ssbal::LANGUAGES.reject { |l| ((eplangvra || 0) & 2**Ssbal::LANGUAGES.index(l)).zero? }
+  end
+
+  def eplangloc_multi_lang=(languages)
+    self.eplangloc = (languages & Ssbal::LANGUAGES).map { |l| 2**Ssbal::LANGUAGES.index(l) }.sum
+  end
+
+  def eplangloc_multi_lang
+    Ssbal::LANGUAGES.reject { |l| ((eplangloc || 0) & 2**Ssbal::LANGUAGES.index(l)).zero? }
+  end
+
+
 def self.makeformline(firsthunk, hunktofix)
   if firsthunk == 'icrp'
     puts "*****awesome*****"
      formline = "f.input :" + firsthunk +",  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => {value: number_with_precision(f.object.icrp, precision: 2, delimiter: '.')    }"
-  elsif  firsthunk == 'eplangcaec'
-    formline = "f.input :" + firsthunk +", collection: [ 'Spanish', 'Chinese',  'Vietnamese', 'Japanese', 'Korean', 'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ],  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
-   elsif  firsthunk == 'eplangvra'
-    formline = "f.input :" + firsthunk +", collection: [ 'Spanish', 'Chinese',  'Vietnamese', 'Japanese', 'Korean', 'Tagalog (Filipino)', 'Asian Indian (Hindi)', 'Other Asian - Not Specified (Gujarati, Bengali)', 'American Indian (Central & South American)',  'American Indian (Yuman)'],  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
+  elsif firsthunk == 'eplangcaec'
+    formline = "f.input :eplangcaec_multi_lang, collection: #{Ssbal::LANGUAGES}, as: :check_boxes,  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
+  elsif firsthunk == 'eplangvra'
+    formline = "f.input :eplangvra_multi_lang, collection: #{Ssbal::LANGUAGES}, as: :check_boxes,  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
+  elsif firsthunk == 'eplangloc'
+    formline = "f.input :eplangloc_multi_lang, collection: #{Ssbal::LANGUAGES}, as: :check_boxes,  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
    else
     formline = "f.input :" + firsthunk +", label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
   end

@@ -11,6 +11,12 @@
       <%= "Yes" %>
 <%elsif  pd[:fieldtype] = 'boolean' and response == false%>
      <%= "No" %>
+<% elsif pd[:field] == 'eplangcaec' || pd[:field] == 'eplangvra' || pd[:field] == 'eplangloc' %>
+  <% if eval("@election_profile.#{ pd[:field] }_multi_lang").blank? %>
+    <div>None selected</div>
+  <% else %>
+    <%= eval("@election_profile.#{ pd[:field] }_multi_lang").join(', ') %>
+  <% end %>
 <%elsif  pd[:fieldtype] = 'string' %>
   <%response = response.to_s%>
    <%response.tr('-', '') %>
