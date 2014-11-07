@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141030055908) do
+ActiveRecord::Schema.define(version: 20141106222044) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -141,9 +141,9 @@ ActiveRecord::Schema.define(version: 20141030055908) do
     t.integer  "epprovunivs"
     t.integer  "epprovoutr"
     t.integer  "epcanvdrere"
-    t.string   "eplangvra"
-    t.string   "eplangcaec"
-    t.string   "eplangloc"
+    t.integer  "eplangvra"
+    t.integer  "eplangcaec"
+    t.integer  "eplangloc"
     t.integer  "eptotcandca"
     t.integer  "eptotvolunth"
   end
@@ -450,7 +450,7 @@ ActiveRecord::Schema.define(version: 20141030055908) do
     t.integer  "ssbalprisbhi"
     t.integer  "ssbalprisbth"
     t.integer  "ssbalprisbfi"
-    t.string   "ssbalprisbml"
+    t.integer  "ssbalprisbml"
     t.integer  "ssbalpriob"
     t.integer  "ssbalprioben"
     t.integer  "ssbalpriobch"
@@ -463,7 +463,7 @@ ActiveRecord::Schema.define(version: 20141030055908) do
     t.integer  "ssbalpriobhi"
     t.integer  "ssbalpriobth"
     t.integer  "ssbalpriobfi"
-    t.string   "ssbalpriobml"
+    t.integer  "ssbalpriobml"
     t.integer  "ssbalprivbm"
     t.integer  "ssbalpriuo"
     t.integer  "ssbalpriprot"
