@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141106222044) do
+ActiveRecord::Schema.define(version: 20141110205233) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(version: 20141106222044) do
     t.integer  "epcanvdrere"
     t.integer  "eplangvra"
     t.integer  "eplangcaec"
-    t.integer  "eplangloc"
+    t.text     "eplangloc"
     t.integer  "eptotcandca"
     t.integer  "eptotvolunth"
   end
