@@ -48,9 +48,6 @@ myhash.each do | k|
   CaCountyInfo.create(:name => name, :fips => fips, :url => url)
 end
 
-CaCountyInfo.create(name: "Test County")
-
-
 ####populate the election years
 ElectionYear.delete_all
 ElectionYear.create(id: 2, :year => 2004)
