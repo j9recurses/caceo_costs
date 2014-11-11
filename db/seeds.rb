@@ -48,6 +48,8 @@ myhash.each do | k|
   CaCountyInfo.create(:name => name, :fips => fips, :url => url)
 end
 
+CaCountyInfo.create(name: "Test County")
+
 
 ####populate the election years
 ElectionYear.delete_all
@@ -55,11 +57,9 @@ ElectionYear.create(:year => 2003)
 ElectionYear.create(:year => 2004)
 ElectionYear.create(:year => 2005)
 ElectionYear.create(:year => 2006)
-ElectionYear.create(:year => 2007)
 ElectionYear.create(:year => 2008)
 ElectionYear.create(:year => 2009)
 ElectionYear.create(:year => 2010)
-ElectionYear.create(:year => 2011)
 ElectionYear.create(:year => 2012)
 
 #load up the cost category table

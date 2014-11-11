@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    @counties = CaCountyInfo.find(:all)
+    @counties = CaCountyInfo.where.not(name: "Test County")
     @counties_array = {}.tap{ |h| @counties.each{ |c| h[c.name] = c.fips } }
   end
 
