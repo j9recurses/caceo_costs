@@ -11,7 +11,7 @@
       <%= "Yes" %>
 <%elsif  pd[:fieldtype] = 'boolean' and response == false%>
      <%= "No" %>
-<% elsif pd[:field] == 'eplangcaec' || pd[:field] == 'eplangvra' || pd[:field] == 'eplangloc' %>
+<% elsif pd[:field] == 'eplangcaec' || pd[:field] == 'eplangvra' %>
   <% if eval("@election_profile.#{ pd[:field] }_multi_lang").blank? %>
     <div>None selected</div>
   <% else %>
