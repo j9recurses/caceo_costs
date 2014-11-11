@@ -53,14 +53,13 @@ CaCountyInfo.create(name: "Test County")
 
 ####populate the election years
 ElectionYear.delete_all
-ElectionYear.create(:year => 2003)
-ElectionYear.create(:year => 2004)
-ElectionYear.create(:year => 2005)
-ElectionYear.create(:year => 2006)
-ElectionYear.create(:year => 2008)
-ElectionYear.create(:year => 2009)
-ElectionYear.create(:year => 2010)
-ElectionYear.create(:year => 2012)
+ElectionYear.create(id: 2, :year => 2004)
+ElectionYear.create(id: 3, :year => 2005)
+ElectionYear.create(id: 4, :year => 2006)
+ElectionYear.create(id: 6, :year => 2008)
+ElectionYear.create(id: 7, :year => 2009)
+ElectionYear.create(id: 8, :year => 2010)
+ElectionYear.create(id: 10, :year => 2012)
 
 #load up the cost category table
 ##cost category table....from file
@@ -114,7 +113,9 @@ end
 
 #add the years to the election profile table
 ElectionYearProfile.destroy_all
-electionprofilelist = [[ '2014 Primary Election' , '06-03-2014', 2014, 'Primary'],['2012 General Election', '11-06-2012', 2012, 'General'],
+electionprofilelist = [
+['2014 Primary Election' , '06-03-2014', 2014, 'Primary'],
+['2012 General Election', '11-06-2012', 2012, 'General'],
 ['2012 Presidential Primary Election', '06-05-2012', 2012 , 'Presidential Primary'],
 ['2010 General Election' , '11-02-2010', 2010, 'General' ],
 ['2010 Primary Election',  '06-08-2010', 2010, 'Primary'],
@@ -173,7 +174,6 @@ ElectionYearProfile.where( year: '2004 Primary Election').update_all( year: '200
 ElectionYearProfile.where( year: '2009 Statewide Special Election').update_all( election_dt: '2009-06-19')
 
 #update the election years
-ElectionYear.where(year: '2003').destroy_all
 ElectionYear.where( year: '2012').update_all(year: '2012 Presidential General Election', election_dt: '2012-11-06', edate_full: 'November 6, 2012', :year_dt => 2012 )
 ElectionYear.where( year: '2010').update_all( year: '2010 General Election',  edate_full: 'November 2, 2010', election_dt: '2010-11-02', :year_dt => 2010 )
 ElectionYear.where( year: '2009').update_all( election_dt: '05-19-2009', year: '2009 Statewide Special Election',   edate_full: 'May 19, 2009', election_dt: '2009-05-19', :year_dt => 2009 )
@@ -183,13 +183,13 @@ ElectionYear.where( year: '2005').update_all( year: '2005 Statewide Special Elec
 ElectionYear.where( year: '2004').update_all(year: '2004 Presidential General Election', edate_full: 'November 2, 2004', election_dt: '2004-11-02', :year_dt => 2004)
 
 #create the new elections that dont exist for the election year table
-ElectionYear.create(:year => '2014 Statewide Direct Primary Election', :election_type =>  'Primary',  :edate_full =>  'June 3, 2014', :election_dt => '2014-06-03', :year_dt => 2014)
-ElectionYear.create( :year => '2012 Presidential Primary Election',  :election_type =>  'Presidential Primary', :edate_full =>  'June 5, 2012', :election_dt => '2012-06-05',  :year_dt => 2012)
-ElectionYear.create( :year => '2010 Statewide Direct Primary Election',  :election_type =>  'Primary', :edate_full =>  'June 8, 2010',  :election_dt =>  '2010-06-08',  :year_dt => 2010)
-ElectionYear.create(:year =>  '2008 Statewide Direct Primary Election',  :election_type =>  'Primary',  :edate_full=> 'June 3, 2008', :election_dt =>  '2008-06-03',  :year_dt => 2008)
-ElectionYear.create(:year => '2008 Presidential Primary Election', :election_type =>  'Presidential Primary',  :edate_full => 'February 5, 2008', :election_dt => '2008-02-05',  :year_dt => 2008)
-ElectionYear.create(:year =>  '2006 Gubernatorial Primary Election',  :election_type =>  'Primary',  :edate_full => 'June 6, 2006', :election_dt => '2006-06-06',  :year_dt => 2006)
-ElectionYear.create(:year =>  '2004 Presidential Primary Election', election_type: 'Presidential Primary', :edate_full => 'March 2, 2004', :election_dt => '2004-03-02',  :year_dt => 2004)
+ElectionYear.create(id: 11, :year => '2014 Statewide Direct Primary Election', :election_type =>  'Primary',  :edate_full =>  'June 3, 2014', :election_dt => '2014-06-03', :year_dt => 2014)
+ElectionYear.create(id: 12, :year => '2012 Presidential Primary Election',  :election_type =>  'Presidential Primary', :edate_full =>  'June 5, 2012', :election_dt => '2012-06-05',  :year_dt => 2012)
+ElectionYear.create(id: 13, :year => '2010 Statewide Direct Primary Election',  :election_type =>  'Primary', :edate_full =>  'June 8, 2010',  :election_dt =>  '2010-06-08',  :year_dt => 2010)
+ElectionYear.create(id: 14, :year =>  '2008 Statewide Direct Primary Election',  :election_type =>  'Primary',  :edate_full=> 'June 3, 2008', :election_dt =>  '2008-06-03',  :year_dt => 2008)
+ElectionYear.create(id: 15, :year => '2008 Presidential Primary Election', :election_type =>  'Presidential Primary',  :edate_full => 'February 5, 2008', :election_dt => '2008-02-05',  :year_dt => 2008)
+ElectionYear.create(id: 16, :year =>  '2006 Gubernatorial Primary Election',  :election_type =>  'Primary',  :edate_full => 'June 6, 2006', :election_dt => '2006-06-06',  :year_dt => 2006)
+ElectionYear.create(id: 18, :year =>  '2004 Presidential Primary Election', election_type: 'Presidential Primary', :edate_full => 'March 2, 2004', :election_dt => '2004-03-02',  :year_dt => 2004)
 
 
 ######
