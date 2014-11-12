@@ -1,0 +1,70 @@
+id,cost_type,name,model_name,started,complete,model_total,county,election_year_id,created_at,updated_at
+9722,salaries,"Salaries related to sample, official, provisional and VBM ballots",salbals,true,true,774614,19,10,2014-08-18 23:21:06 UTC,2014-09-25 18:13:37 UTC
+9723,salaries,Salaries related to polling places (including early voting locations),salpps,true,true,2454738,19,10,2014-08-18 23:21:06 UTC,2014-09-25 18:42:06 UTC
+9724,salaries,Salaries related to poll workers (including early voting locations),salpws,true,true,1011469,19,10,2014-08-18 23:21:06 UTC,2014-09-25 18:50:54 UTC
+9725,salaries,Salaries related to VBM,salvbms,true,true,1282145,19,10,2014-08-18 23:21:06 UTC,2014-09-25 18:55:04 UTC
+9726,salaries,Salaries related to ballot counting,salbcs,true,true,2385911,19,10,2014-08-18 23:21:06 UTC,2014-09-25 19:04:04 UTC
+9727,salaries,Salaries related to candidates,salcans,true,true,43043,19,10,2014-08-18 23:21:06 UTC,2014-09-25 22:16:07 UTC
+9728,salaries,Salaries related to media,salmeds,true,true,2108,19,10,2014-08-18 23:21:06 UTC,2014-09-25 22:21:02 UTC
+9729,salaries,Salaries related to DOJ and other stakeholders,saldojos,true,true,0,19,10,2014-08-18 23:21:06 UTC,2014-09-25 22:24:27 UTC
+9730,salaries,Salaries for other election activities,saloths,true,true,1365660,19,10,2014-08-18 23:21:06 UTC,2014-09-25 22:28:33 UTC
+9731,services & supplies,Ballot printing services and supplies,ssbals,true,true,8289955,19,10,2014-08-18 23:21:06 UTC,2014-09-25 22:50:32 UTC
+9732,services & supplies,Postage services and supplies,postages,true,true,999542,19,10,2014-08-18 23:21:06 UTC,2014-09-25 22:51:39 UTC
+9733,services & supplies,Poll worker services and supplies,sspws,true,true,3309159,19,10,2014-08-18 23:21:06 UTC,2014-09-25 22:52:39 UTC
+9734,services & supplies,Polling place services and supplies,sspps,true,true,1027882,19,10,2014-08-18 23:21:06 UTC,2014-09-25 23:03:23 UTC
+9735,services & supplies,Vehicle services and supplies,ssvehs,true,true,406060,19,10,2014-08-18 23:21:06 UTC,2014-09-25 22:58:38 UTC
+9736,services & supplies,Candidate services and supplies,sscans,true,true,254016,19,10,2014-08-18 23:21:06 UTC,2014-09-25 22:59:05 UTC
+9737,services & supplies,Media services and supplies,ssmeds,true,true,594,19,10,2014-08-18 23:21:06 UTC,2014-09-25 23:04:15 UTC
+9738,services & supplies,Other services and supplies,ssoths,true,true,630872,19,10,2014-08-18 23:21:06 UTC,2014-09-25 23:05:28 UTC
+9920,salaries,"Salaries related to sample, official, provisional and VBM ballots",salbals,true,true,159085,30,10,2014-08-18 23:21:07 UTC,2014-10-21 21:11:39 UTC
+9921,salaries,Salaries related to polling places (including early voting locations),salpps,true,true,711932,30,10,2014-08-18 23:21:07 UTC,2014-10-21 22:37:12 UTC
+9922,salaries,Salaries related to poll workers (including early voting locations),salpws,true,true,536855,30,10,2014-08-18 23:21:07 UTC,2014-10-21 21:20:14 UTC
+9923,salaries,Salaries related to VBM,salvbms,true,true,312065,30,10,2014-08-18 23:21:07 UTC,2014-10-21 21:25:00 UTC
+9924,salaries,Salaries related to ballot counting,salbcs,true,true,296350,30,10,2014-08-18 23:21:07 UTC,2014-10-21 22:44:57 UTC
+9925,salaries,Salaries related to candidates,salcans,true,true,119819,30,10,2014-08-18 23:21:07 UTC,2014-10-21 22:29:44 UTC
+9926,salaries,Salaries related to media,salmeds,true,true,0,30,10,2014-08-18 23:21:07 UTC,2014-10-21 22:45:38 UTC
+9927,salaries,Salaries related to DOJ and other stakeholders,saldojos,true,true,0,30,10,2014-08-18 23:21:07 UTC,2014-10-21 22:46:03 UTC
+9928,salaries,Salaries for other election activities,saloths,true,true,435961,30,10,2014-08-18 23:21:07 UTC,2014-10-21 22:35:00 UTC
+9929,services & supplies,Ballot printing services and supplies,ssbals,true,true,2223938,30,10,2014-08-18 23:21:07 UTC,2014-10-21 23:49:46 UTC
+9930,services & supplies,Postage services and supplies,postages,true,true,399816,30,10,2014-08-18 23:21:07 UTC,2014-10-21 23:24:43 UTC
+9931,services & supplies,Poll worker services and supplies,sspws,true,true,877396,30,10,2014-08-18 23:21:07 UTC,2014-10-21 23:26:22 UTC
+9932,services & supplies,Polling place services and supplies,sspps,true,true,600813,30,10,2014-08-18 23:21:07 UTC,2014-10-21 23:29:15 UTC
+9933,services & supplies,Vehicle services and supplies,ssvehs,true,true,10510,30,10,2014-08-18 23:21:07 UTC,2014-10-21 23:30:46 UTC
+9934,services & supplies,Candidate services and supplies,sscans,true,true,6063,30,10,2014-08-18 23:21:07 UTC,2014-10-21 23:31:43 UTC
+9935,services & supplies,Media services and supplies,ssmeds,true,true,28037,30,10,2014-08-18 23:21:07 UTC,2014-10-21 23:32:59 UTC
+9936,services & supplies,Other services and supplies,ssoths,true,true,212475,30,10,2014-08-18 23:21:07 UTC,2014-10-21 23:36:17 UTC
+9992,salaries,"Salaries related to sample, official, provisional and VBM ballots",salbals,true,false,54978,34,10,2014-08-18 23:21:07 UTC,2014-09-22 15:52:56 UTC
+9993,salaries,Salaries related to polling places (including early voting locations),salpps,true,false,129886,34,10,2014-08-18 23:21:07 UTC,2014-09-22 15:54:59 UTC
+9994,salaries,Salaries related to poll workers (including early voting locations),salpws,true,false,114701,34,10,2014-08-18 23:21:07 UTC,2014-09-22 17:04:43 UTC
+9995,salaries,Salaries related to VBM,salvbms,true,false,121986,34,10,2014-08-18 23:21:07 UTC,2014-09-22 20:24:22 UTC
+9996,salaries,Salaries related to ballot counting,salbcs,true,false,60175,34,10,2014-08-18 23:21:07 UTC,2014-09-22 20:23:30 UTC
+9997,salaries,Salaries related to candidates,salcans,true,false,62519,34,10,2014-08-18 23:21:07 UTC,2014-09-22 20:57:50 UTC
+9998,salaries,Salaries related to media,salmeds,true,false,150,34,10,2014-08-18 23:21:07 UTC,2014-09-22 21:00:27 UTC
+9999,salaries,Salaries related to DOJ and other stakeholders,saldojos,true,false,0,34,10,2014-08-18 23:21:07 UTC,2014-09-22 21:08:10 UTC
+10000,salaries,Salaries for other election activities,saloths,true,false,88945,34,10,2014-08-18 23:21:07 UTC,2014-09-22 21:07:48 UTC
+10001,services & supplies,Ballot printing services and supplies,ssbals,true,false,950881,34,10,2014-08-18 23:21:07 UTC,2014-09-22 21:24:08 UTC
+10002,services & supplies,Postage services and supplies,postages,true,false,213604,34,10,2014-08-18 23:21:07 UTC,2014-09-19 20:51:36 UTC
+10003,services & supplies,Poll worker services and supplies,sspws,true,false,362671,34,10,2014-08-18 23:21:07 UTC,2014-09-22 22:08:52 UTC
+10004,services & supplies,Polling place services and supplies,sspps,true,false,50299,34,10,2014-08-18 23:21:07 UTC,2014-09-22 22:09:26 UTC
+10005,services & supplies,Vehicle services and supplies,ssvehs,true,true,5937,34,10,2014-08-18 23:21:07 UTC,2014-09-22 21:25:31 UTC
+10006,services & supplies,Candidate services and supplies,sscans,true,true,0,34,10,2014-08-18 23:21:07 UTC,2014-09-22 22:20:17 UTC
+10007,services & supplies,Media services and supplies,ssmeds,true,true,0,34,10,2014-08-18 23:21:07 UTC,2014-09-22 22:20:27 UTC
+10008,services & supplies,Other services and supplies,ssoths,true,false,4527,34,10,2014-08-18 23:21:07 UTC,2014-09-19 20:53:56 UTC
+10136,salaries,"Salaries related to sample, official, provisional and VBM ballots",salbals,true,true,292020,42,10,2014-08-18 23:21:07 UTC,2014-09-24 20:25:16 UTC
+10145,services & supplies,Ballot printing services and supplies,ssbals,true,false,410057,42,10,2014-08-18 23:21:07 UTC,2014-09-24 20:58:14 UTC
+10190,salaries,"Salaries related to sample, official, provisional and VBM ballots",salbals,true,false,17378,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:04:52 UTC
+10191,salaries,Salaries related to polling places (including early voting locations),salpps,true,false,32846,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:06:24 UTC
+10192,salaries,Salaries related to poll workers (including early voting locations),salpws,true,false,27667,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:08:04 UTC
+10193,salaries,Salaries related to VBM,salvbms,true,false,29415,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:09:11 UTC
+10194,salaries,Salaries related to ballot counting,salbcs,true,false,25676,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:10:45 UTC
+10195,salaries,Salaries related to candidates,salcans,true,false,22430,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:11:33 UTC
+10198,salaries,Salaries for other election activities,saloths,true,false,1237,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:12:42 UTC
+10199,services & supplies,Ballot printing services and supplies,ssbals,true,false,171772,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:13:42 UTC
+10200,services & supplies,Postage services and supplies,postages,true,false,13976,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:14:05 UTC
+10201,services & supplies,Poll worker services and supplies,sspws,true,false,49927,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:14:33 UTC
+10202,services & supplies,Polling place services and supplies,sspps,true,false,32726,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:15:00 UTC
+10203,services & supplies,Vehicle services and supplies,ssvehs,true,false,815,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:15:11 UTC
+10206,services & supplies,Other services and supplies,ssoths,true,false,60899,45,10,2014-08-18 23:21:07 UTC,2014-09-24 17:16:18 UTC
+10388,salaries,"Salaries related to sample, official, provisional and VBM ballots",salbals,true,false,0,56,10,2014-08-18 23:21:08 UTC,2014-10-01 23:40:59 UTC
+10397,services & supplies,Ballot printing services and supplies,ssbals,true,false,848051,56,10,2014-08-18 23:21:08 UTC,2014-10-08 16:14:13 UTC
+19170,services & supplies,Ballot counting services and supplies,ssbcs,true,true,20343,30,10,2014-10-20 08:05:07 UTC,2014-10-22 00:04:34 UTC
