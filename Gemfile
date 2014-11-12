@@ -8,7 +8,7 @@ gem 'rails'
 gem 'mysql2'
 
 #gem 'thin'
-
+gem 'hirb'
 gem 'phone_wrangler'
 
 gem 'therubyracer', platforms: :ruby
