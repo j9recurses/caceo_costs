@@ -1,7 +1,9 @@
 class SalbalsController < ApplicationController
+  include Surveyable
+
 before_action :authenticate_user
 before_action :get_user, :get_year,  :get_model_name, :get_category_path
-before_action :get_category_description, :make_chunks,  except: [:destroy]
+before_action :get_category_description, :make_chunks, except: [:destroy]
 before_action :load_product, :set_salbal, only: [:show, :update, :edit, :destroy]
 before_action :load_wizard, only: [:new, :edit, :create, :update]
 before_action :get_filtered, only:[:show]
@@ -25,6 +27,7 @@ before_action :get_filtered, only:[:show]
   end
 
   def edit
+    render file: "#{ Rails.root.join('app/views/surveys/edit') }"
   end
 
   def create
@@ -46,7 +49,7 @@ before_action :get_filtered, only:[:show]
       Salbal.category_status( @category_id, @salbal)
       redirect_to @salbal, notice: "The " + @category_name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Updated."
     else
-      render action: 'edit'
+      render file: "#{ Rails.root.join('app/views/surveys/edit') }"
     end
   end
 
@@ -59,6 +62,7 @@ before_action :get_filtered, only:[:show]
 
   private
     def set_salbal
+      puts "params: #{params}"
       @salbal = Salbal.find(params[:id])
     end
 
@@ -100,7 +104,7 @@ before_action :get_filtered, only:[:show]
     @category_description = CategoryDescription.where(model_name: @model_name)
      @category_name = CategoryDescription.where(model_name: @model_name).pluck(:name).first.titleize
      @modal_stuff  = Salbal.make_modals(@category_description)
-  end
+    end
 
   def make_chunks
     @form_chunks = Salbal.make_chunks(@model_name)

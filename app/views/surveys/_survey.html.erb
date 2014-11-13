@@ -1,0 +1,35 @@
+<!-- object: survey_model, locals: survey_pages, survey_annotations, election_year, survey_name -->
+<% if survey.errors.any? %>
+  <div id="error_explanation">
+    <ul>
+      <% survey.errors.each do |field, msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= render partial: 'surveys/hint_annotation', collection: survey_annotations %>
+
+<%= simple_form_for survey do |f| %>
+  <%= f.input :election_year_id ,  as: :hidden, :input_html => { :value => session[:election_year]} %>
+  <%= f.input :county ,  as: :hidden, :input_html => { :value => session[:county]} %>
+
+  <% if params[:all] %>
+    <%= hidden_field_tag :all, 1 %>
+    <%= render partial: "surveys/survey_question", collection: survey_pages.flatten.compact, locals: { f: f } %>
+    <%= f.submit %>
+  <% else %>
+    <%= f.hidden_field :current_step, value: survey.current_step %>
+    <%= render partial: "surveys/survey_question", collection: survey_pages[ survey.current_step ], locals: {f: f} %>
+    <div class="form-actions">
+      <%= f.submit "Back", name: "back_button" unless survey.first_step? %>
+      <%= f.submit  "Save and Exit", name: "save_and_exit" unless survey.last_step? %>
+      <% if survey.last_step? %>
+        <%= f.submit "Submit #{ survey_name } Costs for #{ election_year.year }" %>
+      <% else %>
+        <%= f.submit "Next" %>
+      <%end %>
+    </div>
+  <% end %>
+<% end %>

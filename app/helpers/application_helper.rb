@@ -18,5 +18,9 @@ module ApplicationHelper
     content_for(:head, raw(s))
 end
 
+  def survey_label(label_text)
+    label_text
+  end
+
 end
 
