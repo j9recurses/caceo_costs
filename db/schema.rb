@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141114061647) do
+ActiveRecord::Schema.define(version: 20141114213938) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20141114061647) do
     t.integer  "epmeasr"
     t.integer  "epmeasrfsc"
     t.integer  "epmeasrcd"
-    t.decimal  "epicrp",                   precision: 4, scale: 2
+    t.decimal  "epicrp",                   precision: 6, scale: 2
     t.boolean  "epicrpfed"
     t.boolean  "epicrpcounty"
     t.boolean  "epicrpown"
