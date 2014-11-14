@@ -3,7 +3,7 @@ class ElectionProfile< ActiveRecord::Base
 validates :county, presence: true
 validates :election_year_profile_id, presence: true
 validates  :epppbalpap, :epppbalaccsd, :eprv, :eppploc,:epprecwpp,:epbaltype,:epbalsampvip,:epvipinsrt,:epbalofficl,:epvbmmail,:epvbmmailprm,:epvbmmailmbp,:epvbmmailuo,:epvbmotc,:epvbmret,:epvbmretprm,:epvbmretmbp,:epvbmretuo,:epvbmundel,:epvbmchal,:epvbmprovc,:epvbmprovnc,:epcand,:epcandfsc,:epcandcd,:epcandwi,:epcandwifsc,:epcandwicd,:epmeasr,:epmeasrfsc,:epmeasrcd,:eptotindirc,:eptotelectc,:eptotbilled,:eptotcounty,:eptotsb90c,:eptotsb90r, numericality:{only_integer: true, :greater_than_or_equal_to => 0, :less_than_or_equal_to  => 100000000,  :allow_nil => true, :allow_blank => false,  message: " Entry is not valid. Please check your entry"  }
-validates  :epicrp, numericality: { less_than: 100, greater_than_or_equal_to: 0.01, :allow_nil => true, :allow_blank => false,  message: 'Indirect cost rate is expected to be between 99.99 and 0.01' }
+validates  :epicrp, numericality: { less_than_or_equal_to: 99.99, greater_than_or_equal_to: 0.01, :allow_nil => true, :allow_blank => false,  message: 'Indirect cost rate is expected to be between 99.99 and 0.01' }
 
 VRA_LANGUAGES = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
                   'Tagalog (Filipino)', 'Asian Indian (Hindi)', 
