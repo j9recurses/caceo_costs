@@ -1,4 +1,3 @@
-
 <% c = CategoryDescription.where(model_name: "salbals").pluck(:cost_type).uniq %>
 <%  if c[0] == 'salaries' %>
 <%header_item = " for the "  %>
@@ -6,17 +5,11 @@
 <%header_item = " Costs for the "  %>
 <%end%>
 
-
 <h2 class ="myh2yr"><%= "Edit " + @category_name  + header_item  + @election_year[:year].to_s %>
 &rarr;  Step <%= @salbal.current_step + 1 %> of <%= @salbal.total_steps %></h2>
 
-
-
-
 <%= render 'form' %>
 <%= render 'modal_info' %>
-
-
 
 <div class="end_link">
 <%= link_to "Back ", salbal_path(@salbal[:id]) %>|
