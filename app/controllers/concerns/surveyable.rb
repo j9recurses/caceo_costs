@@ -9,10 +9,13 @@ module Surveyable
     @model_name ||= get_model_name
   end
 
+  # Start here!
   def make_survey_model
-    obj = memo_model_name.singularize
-    eval "set_#{ obj }"
-    @survey_model ||= eval "@#{ obj }"
+    @wizard || load_wizard
+    @survey_model = @wizard.object
+    # obj = memo_model_name.singularize
+    # eval "set_#{ obj }"
+    # @survey_model ||= eval "@#{ obj }"
   end
 
   # to not interfere with #get_category_descriptions defined on all controllers

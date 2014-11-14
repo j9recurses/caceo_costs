@@ -21,7 +21,7 @@
     <%= f.submit %>
   <% else %>
     <%= f.hidden_field :current_step, value: survey.current_step %>
-    <%= render partial: "surveys/survey_question", collection: survey_pages[ survey.current_step ], locals: {f: f} %>
+    <%= render partial: "surveys/survey_question", collection: survey_pages[ survey.current_step ].compact, locals: {f: f} %>
     <div class="form-actions">
       <%= f.submit "Back", name: "back_button" unless survey.first_step? %>
       <%= f.submit  "Save and Exit", name: "save_and_exit" unless survey.last_step? %>
