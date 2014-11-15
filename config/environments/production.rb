@@ -33,6 +33,7 @@ config.action_mailer.smtp_settings = {
   password: "caceoadmin",
      :openssl_verify_mode  => 'none'
 }
+  config.action_mailer.default_url_options = { host: 'caceoelectioncosts.org' }
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier

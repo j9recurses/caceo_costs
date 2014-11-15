@@ -1,5 +1,6 @@
 CaceoCosts::Application.routes.draw do
 
+  resources :password_resets
   resources :election_technologies
 
 

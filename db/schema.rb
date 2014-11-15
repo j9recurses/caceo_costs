@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141114213938) do
+ActiveRecord::Schema.define(version: 20141114232134) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -617,10 +617,12 @@ ActiveRecord::Schema.define(version: 20141114213938) do
     t.string   "security_answer"
     t.string   "security_question"
     t.string   "access_code"
-    t.boolean  "reset_password",     default: false
+    t.boolean  "reset_password",         default: false
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   create_table "year_elements", force: true do |t|
