@@ -119,11 +119,12 @@
  <% @itemamt = 0 %>
 
 <div class="show_item">
-  <% if pd[:field] == 'ssbalprisbml' || pd[:field] == 'ssbalpriobml' %>
-    <% if eval("@ssbal.#{ pd[:field].slice(0..-3) }_multi_lang").blank? %>
-      <div>None selected</div>
+  <% match = /ssbalpri(\w)b(\d)ml/.match pd[:field] %>
+  <% if match %>
+    <% if eval("@ssbal.ssbalpri#{ match[1] }b#{ match[2] }_multi_lang").blank? %>
+      <div>No languages selected</div>
     <% else %>
-      <%= eval("@ssbal.#{ pd[:field].slice(0..-3) }_multi_lang").join(', ') %>
+      <%= eval("@ssbal.ssbalpri#{ match[1] }b#{ match[2] }_multi_lang").join(', ') %>
     <% end %>
 <% elsif  pd[:field].nil? %>
 <%  @itemamt = "0" %>

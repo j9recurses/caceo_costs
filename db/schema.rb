@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141114232134) do
+ActiveRecord::Schema.define(version: 20141117033550) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -450,7 +450,6 @@ ActiveRecord::Schema.define(version: 20141114232134) do
     t.integer  "ssbalprisbhi"
     t.integer  "ssbalprisbth"
     t.integer  "ssbalprisbfi"
-    t.integer  "ssbalprisbml"
     t.integer  "ssbalpriob"
     t.integer  "ssbalprioben"
     t.integer  "ssbalpriobch"
@@ -463,7 +462,6 @@ ActiveRecord::Schema.define(version: 20141114232134) do
     t.integer  "ssbalpriobhi"
     t.integer  "ssbalpriobth"
     t.integer  "ssbalpriobfi"
-    t.integer  "ssbalpriobml"
     t.integer  "ssbalprivbm"
     t.integer  "ssbalpriuo"
     t.integer  "ssbalpriprot"
@@ -476,6 +474,18 @@ ActiveRecord::Schema.define(version: 20141114232134) do
     t.integer  "ssbalprisbmc"
     t.integer  "ssbalpriobmc"
     t.decimal  "ssbalpriprou",     precision: 3, scale: 2
+    t.integer  "ssbalprisb1ml"
+    t.integer  "ssbalprisb2ml"
+    t.integer  "ssbalprisb3ml"
+    t.integer  "ssbalprisb1mc"
+    t.integer  "ssbalprisb2mc"
+    t.integer  "ssbalprisb3mc"
+    t.integer  "ssbalpriob1ml"
+    t.integer  "ssbalpriob2ml"
+    t.integer  "ssbalpriob3ml"
+    t.integer  "ssbalpriob1mc"
+    t.integer  "ssbalpriob2mc"
+    t.integer  "ssbalpriob3mc"
   end
 
   create_table "ssbcs", force: true do |t|

@@ -10,20 +10,29 @@ validates :ssbalpriprou, numericality: { less_than_or_equal_to: 9.99, greater_th
 
   LANGUAGES = ['English', 'Spanish', 'Tagalog', 'Chinese', 'Vietnamese', 'Korean', 'Japanese', 'Hindi', 'Khmer', 'Thai']
 
-  def ssbalprisb_multi_lang=(languages)
-    self.ssbalprisbml = (languages & LANGUAGES).map { |l| 2**LANGUAGES.index(l) }.sum
+  def method_missing(name, *args)
+    mname = name.id2name
+    match = /ssbalpri(\w)b(\d)ml/.match mname
+
+    if match
+
+    else
+      super
+    end
   end
 
-  def ssbalprisb_multi_lang
-    LANGUAGES.reject { |l| ((ssbalprisbml || 0) & 2**LANGUAGES.index(l)).zero? }
-  end
+  ML_COLUMNS = Ssbal.column_names.find_all { |n| /ssbalpri(\w)b(\d)ml/.match n }
+  ML_COLUMNS.each do |ml_col|
+    ml_setter_method_name = ml_col.gsub('ml', '_multi_lang=')
+    ml_getter_method_name = ml_col.gsub('ml', '_multi_lang')
 
-  def ssbalpriob_multi_lang=(languages)
-    self.ssbalpriobml = (languages & LANGUAGES).map { |l| 2**LANGUAGES.index(l) }.sum
-  end
+    define_method( ml_setter_method_name ) do | languages |
+      self.send "#{ml_col}=", ( (languages & LANGUAGES).map { |l| 2**LANGUAGES.index(l) }.sum )
+    end
 
-  def ssbalpriob_multi_lang
-    LANGUAGES.reject { |l| ((ssbalpriobml || 0) & 2**LANGUAGES.index(l)).zero? }
+    define_method( ml_getter_method_name ) do
+      LANGUAGES.reject { |l| ( ( self.send( ml_col ) || 0) & 2**LANGUAGES.index(l)).zero? }
+    end
   end
 
   def self.total_steps
@@ -75,10 +84,9 @@ end
 
 
 def self.makeformline(firsthunk, hunktofix)
-  if firsthunk == 'ssbalprisbml'
-    formline = "f.input :ssbalprisb_multi_lang, collection: #{Ssbal::LANGUAGES}, as: :check_boxes,  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
-  elsif  firsthunk == 'ssbalpriobml'
-    formline = "f.input :ssbalpriob_multi_lang, collection: #{Ssbal::LANGUAGES}, as: :check_boxes,  label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
+  match = /ssbalpri(\w)b(\d)ml/.match firsthunk
+  if match
+    formline = "f.input :ssbalpri#{match[1]}b#{match[2]}_multi_lang,   collection: #{Ssbal::LANGUAGES}, as: :check_boxes, label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}, :input_html => { :multiple => true }"
   else
     formline = "f.input :" + firsthunk +", label: \'" +hunktofix + "\ <span class=\"info\"\>\<a href=\"#" + firsthunk + "_modal\" data-toggle=\"modal\"\>(what\\'s this?)\</a\>\</span\>\'.html_safe,  :label_html => \{ :class =\> \"form_item\" \}"
   end

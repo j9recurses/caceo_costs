@@ -225,13 +225,19 @@ text.each_line do |line|
   ElectionProfileDescription.create(:field  => lstuff[0] , :label  => lstuff[1], :model_name => lstuff[2].to_s, :description=> lstuff[3], :fieldtype=> lstuff[4])
 end
 
-CategoryDescription.destroy_all
-categoriesfname = Rails.root.join("resources", "cost_categories_new.csv").to_s
-text=File.open(categoriesfname).read
-text.gsub!(/\r\n?/, "\n")
-text.each_line do |line|
-  lstuff = line.split("\t")
-  CategoryDescription.create(:field  => lstuff[0] ,  :model_name => lstuff[1].to_s, :cost_type =>  lstuff[2], :name =>  lstuff[3], :label  => lstuff[4], :description=> lstuff[5])
+# CategoryDescription.destroy_all
+# categoriesfname = Rails.root.join("resources", "cost_categories_new.csv").to_s
+# text=File.open(categoriesfname).read
+# text.gsub!(/\r\n?/, "\n")
+# text.each_line do |line|
+#   lstuff = line.split("\t")
+#   CategoryDescription.create(:field  => lstuff[0] ,  :model_name => lstuff[1].to_s, :cost_type =>  lstuff[2], :name =>  lstuff[3], :label  => lstuff[4], :description=> lstuff[5])
+# end
+
+CategoryDescription.delete_all
+categories = CSV.read(Rails.root.join("resources", "cost_categories_new_ml_nov16.csv"))
+categories.each do |row|
+  CategoryDescription.create(field: row[0], model_name: row[1], cost_type: row[2], name: row[3], label: row[4], description: row[5])
 end
 
 
