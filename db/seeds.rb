@@ -235,7 +235,7 @@ end
 # end
 
 CategoryDescription.delete_all
-categories = CSV.read(Rails.root.join("resources", "cost_categories_new_ml_nov16.csv"))
+categories = CSV.read(Rails.root.join("resources", "cost_categories_new_ml_nov17.csv"), col_sep: "\t")
 categories.each do |row|
   CategoryDescription.create(field: row[0], model_name: row[1], cost_type: row[2], name: row[3], label: row[4], description: row[5])
 end
