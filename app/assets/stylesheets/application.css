@@ -20,10 +20,21 @@
     padding: 0 !important;
 }
 
-.mynavbar{
+/*.mynavbar{
   height:80px;
-}
+}*/
 
+@media (min-width: 980px) {
+  #mynav {
+    padding-top:50px;
+    float:right;
+    margin-right:30px;
+  }
+
+  .header_break {
+    height:120px;
+  }
+}
 
 .myaccordion a:link {
     color: blue;
@@ -184,16 +195,6 @@ padding-bottom:0px;
   padding-bottom:10px;
 }
 
-#mynav {
-  padding-top:50px;
-  float:right;
-  margin-right:30px;
-  border-bottom-width:1px;
-  border-bottom-color:#DDDDDD;
-  border-bottom-style:solid;
-
-}
-
 .mynav_li {
 height:35px;
 font-size:12px;
@@ -282,9 +283,6 @@ p.intro_bold {
 
 
 
-.header_break {
-  height:120px;
-}
 
 
 /* mouse over link */

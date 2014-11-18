@@ -33,16 +33,14 @@ class User < ActiveRecord::Base
   end
 
   def self.has_access_code?(user_params)
-  ac = AccessCode.where(user_access_code: user_params[:access_code]).pluck(:user_access_code)
-  code = ''
-   if ac.size > 0
-      code = true
-  else
-      code = false
+    if !(user_params[:access_code] && user_params[:county])
+      false
+    elsif AccessCode.find_by(user_access_code: user_params[:access_code]).county_id.to_s == user_params[:county]
+      true
+    else
+      false
     end
-    return code
   end
-
 
   #method to authenticate users
   def self.authenticate(username_or_email="", login_password="")

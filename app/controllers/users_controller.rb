@@ -4,36 +4,37 @@ class UsersController < ApplicationController
 
 
   def new
-    @user = User.new
-    @counties = CaCountyInfo.where.not(name: "Test County")
-    @counties_array = {}.tap{ |h| @counties.each{ |c| h[c.name] = c.fips } }
+    @user ||= User.new
+    @counties ||= CaCountyInfo.where.not(name: "Test County")
   end
 
   def create
    if  user_params[:password] ==  user_params[:password_confirmation]
     access = User.has_access_code?(user_params)
-    if access
-      @user = User.new(user_params)
-      if @user.save
-        flash[:notice] = "You signed up successfully"
-        @uid = @user.id
-        session[:user_id] = @user.id
-        session[:county] =  @user.county
-        session[:expires_at] = Time.current + 3.hours
-        redirect_to  securityquestion_user_path(@user)
-      else
+    @user = User.new(user_params)
+    @counties ||= CaCountyInfo.where.not(name: "Test County")
+    puts "access: #{access}"
+      if access
+        if @user.save
+          flash[:notice] = "You signed up successfully"
+          @uid = @user.id
+          session[:user_id] = @user.id
+          session[:county] =  @user.county
+          session[:expires_at] = Time.current + 3.hours
+          redirect_to  securityquestion_user_path(@user)
+        else
           puts @user.errors.inspect
-          flash[:error]  =  "There was a problem create your account"
-          redirect_to :signup
+          flash[:error]  =  "There was a problem creating your account"
+          render :new
+        end
+      else
+        flash[:error]  = "Invalid access code, county combination. Please enter a valid access code."
+        render :new
       end
     else
-        flash[:error]  = "Error: Invalid Access Code. Please enter a valid access code"
-        redirect_to :signup
+      flash[:error] = "Passwords do not match. Please try again"
+      render :new
     end
-     else
-       flash[:error] = "Passwords do not match. Please try again"
-        redirect_to :signup
-     end
   end
 
   def login
