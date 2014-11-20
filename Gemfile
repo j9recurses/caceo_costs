@@ -1,15 +1,5 @@
 source 'https://rubygems.org'
-source  'http://gemcutter.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails'
-
-# Use mysql as the database for Active Record
-gem 'mysql2'
-
-#gem 'thin'
-gem 'hirb'
-gem 'phone_wrangler'
 
 gem 'therubyracer', platforms: :ruby
 
@@ -19,23 +9,38 @@ gem 'less-rails'
 gem 'jquery-rails'
 
 gem 'twitter-bootstrap-rails'
-gem 'bootbox-rails', '~>0.1.0'
+gem 'bootstrap-sass'
 
-# Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
-
-# Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-
-# Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
 
 gem 'activerecord-session_store'
 
+
+group :test, :development, :production do
+  gem 'rails'
+  gem 'mysql2'
+end
+
+group :development, :production do
+  gem 'hirb'
+end
+
+group :test do
+  gem 'factory_girl_rails'
+  gem 'spring-commands-rspec'
+  gem 'rspec-rails'
+  gem 'guard-rspec'
+  gem 'capybara'
+  gem 'growl' if /darwin/ =~ RUBY_PLATFORM
+end
+
+
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
-gem 'bootstrap-sass'
 
 #gem 'less-rails-bootstrap'
 
