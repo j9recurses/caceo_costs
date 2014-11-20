@@ -17,7 +17,6 @@ gem 'coffee-rails', '~> 4.0.0'
 
 gem 'activerecord-session_store'
 
-
 group :test, :development, :production do
   gem 'rails'
   gem 'mysql2'
@@ -30,12 +29,14 @@ end
 group :test do
   gem 'factory_girl_rails'
   gem 'spring-commands-rspec'
-  gem 'rspec-rails'
   gem 'guard-rspec'
   gem 'capybara'
   gem 'growl' if /darwin/ =~ RUBY_PLATFORM
 end
 
+group :test, :development do
+  gem 'rspec-rails'
+end
 
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -58,13 +59,10 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-gem 'wicked'
 gem 'nokogiri'
 
 gem 'json'
 
-#gem for phone number vallidation
-gem 'phony_rails'
 
 #helps handle static mapping data- used for the ca county info
 gem 'static_model'

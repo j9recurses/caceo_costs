@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
   validates_length_of :password, :in => 5..20, :on => :create
   validates :security_question, :security_answer, :presence => true, :on => :update
   validates :fn, :ln, :dob, :presence => true , :if => :active_or_personal?
-  validates :phone_number, :presence => true , :phony_plausible => true,  :if => :active_or_phone?, :length => { :is => 10}
 
   #methods for see which steps the form wizard is on; need to do this for vallidation
   def active?
