@@ -23,7 +23,7 @@ before_action :get_filtered, only:[:show]
   end
 
   def new
-     @salbal =@wizard.object
+    render file: "#{ Rails.root.join('app/views/surveys/new') }"
   end
 
   def edit
@@ -31,14 +31,16 @@ before_action :get_filtered, only:[:show]
   end
 
   def create
-      @salbal= @wizard.object
-      @year_element = @election_year.year_elements.create(:element => @salbal)
+
+      # @survey_model
+      # @salbal= @wizard.object
+      @year_element = @election_year.year_elements.create(:element => @survey_model)
       if @wizard.save && @year_element.save
-        Salbal.category_status(@category_id, @salbal)
-        redirect_to @salbal, notice: "The " + @category_name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Saved."
+        Salbal.category_status(@category_id, @survey_model)
+        redirect_to @survey_model, notice: "The " + @category_name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Saved."
       else
-        render :new
-       end
+        render file: "#{ Rails.root.join('app/views/surveys/new') }"
+      end
     end
 
 
@@ -46,8 +48,8 @@ before_action :get_filtered, only:[:show]
      if @wizard.save
       puts "***"
       puts @category_id
-      Salbal.category_status( @category_id, @salbal)
-      redirect_to @salbal, notice: "The " + @category_name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Updated."
+      Salbal.category_status( @category_id, @survey_model)
+      redirect_to @survey_model, notice: "The " + @category_name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Updated."
     else
       render file: "#{ Rails.root.join('app/views/surveys/edit') }"
     end
@@ -85,7 +87,7 @@ before_action :get_filtered, only:[:show]
   end
 
   def load_wizard
-    @wizard = ModelWizard.new(@salbal || Salbal, session, params)
+    @wizard ||= ModelWizard.new(@salbal || Salbal, session, params)
     if self.action_name.in? %w[new edit]
       @wizard.start
     elsif self.action_name.in? %w[create update]
