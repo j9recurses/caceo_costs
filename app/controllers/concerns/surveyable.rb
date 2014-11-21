@@ -2,21 +2,22 @@ module Surveyable
   extend ActiveSupport::Concern
 
   included do
-    before_action :memo_model_name, :make_survey_model, :make_survey_annotations, :make_survey_pages, :make_survey_name,  except: :destroy
+    before_action :memo_model_name,  :make_survey_annotations, :make_survey_pages, :make_survey_name,  except: :destroy
   end
+  # :make_survey_model,
 
   def memo_model_name
     @model_name ||= get_model_name
   end
 
   # Start here!
-  def make_survey_model
-    @wizard || load_wizard
-    @survey_model = @wizard.object
-    # obj = memo_model_name.singularize
-    # eval "set_#{ obj }"
-    # @survey_model ||= eval "@#{ obj }"
-  end
+  # def make_survey_model
+  #   @wizard || load_wizard
+  #   @survey_model = @wizard.object
+  #   # obj = memo_model_name.singularize
+  #   # eval "set_#{ obj }"
+  #   # @survey_model ||= eval "@#{ obj }"
+  # end
 
   # to not interfere with #get_category_descriptions defined on all controllers
   def make_survey_annotations

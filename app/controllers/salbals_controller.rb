@@ -2,14 +2,15 @@ class SalbalsController < ApplicationController
   include Surveyable
 
 before_action :authenticate_user
-before_action :get_user, :get_year,  :get_model_name, :get_category_path
-before_action :get_category_description, :make_chunks, except: [:destroy]
-before_action :load_product, :set_salbal, only: [:show, :update, :edit, :destroy]
+before_action :get_user, :get_year,  :get_model_name, :get_category
+before_action :get_category_description, only: [:show]
+before_action :load_object, only: [:show, :update, :edit, :destroy]
 before_action :load_wizard, only: [:new, :edit, :create, :update]
 before_action :get_filtered, only:[:show]
+before_action :print_controller_name
 
   def index
-   chk = @category.pluck(:started).to_s
+   chk = @category.started.to_s
    if chk == "[true]"
         id = Salbal.where(county: @user[:county], election_year_id: @election_year_id).pluck(:id).last
          redirect_to salbal_path(id)
@@ -31,13 +32,10 @@ before_action :get_filtered, only:[:show]
   end
 
   def create
-
-      # @survey_model
-      # @salbal= @wizard.object
       @year_element = @election_year.year_elements.create(:element => @survey_model)
       if @wizard.save && @year_element.save
-        Salbal.category_status(@category_id, @survey_model)
-        redirect_to @survey_model, notice: "The " + @category_name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Saved."
+        Salbal.category_status(@category.id, @survey_model)
+        redirect_to @survey_model, notice: "The " + @category.name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Saved."
       else
         render file: "#{ Rails.root.join('app/views/surveys/new') }"
       end
@@ -46,27 +44,25 @@ before_action :get_filtered, only:[:show]
 
   def update
      if @wizard.save
-      puts "***"
-      puts @category_id
-      Salbal.category_status( @category_id, @survey_model)
-      redirect_to @survey_model, notice: "The " + @category_name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Updated."
+      Salbal.category_status( @category.id, @survey_model)
+      redirect_to @survey_model, notice: "The " + @category.name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Updated."
     else
       render file: "#{ Rails.root.join('app/views/surveys/edit') }"
     end
   end
 
   def destroy
-    Salbal.remove_category_status(@category_id)
+    Salbal.remove_category_status(@category.id)
     @salbal.destroy
     redirect_to salbals_path
   end
 
 
   private
-    def set_salbal
-      puts "params: #{params}"
-      @salbal = Salbal.find(params[:id])
-    end
+
+  def print_controller_name
+    puts "&&&&&&@@@@@@ #{}{self.controller_name}"
+  end
 
     def get_model_name
       @model_name = "salbals"
@@ -82,7 +78,7 @@ before_action :get_filtered, only:[:show]
     end
 
 
-  def load_product
+  def load_object
     @salbal = Salbal.find(params[:id])
   end
 
@@ -93,23 +89,15 @@ before_action :get_filtered, only:[:show]
     elsif self.action_name.in? %w[create update]
       @wizard.process
     end
+    @survey_model = @wizard.object
   end
 
-  def get_category_path
-    @category= Category.where(election_year_id: @election_year_id, county: @user[:county],  model_name: @model_name)
-    @category_id =  @category.pluck(:id).first
-    @election_year_name = @election_year[:year].to_s
-    @categories_path =  "link_to 'Back to Cost Categories for " +@election_year_name   +" ', election_year_categories_path(" + session[:election_year].to_s  + ")"
+  def get_category
+    @category= Category.find_by(election_year_id: @election_year_id, county: @user[:county],  model_name: @model_name)
   end
 
   def get_category_description
     @category_description = CategoryDescription.where(model_name: @model_name)
-     @category_name = CategoryDescription.where(model_name: @model_name).pluck(:name).first.titleize
-     @modal_stuff  = Salbal.make_modals(@category_description)
-    end
-
-  def make_chunks
-    @form_chunks = Salbal.make_chunks(@model_name)
   end
 
 

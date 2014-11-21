@@ -1,11 +1,11 @@
 <% c = CategoryDescription.where(model_name: "salbals").pluck(:cost_type).uniq %>
-<%  if c[0] == 'salaries' %>
-<%header_item = " for the "  %>
+<% if c[0] == 'salaries' %>
+  <%header_item = "for the" %>
 <%else%>
-<%header_item = " Costs for the "  %>
+  <%header_item = "Costs for the" %>
 <%end%>
 
-<h2 class ="myh2yr"><%= @category_name  +header_item + @election_year[:year].to_s %>
+<h2 class ="myh2yr"><%= "#{@category.name} #{header_item} #{@election_year[:year].to_s}" %>
 &rarr;  Step <%= @survey_model.current_step + 1 %> of <%= @survey_model.total_steps %></h2>
 
 <%= render partial: 'surveys/survey', 
@@ -16,6 +16,6 @@
             election_year: @election_year } %>
 
 <div class="end_link">
-<%= eval(  @categories_path) %> |
-<%= link_to "Cost Category Home", home_path  %>
+  <%= link_to "Back to Cost Categories for #{ @election_year.year }", election_year_categories_path( @election_year.id ) %> |
+  <%= link_to "Cost Category Home", home_path  %>
 </div>
