@@ -1,0 +1,8 @@
+<% survey_presenter.service_supply_items.each do |k, v| %>
+  <div class="show_item_title">
+    <%= "#{k.titleize} : $#{v}" %>
+  </div>
+<% end %>
+
+<div class="show_item_title_total">Total</div>
+<div class="show_item_total"><%="$#{ survey_presenter.service_supply_total }" %></div>

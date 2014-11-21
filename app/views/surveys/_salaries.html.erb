@@ -1,0 +1,56 @@
+
+    <div class="show_item_title_main">
+      <%= "Total Itemized Salary: $#{survey_presenter.salary_total}" %>
+    </div>
+
+    <% survey_presenter.salary_items.each do |k, v| %>
+      <div class="show_item_title_sub">
+        <%= "#{k.titleize} : $#{v}" %>
+      </div>
+    <% end %>
+    
+    <div class="show_item_title_main">
+      <%= "Total Estimated Salary: $#{survey_presenter.salary_estimate_total}" %>
+    </div>    
+
+    <% survey_presenter.salary_estimate_items.each do |k, v| %>
+      <div class="show_item_title_sub">
+        <%= "#{k.titleize} : $#{v}" %>
+      </div>
+    <% end %>
+
+    <div class="show_item_title_main">
+      <%= "Total Benefits - in Dollars: $#{survey_presenter.benefits_dollar_total}" %>
+    </div>
+    
+    <% survey_presenter.benefits_dollar_items.each do |k, v| %>
+      <div class="show_item_title_sub">
+        <%= "#{k.titleize} : $#{v}" %>
+      </div>
+    <% end %>
+
+    <div class="show_item_title_main">
+      <%= "Total Benefits - in Percent: #{survey_presenter.benefits_percent_total}%" %>
+    </div>
+    
+    <% survey_presenter.benefits_percent_items.each do |k, v| %>
+      <div class="show_item_title_sub">
+        <%= "#{k.titleize} : #{v}%" %>
+      </div>
+    <% end %>
+
+    <div class="show_item_title_main">
+      <%= "Total Hours Worked: #{ survey_presenter.hours_total }" %>
+    </div>
+
+    <% survey_presenter.hours_items.each do |k, v| %>
+      <div class="show_item_title_sub">
+        <%= "#{k.titleize} : #{v}" %>
+      </div>
+    <% end %>
+     
+  <div class="show_item_title_total">Total Salaries Including Benefits</div>
+
+  <div class="show_item_total">
+    <%= "$#{ survey_presenter.salary_estimate_benefits_total }" %>
+  </div>
