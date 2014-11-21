@@ -1,32 +1,36 @@
-<!-- object: survey_model, locals: survey_pages, survey_annotations, election_year, survey_name -->
-<% if survey.errors.any? %>
+<!-- object: survey_data_model, locals: survey_pages, survey_form_model, election_year, survey_name -->
+<% if survey_presenter.data.errors.any? %>
   <div id="error_explanation">
     <ul>
-      <% survey.errors.each do |field, msg| %>
+      <% survey_presenter.data.errors.each do |field, msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
   </div>
 <% end %>
 
-<%= render partial: 'surveys/hint_annotation', collection: survey_annotations %>
+<%= render partial: 'surveys/survey_hint', collection: survey_presenter.form %>
 
-<%= simple_form_for survey do |f| %>
+<%= simple_form_for survey_presenter.data do |f| %>
   <%= f.input :election_year_id ,  as: :hidden, :input_html => { :value => session[:election_year]} %>
   <%= f.input :county ,  as: :hidden, :input_html => { :value => session[:county]} %>
 
   <% if params[:all] %>
     <%= hidden_field_tag :all, 1 %>
-    <%= render partial: "surveys/survey_question", collection: survey_pages.flatten.compact, locals: { f: f } %>
+    <%= render partial: "surveys/survey_question", collection: survey_presenter.form_pages, locals: { f: f } %>
     <%= f.submit %>
   <% else %>
-    <%= f.hidden_field :current_step, value: survey.current_step %>
-    <%= render partial: "surveys/survey_question", collection: survey_pages[ survey.current_step ].compact, locals: {f: f} %>
+    <%= f.hidden_field :current_step, value: survey_presenter.current_step %>
+
+    <%= render partial: "surveys/survey_question", 
+      collection: survey_presenter.form_pages[ survey_presenter.current_step ].compact, 
+      locals: {f: f} %>
+
     <div class="form-actions">
-      <%= f.submit "Back", name: "back_button" unless survey.first_step? %>
-      <%= f.submit  "Save and Exit", name: "save_and_exit" unless survey.last_step? %>
-      <% if survey.last_step? %>
-        <%= f.submit "Submit #{ survey_name } Costs for #{ election_year.year }" %>
+      <%= f.submit "Back", name: "back_button" unless survey_presenter.first_step? %>
+      <%= f.submit  "Save and Exit", name: "save_and_exit" unless survey_presenter.last_step? %>
+      <% if survey_presenter.last_step? %>
+        <%= f.submit "Submit #{ survey_presenter.survey_name } Costs for #{ election_year.year }" %>
       <% else %>
         <%= f.submit "Next" %>
       <%end %>

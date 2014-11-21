@@ -9,9 +9,34 @@ before_action :load_wizard, only: [:new, :edit, :create, :update]
 before_action :get_filtered, only:[:show]
 before_action :print_controller_name
 
+  before_action :memo_model_name,  :make_survey_annotations, :make_survey_pages, :make_survey_name,  except: :destroy
+
+  def memo_model_name
+    @model_name ||= get_model_name
+  end
+
+  # to not interfere with #get_category_descriptions defined on all controllers
+  def make_survey_annotations
+    @survey_form_model ||= CategoryDescription.where(model_name: memo_model_name)
+  end
+
+  def make_survey_pages
+    # questions = @survey_form_model.pluck(:field, :label)
+    # @survey_pages = questions.compact.in_groups_of(12)
+  end
+
+  # def make_cost_type
+    # @cost_type = @survey_form_model.pluck(:cost_type).uniq
+  # end
+
+  def make_survey_name
+    # @survey_name ||= @survey_form_model.pluck(:name).first.titleize
+  end
+
+  ############
+
   def index
-   chk = @category.started.to_s
-   if chk == "[true]"
+   if @category.started.to_s
         id = Salbal.where(county: @user[:county], election_year_id: @election_year_id).pluck(:id).last
          redirect_to salbal_path(id)
    else
@@ -20,7 +45,8 @@ before_action :print_controller_name
   end
 
   def show
-    @salbal = Salbal.find(params[:id])
+    @survey_data_model = Salbal.find(params[:id])
+    render file: "#{ Rails.root.join('app/views/surveys/show') }"
   end
 
   def new
@@ -32,10 +58,10 @@ before_action :print_controller_name
   end
 
   def create
-      @year_element = @election_year.year_elements.create(:element => @survey_model)
+      @year_element = @election_year.year_elements.create(:element => @survey_data_model)
       if @wizard.save && @year_element.save
-        Salbal.category_status(@category.id, @survey_model)
-        redirect_to @survey_model, notice: "The " + @category.name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Saved."
+        Salbal.category_status(@category.id, @survey_data_model)
+        redirect_to @survey_data_model, notice: "The " + @category.name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Saved."
       else
         render file: "#{ Rails.root.join('app/views/surveys/new') }"
       end
@@ -44,8 +70,8 @@ before_action :print_controller_name
 
   def update
      if @wizard.save
-      Salbal.category_status( @category.id, @survey_model)
-      redirect_to @survey_model, notice: "The " + @category.name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Updated."
+      Salbal.category_status( @category.id, @survey_data_model)
+      redirect_to @survey_data_model, notice: "The " + @category.name  +  " Costs That You Entered For " + @election_year[:year] .to_s + " were Successfully Updated."
     else
       render file: "#{ Rails.root.join('app/views/surveys/edit') }"
     end
@@ -89,7 +115,7 @@ before_action :print_controller_name
     elsif self.action_name.in? %w[create update]
       @wizard.process
     end
-    @survey_model = @wizard.object
+    @survey_data_model = @wizard.object
   end
 
   def get_category

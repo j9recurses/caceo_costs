@@ -1,3 +1,3 @@
-<%= f.input survey_question[0].to_sym, 
-label: "#{ survey_label( survey_question[1] ) }<span class='info'><a href='##{survey_question[0]}_modal' data-toggle='modal'>(what\'s this?)</a></span>".html_safe,
+<%= f.input survey_question.field.to_sym, 
+label: "#{ format_survey_label( survey_question.label ) }<span class='info'><a href='##{survey_question.field}_modal' data-toggle='modal'>(what\'s this?)</a></span>".html_safe,
 label_html: { class: "form_item" } %>

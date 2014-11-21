@@ -1,21 +1,23 @@
-<% c = CategoryDescription.where(model_name: "salbals").pluck(:cost_type).uniq %>
-<% if c[0] == 'salaries' %>
-  <%header_item = "for the" %>
-<%else%>
-  <%header_item = "Costs for the" %>
-<%end%>
+<% present_survey(@survey_form_model, @survey_data_model)  do |survey_presenter| %>
 
-<h2 class ="myh2yr"><%= "#{@category.name} #{header_item} #{@election_year[:year].to_s}" %>
-&rarr;  Step <%= @survey_model.current_step + 1 %> of <%= @survey_model.total_steps %></h2>
+  <h2 class ="myh2yr">
+    <%= "#{survey_presenter.survey_name} #{survey_presenter.header_text} #{@election_year[:year].to_s}" %>
+  &rarr;  Step <%= survey_presenter.current_step + 1 %> of <%= survey_presenter.total_steps %>
+  </h2>
 
-<%= render partial: 'surveys/survey', 
-  object: @survey_model, 
-  locals: { survey_annotations: @survey_annotations, 
-            survey_pages: @survey_pages, 
-            survey_name: @survey_name,
-            election_year: @election_year } %>
+  <%= render partial: 'surveys/survey', 
+    locals: { survey_presenter: survey_presenter, election_year: @election_year } %>
 
-<div class="end_link">
-  <%= link_to "Back to Cost Categories for #{ @election_year.year }", election_year_categories_path( @election_year.id ) %> |
-  <%= link_to "Cost Category Home", home_path  %>
-</div>
+  <!-- 
+   render partial: 'surveys/survey', 
+    object: @survey_data_model, 
+    locals: { survey_annotations: @survey_form_model, 
+              survey_pages: @survey_pages, 
+              survey_name: @survey_name,
+              election_year: @election_year } %> -->
+
+  <div class="end_link">
+    <%= link_to "Back to Cost Categories for #{ @election_year.year }", election_year_categories_path( @election_year.id ) %> |
+    <%= link_to "Cost Category Home", home_path  %>
+  </div>
+<% end %>
