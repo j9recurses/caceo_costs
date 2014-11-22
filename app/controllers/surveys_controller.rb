@@ -6,6 +6,7 @@ class SurveysController < ApplicationController
   before_action :load_wizard, only: [:new, :edit, :create, :update]
   before_action :make_survey_form_model,  except: :destroy
 
+
   def index
    if @category.started
       id = klass.where(county: @user[:county], election_year_id: @election_year_id).pluck(:id).last
@@ -54,7 +55,7 @@ class SurveysController < ApplicationController
     redirect_to salbals_path
   end
 
-  private
+private
 
   def make_survey_form_model
     @survey_form_model ||= CategoryDescription.where(model_name: model_name)
