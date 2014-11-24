@@ -1,6 +1,6 @@
 
     <div class="show_item_title_main">
-      <%= "Total Itemized Salary: $#{survey_presenter.salary_total}" %>
+      <%= "Total Salaries - Tasks: $#{survey_presenter.salary_total}" %>
     </div>
 
     <% survey_presenter.salary_items.each do |k, v| %>
@@ -10,7 +10,7 @@
     <% end %>
     
     <div class="show_item_title_main">
-      <%= "Total Estimated Salary: $#{survey_presenter.salary_estimate_total}" %>
+      <%= "Total Salaries - Types of Staff and Pay: $#{survey_presenter.salary_estimate_total}" %>
     </div>    
 
     <% survey_presenter.salary_estimate_items.each do |k, v| %>
