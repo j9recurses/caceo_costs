@@ -21,6 +21,8 @@ class UsersController < ApplicationController
           session[:user_id] = @user.id
           session[:county] =  @user.county
           session[:expires_at] = Time.current + 3.hours
+          
+          SupportMailer.signup_notification(@user).deliver
           redirect_to  securityquestion_user_path(@user)
         else
           puts @user.errors.inspect
