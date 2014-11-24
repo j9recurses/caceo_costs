@@ -8,14 +8,6 @@
   <%= render partial: 'surveys/survey', 
     locals: { survey_presenter: survey_presenter, election_year: @election_year } %>
 
-  <!-- 
-   render partial: 'surveys/survey', 
-    object: @survey_data_model, 
-    locals: { survey_annotations: @survey_form_model, 
-              survey_pages: @survey_pages, 
-              survey_name: @survey_name,
-              election_year: @election_year } %> -->
-
   <div class="end_link">
     <%= link_to "Back to Cost Categories for #{ @election_year.year }", election_year_categories_path( @election_year.id ) %> |
     <%= link_to "Cost Category Home", home_path  %>

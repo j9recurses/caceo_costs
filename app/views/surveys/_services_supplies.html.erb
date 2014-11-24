@@ -1,6 +1,6 @@
 <% survey_presenter.service_supply_items.each do |k, v| %>
   <div class="show_item_title">
-    <%= "#{k.titleize} : $#{v}" %>
+    <%= "#{ format_survey_label k } : $#{v}" %>
   </div>
 <% end %>
 

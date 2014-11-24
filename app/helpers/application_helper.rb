@@ -18,10 +18,6 @@ module ApplicationHelper
     content_for(:head, raw(s))
 end
 
-  def format_survey_label(label_text)
-    label_text
-  end
-
   def present(object, klass = nil)
     klass ||= "#{object.class}Presenter".constantize
     presenter = klass.new(object, self)
@@ -33,6 +29,20 @@ end
     presenter = SurveyPresenter.new(survey_form, survey_data, self)
     yield presenter if block_given?
     presenter
+  end
+
+  def format_survey_label(text)
+    if text.nil?
+      return text
+    else
+      text.titleize
+      .gsub("Uocava","UOCAVA")
+      .gsub("Vbm","VBM")
+      .gsub("Dre","DRE")
+      .gsub("Sb90","SB90")
+      .gsub("Vb Ms", "VBMs")
+      .gsub("Icrp", "ICRP")
+    end
   end
 end
 

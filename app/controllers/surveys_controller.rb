@@ -8,7 +8,7 @@ class SurveysController < ApplicationController
 
 
   def index
-   if @category.started
+    if @category.started == true
       id = klass.where(county: @user[:county], election_year_id: @election_year_id).pluck(:id).last
       redirect_to send("#{model_singular}_path", id)
     else
@@ -52,7 +52,7 @@ class SurveysController < ApplicationController
   def destroy
     klass.remove_category_status(@category.id)
     object.destroy
-    redirect_to salbals_path
+    redirect_to send("#{model_name}_path")
   end
 
 private

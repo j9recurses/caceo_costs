@@ -16,7 +16,7 @@
 
   <% survey_presenter.comment_items.each do |k, v| %>
     <div class="show_item_title">
-      <%= k.titleize %>
+      <%= format_survey_label k %>
     </div>
     <div class="show_item">
       <%= v.to_s %>
