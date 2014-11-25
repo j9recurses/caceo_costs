@@ -2,7 +2,7 @@
   <% survey_presenter.sort_form_items %>
 
   <h2 class ="myh2show">
-    <%= "#{survey_presenter.title_show} #{@election_year[:year].to_s}" %>
+    <%= "#{format_survey_label survey_presenter.title_show} #{@election_year[:year].to_s}" %>
   </h2>
   <% puts survey_presenter.cost_type %>
 
