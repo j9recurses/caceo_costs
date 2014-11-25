@@ -6,20 +6,23 @@
   </h2>
   <% puts survey_presenter.cost_type %>
 
-  <% if survey_presenter.cost_type == 'salaries' %>
+
+  <% if survey_presenter.election_profile? %>
+    <%= render partial: "surveys/salaries", locals: { survey_presenter: survey_presenter } %>
+  <% elsif survey_presenter.cost_type == 'salaries' %>
     <%= render partial: "surveys/salaries", locals: { survey_presenter: survey_presenter } %>
     <% survey_presenter.klass.category_total(@category.id, survey_presenter.salary_estimate_benefits_total ) %>
-  <% else %>
+  <% elsif survey_presenter.cost_type == "services & supplies" %>
     <%= render partial: "surveys/services_supplies", locals: { survey_presenter: survey_presenter } %>
     <% survey_presenter.klass.category_total(@category.id, survey_presenter.service_supply_total ) %>
   <% end %>
 
-  <% survey_presenter.comment_items.each do |k, v| %>
+  <% survey_presenter.comment_items.each do | q | %>
     <div class="show_item_title">
-      <%= format_survey_label k %>
+      <%= format_survey_label q.label %>
     </div>
     <div class="show_item">
-      <%= v.to_s %>
+      <%= survey_presenter.response_for( q ) %>
     </div>
   <% end %>
 

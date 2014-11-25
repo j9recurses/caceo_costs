@@ -3,9 +3,9 @@
       <%= "Total Salaries - Tasks: $#{survey_presenter.salary_total}" %>
     </div>
 
-    <% survey_presenter.salary_items.each do |k, v| %>
+    <% survey_presenter.salary_items.each do | item | %>
       <div class="show_item_title_sub">
-        <%= "#{ format_survey_label k } : $#{v}" %>
+        <%= "#{ format_survey_label item.label} : $#{ survey_presenter.response_for( item ) }" %>
       </div>
     <% end %>
     
@@ -13,9 +13,9 @@
       <%= "Total Salaries - Types of Staff and Pay: $#{survey_presenter.salary_estimate_total}" %>
     </div>    
 
-    <% survey_presenter.salary_estimate_items.each do |k, v| %>
+    <% survey_presenter.salary_estimate_items.each do | item | %>
       <div class="show_item_title_sub">
-        <%= "#{ format_survey_label k } : $#{v}" %>
+        <%= "#{ format_survey_label item.label} : $#{ survey_presenter.response_for( item ) }" %>
       </div>
     <% end %>
 
@@ -23,9 +23,9 @@
       <%= "Total Benefits - in Dollars: $#{survey_presenter.benefits_dollar_total}" %>
     </div>
     
-    <% survey_presenter.benefits_dollar_items.each do |k, v| %>
+    <% survey_presenter.benefits_dollar_items.each do | item | %>
       <div class="show_item_title_sub">
-        <%= "#{ format_survey_label k } : $#{v}" %>
+        <%= "#{ format_survey_label item.label} : $#{ survey_presenter.response_for( item ) }" %>
       </div>
     <% end %>
 
@@ -33,9 +33,9 @@
       <%= "Total Benefits - in Percent: #{survey_presenter.benefits_percent_total}%" %>
     </div>
     
-    <% survey_presenter.benefits_percent_items.each do |k, v| %>
+    <% survey_presenter.benefits_percent_items.each do | item | %>
       <div class="show_item_title_sub">
-        <%= "#{ format_survey_label k } : #{v}%" %>
+        <%= "#{ format_survey_label item.label} : #{ survey_presenter.response_for( item ) }%" %>
       </div>
     <% end %>
 
@@ -43,9 +43,9 @@
       <%= "Total Hours Worked: #{ survey_presenter.hours_total }" %>
     </div>
 
-    <% survey_presenter.hours_items.each do |k, v| %>
+    <% survey_presenter.hours_items.each do | item | %>
       <div class="show_item_title_sub">
-        <%= "#{ format_survey_label k } : #{v}" %>
+        <%= "#{ format_survey_label item.label} : #{ survey_presenter.response_for( item ) }" %>
       </div>
     <% end %>
      

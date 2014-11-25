@@ -1,3 +1,9 @@
+# class String
+#   def numeric?
+#     Float(self) != nil rescue false
+#   end
+# end
+
 class SurveyPresenter
   extend Forwardable
 
@@ -9,16 +15,40 @@ class SurveyPresenter
 
   def_delegators :@survey_data, :current_step, :total_steps, :first_step?, :last_step?
 
-  SURVEY_SHOW_SECTIONS = %w{ salary_estimate benefits_percent benefits_dollar hours comment salary service_supply }
+  SURVEY_SHOW_SECTIONS = %w{ salary_estimate benefits_percent benefits_dollar hours comment salary service_supply election_profile }
 
   SURVEY_SHOW_SECTIONS.each do |name|
     define_method("#{name}_items") do
-      show_item_lists[name] ||= {}
+      show_item_lists[name] ||= []
     end
 
     define_method("#{name}_total") do
-      self.send("#{name}_items").values.compact.inject { |sum, item_value| sum + item_value }
+      self.send("#{name}_items").compact.inject(0) do |sum, item|    
+        response = response_for( item )
+        if response.is_a? Numeric
+          sum + response
+        else
+          sum
+        end
+      end
     end
+  end
+
+  def service_supply_total
+    self.service_supply_items.reject { |item| 
+      item.field == 'ssbalpriprou'
+    }.compact.inject(0) do |sum, item| 
+      response = response_for( item )
+      if response.is_a? Numeric
+        sum + response
+      else
+        sum
+      end
+    end
+  end
+
+  def comments_filter
+    @comments_filter ||= FilterCost.find_by(filtertype: "comment").fieldlist
   end
 
   def klass
@@ -34,7 +64,9 @@ class SurveyPresenter
   end
 
   def sort_form_items
-    if cost_type == 'salaries'
+    if election_profile?
+      sort_election_profile
+    elsif cost_type == 'salaries'
       sort_salaries
     elsif cost_type == 'services & supplies'
       sort_services_supplies
@@ -43,33 +75,78 @@ class SurveyPresenter
 
   def sort_salaries
     @survey_form.each do |item|
-      item_value = @survey_data[ item.field ]
+      # item_value = @survey_data[ item.field ]
       case item.label
       when /Salaries/
-        salary_estimate_items[item.label] = item_value.nil? ? 0 : item_value
+        salary_estimate_items.push item
       when /Benefits.*percent/
-        benefits_percent_items[item.label] = item_value.nil? ? 0 : item_value
+        benefits_percent_items.push item
       when /Benefits.*dollars/
-        benefits_dollar_items[item.label] = item_value.nil? ? 0 : item_value
+        benefits_dollar_items.push item
       when /Hours/
-        hours_items[item.label] = item_value.nil? ? 0 : item_value
+        hours_items.push item
       when /General/
-        comment_items[item.label] = item_value
+        comment_items.push item
       else
-        salary_items[item.label] = item_value.nil? ? 0 : item_value
+        salary_items.push item
       end
     end
   end
 
   def sort_services_supplies
     @survey_form.each do |item|
-      item_value = @survey_data[ item.field ]
-      if FilterCost.find_by(filtertype: "comment").fieldlist.include?(item.field)
-        comment_items[item.label] = item_value
+      if comments_filter.include?(item.field)
+        comment_items.push item
       else
-        service_supply_items[item.label] = item_value.nil? ? 0 : item_value
+        service_supply_items.push item
       end
     end
+  end
+
+  def sort_election_profile
+    @survey_form.each do |item|
+      election_profile_items.push item
+    end
+  end
+
+  def election_profile?
+    @survey_form.pluck(:model_name).first == "election_profiles"
+  end
+  
+  def response_for( item, numeric_dollars: false )
+    match = /(ssbalpri|eplang)(\w+)ml/.match item.field
+    value = @survey_data[ item.field ]
+
+    if match
+      response = self.data.send("#{match[1]}#{match[2]}_multi_lang")
+      if response.blank?
+        response = 'No language selected'
+      else
+        response = response.join(', ')
+      end
+    elsif item.respond_to?(:fieldtype) # only ElectionProfileDescription
+      if item.fieldtype == 'boolean'
+        if value == true
+          response = 'Yes'
+        elsif value == false
+          response = 'No'
+        end
+      elsif item.fieldtype == "string"
+        response = value
+      elsif item.fieldtype == "integer"
+        response = value.nil? ? 0 : value
+      end
+    elsif comments_filter.include? item.field
+      response = value
+    else
+      response = value.nil? ? 0 : value
+    end
+
+    if numeric_dollars && response.is_a?(Numeric)
+      response = "$#{response}"
+    end
+
+    return response
   end
 
   def salary_estimate_benefits_total
@@ -108,5 +185,4 @@ class SurveyPresenter
     end
     header_item
   end
-
 end

@@ -9,7 +9,7 @@
 <% response =  eval("@election_profile[:" + pd[:field]+"]" ) %>
 <% if  pd[:fieldtype] = 'boolean' and response == true %>
       <%= "Yes" %>
-<%elsif  pd[:fieldtype] = 'boolean' and response == false%>
+<% elsif  pd[:fieldtype] = 'boolean' and response == false%>
      <%= "No" %>
 <% elsif pd[:field] == 'eplangcaec' || pd[:field] == 'eplangvra' %>
   <% if eval("@election_profile.#{ pd[:field] }_multi_lang").blank? %>
@@ -18,8 +18,6 @@
     <%= eval("@election_profile.#{ pd[:field] }_multi_lang").join(', ') %>
   <% end %>
 <%elsif  pd[:fieldtype] = 'string' %>
-  <%response = response.to_s%>
-   <%response.tr('-', '') %>
     <%= response %>
 <% else %>
    <%=  response %>
