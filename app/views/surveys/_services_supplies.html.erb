@@ -1,6 +1,6 @@
 <% survey_presenter.service_supply_items.each do | item | %>
   <div class="show_item_title">
-    <%= "#{ format_survey_label item.label } : #{ survey_presenter.response_for( item, numeric_dollars: true ) }" %>
+    <%= "#{ format_survey_label item.label }: #{ survey_presenter.response_for( item, numeric_dollars: true ) }" %>
   </div>
 <% end %>
 

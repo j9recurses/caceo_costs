@@ -5,7 +5,7 @@
 
     <% survey_presenter.salary_items.each do | item | %>
       <div class="show_item_title_sub">
-        <%= "#{ format_survey_label item.label} : $#{ survey_presenter.response_for( item ) }" %>
+        <%= "#{ format_survey_label item.label}: $#{ survey_presenter.response_for( item ) }" %>
       </div>
     <% end %>
     
@@ -15,7 +15,7 @@
 
     <% survey_presenter.salary_estimate_items.each do | item | %>
       <div class="show_item_title_sub">
-        <%= "#{ format_survey_label item.label} : $#{ survey_presenter.response_for( item ) }" %>
+        <%= "#{ format_survey_label item.label}: $#{ survey_presenter.response_for( item ) }" %>
       </div>
     <% end %>
 
@@ -25,7 +25,7 @@
     
     <% survey_presenter.benefits_dollar_items.each do | item | %>
       <div class="show_item_title_sub">
-        <%= "#{ format_survey_label item.label} : $#{ survey_presenter.response_for( item ) }" %>
+        <%= "#{ format_survey_label item.label}: $#{ survey_presenter.response_for( item ) }" %>
       </div>
     <% end %>
 
@@ -35,7 +35,7 @@
     
     <% survey_presenter.benefits_percent_items.each do | item | %>
       <div class="show_item_title_sub">
-        <%= "#{ format_survey_label item.label} : #{ survey_presenter.response_for( item ) }%" %>
+        <%= "#{ format_survey_label item.label}: #{ survey_presenter.response_for( item ) }%" %>
       </div>
     <% end %>
 
@@ -45,7 +45,7 @@
 
     <% survey_presenter.hours_items.each do | item | %>
       <div class="show_item_title_sub">
-        <%= "#{ format_survey_label item.label} : #{ survey_presenter.response_for( item ) }" %>
+        <%= "#{ format_survey_label item.label}: #{ survey_presenter.response_for( item ) }" %>
       </div>
     <% end %>
      
