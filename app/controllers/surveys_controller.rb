@@ -2,8 +2,8 @@ class SurveysController < ApplicationController
   before_action :authenticate_user
   before_action :get_user, :get_year, :get_category
   before_action :model_singular
-  before_action :object, only: [:show, :update, :edit, :destroy]
-  before_action :load_wizard, only: [:new, :edit, :create, :update]
+  # before_action :object, only: [:show, :update, :edit, :destroy]
+  # before_action :load_wizard, only: [:new, :edit, :create, :update]
   before_action :make_survey_form_model,  except: :destroy
 
 
@@ -17,52 +17,97 @@ class SurveysController < ApplicationController
   end
 
   def show
-    @survey_data_model = klass.find(params[:id])
+    @survey_data = klass.find(params[:id])
     render file: "#{ Rails.root.join('app/views/surveys/show') }"
   end
 
   def new
-    @survey_data_model = klass.new
-    session[session_model_name] = {}
-    @survey_data_model.current_step = 0
+    @survey_data = klass.new
+    session[session_model_params] = {}
+    @survey_data.current_step = 0
     render file: "#{ Rails.root.join('app/views/surveys/new') }"
   end
 
   def edit
-    @survey_data_model = klass.find(params[:id])
-    session[session_model_name] = {}
-    @survey_data_model.current_step = 0
+    @survey_data = klass.find(params[:id])
+    session[session_model_params] = {}
+    @survey_data.current_step = 0
     render file: "#{ Rails.root.join('app/views/surveys/edit') }"
   end
 
   def create
-    if @survey_data_model.valid?
-      @year_element = @election_year.year_elements.create(element: @survey_data_model)
+    session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
+    @survey_data = klass.new(session[session_model_params])
+    if @survey_data.valid?
+      @year_element = @election_year.year_elements.create(element: @survey_data)
 
-      if @survey_data_model.save && @year_element.save
-        klass.category_status(@category.id, @survey_data_model)
-
-      if @survey_data_model.last_step?
-        redirect_to @survey_data_model, notice: "The #{@category.name} Costs That You Entered For #{@election_year[:year]} were Successfully Saved."
-      else
-        @survey_data_model.step_forward
+      if params[:back_button]
+        @survey_data.step_back
         render file: "#{ Rails.root.join('app/views/surveys/edit') }"
+      elsif params[:save_and_exit] || @survey_data.last_step?
+        session[session_model_params] = nil
+        if @survey_data.save && @year_element.save
+          klass.category_status(@category.id, @survey_data)
+        end
+        redirect_to @survey_data
+      elsif params[:save_and_continue]
+        if @survey_data.save && @year_element.save
+          klass.category_status(@category.id, @survey_data)
+        end
+        @survey_data.step_forward
+        render file: "#{ Rails.root.join('app/views/surveys/edit') }"
+      else
+        @survey_data.step_forward
+        render file: "#{ Rails.root.join('app/views/surveys/edit') }"
+      end
     else
       render file: "#{ Rails.root.join('app/views/surveys/new') }"
     end
   end
 
-
   def update
-    session[session_model_name].deep_merge!(params[model_singular]) if params[model_singular]
+    session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
+    @survey_data = klass.new(session[session_model_params])
+    if @survey_data.valid?
+      # @year_element = @election_year.year_elements.create(element: @survey_data)
 
-    if @wizard.save
-      klass.category_status( @category.id, @survey_data_model)
-      redirect_to @survey_data_model, notice: "The #{@category.name} Costs That You Entered For #{@election_year[:year]} were Successfully Updated."
+      if params[:back_button]
+        @survey_data.step_back
+        render file: "#{ Rails.root.join('app/views/surveys/edit') }"
+      elsif params[:save_and_exit] || @survey_data.last_step?
+        session[session_model_params] = nil
+        if @survey_data.save
+         # && @year_element.save
+          klass.category_status(@category.id, @survey_data)
+        end
+        redirect_to @survey_data
+      elsif params[:save_and_continue]
+        if @survey_data.save
+         # && @year_element.save
+          klass.category_status(@category.id, @survey_data)
+        end
+        @survey_data.step_forward
+        render file: "#{ Rails.root.join('app/views/surveys/edit') }"
+      else
+        @survey_data.step_forward
+        render file: "#{ Rails.root.join('app/views/surveys/edit') }"
+      end
     else
       render file: "#{ Rails.root.join('app/views/surveys/edit') }"
     end
   end
+
+
+  # def update
+  #   session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
+
+  #   if @wizard.save
+  #     klass.category_status( @category.id, @survey_data)
+  #     redirect_to @survey_data, notice: "The #{@category.name} Costs That You Entered For #{@election_year[:year]} were Successfully Updated."
+  #   else
+  #     render file: "#{ Rails.root.join('app/views/surveys/edit') }"
+  #   end
+  # end
 
   def destroy
     klass.remove_category_status(@category.id)
@@ -84,8 +129,8 @@ private
     @model_singular ||= model_name.singularize
   end
 
-  def session_model_name
-    @session_model_name ||= "#{model_singular}_params"
+  def session_model_params
+    @session_model_params ||= "#{model_singular}_params"
   end
 
   def klass
@@ -96,15 +141,15 @@ private
     @object ||= klass.find(params[:id])
   end
 
-  def load_wizard
-    @wizard ||= ModelWizard.new( @object || klass, session, params)
-    if self.action_name.in? %w[new edit]
-      @wizard.start
-    elsif self.action_name.in? %w[create update]
-      @wizard.process
-    end
-    @survey_data_model = @wizard.object
-  end
+  # def load_wizard
+  #   @wizard ||= ModelWizard.new( @object || klass, session, params)
+  #   if self.action_name.in? %w[new edit]
+  #     @wizard.start
+  #   elsif self.action_name.in? %w[create update]
+  #     @wizard.process
+  #   end
+  #   @survey_data = @wizard.object
+  # end
 
   def get_category
     @category= Category.find_by(election_year_id: @election_year_id, county: @user[:county],  model_name: model_name)

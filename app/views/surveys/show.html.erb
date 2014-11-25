@@ -1,4 +1,4 @@
-<% present_survey(@survey_form_model, @survey_data_model) do |survey_presenter| %>
+<% present_survey(@survey_form_model, @survey_data) do |survey_presenter| %>
   <% survey_presenter.sort_form_items %>
 
   <h2 class ="myh2show">
@@ -27,7 +27,7 @@
   <% end %>
 
   <div class="end_link">
-    <%= link_to 'Edit', send("edit_#{@model_singular}_path", @object.id) %> |
+    <%= link_to 'Edit', send("edit_#{@model_singular}_path", @survey_data.id) %> |
     <%= link_to 'Delete This Page', send("#{@model_singular}_path"), method: :delete, data: { confirm: 'Are you sure?' } %> |
     <%= link_to "Back to Cost Categories for #{ @election_year.year }", election_year_categories_path( @election_year.id ) %> |
     <%= link_to "Cost Category Home", home_path  %>

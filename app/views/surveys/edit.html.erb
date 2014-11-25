@@ -1,6 +1,6 @@
 <!-- survey_annotations, survey_model (e.g. @salbals),  @categories_path, election_name  -->
 
-<% present_survey(@survey_form_model, @survey_data_model)  do |survey_presenter| %>
+<% present_survey(@survey_form_model, @survey_data)  do |survey_presenter| %>
 
   <h2 class ="myh2yr"><%= "Edit #{survey_presenter.survey_name} #{survey_presenter.header_text} #{ @election_year.year }" %>
   &rarr;  Step <%= survey_presenter.current_step + 1 %> of <%= survey_presenter.total_steps %></h2>
@@ -9,7 +9,7 @@
     locals: { survey_presenter: survey_presenter, election_year: @election_year } %>
 
   <div class="end_link">
-    <%= link_to "Back ", url_for( [ @survey_data_model ] ) %>|
+    <%= link_to "Back ", url_for( [ @survey_data ] ) %>|
     <%= link_to "Back to Cost Categories for #{ @election_year.year }", election_year_categories_path( @election_year.id ) %> |
     <%= link_to "Cost Category Home", home_path  %>
   </div>
