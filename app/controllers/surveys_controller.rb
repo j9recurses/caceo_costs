@@ -64,8 +64,9 @@ class SurveysController < ApplicationController
   end
 
   def update
+    @survey_data = klass.find(params[:id])
     session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
-    @survey_data = klass.new(session[session_model_params])
+    @survey_data.assign_attributes(session[session_model_params])
     if @survey_data.valid?
       if params[:back_button]
         @survey_data.step_back
