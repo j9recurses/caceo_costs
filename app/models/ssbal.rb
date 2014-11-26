@@ -10,17 +10,6 @@ validates :ssbalpriprou, numericality: { less_than_or_equal_to: 9.99, greater_th
 
   LANGUAGES = ['English', 'Spanish', 'Tagalog', 'Chinese', 'Vietnamese', 'Korean', 'Japanese', 'Hindi', 'Khmer', 'Thai']
 
-  def method_missing(name, *args)
-    mname = name.id2name
-    match = /ssbalpri(\w)b(\d)ml/.match mname
-
-    if match
-
-    else
-      super
-    end
-  end
-
   ML_COLUMNS = Ssbal.column_names.find_all { |n| /ssbalpri(\w)b(\d)ml/.match n }
   ML_COLUMNS.each do |ml_col|
     ml_setter_method_name = ml_col.gsub('ml', '_multi_lang=')

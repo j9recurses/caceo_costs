@@ -24,14 +24,18 @@
 
     <%= render partial: "surveys/survey_question", 
       collection: survey_presenter.form_pages[ survey_presenter.current_step ].compact, 
-      locals: {f: f} %>
+      locals: {f: f, survey_presenter: survey_presenter} %>
 
     <div class="form-actions">
-      <%= f.submit "Back", name: "back_button" unless survey_presenter.first_step? %>
-      <%= f.submit  "Save and Exit", name: "save_and_exit" unless survey_presenter.last_step? %>
+      <% if !survey_presenter.first_step?  %>
+        <%= f.submit "Back", name: "back_button" %>
+      <% end %>
+      
       <% if survey_presenter.last_step? %>
         <%= f.submit "Submit #{ survey_presenter.survey_name } Costs for #{ election_year.year }" %>
       <% else %>
+        <%= f.submit "Save and Exit", name: "save_and_exit" %>
+        <%= f.submit "Save and Continue", name: "save_and_continue", method: :patch %>
         <%= f.submit "Next" %>
       <%end %>
     </div>
