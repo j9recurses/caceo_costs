@@ -29,7 +29,7 @@
   <div class="end_link">
     <%= link_to 'Edit', send("edit_#{@model_singular}_path", @survey_data.id) %> |
     <%= link_to 'Delete This Page', send("#{@model_singular}_path"), method: :delete, data: { confirm: 'Are you sure?' } %> |
-    <%= link_to "Back to Cost Categories for #{ @election_year.year }", election_year_categories_path( @election_year.id ) %> |
-    <%= link_to "Cost Category Home", home_path  %>
+    <%= link_to "Back to Direct Cost Categories for #{ @election_year.year }", election_year_categories_path( @election_year.id ) %> |
+    <%= link_to "Direct Cost Category Home", home_path  %>
   </div>
 <% end %>

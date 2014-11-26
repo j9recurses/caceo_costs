@@ -7,8 +7,8 @@
     locals: { survey_presenter: survey_presenter, election_year: @election_year } %>
 
   <div class="end_link">
-    <%= link_to "Back ", url_for( [ @survey_data ] ) %>|
-    <%= link_to "Back to Cost Categories for #{ @election_year.year }", election_year_categories_path( @election_year.id ) %> |
-    <%= link_to "Cost Category Home", home_path  %>
+    <%= link_to "Exit Survey ", url_for( [ @survey_data ] ) %>|
+    <%= link_to "Back to Direct Cost Categories for #{ @election_year.year }", election_year_categories_path( @election_year.id ) %> |
+    <%= link_to "Direct Cost Category Home", home_path  %>
   </div>
 <% end %>
