@@ -2,8 +2,6 @@ class SurveysController < ApplicationController
   before_action :authenticate_user
   before_action :get_user, :get_year, :get_category
   before_action :model_singular
-  # before_action :object, only: [:show, :update, :edit, :destroy]
-  # before_action :load_wizard, only: [:new, :edit, :create, :update]
   before_action :make_survey_form_model,  except: :destroy
 
 
@@ -39,29 +37,29 @@ class SurveysController < ApplicationController
     session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
     @survey_data = klass.new(session[session_model_params])
     if @survey_data.valid?
-      @year_element = @election_year.year_elements.create(element: @survey_data)
-
       if params[:back_button]
         @survey_data.step_back
-        render file: "#{ Rails.root.join('app/views/surveys/edit') }"
       elsif params[:save_and_exit] || @survey_data.last_step?
-        session[session_model_params] = nil
-        if @survey_data.save && @year_element.save
+        if @survey_data.save && @election_year.year_elements.find_or_create_by(element: @survey_data)
           klass.category_status(@category.id, @survey_data)
+          flash[:notice] = "The #{@category.name} Costs That You Entered For #{@election_year[:year]} Were Successfully Saved."
+          session[session_model_params] = nil
+          redirect_to @survey_data
         end
-        redirect_to @survey_data
       elsif params[:save_and_continue]
-        if @survey_data.save && @year_element.save
+        if @survey_data.save && @election_year.year_elements.find_or_create_by(element: @survey_data)
           klass.category_status(@category.id, @survey_data)
+          flash.now[:notice] = "Your progress has been saved."
+          @survey_data.step_forward
         end
-        @survey_data.step_forward
-        render file: "#{ Rails.root.join('app/views/surveys/edit') }"
       else
         @survey_data.step_forward
-        render file: "#{ Rails.root.join('app/views/surveys/edit') }"
       end
-    else
+    end
+    if @survey_data.new_record?
       render file: "#{ Rails.root.join('app/views/surveys/new') }"
+    else
+      render file: "#{ Rails.root.join('app/views/surveys/edit') }" unless performed?
     end
   end
 
@@ -69,49 +67,30 @@ class SurveysController < ApplicationController
     session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
     @survey_data = klass.new(session[session_model_params])
     if @survey_data.valid?
-      # @year_element = @election_year.year_elements.create(element: @survey_data)
-
       if params[:back_button]
         @survey_data.step_back
-        render file: "#{ Rails.root.join('app/views/surveys/edit') }"
       elsif params[:save_and_exit] || @survey_data.last_step?
-        session[session_model_params] = nil
         if @survey_data.save
-         # && @year_element.save
-          klass.category_status(@category.id, @survey_data)
+          klass.category_status(@category.id, @survey_data) if @survey_data.save
+          session[session_model_params] = nil
+          flash[:notice] = "The #{@category.name} Costs That You Entered For #{@election_year[:year]} Were Successfully Updated."
+          redirect_to @survey_data
         end
-        redirect_to @survey_data
       elsif params[:save_and_continue]
-        if @survey_data.save
-         # && @year_element.save
-          klass.category_status(@category.id, @survey_data)
-        end
+        klass.category_status(@category.id, @survey_data) if @survey_data.save
+        flash.now[:notice] = "Your progress has been saved."
         @survey_data.step_forward
-        render file: "#{ Rails.root.join('app/views/surveys/edit') }"
       else
         @survey_data.step_forward
-        render file: "#{ Rails.root.join('app/views/surveys/edit') }"
       end
-    else
-      render file: "#{ Rails.root.join('app/views/surveys/edit') }"
     end
+    render file: "#{ Rails.root.join('app/views/surveys/edit') }" unless performed?
   end
 
-
-  # def update
-  #   session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
-
-  #   if @wizard.save
-  #     klass.category_status( @category.id, @survey_data)
-  #     redirect_to @survey_data, notice: "The #{@category.name} Costs That You Entered For #{@election_year[:year]} were Successfully Updated."
-  #   else
-  #     render file: "#{ Rails.root.join('app/views/surveys/edit') }"
-  #   end
-  # end
-
   def destroy
+    @survey_data = klass.find(params[:id])
     klass.remove_category_status(@category.id)
-    object.destroy
+    @survey_data.destroy
     redirect_to send("#{model_name}_path")
   end
 
@@ -137,84 +116,7 @@ private
     @klass ||= model_name.singularize.capitalize.constantize
   end
 
-  def object
-    @object ||= klass.find(params[:id])
-  end
-
-  # def load_wizard
-  #   @wizard ||= ModelWizard.new( @object || klass, session, params)
-  #   if self.action_name.in? %w[new edit]
-  #     @wizard.start
-  #   elsif self.action_name.in? %w[create update]
-  #     @wizard.process
-  #   end
-  #   @survey_data = @wizard.object
-  # end
-
   def get_category
     @category= Category.find_by(election_year_id: @election_year_id, county: @user[:county],  model_name: model_name)
-  end
-end
-
-class ModelWizard
-  attr_reader :object
-
-  def initialize(object_or_class, session, params = nil, param_key = nil)
-    @object_or_class, @session, @params = object_or_class, session, params
-    @param_key = param_key || ActiveModel::Naming.param_key(object_or_class)
-    @session_params = "#{@param_key}_params".to_sym
-  end
-
-
-  # def start
-  #   @session[@session_params] = {}
-  #   set_object
-  #   @object.current_step = 0
-  # end
-
-  def process
-    @session[@session_params].deep_merge!(@params[@param_key]) if @params[@param_key]
-    set_object
-    @object.assign_attributes(@session[@session_params]) unless class?
-  end
-
-  def save
-    if @object.current_step_valid?
-      return process_save
-    end
-    false
-  end
-
-private
-
-  # def set_object
-  #   @object = class? ? @object_or_class.new(@session[@session_params]): @object_or_class
-  # end
-
-  # def class?
-  #   @object_or_class.is_a?(Class)
-  # end
-
-  def process_save
-    if @params[:back_button]
-      @object.step_back
-    elsif @object.last_step?
-      if @object.all_steps_valid?
-        success = @object.save
-        @session[@session_param] = nil
-        return success
-      end
-    elsif @params[:save_and_exit]
-      if @object.some_steps_valid?
-        success = @object.save
-        @session[@session_param] = nil
-        return success
-      end
-    elsif @params[:save_and_continue]
-
-    else
-      @object.step_forward
-    end
-    false
   end
 end

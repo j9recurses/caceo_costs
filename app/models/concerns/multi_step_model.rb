@@ -17,9 +17,9 @@ module MultiStepModel
   end
 
   def some_steps_valid?
-   @onthisstep =  @current_step.to_i
-  (0..@onthisstep).all? do |step|
-     @current_step = step
+    @onthisstep = @current_step.to_i
+    (0..@onthisstep).all? do |step|
+      @current_step = step
       current_step_valid?
     end
   end
@@ -39,8 +39,15 @@ module MultiStepModel
   end
 
   def last_step?
-    step?(self.class.total_steps)
+    puts 'IS THIS THE LAST STEP?'
+    puts "#{step? total_steps}"
+    step?(total_steps)
   end
+
+  def total_steps
+    @total_steps ||= CategoryDescription.where(model_name: "#{self.class.to_s.downcase}s" ).in_groups_of(12).size
+  end
+
 
   def first_step?
     step?(1)
