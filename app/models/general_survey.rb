@@ -2,10 +2,12 @@ class GeneralSurvey
   def initialize(survey_data)
     @data = survey_data
     form
+    sort_form_items
   end
+  attr_reader :data, :form
 
   def model_name
-    @model_name ||= self.class.to_s.gsub('Controller', '').downcase
+    @model_name ||= "#{@data.class.to_s.underscore}s"
   end
 
   def model_singular
@@ -25,15 +27,27 @@ class GeneralSurvey
   end
   
   def election_profile?
-    klass == ElectionProfile
+    klass == ElectionProfile ? true : false
   end
 
   def salary?
-    klass.to_s.match /^Sal/
+    klass.to_s.match( /^Sal/ ) ? true : false
   end
 
   def service_supply?
-    klass.to_s.match /^(Ss|Postage)/
+    klass.to_s.match( /^(Ss|Postage)/ ) ? true : false
+  end
+
+  def election
+    if data.persisted?
+      @election ||= if election_profile?
+        ElectionYearProfile.find( data.election_year_profile_id )
+      else
+        ElectionYear.find( data.election_year_id )
+      end
+    else
+      nil
+    end
   end
 
   SURVEY_SECTIONS = %w{ salary_estimate benefits_percent benefits_dollar hours comment salary service_supply election_profile }
@@ -76,17 +90,13 @@ class GeneralSurvey
     benefits_dollar_total + salary_total
   end
 
-  def survey_total
-    send("#{survey_type}_total")
-  end
-
-  def survey_type
-    if election_profile?
-      'election_profile'
-    elsif salary?
-      'salary'
+  def total
+    if salary?
+      salary_estimate_benefits_total
     elsif service_supply?
-      'service_supply'
+      service_supply_total
+    else
+      nil
     end
   end
 
@@ -95,16 +105,15 @@ class GeneralSurvey
   end
 
   def survey_item_lists
-    item_lists ||= {}
+    @item_lists ||= {}
   end
-
 
   def sort_form_items
     if election_profile?
       sort_election_profile
-    elsif cost_type == 'salaries'
+    elsif salary?
       sort_salaries
-    elsif cost_type == 'services & supplies'
+    elsif service_supply?
       sort_services_supplies
     end
   end
@@ -148,7 +157,7 @@ class GeneralSurvey
   
   def response_for( item, numeric_dollars: false )
     match = /(ssbalpri|eplang)(\w+)ml/.match item.field
-    value = survey_data[ item.field ]
+    value = self.data[ item.field ]
 
     if match
       response = self.data.send("#{match[1]}#{match[2]}_multi_lang")

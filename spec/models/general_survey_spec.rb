@@ -7,9 +7,21 @@ RSpec.describe GeneralSurvey  do
 
   describe 'survey type' do
     it 'correctly returns true for services' do
-      expect(election_profile?).to be false
-      expect(service_supply?).to be true
-      expect(salary).to be false
+      expect(survey.election_profile?).to be false
+      expect(survey.service_supply?).to be true
+      expect(survey.salary?).to be false
     end
   end
+
+  describe 'survey_total' do
+    it 'has the right policy for service_supply' do
+      expect(survey.service_supply_total).to be 1025
+    end
+  end
+
+  # describe 'election' do 
+  #   it 'returns an ElectionYear' do
+  #     expect( survey.election.class ).to be ElectionYear
+  #   end
+  # end
 end

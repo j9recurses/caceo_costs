@@ -1,4 +1,4 @@
-class SalcansController < SurveysController
+class SalcansController < GeneralSurveysController
 end
 
 # class SalcansController < ApplicationController

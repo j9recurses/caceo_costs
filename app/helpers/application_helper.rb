@@ -25,8 +25,8 @@ end
     presenter
   end
 
-  def present_survey(survey_form, survey_data)
-    presenter = SurveyPresenter.new(survey_form, survey_data, self)
+  def present_survey(survey_data)
+    presenter = SurveyPresenter.new(survey_data, self)
     yield presenter if block_given?
     presenter
   end

@@ -1,4 +1,4 @@
-class SalppsController < SurveysController 
+class SalppsController < GeneralSurveysController 
 end
 
 # class SalppsController < ApplicationController

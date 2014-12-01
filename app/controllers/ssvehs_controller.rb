@@ -1,4 +1,4 @@
-class SsvehsController < SurveysController
+class SsvehsController < GeneralSurveysController
 end
 # before_action :authenticate_user
 # before_action :get_user, :get_year,  :get_model_name, :get_category_path

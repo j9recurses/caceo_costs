@@ -1,19 +1,22 @@
 class SurveyPersistor
-  include SurveySortable
 
-  def initialize(survey_data, election_year = nil, category = nil)
-    @survey_data = survey_data
-    @election_year = election_year
+  def initialize(survey)
+    # @survey_data = survey_data
+    @survey = survey
   end
-  attr_accessor :survey_data, :election_year
+  attr_accessor :survey
+
+  def survey_data
+    survey.data
+  end
 
   def save
-    if election_profile?
+    if survey.election_profile?
       # do something
     else
-      save_success = survey_data.save
-      # a year_element, aka lookup table entry for election_year/survey, is created when survey is created
-      election_success = election_year ? election_year.year_elements.find_or_create_by( element: survey_data ) : true
+      save_success = survey.data.save
+      # a year_element, aka lookup table entry for election_year/survey, to deal with polymorphic survey, is created when survey is created
+      election_success = survey.election.year_elements.find_or_create_by( element: survey_data )
       status_success = update_status
       save_success && election_success && status_success
     end
@@ -21,7 +24,7 @@ class SurveyPersistor
 
   def destroy
     survey_data.destroy
-    remove_category_status unless election_profile?
+    remove_category_status unless survey.election_profile?
   end
 
   def completed_ratio
@@ -33,12 +36,12 @@ class SurveyPersistor
   end
 
   def update_status
-    if election_profile?
+    if survey.election_profile?
       complete = completed_ratio < 0.5 ? false : true
       survey_data.update_attributes( complete: complete, started: true)
     else
       complete = completed_ratio < 0.75 ? false : true
-      category.update_attributes( complete: complete, started: true, model_total: survey_total )
+      category.update_attributes( complete: complete, started: true, model_total: survey.total )
     end
   end
 
@@ -51,7 +54,7 @@ class SurveyPersistor
   end
 
   def category
-    @category ||= Category.find_by(election_year_id: survey_data.election_year_id, county: survey_data.county,  model_name: "#{survey_data.class.downcase}s")
+    @category ||= Category.find_by(election_year_id: survey_data.election_year_id, county: survey_data.county,  model_name: "#{klass.to_s.downcase}s")
   end
 
   def self.category_status(category_id, model_stuff)

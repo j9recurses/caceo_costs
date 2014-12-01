@@ -14,18 +14,6 @@ class ApplicationController < ActionController::Base
     return @user
   end
 
-
-  def get_year
-     # @election_year = ElectionYear.find(params[:election_year_id])
-       if session[:election_year]
-        @election_year_id = session[:election_year]
-        @election_year = ElectionYear.find(@election_year_id)
-       else
-        redirect_to home_path
-      end
-    end
-
-
   def authenticate_user
     if session[:user_id]
       # set current user object to @current_user object variable

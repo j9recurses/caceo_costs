@@ -1,4 +1,4 @@
-class SalothsController < SurveysController 
+class SalothsController < GeneralSurveysController 
 end
 
 # class SalothsController < ApplicationController

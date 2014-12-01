@@ -1,4 +1,4 @@
-class SurveysController < ApplicationController
+class GeneralSurveysController < ApplicationController
   before_action :authenticate_user
   before_action :get_user, :get_year, :get_category
   before_action :model_singular
@@ -62,13 +62,13 @@ private
       if params[:back_button]
         @survey_data.step_back
       elsif params[:save_and_exit] || @survey_data.last_step?
-        if SurveyPersistor.new( @survey_data, @election_year ).save
+        if SurveyPersistor.new( @survey_data ).save
           flash[:notice] = flash_message
           session[session_model_params] = nil
           redirect_to @survey_data
         end
       elsif params[:save_and_continue]
-        if SurveyPersistor.new( @survey_data, @election_year ).save
+        if SurveyPersistor.new( @survey_data ).save
           flash.now[:notice] = "Your progress has been saved."
           @survey_data.step_forward
         end

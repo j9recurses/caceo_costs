@@ -1,4 +1,4 @@
-class SalbcsController < SurveysController
+class SalbcsController < GeneralSurveysController
 end
 # class SalbcsController < ApplicationController
 # before_action :authenticate_user

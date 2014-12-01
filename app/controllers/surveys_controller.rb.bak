@@ -1,4 +1,4 @@
-class SurveysController < ApplicationController
+class GeneralSurveysController < ApplicationController
   before_action :authenticate_user
   before_action :get_user, :get_year, :get_category
   before_action :model_singular

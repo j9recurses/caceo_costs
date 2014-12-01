@@ -1,2 +1,2 @@
-class SalbalsController < SurveysController
+class SalbalsController < GeneralSurveysController
 end 

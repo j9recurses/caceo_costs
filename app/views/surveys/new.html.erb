@@ -1,4 +1,4 @@
-<% present_survey(@survey_form_model, @survey_data)  do |survey_presenter| %>
+<% present_survey(@survey) do |survey_presenter| %>
 
   <h2 class ="myh2yr">
     <%= "#{format_survey_label survey_presenter.survey_name} #{survey_presenter.header_text} #{@election_year[:year].to_s}" %>
