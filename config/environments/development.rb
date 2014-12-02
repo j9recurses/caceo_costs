@@ -37,19 +37,6 @@ CaceoCosts::Application.configure do
 
   config.action_mailer.raise_delivery_errors = true
   # config.action_mailer.default_url_options = { host: 'localhost:3000' }
-  config.action_mailer.default_url_options = { host: 'caceoelectioncosts.org' }
 
   Hirb.enable
-
-
-config.action_mailer.smtp_settings = {
-  address: "smtp.gmail.com",
-  port: 587,
-  domain: "example.com",
-  authentication: "plain",
-  enable_starttls_auto: true,
-  user_name: "automated.caceoelectioncosts@gmail.com",
-  password: "palisadeglacier",
-     :openssl_verify_mode  => 'none'
-}
 end

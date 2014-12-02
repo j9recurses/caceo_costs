@@ -22,18 +22,6 @@ CaceoCosts::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this).
   config.serve_static_assets = false
 
-
-config.action_mailer.smtp_settings = {
-  address: "smtp.gmail.com",
-  port: 587,
-  authentication: "plain",
-  enable_starttls_auto: true,
-  user_name: "automated.caceoelectioncosts@gmail.com",
-  password: "palisadeglacier",
-  :openssl_verify_mode  => 'none'
-}
-  config.action_mailer.default_url_options = { host: 'caceoelectioncosts.org' }
-
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
@@ -41,8 +29,8 @@ config.action_mailer.smtp_settings = {
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   #config.assets.compile = false
   config.assets.compile =false
- config.assets.precompile =  ['*.js', '*.css', '*.css.erb']
- #then run RAILS_ENV=production bundle exec rake assets:precompile
+  config.assets.precompile =  ['*.js', '*.css', '*.css.erb']
+  #then run RAILS_ENV=production bundle exec rake assets:precompile
 
   # Generate digests for assets URLs.
   config.assets.digest = true
@@ -93,5 +81,5 @@ config.action_mailer.smtp_settings = {
   config.log_formatter = ::Logger::Formatter.new
 
   # Do not dump schema after migrations.
- # config.active_record.dump_schema_after_migration = false
+  # config.active_record.dump_schema_after_migration = false
 end

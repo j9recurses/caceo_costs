@@ -1,5 +1,4 @@
 class SupportMailer < ActionMailer::Base
-  default from: "automated.caceoelectioncosts@gmail.com"
   default to: "contact.caceoelectioncosts@gmail.com"
 
   def signup_notification(user)
