@@ -8,7 +8,7 @@ before_action :authenticate_user
   def create
     @message = Message.new(params[:message])
       if @message.valid?
-        NotificationsMailer.new_message(@message).deliver
+        SupportMailer.contact_us(@message).deliver
         redirect_to home_path, :notice => "Thanks! Your message was sent."
         return
       else

@@ -48,8 +48,8 @@ config.action_mailer.smtp_settings = {
   domain: "example.com",
   authentication: "plain",
   enable_starttls_auto: true,
-  user_name: "emailcontact.q2.datauser@gmail.com",
-  password: "caceoadmin",
+  user_name: "automated.caceoelectioncosts@gmail.com",
+  password: "palisadeglacier",
      :openssl_verify_mode  => 'none'
 }
 end
