@@ -9,6 +9,6 @@ class SupportMailer < ActionMailer::Base
 
   def contact_us(message)
     @message = message
-    mail(:from => @message.email, :subject => @message.message_subject)
+    mail(:from => @message.email, :subject => "Contact Us: #{@message.message_subject}")
   end
 end
