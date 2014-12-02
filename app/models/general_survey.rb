@@ -21,7 +21,9 @@ class GeneralSurvey
   def form_klass
     @form_klass ||= election_profile? ? ElectionProfileDescription : CategoryDescription
   end
+#######
 
+####### class Survey
   def form
     @form ||= form_klass.where(model_name: model_name)
   end

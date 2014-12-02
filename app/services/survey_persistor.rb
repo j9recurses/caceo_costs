@@ -57,33 +57,33 @@ class SurveyPersistor
     @category ||= Category.find_by(election_year_id: survey_data.election_year_id, county: survey_data.county,  model_name: "#{klass.to_s.downcase}s")
   end
 
-  def self.category_status(category_id, model_stuff)
-    model_fields =  Salpw.column_names
-    model_fields_size = model_fields.size
-    model_fields_size = model_fields_size -1
-    fields_complete = model_fields_size
-    complete = true
-    started  = true
-    model_fields.each do |c |
-      if eval("model_stuff[:" + c+ "]").nil?
-        fields_complete = fields_complete -1
-      end
-    end
-    amt_complete = fields_complete.to_f / model_fields_size.to_f
-    if amt_complete < 0.75
-      complete = false
-    end
-    Category.update( category_id , started: started)
-    Category.update( category_id , complete: complete)
-  end
+#   def self.category_status(category_id, model_stuff)
+#     model_fields =  Salpw.column_names
+#     model_fields_size = model_fields.size
+#     model_fields_size = model_fields_size -1
+#     fields_complete = model_fields_size
+#     complete = true
+#     started  = true
+#     model_fields.each do |c |
+#       if eval("model_stuff[:" + c+ "]").nil?
+#         fields_complete = fields_complete -1
+#       end
+#     end
+#     amt_complete = fields_complete.to_f / model_fields_size.to_f
+#     if amt_complete < 0.75
+#       complete = false
+#     end
+#     Category.update( category_id , started: started)
+#     Category.update( category_id , complete: complete)
+#   end
 
-def self.remove_category_status(category_id)
-    Category.update(category_id, started: false)
-    Category.update(category_id, complete: false)
-    Category.update(category_id, model_total: '')
-end
+# def self.remove_category_status(category_id)
+#     Category.update(category_id, started: false)
+#     Category.update(category_id, complete: false)
+#     Category.update(category_id, model_total: '')
+# end
 
-def self.category_total(category_id, total)
-   Category.update(category_id, model_total: total)
-end
+# def self.category_total(category_id, total)
+#    Category.update(category_id, model_total: total)
+# end
 end

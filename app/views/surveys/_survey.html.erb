@@ -27,7 +27,7 @@
       locals: {f: f, survey_presenter: survey_presenter} %>
 
     <div class="form-actions">
-      <% if !survey_presenter.first_step?  %>
+      <% unless survey_presenter.first_step?  %>
         <%= f.submit "Back", name: "back_button" %>
       <% end %>
       

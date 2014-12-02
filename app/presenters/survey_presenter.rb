@@ -15,6 +15,14 @@ class SurveyPresenter
   def_delegators :@survey, :form, :data, :election
   def_delegators :@survey, *survey_section_methods, :response_for
 
+  def method_missing(name, *args)
+    if @survey.respond_to?(name)
+      @survey.send(name, *args)
+    else
+      super
+    end
+  end
+
   def current_step
     survey.data.current_step
   end

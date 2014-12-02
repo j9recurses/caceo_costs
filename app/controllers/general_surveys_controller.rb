@@ -3,8 +3,8 @@ class GeneralSurveysController < ApplicationController
   before_action :get_user, :get_year, :get_category
   before_action :model_singular
   # before_action :survey, only: [:show, :edit]
-  before_action :survey_from_record_id, only: [:show, :edit, :update, :destroy]
-  before_action :survey_from_session, only: [:new, :create]
+  before_action :survey_from_record_id, only: [:show, :edit, :destroy]
+  before_action :survey_from_session, only: [:new, :create, :update]
 
   def index
     if @category.started == true
@@ -22,21 +22,16 @@ class GeneralSurveysController < ApplicationController
   end
 
   def new
-    # @survey_data = klass.new(session[session_model_params])
     session[session_model_params] = {}
-    @survey.data.current_step = 0
     render file: "#{ Rails.root.join('app/views/surveys/new') }"
   end
 
   def edit
     session[session_model_params] = {}
-    @survey.data.current_step = 0
     render file: "#{ Rails.root.join('app/views/surveys/edit') }"
   end
 
   def create
-    # session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
-    # @survey = GeneralSurvey( klass.new(session[session_model_params]) )
     wizard_action
     if @survey.data.new_record?
       render file: "#{ Rails.root.join('app/views/surveys/new') }"
@@ -46,8 +41,6 @@ class GeneralSurveysController < ApplicationController
   end
 
   def update
-    # session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
-    # @survey_data.assign_attributes(session[session_model_params])
     wizard_action
     render file: "#{ Rails.root.join('app/views/surveys/edit') }" unless performed?
   end
@@ -60,9 +53,7 @@ class GeneralSurveysController < ApplicationController
 private
   def wizard_action
     if @survey.data.valid?
-      if params[:back_button]
-        @survey.data.step_back
-      elsif params[:save_and_exit] || @survey.data.last_step?
+      if params[:save_and_exit] || @survey.data.last_step?
         if SurveyPersistor.new( @survey ).save
           flash[:notice] = flash_message
           session[session_model_params] = nil
@@ -73,9 +64,12 @@ private
           flash.now[:notice] = "Your progress has been saved."
           @survey.data.step_forward
         end
+      elsif params[:back_button]
+        @survey.data.step_back
       else
         @survey.data.step_forward
       end
+      session[session_model_params][:current_step] = @survey.data.current_step if session[session_model_params] 
     end
   end
 
