@@ -37,10 +37,15 @@
 }
 
 .observer_county_select {
-/*  float: right;
-  top: 10px;*/
-  width: 400px;
+    width: 400px;
   float: left;
+
+}
+.observer_county_select form {
+  margin: 0;
+}
+.observer_county_select select {
+  margin: 0;
 }
 
 .myaccordion a:link {
