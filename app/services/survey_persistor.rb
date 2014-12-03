@@ -41,21 +41,21 @@ class SurveyPersistor
       survey_data.update_attributes( complete: complete, started: true)
     else
       complete = completed_ratio < 0.75 ? false : true
-      category.update_attributes( complete: complete, started: true, model_total: survey.total )
+      survey.category.update_attributes( complete: complete, started: true, model_total: survey.total )
     end
   end
 
   def remove_category_status
-    category.update_attributes( complete: false, started: false, model_total: nil)
+    survey.category.update_attributes( complete: false, started: false, model_total: nil)
   end
 
   def klass
     @klass ||= survey_data.class
   end
 
-  def category
-    @category ||= Category.find_by(election_year_id: survey_data.election_year_id, county: survey_data.county,  model_name: "#{klass.to_s.downcase}s")
-  end
+  # def category
+  #   @category ||= Category.find_by(election_year_id: survey_data.election_year_id, county: survey_data.county,  model_name: "#{klass.to_s.downcase}s")
+  # end
 
 #   def self.category_status(category_id, model_stuff)
 #     model_fields =  Salpw.column_names

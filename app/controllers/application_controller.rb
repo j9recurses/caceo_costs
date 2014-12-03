@@ -15,14 +15,16 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user
-    if session[:user_id]
-      # set current user object to @current_user object variable
-      @current_user = User.find_by_id(session[:user_id])
-      return true
+    if current_user
+      true
     else
       redirect_to(login_path)
-      return false
+      false
     end
   end
 
+private
+  def current_user
+    @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
+  end
 end

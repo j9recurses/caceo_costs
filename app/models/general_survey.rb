@@ -10,6 +10,10 @@ class GeneralSurvey
     @model_name ||= "#{@data.class.to_s.underscore}s"
   end
 
+  def category
+
+  end
+
   def model_singular
     @model_singular ||= model_name.singularize
   end
@@ -27,7 +31,11 @@ class GeneralSurvey
   def form
     @form ||= form_klass.where(model_name: model_name)
   end
-  
+
+  def category
+    @category ||= Category.find_by(election_year_id: data.election_year_id, county: data.county,  model_name: "#{klass.to_s.downcase}s")
+  end
+
   def election_profile?
     klass == ElectionProfile ? true : false
   end
@@ -41,15 +49,15 @@ class GeneralSurvey
   end
 
   def election
-    if data.persisted?
+    # if data.persisted?
       @election ||= if election_profile?
         ElectionYearProfile.find( data.election_year_profile_id )
       else
         ElectionYear.find( data.election_year_id )
       end
-    else
-      nil
-    end
+    # else
+    #   nil
+    # end
   end
 
   SURVEY_SECTIONS = %w{ salary_estimate benefits_percent benefits_dollar hours comment salary service_supply election_profile }

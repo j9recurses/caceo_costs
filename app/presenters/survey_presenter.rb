@@ -48,7 +48,7 @@ class SurveyPresenter
   end
 
   def title_show
-    "#{survey_name.gsub('Salaries Related To', '')} Salaries Summary for the"
+    "#{survey_name.gsub('Salaries Related To', '')} #{'Salaries' if survey.salary?} Summary for the"
   end
 
   def cost_type
