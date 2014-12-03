@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    @user.update_attributes(county: params[:county])
+    @user.update_attribute(:county, params[:user][:county])
     redirect_to :back
   end
 

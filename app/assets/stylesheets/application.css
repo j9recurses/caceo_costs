@@ -36,6 +36,13 @@
   }
 }
 
+.observer_county_select {
+/*  float: right;
+  top: 10px;*/
+  width: 400px;
+  float: left;
+}
+
 .myaccordion a:link {
     color: blue;
 }
