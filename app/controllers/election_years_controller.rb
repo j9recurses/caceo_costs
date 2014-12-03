@@ -1,5 +1,4 @@
 class ElectionYearsController < ApplicationController
-before_action :authenticate_user
 before_action :get_user
 before_action :set_election_year, only: [:view_year]
 

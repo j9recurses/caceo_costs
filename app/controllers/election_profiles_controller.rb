@@ -1,5 +1,4 @@
 class ElectionProfilesController < ApplicationController
-before_action :authenticate_user
 before_action :get_user, :get_model_name
 before_action :get_election_profile_description, :make_chunks,  except: [:destroy]
 before_action :load_product, :set_election_profile, only: [:show, :update, :edit, :destroy]

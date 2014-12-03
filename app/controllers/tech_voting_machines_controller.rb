@@ -1,6 +1,5 @@
 class TechVotingMachinesController < ApplicationController
   before_action :set_tech_voting_machine, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user
   before_action :get_user
 
   # GET /tech_voting_machines

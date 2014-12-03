@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141117220136) do
+ActiveRecord::Schema.define(version: 20141203075058) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -195,6 +195,19 @@ ActiveRecord::Schema.define(version: 20141117220136) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "ssposaddsepm"
+  end
+
+  create_table "role_assignments", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "salbals", force: true do |t|
