@@ -5,7 +5,7 @@ class Permission
     @user = user
     allow :users, [:new, :create, :security_question, :securityquestion, :securityquestion_submit]
     allow :users, [:login, :login_attempt, :forgot_password, :reset_password, :update_password, :updatepassword_submit]
-    allow :password_resets, [:new, :edit]
+    allow :password_resets, [:new, :create, :edit, :update]
     allow :messages, [:new, :create]
     if user
       allow :users, [:profile, :logout]
