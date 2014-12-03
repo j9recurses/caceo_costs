@@ -3,7 +3,7 @@ class Permission
 
   def initialize(user)
     @user = user
-    allow :users, [:new, :create, :security_question, :securityquestion_submit]
+    allow :users, [:new, :create, :security_question, :securityquestion, :securityquestion_submit]
     allow :users, [:login, :login_attempt, :forgot_password, :reset_password, :update_password, :updatepassword_submit]
     allow :password_resets, [:new, :edit]
     allow :messages, [:new, :create]
