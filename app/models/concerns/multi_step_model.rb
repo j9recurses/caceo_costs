@@ -26,7 +26,11 @@ module MultiStepModel
   end
 
   def total_steps
-    @total_steps ||= CategoryDescription.where(model_name: "#{self.class.to_s.downcase}s" ).in_groups_of(12).size - 1
+    if self.class == ElectionProfile
+      ElectionProfileDescription.where(model_name: 'election_profiles').in_groups_of(16).size - 1
+    else
+      @total_steps ||= CategoryDescription.where(model_name: "#{self.class.to_s.downcase}s" ).in_groups_of(12).size - 1
+    end
   end
 
   def first_step?

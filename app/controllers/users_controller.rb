@@ -1,11 +1,17 @@
 class UsersController < ApplicationController
   include BCrypt
-  before_filter :authenticate_user, :get_user, :only => [:profile, :securityquestion, :securityquestion_submit, :update_password, :updatepassword_submit]
+  before_filter :get_user, :only => [:profile, :securityquestion, :securityquestion_submit, :update_password, :updatepassword_submit]
 
 
   def new
     @user ||= User.new
     @counties ||= CaCountyInfo.where.not(name: "Test County")
+  end
+
+  def update
+    @user = current_user
+    @user.update_attribute(:county, params[:user][:county])
+    redirect_to :back
   end
 
   def create
@@ -96,7 +102,7 @@ class UsersController < ApplicationController
         @newpass[:encrypted_password]  = encrypted_password
         if  @user.update_attributes(  @newpass)
          flash[:notice]  = "Succeessfully Updated Your Password"
-          redirect_to(profile_user_path (@user))
+          redirect_to(profile_user_path(@user))
       else
         flash[:error] = "Unable to save your new password. Please try again."
         redirect_to :login

@@ -1,5 +1,7 @@
 
 class User < ActiveRecord::Base
+  has_many :role_assignments
+  has_many :roles, through: :role_assignments
   attr_accessor :password
   before_save :encrypt_password
   after_save :clear_password
@@ -11,6 +13,10 @@ class User < ActiveRecord::Base
   validates_length_of :password, :in => 5..20, :on => :create
   validates :security_question, :security_answer, :presence => true, :on => :update
   validates :fn, :ln, :dob, :presence => true , :if => :active_or_personal?
+
+  def observer?
+    roles.pluck(:name).include?('observer')
+  end
 
   #methods for see which steps the form wizard is on; need to do this for vallidation
   def active?

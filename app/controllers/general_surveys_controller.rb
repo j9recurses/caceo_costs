@@ -1,5 +1,5 @@
 class GeneralSurveysController < ApplicationController
-  before_action :authenticate_user, :require_election
+  before_action :require_election
   before_action :survey_from_record_id, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -83,6 +83,16 @@ private
   #     redirect_to action: :index
   #   end
   # end
+
+  def current_resource
+    @current_resource = klass.find(params[:id]) if params[:id]
+  end
+
+  def current_session
+    # session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
+    @current_session = params[model_singular]
+    # session[session_model_params] if session[session_model_params]
+  end
 
   def survey_from_record_id
     @survey = GeneralSurvey.new( klass.find(params[:id]) )

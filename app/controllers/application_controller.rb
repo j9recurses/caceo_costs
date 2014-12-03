@@ -1,9 +1,13 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-   protect_from_forgery with: :exception
+  protect_from_forgery with: :exception
   protected
 
+  delegate :allow?, to: :current_permissions
+  helper_method :allow?
+
+  before_filter :authorize
 
   def get_user
     if session[:user_id]
@@ -14,17 +18,35 @@ class ApplicationController < ActionController::Base
     return @user
   end
 
-  def authenticate_user
-    if current_user
-      true
+private
+  def current_user
+    @current_user = User.find(session[:user_id]) if session[:user_id]
+  end
+
+  def current_resource
+    nil
+  end
+
+  def current_session
+    nil
+  end
+
+  def authorize
+      # puts "SESSION #{current_session.inspect}"
+      # puts "RESOURCE #{current_resource.inspect}"
+      # puts "current_session['county']: #{current_session["county"] if current_session}"
+      # puts "current_user.county: #{current_user.county}"
+      # puts "SESSION PERMISSION: #{current_permissions.allow?(params[:controller], params[:action], current_session).inspect if current_session}"
+      # puts "RESOURCE PERMISSION: #{current_permissions.allow?(params[:controller], params[:action], current_resource).inspect}"
+    if current_permissions.allow?(params[:controller], params[:action], current_resource)
+    elsif current_permissions.allow?(params[:controller], params[:action], current_session)
     else
-      redirect_to(login_path)
-      false
+      redirect_to :back
+      flash[:error] = "Not Authorized."
     end
   end
 
-private
-  def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  def current_permissions
+    @current_permissions = Permission.new(current_user)
   end
 end
