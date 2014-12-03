@@ -122,7 +122,8 @@ class User < ActiveRecord::Base
 
   #method to check if the user is entering an email
   def self.isEmail(str)
-    return str.match(/[a-zA-Z0-9._%]@(?:[a-zA-Z0-9]\.)[a-zA-Z]{2,4}/)
+    str.match(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i)
+    # return str.match(/[a-zA-Z0-9._%]@(?:[a-zA-Z0-9]\.)[a-zA-Z]{2,4}/)
   end
 
   #method to clear the users password

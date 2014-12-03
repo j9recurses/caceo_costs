@@ -19,7 +19,6 @@ module CaceoCosts
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
-    config.action_mailer.default_url_options = { host: 'caceoelectioncosts.org' }
     config.action_mailer.smtp_settings = {
       address: "smtp.gmail.com",
       port: 587,
@@ -29,5 +28,7 @@ module CaceoCosts
       password: "palisadeglacier",
       openssl_verify_mode: 'none'
     }
+    config.action_mailer.default_options = { from: "automated.caceoelectioncosts@gmail.com" }
+    config.action_mailer.default_url_options = { host: 'caceoelectioncosts.org' }
   end
 end
