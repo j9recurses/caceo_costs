@@ -9,7 +9,7 @@
   </div>
 <% end %>
 
-<%= render partial: 'surveys/survey_hint', collection: survey_presenter.form %>
+<%= render partial: 'general_surveys/survey_hint', collection: survey_presenter.form %>
 
 <%= simple_form_for survey_presenter.data do |f| %>
   <%= f.input :election_year_id ,  as: :hidden, :input_html => { :value => session[:election_year]} %>
@@ -17,26 +17,26 @@
 
   <% if params[:all] %>
     <%= hidden_field_tag :all, 1 %>
-    <%= render partial: "surveys/survey_question", collection: survey_presenter.form_pages, locals: { f: f } %>
+    <%= render partial: "general_surveys/survey_question", collection: survey_presenter.form_pages, locals: { f: f } %>
     <%= f.submit %>
   <% else %>
     <%= f.hidden_field :current_step, value: survey_presenter.current_step %>
 
-    <%= render partial: "surveys/survey_question", 
+    <%= render partial: "general_surveys/survey_question", 
       collection: survey_presenter.form_pages[ survey_presenter.current_step ].compact, 
       locals: {f: f, survey_presenter: survey_presenter} %>
 
     <div class="form-actions">
-      <% if !survey_presenter.first_step?  %>
+      <% unless survey_presenter.first_step?  %>
         <%= f.submit "Back", name: "back_button" %>
       <% end %>
       
       <% if survey_presenter.last_step? %>
-        <%= f.submit "Submit #{ survey_presenter.survey_name } Costs for #{ election_year.year }" %>
+        <%= f.submit "Submit #{ survey_presenter.survey_name } Costs for #{ survey_presenter.survey.election.year }" %>
       <% else %>
         <%= f.submit "Save and Exit", name: "save_and_exit" %>
         <%= f.submit "Save and Continue", name: "save_and_continue", method: :patch %>
-        <%= f.submit "Next" %>
+        <%= f.submit "Next", name: "next_button" %>
       <%end %>
     </div>
   <% end %>

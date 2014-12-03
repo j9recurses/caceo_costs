@@ -1,4 +1,4 @@
-class SaldojosController < SurveysController
+class SaldojosController < GeneralSurveysController
 end
 
 # class SaldojosController < ApplicationController

@@ -1,4 +1,4 @@
-class SurveysController < ApplicationController
+class GeneralSurveysController < ApplicationController
   before_action :authenticate_user
   before_action :get_user, :get_year, :get_category
   before_action :model_singular
@@ -72,7 +72,7 @@ class SurveysController < ApplicationController
         @survey_data.step_back
       elsif params[:save_and_exit] || @survey_data.last_step?
         if @survey_data.save
-          klass.category_status(@category.id, @survey_data) if @survey_data.save
+          klass.category_status(@category.id, @survey_data)
           session[session_model_params] = nil
           flash[:notice] = "The #{@category.name} Costs That You Entered For #{@election_year[:year]} Were Successfully Updated."
           redirect_to @survey_data
