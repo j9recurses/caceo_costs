@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141203075058) do
+ActiveRecord::Schema.define(version: 20141204032625) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -503,18 +503,20 @@ ActiveRecord::Schema.define(version: 20141203075058) do
   end
 
   create_table "ssbcs", force: true do |t|
-    t.integer "ssbcprocvbh"
-    t.integer "ssbcprocpbh"
-    t.integer "ssbcprocs"
-    t.integer "ssbcbcounth"
-    t.integer "ssbcbcounts"
-    t.integer "ssbccanvh"
-    t.integer "ssbccanvs"
-    t.integer "ssbcpcsec"
-    t.text    "ssbccomment"
-    t.integer "election_year_id"
-    t.integer "county"
-    t.string  "current_step"
+    t.integer  "ssbcprocvbh"
+    t.integer  "ssbcprocpbh"
+    t.integer  "ssbcprocs"
+    t.integer  "ssbcbcounth"
+    t.integer  "ssbcbcounts"
+    t.integer  "ssbccanvh"
+    t.integer  "ssbccanvs"
+    t.integer  "ssbcpcsec"
+    t.text     "ssbccomment"
+    t.integer  "election_year_id"
+    t.integer  "county"
+    t.string   "current_step"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "ssbcs", ["current_step"], name: "index_ssbcs_on_current_step", using: :btree

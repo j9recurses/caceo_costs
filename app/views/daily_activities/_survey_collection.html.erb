@@ -1,0 +1,4 @@
+<p><%= CategoryDescription.where(model_name: survey_collection.first.class.to_s.downcase.pluralize).first.name %></p>
+<ul>
+  <%= render partial: 'survey', collection: survey_collection %>
+</ul>

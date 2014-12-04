@@ -15,7 +15,15 @@ class User < ActiveRecord::Base
   validates :fn, :ln, :dob, :presence => true , :if => :active_or_personal?
 
   def observer?
-    roles.pluck(:name).include?('observer')
+    role_names.include?('observer')
+  end
+
+  def admin?
+    role_names.include?('admin')
+  end
+
+  def role_names
+    @role_names ||= roles.pluck(:name)
   end
 
   #methods for see which steps the form wizard is on; need to do this for vallidation

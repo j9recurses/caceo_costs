@@ -81,7 +81,11 @@
                       <li class="mynav_li"><%= link_to "County Home",  profile_user_path(session[:user_id]) %></li>
                     <% end %>
 
-                    <li class="mynav_li"><a href="/messages/new">Contact Us</a></li>
+                    <% if allow? :daily_activities, :index %>
+                      <li class="mynav_li"><a href="/daily_activities">Daily Activity</a></li>
+                    <% else %>
+                      <li class="mynav_li"><a href="/messages/new">Contact Us</a></li>
+                    <% end %>
 
                     <% if allow? :users, :logout %>
                       <li class="mynav_li"><%= link_to "Logout", logout_path  %></li>

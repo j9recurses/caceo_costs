@@ -1,0 +1,4 @@
+<% _county = CaCountyInfo.find(daily_activity.keys[0])%>
+<h3><%= _county.name %></h3>
+<% survey_collections = daily_activity.values[0] %>
+<%= render partial: 'survey_collection', collection: survey_collections %>

@@ -30,6 +30,10 @@ class Permission
           allow_survey(name)
         end
       end
+
+      if user.admin?
+        allow :daily_activities, :index
+      end
     end
   end
 
