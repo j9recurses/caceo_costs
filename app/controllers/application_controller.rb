@@ -32,16 +32,16 @@ private
   end
 
   def authorize
-      # puts "SESSION #{current_session.inspect}"
-      # puts "RESOURCE #{current_resource.inspect}"
-      # puts "current_session['county']: #{current_session["county"] if current_session}"
-      # puts "current_user.county: #{current_user.county}"
-      # puts "SESSION PERMISSION: #{current_permissions.allow?(params[:controller], params[:action], current_session).inspect if current_session}"
-      # puts "RESOURCE PERMISSION: #{current_permissions.allow?(params[:controller], params[:action], current_resource).inspect}"
     if current_permissions.allow?(params[:controller], params[:action], current_resource)
     elsif current_permissions.allow?(params[:controller], params[:action], current_session)
     else
-      redirect_to :back
+      if request.env["HTTP_REFERER"]
+        redirect_to :back
+      elsif current_user
+        redirect_to home_path
+      else
+        redirect_to login_path
+      end
       flash[:error] = "Not Authorized."
     end
   end
