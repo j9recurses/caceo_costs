@@ -32,7 +32,7 @@ class Permission
       end
 
       if user.admin?
-        allow :daily_activities, :index
+        allow :activities, :index
       end
     end
   end

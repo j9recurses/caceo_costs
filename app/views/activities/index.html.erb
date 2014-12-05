@@ -1,0 +1,14 @@
+<h1><%= @title %></h1>
+
+<% @activities.each do |county_activity| %>
+  <h3><%= county_activity[:county_name] %></h3>
+
+  <% county_activity[:elections].each do |election_name, surveys| %>
+    <p><%= election_name %></p>
+    <% surveys.each do |survey| %>
+      <ul>
+        <li class="minimal-li"><%= survey.survey_name %></li>
+      </ul>
+    <% end %>
+  <% end %>
+<% end %>
