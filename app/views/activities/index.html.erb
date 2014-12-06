@@ -7,7 +7,7 @@
     <p><%= election_name %></p>
     <% surveys.each do |survey| %>
       <ul>
-        <li class="minimal-li"><%= survey.survey_name %></li>
+        <li class="minimal-li"><%= "#{survey.updated_at.strftime('%F')}: #{survey.survey_name}" %></li>
       </ul>
     <% end %>
   <% end %>
