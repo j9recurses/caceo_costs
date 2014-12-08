@@ -10,10 +10,6 @@ class GeneralSurvey
     @model_name ||= "#{@data.class.to_s.underscore}s"
   end
 
-  def category
-
-  end
-
   def model_singular
     @model_singular ||= model_name.singularize
   end
@@ -29,7 +25,7 @@ class GeneralSurvey
 
 ####### class Survey
   def form
-    @form ||= form_klass.where(model_name: model_name)
+    @form ||= form_klass.where(model_name: model_name).where.not('label LIKE "%Percent%" AND model_name != "salbals"')
   end
 
   def count_questions
@@ -186,7 +182,9 @@ class GeneralSurvey
     end
   end
 
-
+  def benefits_percent?
+    benefits_percent_items.size > 0
+  end
   
   def response_for( item, numeric_dollars: false, nil_zeros: true )
     match = /(ssbalpri|eplang)(\w+)ml/.match item.field

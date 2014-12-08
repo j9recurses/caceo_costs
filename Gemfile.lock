@@ -243,6 +243,8 @@ DEPENDENCIES
   mysql2
   nokogiri
   rails
+  rb-fsevent
+  rb-inotify
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc

@@ -29,14 +29,16 @@
       </div>
     <% end %>
 
-    <div class="show_item_title_main">
-      <%= "Total Benefits - in Percent: #{survey_presenter.benefits_percent_total}%" %>
-    </div>
-    
-    <% survey_presenter.benefits_percent_items.each do | item | %>
-      <div class="show_item_title_sub">
-        <%= "#{ format_survey_label item.label}: #{ survey_presenter.response_for( item ) }%" %>
+    <% if survey_presenter.survey.benefits_percent? %>
+      <div class="show_item_title_main">
+        <%= "Total Benefits - in Percent: #{survey_presenter.benefits_percent_total}%" %>
       </div>
+      
+      <% survey_presenter.benefits_percent_items.each do | item | %>
+        <div class="show_item_title_sub">
+          <%= "#{ format_survey_label item.label}: #{ survey_presenter.response_for( item ) }%" %>
+        </div>
+      <% end %>
     <% end %>
 
     <div class="show_item_title_main">
