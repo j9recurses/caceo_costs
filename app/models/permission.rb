@@ -12,6 +12,7 @@ class Permission
       allow :election_years, :home
       allow :categories, :index
       allow :election_year_profiles, :election_profile_home
+      allow :announcements, :index
       if user.observer?
         allow :users, :update
         allow :election_profiles, [:index, :show]

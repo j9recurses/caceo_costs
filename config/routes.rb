@@ -1,7 +1,7 @@
 CaceoCosts::Application.routes.draw do
 
   resources :activities
-
+  resources :announcements
   resources :password_resets
   resources :election_technologies
 
