@@ -15,7 +15,7 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xlsx { render xlsx: "all-surveys_#{Time.now.strftime('%FT%T%:z')}", template: 'activities/index' }
+      format.xlsx { render xlsx: "all-surveys_#{Time.current.strftime('%FT%T%:z')}", template: 'activities/index' }
     end
   end
 end

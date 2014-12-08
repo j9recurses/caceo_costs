@@ -2,7 +2,7 @@ wb = xlsx_package.workbook
 @reports.each do |survey_relation|
   wb.add_worksheet(name: survey_relation.first.class.to_s) do |sheet|
     first_survey = GeneralSurvey.new(survey_relation.first)
-    sheet.add_row [first_survey.data.survey_name, "", "", "", "", *( first_survey.form.map { |q| q.field } ) ]
+    sheet.add_row [first_survey.data.survey_name, Time.current.strftime('%F %T%:z'), "", "", "", *( first_survey.form.map { |q| q.field } ) ]
     sheet.add_row ["County", "Election", "Total Questions", "Total Responses", "Percent Complete", *( first_survey.form.map { |q| q.label } ) ]
     survey_relation.each do |survey_response|
       survey = GeneralSurvey.new(survey_response)
