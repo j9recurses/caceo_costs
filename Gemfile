@@ -33,7 +33,15 @@ group :test do
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
   gem 'capybara'
-  gem 'growl' if /darwin/ =~ RUBY_PLATFORM
+end
+
+group :darwin do
+  gem 'rb-fsevent'
+  gem 'growl'
+end
+
+group :linux do
+  gem 'rb-inotify'
 end
 
 group :test, :development do

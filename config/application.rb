@@ -5,6 +5,9 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+platform = RUBY_PLATFORM.match(/(linux|darwin)/)[0].to_sym
+Bundler.require(platform)
+
 module CaceoCosts
   class Application < Rails::Application
      #config.force_ssl = true
