@@ -5,12 +5,8 @@ class Activity
     result = []
     SURVEYS.each do |klass|
       model_name = klass.to_s.downcase.pluralize
-      result.concat klass.select("MAX(#{model_name}.id) AS id, '#{model_name}' AS model_name, county, #{model_name}.updated_at, election_years.year AS election_name, election_years.election_dt AS election_date, category_descriptions.name AS survey_name")
-        .where.not(county: 59)
-        .where("#{model_name}.updated_at > ?", time)
-        .group(:county, :election_year_id)
-        .joins("INNER JOIN election_years ON election_years.id = #{model_name}.election_year_id")
-        .joins("INNER JOIN category_descriptions ON category_descriptions.model_name = '#{model_name}'")
+      relation = Activity.query(klass).where("#{model_name}.updated_at > ?", time)
+      result.concat relation
     end
     result
   end
@@ -18,12 +14,34 @@ class Activity
   def self.all
     result = []
     SURVEYS.each do |klass|
-      model_name = klass.to_s.downcase.pluralize
-      result.concat klass.select("MAX(#{model_name}.id) AS id, '#{model_name}' AS model_name, county, #{model_name}.updated_at, election_years.year AS election_name, election_years.election_dt AS election_date, category_descriptions.name AS survey_name")
-        .where.not(county: 59)
-        .group(:county, :election_year_id)
-        .joins("INNER JOIN election_years ON election_years.id = #{model_name}.election_year_id")
-        .joins("INNER JOIN category_descriptions ON category_descriptions.model_name = '#{model_name}'")
+      result.concat Activity.query(klass)
+    end
+    result
+  end
+
+  def self.query(klass)
+    model_name = klass.to_s.downcase.pluralize
+    klass.select("MAX(#{model_name}.id) AS id, '#{model_name}' AS model_name, county, #{model_name}.updated_at, election_years.year AS election_name, election_years.election_dt AS election_date, category_descriptions.name AS survey_name")
+      .where.not(county: 59)
+      .group(:county, :election_year_id)
+      .joins("INNER JOIN election_years ON election_years.id = #{model_name}.election_year_id")
+      .joins("INNER JOIN category_descriptions ON category_descriptions.model_name = '#{model_name}'")
+  end
+
+  def self.report(klass)
+    model_name = klass.to_s.downcase.pluralize
+    klass.select("MAX(#{model_name}.id) AS id, '#{model_name}' AS model_name, ca_county_infos.name as county_name, election_years.year AS election_name, election_years.election_dt AS election_date, category_descriptions.name AS survey_name, #{model_name}.*")
+      .where.not(county: 59)
+      .group(:county, :election_year_id)
+      .joins("INNER JOIN ca_county_infos on ca_county_infos.id = #{model_name}.county")
+      .joins("INNER JOIN election_years ON election_years.id = #{model_name}.election_year_id")
+      .joins("INNER JOIN category_descriptions ON category_descriptions.model_name = '#{model_name}'")
+  end
+
+  def self.report_all
+    result = []
+    SURVEYS.each do |klass|
+      result.push Activity.report(klass)
     end
     result
   end

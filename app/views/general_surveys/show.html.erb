@@ -1,4 +1,5 @@
 <% present_survey(@survey) do |survey_presenter| %>
+  <% @survey.sort_form_items %>
 
   <h2 class ="myh2show">
     <%= "#{format_survey_label survey_presenter.title_show} #{ @survey.election.year }" %>

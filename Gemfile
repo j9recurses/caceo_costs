@@ -20,6 +20,8 @@ gem 'activerecord-session_store'
 group :test, :development, :production do
   gem 'rails'
   gem 'mysql2'
+  gem 'axlsx'
+  gem 'axlsx_rails'
 end
 
 group :development, :production do

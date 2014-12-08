@@ -1,0 +1,17 @@
+wb = xlsx_package.workbook
+@reports.each do |survey_relation|
+  wb.add_worksheet(name: survey_relation.first.class.to_s) do |sheet|
+    first_survey = GeneralSurvey.new(survey_relation.first)
+    sheet.add_row [first_survey.data.survey_name, "", "", "", "", *( first_survey.form.map { |q| q.field } ) ]
+    sheet.add_row ["County", "Election", "Total Questions", "Total Responses", "Percent Complete", *( first_survey.form.map { |q| q.label } ) ]
+    survey_relation.each do |survey_response|
+      survey = GeneralSurvey.new(survey_response)
+      sheet.add_row [ survey_response.county_name, 
+                      survey_response.election_name, 
+                      survey.count_questions, 
+                      survey.count_answers,
+                      survey.percent_complete,
+                      *( survey.form.map { |q| survey.response_for( q, nil_zeros: false) } ) ]
+    end
+  end
+end

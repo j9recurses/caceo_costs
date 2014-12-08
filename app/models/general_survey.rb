@@ -2,7 +2,7 @@ class GeneralSurvey
   def initialize(survey_data)
     @data = survey_data
     form
-    sort_form_items
+    # sort_form_items
   end
   attr_reader :data, :form
 
@@ -30,6 +30,28 @@ class GeneralSurvey
 ####### class Survey
   def form
     @form ||= form_klass.where(model_name: model_name)
+  end
+
+  def count_questions
+    @total_questions ||= form.count
+  end
+
+  def count_answers
+    @total_responses ||= form.inject(0) do |sum, form_item|
+      answered?( form_item ) ? sum + 1 : sum
+    end
+  end
+
+  def answered?( form_item )
+    !self.data[ form_item.field ].blank?
+  end
+
+  def completed_ratio
+    (count_answers.to_f / count_questions.to_f).round(2)
+  end
+
+  def percent_complete
+    (completed_ratio * 100).to_i
   end
 
   def category
@@ -164,8 +186,9 @@ class GeneralSurvey
     end
   end
 
+
   
-  def response_for( item, numeric_dollars: false )
+  def response_for( item, numeric_dollars: false, nil_zeros: true )
     match = /(ssbalpri|eplang)(\w+)ml/.match item.field
     value = self.data[ item.field ]
 
@@ -186,12 +209,21 @@ class GeneralSurvey
       elsif item.fieldtype == "string"
         response = value
       elsif item.fieldtype == "integer"
-        response = value.nil? ? 0 : value
+        if value.nil?
+          response = nil_zeros ? 0 : value
+        else
+          response = value
+        end        
       end
     elsif comments_filter.include? item.field
       response = value
     else
-      response = value.nil? ? 0 : value
+      if value.nil?
+        response = nil_zeros ? 0 : value
+      else
+        response = value
+      end
+      # response = value.nil? ? 0 : value
     end
 
     if numeric_dollars && response.is_a?(Numeric)

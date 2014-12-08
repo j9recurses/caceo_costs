@@ -9,6 +9,13 @@ class ActivitiesController < ApplicationController
     elsif params[:all]
       @activities = Activity.sort_by_county_election Activity.all
       @title = "All open surveys"
+    elsif params[:full_report] 
+      @reports = Activity.report_all
+    end
+
+    respond_to do |format|
+      format.html
+      format.xlsx { render xlsx: "all-surveys_#{Time.now.strftime('%FT%T%:z')}", template: 'activities/index' }
     end
   end
 end
