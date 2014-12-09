@@ -2,9 +2,6 @@ class Activity
   SURVEYS = [ElectionProfile, Postage, Salbal, Salbc, Salcan, Saldojo, Salmed, Saloth, Salpp, Salpw, Salvbm, Ssbal, Ssbc, Sscan, Ssmed, Ssoth, Sspp, Sspw, Ssveh]
   TECH_SURVEYS = [TechVotingMachine, TechVotingSoftware]
   COUNTY_IDS = Array(1..58)
-  # def initialize()
-  #   @relation = relation
-  # end
 
   def self.since(time)
     result = []
@@ -67,18 +64,13 @@ class Activity
       
       if klass != ElectionProfile
         survey_name = CategoryDescription.where("model_name = '#{model_name}'").limit(1).first.name
-        # relation.select("category_descriptions.name AS survey_name")
-        # .joins("INNER JOIN category_descriptions ON category_descriptions.model_name = '#{model_name}'")
       else
         survey_name = 'Election Profile'
-        # relation = relation.select("'Election Profile' AS survey_name")
       end
-
-      result.push( { survey_name => relation })
+      result.push( { survey_name => relation } )
     end
     { CaCountyInfo.find(id).name => result }
   end
-
       # relation = klass.where(county: id).select("ca_county_infos.name AS county_name").select("#{model_name}.*, #{election_model}.year AS election_name, #{election_model}.election_dt AS election_date").joins("INNER JOIN #{election_model} ON #{election_model}.id = #{model_name}.#{election_foreign_key}").joins("INNER JOIN ca_county_infos on ca_county_infos.id = #{model_name}.county")
         
   def self.elections

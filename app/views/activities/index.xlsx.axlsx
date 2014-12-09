@@ -17,14 +17,14 @@ wb = xlsx_package.workbook
                       *( survey.form.map { |q| survey.response_for( q, nil_zeros: false) } ) ]
 
       # color_scale = Axlsx::ColorScale.three_tone
-      color_scale = Axlsx::ColorScale.new({:type => :num, :val => 1, :color => 'FFF8696B'},
-                 {:type => :num, :val => '50', :color => 'FFFFEB84'},
-                 {:type => :num, :val => 100, :color => 'FF63BE7B'})
-      sheet.add_conditional_formatting 'C4:E10', { :type => :colorScale,
-                                              operator: :greaterThan,
-                                              formula: '1',
-                                             :priority => 1,
-                                             :color_scale => color_scale }
+      # color_scale = Axlsx::ColorScale.new({:type => :num, :val => 1, :color => 'FFF8696B'},
+      #            {:type => :num, :val => '50', :color => 'FFFFEB84'},
+      #            {:type => :num, :val => 100, :color => 'FF63BE7B'})
+      # sheet.add_conditional_formatting 'C4:E10', { :type => :colorScale,
+      #                                         operator: :greaterThan,
+      #                                         formula: '1',
+      #                                        :priority => 1,
+      #                                        :color_scale => color_scale }
     
   # icon_set = Axlsx::IconSet.new
   #    sheet.add_conditional_formatting 'C4:E10', { :type => :iconSet,
