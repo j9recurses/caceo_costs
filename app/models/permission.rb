@@ -33,7 +33,7 @@ class Permission
       end
 
       if user.admin?
-        allow :activities, :index
+        allow :activities, [:index, :show]
       end
     end
   end

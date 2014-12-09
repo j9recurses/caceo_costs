@@ -13,6 +13,28 @@ VRA_LANGUAGES = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean',
 CAEC_LANGUAGES = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
                   'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ]
 
+  # def count_questions
+  #   86
+  # end
+
+  # def count_answers
+  #   @total_responses ||= self.attributes.inject(0) do |sum, k_v|
+  #     if ['id', 'updated_at', 'created_at', 'complete', 'started', 'current_step', 'county', 'election_year_profile_id'].include?(k_v[0])
+  #       sum
+  #     else
+  #       k_v[1].blank? ? sum : sum + 1
+  #     end
+  #   end
+  # end
+
+  # def completed_ratio
+  #   (count_answers.to_f / count_questions.to_f).round(2)
+  # end
+
+  # def percent_complete
+  #   (completed_ratio * 100).to_i
+  # end
+
   def self.total_steps
    c = ElectionProfileDescription.where(model_name: "election_profiles").pluck(:field, :label)
   cfchunks = c.in_groups_of(16)

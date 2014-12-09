@@ -11,11 +11,21 @@ class ActivitiesController < ApplicationController
       @title = "All open surveys"
     elsif params[:full_report] 
       @reports = Activity.report_all
+      @tech_reports = Activity.report_tech
     end
 
     respond_to do |format|
       format.html
       format.xlsx { render xlsx: "all-surveys_#{Time.current.strftime('%FT%T%:z')}", template: 'activities/index' }
     end
+  end
+
+  def show
+    @county_reports = Activity.county_report
+    @elections = Activity.elections
+    
+    respond_to do |format|
+      format.xlsx { render xlsx: "counties_#{Time.current.strftime('%FT%T%:z')}", template: 'activities/counties' }
+    end  
   end
 end

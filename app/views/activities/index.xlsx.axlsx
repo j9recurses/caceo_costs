@@ -1,4 +1,7 @@
 wb = xlsx_package.workbook
+
+
+
 @reports.each do |survey_relation|
   wb.add_worksheet(name: survey_relation.first.class.to_s) do |sheet|
     first_survey = GeneralSurvey.new(survey_relation.first)
@@ -6,12 +9,44 @@ wb = xlsx_package.workbook
     sheet.add_row ["County", "Election", "Total Questions", "Total Responses", "Percent Complete", *( first_survey.form.map { |q| q.label } ) ]
     survey_relation.each do |survey_response|
       survey = GeneralSurvey.new(survey_response)
-      sheet.add_row [ survey_response.county_name, 
-                      survey_response.election_name, 
-                      survey.count_questions, 
+      sheet.add_row [ survey_response.county_name,
+                      survey_response.election_name,
+                      survey.count_questions,
                       survey.count_answers,
                       survey.percent_complete,
                       *( survey.form.map { |q| survey.response_for( q, nil_zeros: false) } ) ]
+
+      # color_scale = Axlsx::ColorScale.three_tone
+      color_scale = Axlsx::ColorScale.new({:type => :num, :val => 1, :color => 'FFF8696B'},
+                 {:type => :num, :val => '50', :color => 'FFFFEB84'},
+                 {:type => :num, :val => 100, :color => 'FF63BE7B'})
+      sheet.add_conditional_formatting 'C4:E10', { :type => :colorScale,
+                                              operator: :greaterThan,
+                                              formula: '1',
+                                             :priority => 1,
+                                             :color_scale => color_scale }
+    
+  # icon_set = Axlsx::IconSet.new
+  #    sheet.add_conditional_formatting 'C4:E10', { :type => :iconSet,
+  #                                              # :color_scale => color_scale }
+  #                                              # :operator => :greaterThan,
+  #                                               # :formula => '50',
+  #                                            :priority => 1,
+  #                                            :icon_set => icon_set }
+    end
+  end
+end
+
+@tech_reports.each do |tech_relation|
+  wb.add_worksheet( name: tech_relation.first.model_name.titleize ) do |sheet|
+    sheet.add_row [tech_relation.first.model_name.titleize, Time.current.strftime('%F %T%:z') ]
+    sheet.add_row ["County", "Total Questions", "Total Responses", "Percent Complete", *( tech_relation.first.class.column_names ) ]
+    tech_relation.each do |tech_response|
+      sheet.add_row [ tech_response.county_name,
+                      tech_response.count_questions,
+                      tech_response.count_answers,
+                      tech_response.percent_complete,
+                      *( tech_response.attributes.values_at( *tech_response.class.column_names ) ) ]
     end
   end
 end

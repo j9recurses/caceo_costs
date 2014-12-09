@@ -198,15 +198,15 @@ class GeneralSurvey
         response = response.join(', ')
       end
     elsif item.respond_to?(:fieldtype) # only ElectionProfileDescription
-      if item.fieldtype == 'boolean'
+      if item.fieldtype.chomp == 'boolean'
         if value == true
           response = 'Yes'
         elsif value == false
           response = 'No'
         end
-      elsif item.fieldtype == "string"
+      elsif item.fieldtype.chomp == "string"
         response = value
-      elsif item.fieldtype == "integer"
+      elsif item.fieldtype.chomp == "integer"
         if value.nil?
           response = nil_zeros ? 0 : value
         else
