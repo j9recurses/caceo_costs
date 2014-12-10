@@ -2,7 +2,7 @@ class GeneralSurvey
   def initialize(survey_data)
     @data = survey_data
     form
-    # sort_form_items
+    # sort_form_items # taken out when I put in xlsx reports, gen surv is widely used, don't need to sort except for totals
   end
   attr_reader :data, :form
 
@@ -51,7 +51,7 @@ class GeneralSurvey
   end
 
   def category
-    @category ||= Category.find_by(election_year_id: data.election_year_id, county: data.county,  model_name: "#{klass.to_s.downcase}s")
+    @category ||= Category.find_by(election_year_id: data.election_year_id, county: data.county,  model_name: "#{klass.to_s.underscore}s")
   end
 
   def election_profile?
@@ -86,6 +86,7 @@ class GeneralSurvey
     end
 
     define_method("#{name}_total") do
+      sort_form_items unless @sorted
       self.send("#{name}_items").compact.inject(0) do |sum, item|    
         response = response_for( item )
         if response.is_a? Numeric
@@ -144,6 +145,7 @@ class GeneralSurvey
     elsif service_supply?
       sort_services_supplies
     end
+    @sorted = true
   end
 
   def sort_salaries
