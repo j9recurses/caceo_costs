@@ -12,7 +12,7 @@
 
  */
 
-@import 'bootstrap_and_overrides';
+/*@import 'bootstrap_and_overrides';*/
 @import 'activities';
 @import 'users';
 @import 'categories';
