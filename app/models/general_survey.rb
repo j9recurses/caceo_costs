@@ -99,7 +99,6 @@ class GeneralSurvey
   end
 
   def service_supply_total
-    sort_form_items unless @sorted
     self.service_supply_items.reject { |item| 
       item.field == 'ssbalpriprou'
     }.compact.inject(0) do |sum, item| 
