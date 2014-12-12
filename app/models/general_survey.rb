@@ -1,10 +1,14 @@
 class GeneralSurvey
+  extend Forwardable
+
   def initialize(survey_data)
     @data = survey_data
     form
     # sort_form_items # taken out when I put in xlsx reports, gen surv is widely used, don't need to sort except for totals
   end
   attr_reader :data, :form
+
+  def_delegators :@data, :current_step, :total_steps, :first_step?, :last_step?
 
   def model_name
     @model_name ||= "#{@data.class.to_s.underscore}s"
@@ -26,6 +30,24 @@ class GeneralSurvey
 ####### class Survey
   def form
     @form ||= form_klass.where(model_name: model_name).where.not('label LIKE "%Percent%" AND model_name != "salbals"')
+  end
+
+  def type
+    if election_profile?
+      'election_profile'
+    elsif salary?
+      'salaries'
+    elsif service_supply?
+      'services_supplies'
+    end
+  end
+
+  def title
+    @title ||= if election_profile?
+      'Election Profile'
+    else
+      form.pluck(:name).first.titleize
+    end
   end
 
   def count_questions
@@ -67,15 +89,19 @@ class GeneralSurvey
   end
 
   def election
-    # if data.persisted?
-      @election ||= if election_profile?
-        ElectionYearProfile.find( data.election_year_profile_id )
-      else
-        ElectionYear.find( data.election_year_id )
-      end
-    # else
-    #   nil
-    # end
+    @election ||= if election_profile?
+      ElectionYearProfile.find( data.election_year_profile_id )
+    else
+      ElectionYear.find( data.election_year_id )
+    end
+  end
+
+  def election=(id)
+    if election_profile?
+      data.election_year_profile_id = id
+    else
+      data.election_year_id = id
+    end
   end
 
   SURVEY_SECTIONS = %w{ salary_estimate benefits_percent benefits_dollar hours comment salary service_supply election_profile }

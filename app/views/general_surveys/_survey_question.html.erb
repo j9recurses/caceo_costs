@@ -1,14 +1,14 @@
-<% match = /(ssbalpri|eplang)(\w+)ml/.match survey_question.field; langs = nil %>
+<% match = /ssbalpri(\w+)ml/.match( survey_question.field ) || /eplang(vra|caec)/.match( survey_question.field ); langs = nil %>
 
 <% if match %>
-  <% if match[1] == 'ssbalpri' %>
-    <% langs = Ssbal::LANGUAGES %>
-  <% elsif match[1] == 'eplang' %>
-    <% langs = "ElectionProfile::#{match[2].upcase}_LANGUAGES".constantize %>
+  <% if match[1] == 'vra' || match[1] == 'caec'%>
+    <% langs = "ElectionProfile::#{match[1].upcase}_LANGUAGES".constantize; field_slice = 'eplang' %>
+  <% else %>
+    <% langs = Ssbal::LANGUAGES; field_slice = 'ssbalpri' %>
   <% end %>
-    <%= f.input "#{match[1]}#{match[2]}_multi_lang".to_sym, 
-    collection: langs, 
-    as: :check_boxes, 
+    <%= f.input "#{field_slice}#{match[1]}_multi_lang".to_sym, 
+    collection: langs,
+    as: :check_boxes,
     label: "#{ format_survey_label( survey_question.label ) }<span class='info'><a href='##{survey_question.field}_modal' data-toggle='modal'> (what\'s this?)</a></span>".html_safe,  
     label_html: { class: "form_item" }, 
     input_html: { :multiple => true } %>

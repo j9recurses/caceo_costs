@@ -5,14 +5,14 @@
     <%= "#{format_survey_label survey_presenter.title_show} #{ @survey.election.year }" %>
   </h2>
 
-  <%= render partial: "general_surveys/#{survey_presenter.cost_type}", locals: { survey_presenter: survey_presenter } %>
+  <%= render partial: "general_surveys/#{ @survey.type }", locals: { survey_presenter: survey_presenter } %>
 
-  <% survey_presenter.comment_items.each do | q | %>
+  <% @survey.comment_items.each do | q | %>
     <div class="show_item_title">
       <%= format_survey_label q.label %>
     </div>
     <div class="show_item">
-      <%= survey_presenter.response_for( q ) %>
+      <%= @survey.response_for( q ) %>
     </div>
   <% end %>
 
