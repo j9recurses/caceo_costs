@@ -8,8 +8,11 @@
 
   <div class="end_link">
     <%= link_to "Exit Survey ", url_for( [ @survey.data ] ) %>|
-    <%= link_to "Back to Direct Cost Categories for #{ @survey.election.year }", 
-      election_year_categories_path( @survey.election.id ) %> |
-    <%= link_to "Direct Cost Category Home", home_path  %>
+    <% if @survey.election_profile? %>
+      <%= link_to "Election Profile Home", election_profile_home_path  %>
+    <% else %>
+      <%= link_to "Back to Direct Cost Categories for #{ @survey.election.year }", election_year_categories_path( @survey.election.id ) %> |
+      <%= link_to "Direct Cost Category Home", home_path  %>
+    <% end %>
   </div>
 <% end %>
