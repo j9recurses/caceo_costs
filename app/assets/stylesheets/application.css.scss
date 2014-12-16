@@ -1,0 +1,479 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ */
+
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'layout_header';
+@import 'categories';
+@import 'scaffolds';
+@import 'users';
+@import 'activities';
+@import 'forms';
+
+
+#mybody {  font-family: 'Muli', sans-serif; }
+
+
+.hiddenRow {
+  padding: 0 !important;
+}
+
+.observer_county_select {
+  width: 400px;
+  float: left;
+}
+.observer_county_select form {
+  margin: 0;
+}
+.observer_county_select select {
+  margin: 0;
+}
+
+.myaccordion a:link {
+  color: blue;
+}
+
+.myaccordion {
+  padding-left:30px;
+}
+
+.checkline {
+  padding-left:3px;
+}
+
+/* mouse over link */
+.myaccordion a:hover {
+  color: blue;
+  background-color:yellow;
+  text-decoration: none
+}
+
+th.mytable {
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  height:17px;
+  padding-right:10px;
+  padding-left:10px;
+  text-align: center;
+  width:100px;
+}
+
+td.mytable {
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  height:17px;
+  padding-right:10px;
+  padding-left:10px;
+  text-align: center;
+  width:100px;
+}
+
+th.mytable_cash {
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  height:17px;
+  padding-right:10px;
+  padding-left:10px;
+  text-align: center;
+  width:175px;
+}
+
+td.mytable_cash {
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  height:17px;
+  padding-right:10px;
+  padding-left:10px;
+  text-align: center;
+  width:175px;
+}
+
+td.mytable_first {
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  height:17px;
+  padding-right:60px;
+  padding-left:10px;
+  width:300px;
+}
+
+th.mytable_first {
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  height:17px;
+  padding-right:60px;
+  padding-left:10px;
+  width:300px;
+}
+
+.show_item{
+  font_size: 14px;
+}
+
+.show_item_title{
+  padding-top:13px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.show_item_title_main{
+  padding-top:13px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+
+.show_item_title_sub{
+  padding-top:5px;
+  font-size:12px;
+  font-weight:bold;
+  padding-left: 50px;
+}
+
+
+.show_item_total{
+  padding-top:2px;
+  font-size:25px;
+}
+
+.show_item_title_total{
+  padding-top:16px;
+  font-size:20px;
+  font-weight:bold;
+}
+
+h1.myh1 {
+  clear:both;
+  text-decoration: none;
+  font-size:33px;
+  padding-bottom:20px;
+}
+
+
+h2.myh2 {
+  clear:both;
+  text-decoration: none;
+  font-size:33px;
+  padding-bottom:20px;
+}
+
+/*for a 'subtitle' below a myh2*/
+.myh2-sub {
+  margin-top: -20px;
+  padding-bottom: 20px;
+}
+
+h2.myh2show {
+  clear:both;
+  text-decoration: none;
+  font-size:30px;
+  padding-bottom:1px;
+}
+
+h2.myh2profile {
+  clear:both;
+  text-decoration: none;
+  font-size:25px;
+  padding-bottom:1px;
+}
+
+
+
+h2.myh2cats {
+  clear:both;
+  text-decoration: none;
+  font-size:30px;
+  padding-bottom:10px;
+}
+
+h2.myh2yr {
+  clear:both;
+  text-decoration: none;
+  font-size:25px;
+  padding-bottom:0px;
+}
+
+.instructs{
+  font-size:14px;
+  padding-bottom:10px;
+}
+
+.mynav_li {
+  height:35px;
+  font-size:12px;
+}
+
+.info {
+  font-size:10px;
+}
+
+.info a:link {
+  color: blue;
+}
+
+/* mouse over link */
+.info a:hover {
+  color: blue;
+  background-color:yellow;
+  text-decoration: none
+}
+
+.end_link {
+  font-size:20px;
+  padding-top:30px;
+}
+
+.end_link a:link {
+  color: blue;
+}
+
+/* mouse over link */
+.end_link a:hover {
+  color: blue;
+  background-color:yellow;
+  text-decoration: none
+}
+
+.signin{
+  font-size:14px;
+  padding-top:5px;
+}
+
+.signin a:link {
+  color: blue;
+}
+
+/* mouse over link */
+.signin a:hover {
+  color: blue;
+  background-color:yellow;
+  text-decoration: none
+}
+
+p.intro {
+  font-size:12px;
+  padding-bottom:6px;
+  padding-top:6px;
+}
+
+.rlink {
+  font-size:15px;
+}
+
+.rlink a:hover {
+  color: blue;
+  background-color:yellow;
+  text-decoration: none
+}
+.rlink a:link {
+  color: blue;
+}
+
+
+
+p.intro_bold {
+  font-size:15px;
+  display: flex;
+  padding-bottom:6px;
+  padding-top:6px;
+  font-weight: bold;
+}
+
+.mydiv a:hover{
+  color:none;
+  background-color:none;
+}
+
+/* mouse over link */
+.info_table a:hover {
+  color: blue;
+  background-color:yellow;
+  text-decoration: none
+}
+
+.myfooterpad{
+  padding-bottom:100px;
+}
+
+.myfooter{
+  border-top-style:solid;
+  padding-top:10px;
+  width:850px;
+  border-top-width:1px;
+  border-top-color:#DDDDDD;
+  font-size:9px;
+}
+
+.mytable_new{
+  width:600px;
+}
+
+.category_break {
+  padding-bottom:20px;
+}
+
+.category_end_link {
+  font-size:20px;
+  padding-top:20px;
+}
+
+.category_end_link a:link {
+  color: blue;
+}
+
+
+.category_end_link a:hover {
+  color: blue;
+  background-color:yellow;
+  text-decoration: none
+}
+
+th.yr_mytable {
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  height:17px;
+  padding-right:20px;
+  text-align: center;
+  width:100px;
+}
+
+td.yr_mytable {
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  height:17px;
+  padding-right:20px;
+  text-align: center;
+  width:100px;
+}
+
+th.yr_mytable_cash {
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  height:17px;
+  text-align: center;
+  padding-right:10px;
+  padding-left:10px;
+  width:125px;
+}
+
+td.yr_mytable_cash {
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  height:17px;
+  text-align: center;
+  padding-right:10px;
+  padding-left:10px;
+  width:125px;
+}
+
+td.yr_mytable_first {
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  height:17px;
+  padding-right:60px;
+  padding-left:10px;
+  width:175px;
+}
+
+th.yr_mytable_first {
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  height:17px;
+  padding-left:10px;
+  padding-right:60px;
+  width:175px;
+}
+
+
+
+h2.myh2yr_tot {
+  clear:both;
+  text-decoration: none;
+  font-size:25px;
+  padding-top:20px;
+}
+
+.myh5{
+  font-size:15px;
+  float:right;
+  padding-left:100px;
+}
+
+
+table.mymult{
+
+overflow:auto;
+  width:1200px;
+  height:1000px;
+  border: 1px solid #DDDDDD;
+}
+
+
+tr.mymult{
+  border: 1px solid #DDDDDD;
+}
+
+
+td.mymult{
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  text-align: center;
+  padding:10px;
+}
+
+th.mymult{
+  border: 1px solid #DDDDDD;
+  font-size: 18px;
+  text-align:center;
+  padding:5px;
+}
+
+td.mymult_num{
+  border: 1px solid #DDDDDD;
+  font-size: 12px;
+  text-align: left;
+  padding:10px;
+}
+
+.myh3 {
+  padding-left: 100px;
+  font-size: 20px;
+  padding-bottom:17px;
+}
+.myh3 a:hover {
+  color: blue;
+  background-color:yellow;
+  text-decoration: none;
+}
+.myh4{
+  padding-top:30px;
+  padding-bottom:20px;
+  font-size:17px;
+}
+
+
+.end_link_tech{
+  padding-bottom:30px;
+  font-size:17px;
+}
+
+
+.end_link_tech a:hover {
+  color: blue;
+  background-color:yellow;
+  text-decoration: none;
+}
+.brand a:hover{
+  color: blue;
+  background-color:yellow;
+  text-decoration: none;
+}

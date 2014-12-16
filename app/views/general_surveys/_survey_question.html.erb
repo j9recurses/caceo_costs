@@ -7,13 +7,18 @@
     <% langs = Ssbal::LANGUAGES; field_slice = 'ssbalpri' %>
   <% end %>
     <%= f.input "#{field_slice}#{match[1]}_multi_lang".to_sym, 
-    collection: langs,
-    as: :check_boxes,
-    label: "#{ format_survey_label( survey_question.label ) }<span class='info'><a href='##{survey_question.field}_modal' data-toggle='modal'> (what\'s this?)</a></span>".html_safe,  
-    label_html: { class: "form_item" }, 
-    input_html: { :multiple => true } %>
+      # wrapper: :horizontal_input_group
+      collection: langs,
+      as: :check_boxes,
+      label: "#{ format_survey_label( survey_question.label ) }<span class='info'><a href='##{survey_question.field}_modal' data-toggle='modal'> (what\'s this?)</a></span>".html_safe, 
+      input_html: { :multiple => true } 
+    %>
 <% else %>
-  <%= f.input survey_question.field.to_sym, 
-  label: "#{ format_survey_label( survey_question.label ) }<span class='info'><a href='##{survey_question.field}_modal' data-toggle='modal'> (what\'s this?)</a></span>".html_safe,
-  label_html: { class: "form_item" } %>
+
+  <%= f.input :not_applicable, wrapper: :horizontal_input_group do %>
+    <span class="input-group-addon">N/A<input type="checkbox"></span>
+    <%= f.input survey_question.field.to_sym,
+      label: "#{ format_survey_label( survey_question.label ) }<span ><a href='##{survey_question.field}_modal' data-toggle='modal'> (what\'s this?)</a></span>".html_safe,
+      label_html: { class: 'control-form caceo-form-label'} %>
+  <% end %>
 <% end %>

@@ -25,7 +25,7 @@ class UsersController < ApplicationController
           flash[:notice] = "You signed up successfully"
           @uid = @user.id
           session[:user_id] = @user.id
-          session[:county] =  @user.county
+          session[:county] =  @user.county.id
           session[:expires_at] = Time.current + 3.hours
           
           SupportMailer.signup_notification(@user).deliver
@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     if @chkd
        flash[:notice] =  "Welcome again, you logged in as #{@authorized_user.username}"
       @uid =  @authorized_user.id
-      @ucounty =  @authorized_user.county
+      @ucounty =  @authorized_user.county.id
       session[:user_id] = @authorized_user.id
       session[:county] = @ucounty
       session[:expires_at] = Time.current + 3.hours

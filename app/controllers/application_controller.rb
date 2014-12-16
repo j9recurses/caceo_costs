@@ -45,6 +45,7 @@ private
       end
       flash[:error] = "Not Authorized."
     end
+    puts "controller: #{params[:controller]}, action: #{params[:action]}, county: #{current_user.county.name}"
   end
 
   def current_permissions

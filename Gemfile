@@ -3,15 +3,14 @@ source 'https://rubygems.org'
 
 gem 'therubyracer', platforms: :ruby
 
-gem 'less-rails'
+# gem 'less-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-gem 'twitter-bootstrap-rails', "~> 2.2.8"
+# gem 'twitter-bootstrap-rails', "~> 2.2.8"
 
-# gem 'bootstrap-sass'
-
+gem 'bootstrap-sass'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'

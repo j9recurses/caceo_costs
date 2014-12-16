@@ -31,93 +31,95 @@
   </head>
   <body>
     <div id ="mybody">
-      <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
+      <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
           <div class="mynavbar">
-            <div class="container">
+            <div class="navbar-header">
 
-              <% if @current_user && @current_user.observer? %>
-              <% elsif @current_user %>
-                <a class="brand" href="<%= profile_user_path(@current_user.id) %>"><img src="/images/CACEO_logo.gif" alt="logo" /></a>
+              <div class="mynav_login"> 
+                <% if current_user %>
+                  Logged in as <%= current_user.username %> with <%= link_to "#{ current_user.county.name }", profile_user_path(session[:user_id]) %>.
+                  <%= link_to "Log Out", logout_path %>
+                <% else %>
+                  <%= link_to "Sign Up", signup_path %> or
+                  <%= link_to "Log In", login_path %>
+                <% end %>
+              </div>
+
+              <% if current_user && current_user.observer? %>
+              <% elsif current_user %>
+                <a class="navbar-brand" href="<%= profile_user_path(current_user.id) %>"><img src="/images/CACEO_logo.gif" alt="logo" /></a>
               <% else %>
-                <a class="brand" href="/"><img src="/images/CACEO_logo.gif" alt="logo" /></a>
+                <a class="navbar-brand" href="/"><img src="/images/CACEO_logo.gif" alt="logo" /></a>
               <% end %>
 
-              <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </a>
 
-
-              <div class="container nav-collapse">
+              <button type="button" class="navbar-toggle collapsed" data-target="#mynav" data-toggle="collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
                 
+              <div class="collapse navbar-collapse" id="mynav">
 
-
-                <div id ="mynav">
-                  <ul class="nav">
-                    <% if @current_user && @current_user.observer? %>
-                      <div class="observer_county_select">
-                        <%= form_tag("/users/#{@current_user.id}", method: :patch) do %>
-                          <%= collection_select(:user, :county, CaCountyInfo.all, :id, :name) %>
-                          <%= submit_tag "Change County" %>
-                        <% end %>
-                      </div>
-                    <% end %>
-
-                    <% if allow? :categories, :index %>
-                      <li class="dropdown">
-                        <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
-                          Surveys
-                          <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                          <%= render partial: "layouts/nav_links", locals: { session: session } %>
-                        </ul>
-                      </li>
-                    <% end %>
-
-                    <% if allow? :users, :profile %>
-                      <li class="mynav_li"><%= link_to "County Home",  profile_user_path(session[:user_id]) %></li>
-                    <% end %>
-
-                    <% if allow? :activities, :index %>
-                      <li class="dropdown">
-                        <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
-                          Admin Tools
-                          <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                          <li class="mynav_li"><%= link_to "Daily Activity", activities_path(day: true)%></li>
-                          <li class="mynav_li"><%= link_to "Weekly Activity", activities_path(week: true)%></li>
-                          <li class="mynav_li"><%= link_to "All Activity", activities_path(all: true)%></li>
-                          <li class="mynav_li"><%= link_to "Surveys Report", activities_path(full_report: true, format: :xlsx)%></li>
-                          <li class="mynav_li"><%= link_to "Counties Report", activity_path(id: 'county', format: :xlsx)%></li>
-                        </ul>
-                      </li>
-
-
-                    <% else %>
-                      <li class="mynav_li"><a href="/messages/new">Contact Us</a></li>
-                    <% end %>
-
-                    <% if allow? :users, :logout %>
-                      <li class="mynav_li"><%= link_to "Logout", logout_path  %></li>
-                    <% end %>
-
-<!--                     <div class="hidden-desktop">
-                      <%= render partial: "layouts/nav_links", locals: { session: session } %>
+                <ul class="nav navbar-nav list-unstyled">
+                  <% if current_user && current_user.observer? %>
+                    <div class="observer_county_select">
+                      <%= form_tag("/users/#{current_user.id}", method: :patch) do %>
+                        <%= collection_select(:user, :county, CaCountyInfo.all, :id, :name) %>
+                        <%= submit_tag "Change County" %>
+                      <% end %>
                     </div>
- -->                  </ul>
-                </div>
-              </div><!--/.nav-collapse -->
+                  <% end %>
+
+                  <% if allow? :categories, :index %>
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+                        Surveys
+                        <b class="caret"></b>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <%= render partial: "layouts/nav_links", locals: { session: session } %>
+                      </ul>
+                    </li>
+                  <% end %>
+
+                  <% if allow? :users, :profile %>
+                    <li class="mynav_li"><%= link_to "County Home",  profile_user_path(session[:user_id]) %></li>
+                  <% end %>
+
+                  <% if allow? :activities, :index %>
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+                        Admin Tools
+                        <b class="caret"></b>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li class="mynav_li"><%= link_to "Daily Activity", activities_path(day: true)%></li>
+                        <li class="mynav_li"><%= link_to "Weekly Activity", activities_path(week: true)%></li>
+                        <li class="mynav_li"><%= link_to "All Activity", activities_path(all: true)%></li>
+                        <li class="mynav_li"><%= link_to "Surveys Report", activities_path(full_report: true, format: :xlsx)%></li>
+                        <li class="mynav_li"><%= link_to "Counties Report", activity_path(id: 'county', format: :xlsx)%></li>
+                      </ul>
+                    </li>
+
+
+                  <% else %>
+                    <li class="mynav_li"><a href="/messages/new">Contact Us</a></li>
+                  <% end %>
+
+                  <% if allow? :users, :logout %>
+                    <li class="mynav_li"><%= link_to "Logout", logout_path  %></li>
+                  <% end %>
+                </ul>
+              </div><!--/.navbar-collapse -->
             </div>
           </div>
         </div>
       </div>
       <div class="container">
         <div class="row">
-          <div class="span9">
+          <div class="col-md-9">
             <div class ="header_break">
             </div>
             <%= flash_messages %>

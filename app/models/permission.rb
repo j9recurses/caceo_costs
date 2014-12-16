@@ -41,17 +41,17 @@ class Permission
   def allow_survey(survey_name)
     allow survey_name, [:index, :new]
     allow survey_name, [:create] do |session|
-      @user.county == session["county"].to_i
+      @user.county.id == session["county"].to_i
     end
     allow survey_name, [:show, :edit, :update, :destroy] do |survey|
-      @user.county == survey.county
+      @user.county.id == survey.county
     end
   end
 
   def allow_observe_survey(survey_name)
     allow survey_name, [:index]
     allow survey_name, [:show] do |survey|
-      @user.county == survey.county
+      @user.county.id == survey.county
     end
   end
 

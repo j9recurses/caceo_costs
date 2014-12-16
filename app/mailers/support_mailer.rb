@@ -4,7 +4,7 @@ class SupportMailer < ActionMailer::Base
 
   def signup_notification(user)
     @user = user
-    @county = CaCountyInfo.find(@user.county)
+    @county = user.county
     mail subject: "New User Signup: #{@user.email}"
   end
 
