@@ -2,23 +2,39 @@
 
 <% if match %>
   <% if match[1] == 'vra' || match[1] == 'caec'%>
-    <% langs = "ElectionProfile::#{match[1].upcase}_LANGUAGES".constantize; field_slice = 'eplang' %>
+    <% langs = "ElectionProfile::#{match[1].upcase}_LANGUAGES".constantize
+    survey_field = "eplang#{match[1]}_multi_lang".to_sym %>
   <% else %>
-    <% langs = Ssbal::LANGUAGES; field_slice = 'ssbalpri' %>
+    <% langs = Ssbal::LANGUAGES
+    survey_field = "ssbalpri#{match[1]}_multi_lang".to_sym %>
   <% end %>
-    <%= f.input "#{field_slice}#{match[1]}_multi_lang".to_sym, 
-      # wrapper: :horizontal_input_group
-      collection: langs,
-      as: :check_boxes,
-      label: "#{ format_survey_label( survey_question.label ) }<span class='info'><a href='##{survey_question.field}_modal' data-toggle='modal'> (what\'s this?)</a></span>".html_safe, 
-      input_html: { :multiple => true } 
-    %>
+    <%= f.input( survey_field, 
+          # wrapper: :horizontal_input_group
+          collection: langs,
+          as: :check_boxes,
+          input_html: { :multiple => true } 
+        ) do %>
+        <% end %>
 <% else %>
+  <% survey_field = survey_question.field.to_sym %>
 
-  <%= f.input :not_applicable, wrapper: :horizontal_input_group do %>
-    <span class="input-group-addon">N/A<input type="checkbox"></span>
-    <%= f.input survey_question.field.to_sym,
-      label: "#{ format_survey_label( survey_question.label ) }<span ><a href='##{survey_question.field}_modal' data-toggle='modal'> (what\'s this?)</a></span>".html_safe,
-      label_html: { class: 'control-form caceo-form-label'} %>
-  <% end %>
+
+  <div class="form-group">
+
+    <%= f.label( survey_field, class: 'control-label caceo-form-label' ) do %>
+      <%= "#{ format_survey_label( survey_question.label ) }" %>
+      <span class="info">
+        <a href= <%= "#{survey_field}_modal" %> data-toggle='modal'>(what's this?)</a>
+      </span>
+    <% end %>
+
+    <%= f.input survey_question.field.to_sym, wrapper: :horizontal_input_group do %>
+      <span class="input-group-addon">
+        <span>N/A</span>
+        <input type="checkbox">
+      </span>
+      <%= f.input_field survey_question.field.to_sym, class: 'form-control splootnik' %>
+    <% end %>
+
+  </div>
 <% end %>

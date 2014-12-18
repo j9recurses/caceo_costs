@@ -65,7 +65,7 @@
                 <ul class="nav navbar-nav list-unstyled">
                   <% if current_user && current_user.observer? %>
                     <div class="observer_county_select">
-                      <%= form_tag("/users/#{current_user.id}", method: :patch) do %>
+                      <%= form_for(current_user, method: :patch) do %>
                         <%= collection_select(:user, :county, CaCountyInfo.all, :id, :name) %>
                         <%= submit_tag "Change County" %>
                       <% end %>
@@ -102,7 +102,6 @@
                         <li class="mynav_li"><%= link_to "Counties Report", activity_path(id: 'county', format: :xlsx)%></li>
                       </ul>
                     </li>
-
 
                   <% else %>
                     <li class="mynav_li"><a href="/messages/new">Contact Us</a></li>

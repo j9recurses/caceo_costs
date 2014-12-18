@@ -1,14 +1,14 @@
 .caceo-form-input {
-  @include make-sm-column(7);
+  @include make-sm-column(6);
 }
 
 .caceo-form-label {
-  @include make-sm-column(3);
+  @include make-sm-column(6);
 }
 
-.caceo-form-input {
-  @include make-sm-column(2);
-}
+// .caceo-form-input {
+//   @include make-sm-column(2);
+// }
 
 // .simple_form {
 //   $indent: 120px;

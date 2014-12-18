@@ -55,7 +55,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :horizontal_file_input, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :horizontal_file_input, tag: 'div', class: 'blarny', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -83,11 +83,11 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :horizontal_radio_and_checkboxes, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :horizontal_radio_and_checkboxes, tag: 'div', error_class: 'has-error' do |b|
     b.use :html5
     b.optional :readonly
 
-    b.use :label, class: 'caceo-form-label control-label'
+    # b.use :label, class: 'caceo-form-label control-label'
 
     b.wrapper tag: 'div', class: 'caceo-form-input' do |ba|
       ba.use :input
@@ -96,22 +96,20 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :horizontal_input_group, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :horizontal_input_group, tag: 'div', class: 'caceo-form-input', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: 'caceo-form-label control-label'
+    # b.use :label, class: 'caceo-form-label control-label'
 
-    b.wrapper tag: 'div', class: 'caceo-form-input' do |ba|
-      ba.wrapper tag: 'div', class: 'input-group' do |append|
-        append.use :input, class: 'form-control'
-      end
-      ba.use :error, wrap_with: { tag: 'span', class: 'help-block' }
-      ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+    b.wrapper tag: 'div', class: 'input-group' do |append|
+      append.use :input, class: 'form-control'
     end
+    b.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+    b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
   end
 
   # config.wrappers :horizontal_form, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|

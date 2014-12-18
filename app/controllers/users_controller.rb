@@ -10,7 +10,8 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    @user.update_attribute(:county, params[:user][:county])
+    # because of county ambiguity, foreign key vs model
+    @user.update_attribute(:county, CaCountyInfo.find( params[:user][:county].to_i ) ) 
     redirect_to :back
   end
 

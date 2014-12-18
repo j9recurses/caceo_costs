@@ -3,12 +3,9 @@ source 'https://rubygems.org'
 
 gem 'therubyracer', platforms: :ruby
 
-# gem 'less-rails'
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-# gem 'twitter-bootstrap-rails', "~> 2.2.8"
 
 gem 'bootstrap-sass'
 gem 'sass-rails', '~> 4.0.0'
@@ -22,6 +19,8 @@ group :test, :development, :production do
   gem 'mysql2'
   gem 'axlsx'
   gem 'axlsx_rails'
+  gem 'simple_form', '3.0'
+  gem 'turbolinks'
 end
 
 group :development, :production do
@@ -45,7 +44,11 @@ group :linux do
 end
 
 group :test, :development do
-  gem 'rspec-rails'
+  gem 'rspec-rails'  
+end
+
+group :development do
+  gem 'nokogiri'
 end
 
 
@@ -63,20 +66,11 @@ gem 'email_validator'
 gem 'bcrypt-ruby', '~> 3.0.0', :require => "bcrypt"
 
 
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
-
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-gem 'nokogiri'
-
 gem 'json'
 
-
-#helps handle static mapping data- used for the ca county info
-gem 'static_model'
-gem 'simple_form', '3.0'
 
 
 gem "letter_opener", :group => :development
