@@ -29,7 +29,7 @@ module MultiStepModel
     if self.class == ElectionProfile
       ElectionProfileDescription.where(model_name: 'election_profiles').in_groups_of(16).size - 1
     else
-      @total_steps ||= CategoryDescription.where(model_name: "#{self.class.to_s.downcase}s" ).in_groups_of(12).size - 1
+      @total_steps ||= CategoryDescription.where(model_name: "#{self.class.to_s.downcase}s" ).where.not('label LIKE "%Percent%" AND model_name != "salbals"').in_groups_of(12).size - 1
     end
   end
 
