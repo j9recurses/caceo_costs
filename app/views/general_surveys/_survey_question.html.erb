@@ -28,14 +28,12 @@
       </span>
     <% end %>
 
-    <%= f.input survey_field, wrapper: :horizontal_input_group do %>
-    <% unless survey_question.comment? %>
-      <span class="input-group-addon">
-        <%= f.input "#{survey_field}_na", as: :boolean, boolean_style: :inline, label: 'N/A', label_style: :inline %>
-      </span>
-    <% end %>
+    <div class="caceo-form-input input-group">
+      <% unless survey_question.comment? %>
+        <label class="input-group-addon"><%= f.check_box "#{survey_field}_na".to_sym %> N/A</label>
+      <% end %>
       <%= f.input_field survey_field, class: 'form-control' %>
-    <% end %>
+    </div>
 
   </div>
 <% end %>

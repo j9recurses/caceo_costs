@@ -21,7 +21,6 @@
   padding-left: 50px;
 }
 
-
 .show_item_total{
   padding-top:16px;
   font-size:25px;
@@ -31,4 +30,32 @@
   padding-top:16px;
   font-size:20px;
   font-weight:bold;
+}
+
+
+.survey-index-title {
+  @include make-sm-column(5);
+}
+
+.survey-index-progress {
+  @include make-sm-column(4);
+}
+
+.survey-index-total {
+  @include make-sm-column(3);
+}
+
+.survey-show-summary {
+}
+.survey-show-summary {
+  @include make-sm-column(10);
+  padding: 0 30px;
+
+}
+.survey-show-question {
+  @include make-sm-column(7);
+}
+
+.survey-show-response {
+  @include make-sm-column(5);
 }

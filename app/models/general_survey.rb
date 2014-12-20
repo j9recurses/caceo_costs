@@ -60,8 +60,14 @@ class GeneralSurvey
 
   def count_answers
     @total_responses ||= countable_form.inject(0) { |sum, form_item|
-      answered?( form_item ) ? sum + 1 : sum
-    } + count_na
+      if na?( form_item )
+        sum + 1
+      elsif answered?( form_item )
+        sum + 1
+      else
+        sum
+      end
+    }
   end
 
   def count_na

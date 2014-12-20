@@ -11,12 +11,7 @@
 <%= render partial: 'general_surveys/survey_hint', collection: survey.form %>
 
 <%= simple_form_for survey.data, html: { class: 'form-horizontal' },
-  wrapper: :horizontal_form,
-    wrapper_mappings: {
-    check_boxes: :horizontal_radio_and_checkboxes,
-    radio_buttons: :horizontal_radio_and_checkboxes,
-    boolean: :horizontal_boolean
-  } do |f| %>
+  wrapper: :horizontal_form do |f| %>
   <%= f.input @survey.election_profile? ? :election_year_profile_id : :election_year_id ,  as: :hidden, :input_html => { :value => session_election } %>
   <%= f.input :county_id,  as: :hidden, :input_html => { :value => session[:county_id]} %>
 

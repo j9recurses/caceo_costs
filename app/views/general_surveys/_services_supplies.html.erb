@@ -1,13 +1,21 @@
-<% survey_presenter.service_supply_items.each do | item | %>
-  <div class="row show_item_title">
-    <span class="col-sm-7"><%= "#{ format_survey_label item.label }: " %></span>
-    <span class="col-sm-5" style="display:inline-block">
-      <%= "#{ survey_presenter.response_for( item, numeric_dollars: true ) }" %>
-    </span>
-  </div>
-<% end %>
+<div class="row">
+  <ul class="list-group survey-show-summary">
+    <li class="list-group-item row">
+      <h4 class="survey-show-question">Question</h4>
+      <h4 class="survey-show-response">Response</h4>
+    </li>
+    <% survey_presenter.service_supply_items.each do | item | %>
+      <li class="list-group-item row">
+        <span class="survey-show-question"><%= "#{ format_survey_label item.label }" %></span>
+        <span class="survey-show-response" style="display:inline-block">
+          <%= "#{ survey_presenter.response_for( item, numeric_dollars: true ) }" %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
 <div class="row">
-<div class="col-sm-7 show_item_title_total">Total</div>
-<div class="col-sm-5 show_item_total"><%="$#{ survey_presenter.service_supply_total }" %></div>
+<div class="survey-show-question show_item_title_total">Total</div>
+<div class="survey-show-response show_item_total"><%="$#{ survey_presenter.service_supply_total }" %></div>
 </div>
