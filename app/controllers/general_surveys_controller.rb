@@ -9,7 +9,7 @@ class GeneralSurveysController < ApplicationController
       id = surv_status.id if surv_status
     else
       surv_status = Category.find_by(election_year_id: session[:election_year], county: current_user[:county],  model_name: model_name)
-      id = klass.where(county: current_user[:county], election_year_id: session[:election_year]).pluck(:id).last
+      id = klass.where(county_id: current_user[:county], election_year_id: session[:election_year]).pluck(:id).last
     end
 
     if surv_status && surv_status.started?

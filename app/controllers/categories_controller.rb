@@ -8,5 +8,21 @@ class CategoriesController < ApplicationController
        @year_total = @salary_total + @supply_total
        #set the election_year session
        session[:election_year] = @election_year.id
+
+    # new sheriff in town
+    @election_year = ElectionYear.find(params[:election_year_id])
+    @surveys = CategoryDescription.group(:name, :model_name).order(:cost_type)
+    @responses = @surveys.map { |c| 
+      klass = c.model_name.singularize.camelize.constantize
+      survey = klass.where( county_id: current_user.county, election_year_id: params[:election_year_id] ).last
+      GeneralSurvey.new( survey )
+    }
   end
 end
+
+    # @surveys = CategoryDescription.group(:name, :model_name).order(:cost_type)
+    # @responses = @surveys.map do |c| 
+    #   klass = c.model_name.singularize.camelize.constantize
+    #   survey = klass.where( county_id: 1, election_year_id: 11 ).last
+    #   GeneralSurvey.new( survey )
+    # end

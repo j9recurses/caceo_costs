@@ -28,12 +28,13 @@
       </span>
     <% end %>
 
-    <%= f.input survey_question.field.to_sym, wrapper: :horizontal_input_group do %>
+    <%= f.input survey_field, wrapper: :horizontal_input_group do %>
+    <% unless survey_question.comment? %>
       <span class="input-group-addon">
-        <span>N/A</span>
-        <input type="checkbox">
+        <%= f.input "#{survey_field}_na", as: :boolean, boolean_style: :inline, label: 'N/A', label_style: :inline %>
       </span>
-      <%= f.input_field survey_question.field.to_sym, class: 'form-control splootnik' %>
+    <% end %>
+      <%= f.input_field survey_field, class: 'form-control' %>
     <% end %>
 
   </div>

@@ -1,11 +1,13 @@
 <% survey_presenter.service_supply_items.each do | item | %>
-  <div class="show_item_title">
-    <%= "#{ format_survey_label item.label }: " %>
-    <span style="display:inline-block">
+  <div class="row show_item_title">
+    <span class="col-sm-7"><%= "#{ format_survey_label item.label }: " %></span>
+    <span class="col-sm-5" style="display:inline-block">
       <%= "#{ survey_presenter.response_for( item, numeric_dollars: true ) }" %>
     </span>
   </div>
 <% end %>
 
-<div class="show_item_title_total">Total</div>
-<div class="show_item_total"><%="$#{ survey_presenter.service_supply_total }" %></div>
+<div class="row">
+<div class="col-sm-7 show_item_title_total">Total</div>
+<div class="col-sm-5 show_item_total"><%="$#{ survey_presenter.service_supply_total }" %></div>
+</div>

@@ -6,7 +6,8 @@ before_action :set_election_year, only: [:view_year]
 
   def home
     @years, @total_election_year_costs  = ElectionYear.get_all_years(@user)
-    @county_name  = CaCountyInfo.where(id: @user[:county]).pluck(:name)
+
+    @county_name  = current_user.county.name
   end
 
   private

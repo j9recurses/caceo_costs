@@ -26,7 +26,7 @@ class UsersController < ApplicationController
           flash[:notice] = "You signed up successfully"
           @uid = @user.id
           session[:user_id] = @user.id
-          session[:county] =  @user.county.id
+          session[:county_id] =  @user.county.id
           session[:expires_at] = Time.current + 3.hours
           
           SupportMailer.signup_notification(@user).deliver
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
       @uid =  @authorized_user.id
       @ucounty =  @authorized_user.county.id
       session[:user_id] = @authorized_user.id
-      session[:county] = @ucounty
+      session[:county_id] = @ucounty
       session[:expires_at] = Time.current + 3.hours
       redirect_to(profile_user_path (@uid))
     else
@@ -83,7 +83,7 @@ class UsersController < ApplicationController
       @authorized_user, @chkd = User.authenticate_security_question(user_params[:username_or_email],user_params[:security_answer])
        if @chkd
          session[:user_id] = @authorized_user.id
-         session[:county] = @ucounty
+         session[:county_id] = @ucounty
          session[:expires_at] = Time.current + 3.hours
          redirect_to update_password_user_path(@authorized_user.id)
       else

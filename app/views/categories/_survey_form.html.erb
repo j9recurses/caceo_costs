@@ -1,0 +1,30 @@
+<% response = responses.detect { |r| r.klass.to_s.underscore.pluralize == survey_form.model_name } %>
+<% if response %>
+  <% total = response.total %>
+  <% percent = response.percent_complete %>
+  <% url = url_for( controller: survey_form.model_name, action: 'show', id: response.data.id ) %>
+<% else %>
+  <% url = url_for( controller: survey_form.model_name, action: 'new' ) %>
+<% end %>
+
+<div class="row">
+  <div class="col-sm-5">
+    <span><%= link_to( format_category(survey_form.name), url ) %></span>
+  </div>
+
+
+  <div class="col-sm-5">
+    <div class="progress">
+      <% if response %>
+        <div class="progress-bar" role="progressbar" aria-valuenow=<%="#{percent}"%> aria-valuemin="0" aria-valuemax="100" style="<%="width: #{percent}%;" %> ">
+          <%= percent ? "#{percent}%" : '' %></div>
+      <% else %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-sm-2">
+    <%= total ? "$#{total}" : 'Not Started'%>
+  </div>
+
+</div>

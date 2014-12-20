@@ -18,6 +18,7 @@
 @import 'users';
 @import 'activities';
 @import 'forms';
+@import 'general_surveys';
 
 
 #mybody {  font-family: 'Muli', sans-serif; }
@@ -55,100 +56,6 @@
   color: blue;
   background-color:yellow;
   text-decoration: none
-}
-
-th.mytable {
-  border: 1px solid #DDDDDD;
-  font-size: 12px;
-  height:17px;
-  padding-right:10px;
-  padding-left:10px;
-  text-align: center;
-  width:100px;
-}
-
-td.mytable {
-  border: 1px solid #DDDDDD;
-  font-size: 12px;
-  height:17px;
-  padding-right:10px;
-  padding-left:10px;
-  text-align: center;
-  width:100px;
-}
-
-th.mytable_cash {
-  border: 1px solid #DDDDDD;
-  font-size: 12px;
-  height:17px;
-  padding-right:10px;
-  padding-left:10px;
-  text-align: center;
-  width:175px;
-}
-
-td.mytable_cash {
-  border: 1px solid #DDDDDD;
-  font-size: 12px;
-  height:17px;
-  padding-right:10px;
-  padding-left:10px;
-  text-align: center;
-  width:175px;
-}
-
-td.mytable_first {
-  border: 1px solid #DDDDDD;
-  font-size: 12px;
-  height:17px;
-  padding-right:60px;
-  padding-left:10px;
-  width:300px;
-}
-
-th.mytable_first {
-  border: 1px solid #DDDDDD;
-  font-size: 12px;
-  height:17px;
-  padding-right:60px;
-  padding-left:10px;
-  width:300px;
-}
-
-.show_item{
-  font_size: 14px;
-}
-
-.show_item_title{
-  padding-top:13px;
-  font-size:14px;
-  font-weight:bold;
-}
-
-.show_item_title_main{
-  padding-top:13px;
-  font-size:14px;
-  font-weight:bold;
-}
-
-
-.show_item_title_sub{
-  padding-top:5px;
-  font-size:12px;
-  font-weight:bold;
-  padding-left: 50px;
-}
-
-
-.show_item_total{
-  padding-top:2px;
-  font-size:25px;
-}
-
-.show_item_title_total{
-  padding-top:16px;
-  font-size:20px;
-  font-weight:bold;
 }
 
 h1.myh1 {
@@ -313,10 +220,6 @@ p.intro_bold {
   font-size:9px;
 }
 
-.mytable_new{
-  width:600px;
-}
-
 .category_break {
   padding-bottom:20px;
 }
@@ -337,64 +240,6 @@ p.intro_bold {
   text-decoration: none
 }
 
-th.yr_mytable {
-  border: 1px solid #DDDDDD;
-  font-size: 12px;
-  height:17px;
-  padding-right:20px;
-  text-align: center;
-  width:100px;
-}
-
-td.yr_mytable {
-  border: 1px solid #DDDDDD;
-  font-size: 12px;
-  height:17px;
-  padding-right:20px;
-  text-align: center;
-  width:100px;
-}
-
-th.yr_mytable_cash {
-  border: 1px solid #DDDDDD;
-  font-size: 12px;
-  height:17px;
-  text-align: center;
-  padding-right:10px;
-  padding-left:10px;
-  width:125px;
-}
-
-td.yr_mytable_cash {
-  border: 1px solid #DDDDDD;
-  font-size: 12px;
-  height:17px;
-  text-align: center;
-  padding-right:10px;
-  padding-left:10px;
-  width:125px;
-}
-
-td.yr_mytable_first {
-  border: 1px solid #DDDDDD;
-  font-size: 12px;
-  height:17px;
-  padding-right:60px;
-  padding-left:10px;
-  width:175px;
-}
-
-th.yr_mytable_first {
-  border: 1px solid #DDDDDD;
-  font-size: 12px;
-  height:17px;
-  padding-left:10px;
-  padding-right:60px;
-  width:175px;
-}
-
-
-
 h2.myh2yr_tot {
   clear:both;
   text-decoration: none;
@@ -408,7 +253,6 @@ h2.myh2yr_tot {
   padding-left:100px;
 }
 
-
 table.mymult{
 
 overflow:auto;
@@ -421,7 +265,6 @@ overflow:auto;
 tr.mymult{
   border: 1px solid #DDDDDD;
 }
-
 
 td.mymult{
   border: 1px solid #DDDDDD;
@@ -460,12 +303,10 @@ td.mymult_num{
   font-size:17px;
 }
 
-
 .end_link_tech{
   padding-bottom:30px;
   font-size:17px;
 }
-
 
 .end_link_tech a:hover {
   color: blue;

@@ -18,7 +18,7 @@
     boolean: :horizontal_boolean
   } do |f| %>
   <%= f.input @survey.election_profile? ? :election_year_profile_id : :election_year_id ,  as: :hidden, :input_html => { :value => session_election } %>
-  <%= f.input :county ,  as: :hidden, :input_html => { :value => session[:county]} %>
+  <%= f.input :county_id,  as: :hidden, :input_html => { :value => session[:county_id]} %>
 
   <% if params[:all] %>
     <%= hidden_field_tag :all, 1 %>

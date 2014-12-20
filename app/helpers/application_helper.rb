@@ -48,5 +48,14 @@ end
       .gsub("Ca Ec", "CA EC")
     end
   end
+
+  def format_category(text)
+      text.titleize
+      .gsub('Vbm', "VBM")
+      .gsub('Doj', "DOJ")
+      .gsub("Salaries Related To ", '')
+      .gsub("Salaries For", "")
+      .gsub(" Services And Supplies", '')
+  end
 end
 
