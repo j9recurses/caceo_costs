@@ -6,7 +6,9 @@ gem 'therubyracer', platforms: :ruby
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
+gem 'autoprefixer-rails'
 
+gem 'sprockets-rails', '~> 2.2.2'
 gem 'bootstrap-sass'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
