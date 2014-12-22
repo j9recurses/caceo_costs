@@ -17,11 +17,11 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'activerecord-session_store'
 
 group :test, :development, :production do
-  gem 'rails'
+  gem 'rails', '~> 4.1'
   gem 'mysql2'
   gem 'axlsx'
   gem 'axlsx_rails'
-  gem 'simple_form', '3.0'
+  gem 'simple_form', '~> 3.1'
   gem 'turbolinks'
 end
 
@@ -49,9 +49,9 @@ group :test, :development do
   gem 'rspec-rails'  
 end
 
-group :development do
-  gem 'nokogiri'
-end
+# group :development do
+#   gem 'nokogiri'
+# end
 
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
