@@ -285,10 +285,14 @@ class GeneralSurvey
       # response = value.nil? ? 0 : value
     end
 
-    if numeric_dollars && response.is_a?(Numeric)
-      response = "$#{response}"
+    if response.is_a?(Numeric)
+      if numeric_dollars
+        response = "$#{response}"
+      elsif numeric_percent
+        response = "#{response}%"
+      end
     end
-
+    
     return response
   end
 end
