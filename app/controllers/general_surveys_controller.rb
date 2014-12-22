@@ -77,6 +77,8 @@ private
           puts @survey.data.inspect
           redirect_to( @survey.data )
         end
+      else
+
       end
       session[session_model_params][:current_step] = @survey.data.current_step if session[session_model_params] 
     end
@@ -99,6 +101,11 @@ private
     # session
     # session[session_model_params]
   end
+
+  def survey_session
+    session[session_model_params]
+  end
+  helper_method :survey_session
 
   def survey_from_record_id
     @survey = GeneralSurvey.new( klass.find(params[:id]) )
