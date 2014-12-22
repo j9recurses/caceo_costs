@@ -2,8 +2,13 @@
   @include make-sm-column(6);
 }
 
-.caceo-form-label {
-  @include make-sm-column(6);
+label.caceo-form-label.control-label {
+  @include make-sm-column(5);
+  text-align: left;
+}
+
+.caceo_checkbox_group {
+  padding-left: 30px;
 }
 
 // .caceo-form-input {

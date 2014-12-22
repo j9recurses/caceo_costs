@@ -1,4 +1,8 @@
 class CategoryDescription < ActiveRecord::Base
+  def election_profile?
+    false
+  end
+ 
   def comment?
     question_type == 'comment'
   end
