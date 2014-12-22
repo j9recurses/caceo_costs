@@ -21,10 +21,10 @@
     <%= render partial: "general_surveys/survey_question", collection: survey_presenter.form_pages, locals: { f: f } %>
     <%= f.submit %>
   <% else %>
-    <%= f.hidden_field :current_step, value: survey_session[:current_step] %>
+    <%= f.hidden_field :current_step, value: survey.current_step %>
 
     <%= render partial: "general_surveys/survey_question", 
-      collection: survey_presenter.form_pages[ survey_session[:current_step] ], 
+      collection: survey_presenter.form_pages[ survey.current_step ], 
       locals: { f: f } %>
 
     <div class="form-actions">
