@@ -24,7 +24,7 @@
     <%= f.hidden_field :current_step, value: survey.current_step %>
 
     <%= render partial: "general_surveys/survey_question", 
-      collection: survey_presenter.form_pages[ survey.current_step ], 
+      collection: survey_presenter.form_pages[ survey.current_step ].compact, 
       locals: { f: f } %>
 
     <div class="form-actions">
