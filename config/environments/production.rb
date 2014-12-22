@@ -20,7 +20,7 @@ CaceoCosts::Application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.serve_static_assets = false
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -29,7 +29,7 @@ CaceoCosts::Application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   #config.assets.compile = false
   config.assets.compile =false
-  config.assets.precompile =  ['*.js', '*.css', '*.css.erb']
+  # config.assets.precompile =  ['*.js', '*.css', '*.css.erb']
   #then run RAILS_ENV=production bundle exec rake assets:precompile
 
   # Generate digests for assets URLs.
