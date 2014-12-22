@@ -240,7 +240,7 @@ class GeneralSurvey
     benefits_percent_items.size > 0
   end
   
-  def response_for( item, numeric_dollars: false, nil_zeros: false )
+  def response_for( item, numeric_dollars: false, numeric_percent: false, nil_zeros: false )
     match = /ssbalpri(\w+)ml/.match( item.field ) || /eplang(vra|caec)/.match( item.field )
     value = self.data[ item.field ]
 
@@ -292,7 +292,7 @@ class GeneralSurvey
         response = "#{response}%"
       end
     end
-    
+
     return response
   end
 end
