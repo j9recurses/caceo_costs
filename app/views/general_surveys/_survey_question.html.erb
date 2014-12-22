@@ -40,7 +40,7 @@
     <% end %>
 
     <div class="caceo-form-input input-group">
-      <% unless survey_question.comment? || survey_question.election_profile? %>
+      <% if !survey_question.comment? && !survey_question.election_profile? %>
         <label class="input-group-addon">
           <%= f.check_box "#{survey_field}_na" %> N/A
         </label>
