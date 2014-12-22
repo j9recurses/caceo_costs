@@ -1,8 +1,20 @@
-<% survey_presenter.election_profile_items.each do | item | %>
-  <div class="show_item_title">
-    <%= "#{ format_survey_label item.label }: " %>
-    <span style="display:inline-block">
-      <%= "#{ survey_presenter.response_for( item, numeric_dollars: false ) }" %>
-    </span>
+<div class="row">
+  <div class="survey-show-summary">
+    <div class="row">
+      <ul class="list-group">
+        <li class="list-group-item row">
+          <h4 class="survey-show-question">Question</h4>
+          <h4 class="survey-show-response">Response</h4>
+        </li>
+        <% survey_presenter.election_profile_items.each do | item | %>
+          <li class="list-group-item row">
+            <span class="survey-show-question"><%= format_survey_label item.label %></span>
+            <span class="survey-show-response">
+              <%= survey.response_for( item, numeric_dollars: false ) %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
-<% end %>
+</div>

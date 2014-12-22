@@ -46,10 +46,8 @@
 }
 
 .survey-show-summary {
-}
-.survey-show-summary {
   @include make-sm-column(10);
-  padding: 0 30px;
+  padding-left: 50px;
 
 }
 .survey-show-question {
@@ -58,4 +56,5 @@
 
 .survey-show-response {
   @include make-sm-column(5);
+  display: inline-block;
 }

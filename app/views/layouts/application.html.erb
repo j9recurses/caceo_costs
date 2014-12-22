@@ -34,85 +34,87 @@
       <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
           <div class="mynavbar">
-            <div class="navbar-header">
-
-              <div class="mynav_login"> 
-                <% if current_user %>
-                  Logged in as <%= current_user.username %> with <%= link_to "#{ current_user.county.name }", profile_user_path(session[:user_id]) %>.
-                  <%= link_to "Log Out", logout_path %>
-                <% else %>
-                  <%= link_to "Sign Up", signup_path %> or
-                  <%= link_to "Log In", login_path %>
-                <% end %>
-              </div>
-
-              <% if current_user && current_user.observer? %>
-              <% elsif current_user %>
-                <a class="navbar-brand" href="<%= profile_user_path(current_user.id) %>"><img id="caceo-logo" src="/images/CACEO_logo.gif" alt="logo" /></a>
+            <div class="mynav_login navbar-link"> 
+              <% if allow? :users, :logout %>
+                Signed in as <%= current_user.username %> with <%= link_to "#{ current_user.county.name }.", profile_user_path(session[:user_id]) %><span style="width:10px;q"></span>
+                  <button type="button" href=<%= logout_path %> class="btn btn-default">Log Out</button>
               <% else %>
-                <a class="navbar-brand" href="/"><img src="/images/CACEO_logo.gif" alt="logo" /></a>
+                <%= link_to "Sign Up", signup_path %> or
+                <%= link_to "Log In", login_path %>
               <% end %>
-
-
-              <button type="button" class="navbar-toggle collapsed" data-target="#mynav" data-toggle="collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-                
-              <div class="collapse navbar-collapse" id="mynav">
-
-                <ul class="nav navbar-nav list-unstyled">
-                  <% if current_user && current_user.observer? %>
-                    <div class="observer_county_select">
-                      <%= form_for(current_user, method: :patch) do %>
-                        <%= collection_select(:user, :county, CaCountyInfo.all, :id, :name) %>
-                        <%= submit_tag "Change County" %>
-                      <% end %>
-                    </div>
-                  <% end %>
-
-                  <% if allow? :categories, :index %>
-                    <li class="dropdown">
-                      <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
-                        Surveys
-                        <b class="caret"></b>
-                      </a>
-                      <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <%= render partial: "layouts/nav_links", locals: { session: session } %>
-                      </ul>
-                    </li>
-                  <% end %>
-
-                  <% if allow? :users, :profile %>
-                    <li class="mynav_li"><%= link_to "County Home",  profile_user_path(session[:user_id]) %></li>
-                  <% end %>
-
-                  <% if allow? :activities, :index %>
-                    <li class="dropdown">
-                      <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
-                        Admin Tools
-                        <b class="caret"></b>
-                      </a>
-                      <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <li class="mynav_li"><%= link_to "Daily Activity", activities_path(day: true)%></li>
-                        <li class="mynav_li"><%= link_to "Weekly Activity", activities_path(week: true)%></li>
-                        <li class="mynav_li"><%= link_to "All Activity", activities_path(all: true)%></li>
-                        <li class="mynav_li"><%= link_to "Surveys Report", activities_path(full_report: true, format: :xlsx)%></li>
-                        <li class="mynav_li"><%= link_to "Counties Report", activity_path(id: 'county', format: :xlsx)%></li>
-                      </ul>
-                    </li>
-
-                  <% else %>
-                    <li class="mynav_li"><a href="/messages/new">Contact Us</a></li>
-                  <% end %>
-
-                  <% if allow? :users, :logout %>
-                    <li class="mynav_li"><%= link_to "Logout", logout_path  %></li>
-                  <% end %>
-                </ul>
-              </div><!--/.navbar-collapse -->
             </div>
+
+            <% if current_user && current_user.observer? %>
+            <% elsif current_user %>
+              <a class="navbar-brand" href="<%= profile_user_path(current_user.id) %>"><img id="caceo-logo" src="/images/CACEO_logo.gif" alt="logo" /></a>
+            <% else %>
+              <a class="navbar-brand" href="/"><img src="/images/CACEO_logo.gif" alt="logo" /></a>
+            <% end %>
+
+
+            <button type="button" class="navbar-toggle collapsed" data-target="#mynav" data-toggle="collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+              
+            <div class="collapse navbar-collapse" id="mynav">
+
+              <ul class="nav navbar-nav list-unstyled">
+                <% if current_user && current_user.observer? %>
+                  <div class="observer_county_select">
+                    <%= form_for(current_user, method: :patch) do |f| %>
+                      <%= f.collection_select(:county, CaCountyInfo.all, :id, :name) %>
+                      <%= submit_tag "Change County" %>
+                    <% end %>
+                  </div>
+                <% end %>
+
+                <% if allow? :categories, :index %>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+                      Surveys
+                      <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                      <%= render partial: "layouts/nav_links", locals: { session: session } %>
+                    </ul>
+                  </li>
+                <% end %>
+
+                <% if allow? :activities, :index %>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+                      Admin Tools
+                      <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                      <li class="mynav_li"><%= link_to "Daily Activity", activities_path(day: true)%></li>
+                      <li class="mynav_li"><%= link_to "Weekly Activity", activities_path(week: true)%></li>
+                      <li class="mynav_li"><%= link_to "All Activity", activities_path(all: true)%></li>
+                      <li class="divider"></li>
+                      <li class="mynav_li"><%= link_to "Surveys Report", activities_path(full_report: true, format: :xlsx)%></li>
+                      <li class="mynav_li"><%= link_to "Counties Report", activity_path(id: 'county', format: :xlsx)%></li>
+                    </ul>
+                  </li>
+                <% end %>
+
+                <% if allow? :users, :profile %>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+                      Account
+                      <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                      <li class="mynav_li"><%= link_to "Home",  profile_user_path(session[:user_id]) %></li>
+                      <li class="mynav_li"><%= link_to "Log Out", logout_path %></li>
+                      <li class="divider"></li>
+                      <li class="mynav_li"><a href="/messages/new">Contact Us</a></li>
+                    </ul>
+                  </li>
+                <% end %>
+              </ul>
+            </div><!--/.navbar-collapse -->
           </div>
         </div>
       </div>

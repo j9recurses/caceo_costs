@@ -1,13 +1,12 @@
 class CategoriesController < ApplicationController
 
   def index
-       @election_year = ElectionYear.find(params[:election_year_id])
+       # @election_year = ElectionYear.find(params[:election_year_id])
        @county = current_user.county
-       @salary_categories, @salary_total =  Category.get_completed_or_started(params[:election_year_id], @county, "salaries")
-       @supply_categories, @supply_total  =  Category.get_completed_or_started(params[:election_year_id], @county, "services & supplies")
-       @year_total = @salary_total + @supply_total
+       # @salary_categories, @salary_total =  Category.get_completed_or_started(params[:election_year_id], @county, "salaries")
+       # @supply_categories, @supply_total  =  Category.get_completed_or_started(params[:election_year_id], @county, "services & supplies")
+       # @year_total = @salary_total + @supply_total
        #set the election_year session
-       session[:election_year] = @election_year.id
 
     # new sheriff in town
     @election_year = ElectionYear.find(params[:election_year_id])
@@ -17,6 +16,9 @@ class CategoriesController < ApplicationController
       survey = klass.where( county_id: current_user.county, election_year_id: params[:election_year_id] ).last
       GeneralSurvey.new( survey )
     }
+
+   session[:election_year] = @election_year.id
+
   end
 end
 

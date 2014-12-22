@@ -50,7 +50,16 @@
         <%= "#{ format_survey_label item.label}: #{ survey_presenter.response_for( item ) }" %>
       </div>
     <% end %>
-     
+    
+    <% survey.comment_items.each do | q | %>
+      <div class="show_item_title">
+        <%= format_survey_label q.label %>
+      </div>
+      <div class="show_item">
+        <%= survey.response_for( q ) %>
+      </div>
+    <% end %>
+
   <div class="show_item_title_total">Total Salaries Including Benefits</div>
 
   <div class="show_item_total">

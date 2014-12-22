@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141219024155) do
+ActiveRecord::Schema.define(version: 20141222081212) do
 
   create_table "access_codes", force: true do |t|
     t.string   "user_access_code"
@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 20141219024155) do
     t.boolean  "started",                                          default: false
     t.boolean  "complete",                                         default: false
     t.string   "current_step"
-    t.integer  "county"
+    t.integer  "county_id"
     t.integer  "election_year_profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"

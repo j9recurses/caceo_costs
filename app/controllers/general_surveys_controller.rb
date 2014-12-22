@@ -5,7 +5,7 @@ class GeneralSurveysController < ApplicationController
 
   def index
     if election_profiles_controller?
-      surv_status = ElectionProfile.find_by(county: current_user[:county], election_year_profile_id: params[:election_year_profile_id])
+      surv_status = ElectionProfile.find_by(county_id: current_user[:county], election_year_profile_id: params[:election_year_profile_id])
       id = surv_status.id if surv_status
     else
       surv_status = Category.find_by(election_year_id: session[:election_year], county: current_user[:county],  model_name: model_name)
@@ -95,6 +95,8 @@ private
 
   def current_session
     params[model_singular]
+    # session
+    # session[session_model_params]
   end
 
   def survey_from_record_id

@@ -24,7 +24,7 @@
         </label>
       <% end %>
       <div class="caceo_checkbox_group">
-        <%= f.input_field survey_field, collection: langs, as: :check_boxes, wrapper_html: {class: 'checkbox'} %>
+        <%= f.input_field survey_field, collection: langs, as: :check_boxes %>
         </div>
     </div>
   </div>
@@ -45,7 +45,7 @@
           <%= f.check_box "#{survey_field}_na" %> N/A
         </label>
       <% end %>
-      <%= f.input_field survey_field, class: 'form-control' %>
+      <%= f.input_field survey_field, class: "form-control #{ survey_question.election_profile? ? 'election-profile' : ''}" %>
     </div>
   </div>
 <% end %>

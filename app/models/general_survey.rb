@@ -241,13 +241,18 @@ class GeneralSurvey
   end
   
   def response_for( item, numeric_dollars: false, nil_zeros: false )
-    match = /(ssbalpri|eplang)(\w+)ml/.match item.field
+    match = /ssbalpri(\w+)ml/.match( item.field ) || /eplang(vra|caec)/.match( item.field )
     value = self.data[ item.field ]
 
     if na?(item)
       response = 'N/A'
     elsif match
-      response = self.data.send("#{match[1]}#{match[2]}_multi_lang")
+      if match[1] == 'vra' || match[1] == 'caec'
+        ml_method_name = "eplang#{match[1]}_multi_lang".to_sym
+      else
+        ml_method_name = "ssbalpri#{match[1]}_multi_lang".to_sym
+      end
+      response = self.data.send( ml_method_name )
       if response.blank?
         response = 'No language selected'
       else
