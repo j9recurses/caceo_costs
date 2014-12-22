@@ -10,9 +10,9 @@ class CategoriesController < ApplicationController
 
     # new sheriff in town
     @election_year = ElectionYear.find(params[:election_year_id])
-    @surveys = CategoryDescription.group(:name, :model_name).order(:cost_type)
+    @surveys = CategoryDescription.group(:name, :table_name).order(:cost_type)
     @responses = @surveys.map { |c| 
-      klass = c.model_name.singularize.camelize.constantize
+      klass = c.table_name.singularize.camelize.constantize
       survey = klass.where( county_id: current_user.county, election_year_id: params[:election_year_id] ).last
       GeneralSurvey.new( survey )
     }
@@ -22,9 +22,9 @@ class CategoriesController < ApplicationController
   end
 end
 
-    # @surveys = CategoryDescription.group(:name, :model_name).order(:cost_type)
+    # @surveys = CategoryDescription.group(:name, :table_name).order(:cost_type)
     # @responses = @surveys.map do |c| 
-    #   klass = c.model_name.singularize.camelize.constantize
+    #   klass = c.table_name.singularize.camelize.constantize
     #   survey = klass.where( county_id: 1, election_year_id: 11 ).last
     #   GeneralSurvey.new( survey )
     # end

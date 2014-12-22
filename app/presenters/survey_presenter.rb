@@ -25,9 +25,9 @@ class SurveyPresenter
 
   def form_pages
     @form_pages ||= if survey.election_profile?
-      survey.form.compact.in_groups_of(16)
+      survey.form.in_groups_of(16)
     else
-      survey.form.compact.in_groups_of(12)
+      survey.form.in_groups_of(12)
     end
   end
 

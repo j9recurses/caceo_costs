@@ -18,8 +18,8 @@ wb = xlsx_package.workbook
 end
 
 @tech_reports.each do |tech_relation|
-  wb.add_worksheet( name: tech_relation.first.model_name.titleize ) do |sheet|
-    sheet.add_row [tech_relation.first.model_name.titleize, Time.current.strftime('%F %T%:z') ]
+  wb.add_worksheet( name: tech_relation.first.table_name.titleize ) do |sheet|
+    sheet.add_row [tech_relation.first.table_name.titleize, Time.current.strftime('%F %T%:z') ]
     sheet.add_row ["County", "Total Questions", "Total Responses", "Percent Complete", *( tech_relation.first.class.column_names ) ]
     tech_relation.each do |tech_response|
       sheet.add_row [ tech_response.county_name,

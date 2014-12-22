@@ -22,7 +22,7 @@ group :test, :development, :production do
   gem 'axlsx'
   gem 'axlsx_rails'
   gem 'simple_form', '~> 3.1'
-  gem 'turbolinks'
+  gem 'turbolinks', '~> 2.5.3'
 end
 
 group :development, :production do

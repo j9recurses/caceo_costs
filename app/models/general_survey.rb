@@ -10,12 +10,12 @@ class GeneralSurvey
 
   def_delegators :@data, :current_step, :total_steps, :first_step?, :last_step?
 
-  def model_name
-    @model_name ||= "#{@data.class.to_s.underscore}s"
+  def table_name
+    @table_name ||= "#{@data.class.to_s.underscore}s"
   end
 
   def model_singular
-    @model_singular ||= model_name.singularize
+    @model_singular ||= table_name.singularize
   end
 
   def klass
@@ -29,7 +29,7 @@ class GeneralSurvey
 
 ####### class Survey
   def form
-    @form ||= form_klass.where(model_name: model_name).where.not('label LIKE "%Percent%" AND model_name != "salbals"')
+    @form ||= form_klass.where(table_name: table_name).where.not('label LIKE "%Percent%" AND table_name != "salbals"')
   end
 
   def type
@@ -51,7 +51,7 @@ class GeneralSurvey
   end
 
   def countable_form
-    @countable_form ||= form.where(question_type: nil)
+    @countable_form ||= if election_profile? then form else form.where(question_type: nil) end
   end
 
   def count_questions
@@ -93,7 +93,7 @@ class GeneralSurvey
   end
 
   def category
-    @category ||= Category.find_by(election_year_id: data.election_year_id, county: data.county_id,  model_name: "#{klass.to_s.underscore}s")
+    @category ||= Category.find_by(election_year_id: data.election_year_id, county: data.county_id,  table_name: "#{klass.to_s.underscore}s")
   end
 
   def election_profile?
@@ -254,7 +254,7 @@ class GeneralSurvey
       end
       response = self.data.send( ml_method_name )
       if response.blank?
-        response = 'No language selected'
+        response = nil
       else
         response = response.join(', ')
       end
@@ -278,7 +278,7 @@ class GeneralSurvey
       response = value
     else
       if value.nil?
-        response = nil_zeros ? 0 : 'No Response'
+        response = nil_zeros ? 0 : value
       else
         response = value
       end

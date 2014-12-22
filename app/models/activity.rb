@@ -6,8 +6,8 @@ class Activity
   def self.since(time)
     result = []
     SURVEYS.each do |klass|
-      model_name = klass.to_s.underscore.pluralize
-      relation = Activity.query(klass).where("#{model_name}.updated_at > ?", time)
+      table_name = klass.to_s.underscore.pluralize
+      relation = Activity.query(klass).where("#{table_name}.updated_at > ?", time)
       result.concat relation
     end
     result
@@ -22,48 +22,49 @@ class Activity
   end
 
   def self.query(klass)
-    model_name = klass.to_s.underscore.pluralize
+    table_name = klass.to_s.underscore.pluralize
     election_model       = klass == ElectionProfile ? 'election_year_profiles'   : 'election_years'
     election_foreign_key = klass == ElectionProfile ? 'election_year_profile_id' : 'election_year_id' 
 
-    relation = klass.select("MAX(#{model_name}.id) AS id, '#{model_name}' AS model_name, county, #{model_name}.updated_at")
-      .where.not(county: 59)
-      .group(:county, election_foreign_key.to_sym)
+    relation = klass.select("MAX(#{table_name}.id) AS id, '#{table_name}' AS table_name, county_id, #{table_name}.updated_at")
+      .where.not(county_id: 59)
+      .group(:county_id, election_foreign_key.to_sym)
 
     unless klass == TechVotingMachine || klass == TechVotingSoftware
       relation = relation.select("#{election_model}.year AS election_name, #{election_model}.election_dt AS election_date")
-      .joins("INNER JOIN #{election_model} ON #{election_model}.id = #{model_name}.#{election_foreign_key}")
+      .joins("INNER JOIN #{election_model} ON #{election_model}.id = #{table_name}.#{election_foreign_key}")
     end
 
     if klass != ElectionProfile
       relation = relation.select("category_descriptions.name AS survey_name")
-      .joins("INNER JOIN category_descriptions ON category_descriptions.model_name = '#{model_name}'")
+      .joins("INNER JOIN category_descriptions ON category_descriptions.table_name = '#{table_name}'")
     else
       relation = relation.select("'Election Profile' AS survey_name")
     end
   end
 
+# maintina 'county' not county_id
   def self.tech_query(klass)
-    model_name = klass.to_s.underscore.pluralize
-    relation = klass.select("MAX(#{model_name}.id) AS id, '#{model_name}' AS model_name, county, #{model_name}.updated_at")
+    table_name = klass.to_s.underscore.pluralize
+    relation = klass.select("MAX(#{table_name}.id) AS id, '#{table_name}' AS table_name, county, #{table_name}.updated_at")
       .where.not(county: 59)
-      .select("ca_county_infos.name AS county_name, #{model_name}.*")
-      .joins("INNER JOIN ca_county_infos on ca_county_infos.id = #{model_name}.county")
+      .select("ca_county_infos.name AS county_name, #{table_name}.*")
+      .joins("INNER JOIN ca_county_infos on ca_county_infos.id = #{table_name}.county")
   end
 
   def self.county_query(id)
     result = []
     SURVEYS.each do |klass|
-      model_name = klass.to_s.underscore.pluralize
+      table_name = klass.to_s.underscore.pluralize
       election_model       = klass == ElectionProfile ? 'election_year_profiles'   : 'election_years'
       election_foreign_key = klass == ElectionProfile ? 'election_year_profile_id' : 'election_year_id' 
 
-      relation = klass.where(county: id)      
-        .select("#{model_name}.*, #{election_model}.year AS election_name, #{election_model}.election_dt AS election_date")
-        .joins("INNER JOIN #{election_model} ON #{election_model}.id = #{model_name}.#{election_foreign_key}")
+      relation = klass.where(county_id: id)      
+        .select("#{table_name}.*, #{election_model}.year AS election_name, #{election_model}.election_dt AS election_date")
+        .joins("INNER JOIN #{election_model} ON #{election_model}.id = #{table_name}.#{election_foreign_key}")
       
       if klass != ElectionProfile
-        survey_name = CategoryDescription.where("model_name = '#{model_name}'").limit(1).first.name
+        survey_name = CategoryDescription.where("table_name = '#{table_name}'").limit(1).first.name
       else
         survey_name = 'Election Profile'
       end
@@ -71,7 +72,7 @@ class Activity
     end
     { CaCountyInfo.find(id).name => result }
   end
-      # relation = klass.where(county: id).select("ca_county_infos.name AS county_name").select("#{model_name}.*, #{election_model}.year AS election_name, #{election_model}.election_dt AS election_date").joins("INNER JOIN #{election_model} ON #{election_model}.id = #{model_name}.#{election_foreign_key}").joins("INNER JOIN ca_county_infos on ca_county_infos.id = #{model_name}.county")
+      # relation = klass.where(county_id: id).select("ca_county_infos.name AS county_name").select("#{table_name}.*, #{election_model}.year AS election_name, #{election_model}.election_dt AS election_date").joins("INNER JOIN #{election_model} ON #{election_model}.id = #{table_name}.#{election_foreign_key}").joins("INNER JOIN ca_county_infos on ca_county_infos.id = #{table_name}.county_id")
         
   def self.elections
     ElectionYear.order(election_dt: :asc).pluck(:year)
@@ -87,10 +88,10 @@ class Activity
   end
 
   def self.report(klass)
-    model_name = klass.to_s.underscore.pluralize
+    table_name = klass.to_s.underscore.pluralize
     Activity.query(klass)
-      .select("ca_county_infos.name AS county_name, #{model_name}.*")
-      .joins("INNER JOIN ca_county_infos on ca_county_infos.id = #{model_name}.county")
+      .select("ca_county_infos.name AS county_name, #{table_name}.*")
+      .joins("INNER JOIN ca_county_infos on ca_county_infos.id = #{table_name}.county_id")
   end
 
   def self.report_tech
@@ -110,8 +111,8 @@ class Activity
   end
 
   def self.sort_by_county_election(array)
-    county_array = array.sort { |x,y| x.county <=> y.county }
-    grouped = county_array.group_by { |x| x.county }
+    county_array = array.sort { |x,y| x.county_id <=> y.county_id }
+    grouped = county_array.group_by { |x| x.county_id }
 
     grouped.map do |county_id, surveys|
       sorted_surveys = surveys.sort {|x,y| y.election_date <=> x.election_date } 

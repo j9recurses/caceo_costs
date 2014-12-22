@@ -9,16 +9,17 @@
 
   <table class="table table-bordered table-striped">
     <thead>
-      <th>Voting Equipment Type</th>
+      <tr>
+        <th>Voting Equipment Type</th>
         <th>Purchase Date</th>
-         <th> Make and Model</th>
+        <th> Make and Model</th>
         <th> Purchase Price</th>
         <th> Purchase Price Includes Some Services? </th>
-            <th>Quantity</th>
-            <th>Offsetting Funds Source</th>
-            <th>Offsetting Funds Amount</th>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
+        <th>Quantity</th>
+        <th>Offsetting Funds Source</th>
+        <th>Offsetting Funds Amount</th>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
       </tr>
     </thead>
     <tbody class="tech-index">
@@ -31,8 +32,10 @@
 <%= link_to "Election Technology Home", election_technologies_path  %>
 </div>
 
-<div id="tech-modal" class="modal fade">
-<div class="modal-dialog">
-<div id="inner-product-modal" class="modal-content"></div>
+<div class="modal fade" id="tech-modal">
+  <div class="modal-dialog">
+    <div id="inner-product-modal" class="modal-content">
+      <div id="tech-modal-inner"></div>
+    </div>
+  </div>
 </div>
-

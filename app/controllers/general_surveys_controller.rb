@@ -8,7 +8,7 @@ class GeneralSurveysController < ApplicationController
       surv_status = ElectionProfile.find_by(county_id: current_user[:county], election_year_profile_id: params[:election_year_profile_id])
       id = surv_status.id if surv_status
     else
-      surv_status = Category.find_by(election_year_id: session[:election_year], county: current_user[:county],  model_name: model_name)
+      surv_status = Category.find_by(election_year_id: session[:election_year], county: current_user[:county],  table_name: table_name)
       id = klass.where(county_id: current_user[:county], election_year_id: session[:election_year]).pluck(:id).last
     end
 
@@ -52,7 +52,7 @@ class GeneralSurveysController < ApplicationController
 
   def destroy
     SurveyPersistor.new( @survey ).destroy
-    redirect_to send("#{model_name}_path")
+    redirect_to send("#{table_name}_path")
   end
 
 private
@@ -67,14 +67,15 @@ private
         @survey.data.step_forward  
       elsif params[:save_and_continue]
         if SurveyPersistor.new( @survey ).save
-          flash.now[:notice] = "Your progress has been saved."
+          flash.now['success'] = "Your progress has been saved."
           @survey.data.step_forward
         end      
       elsif params[:save_and_exit] || @survey.data.last_step?
         if SurveyPersistor.new( @survey ).save
-          flash[:notice] = flash_message
+          flash['success'] = flash_message
           session[session_model_params] = nil
-          redirect_to @survey.data
+          puts @survey.data.inspect
+          redirect_to( @survey.data )
         end
       end
       session[session_model_params][:current_step] = @survey.data.current_step if session[session_model_params] 
@@ -103,12 +104,12 @@ private
     @survey = GeneralSurvey.new( klass.find(params[:id]) )
   end
 
-  def model_name
-    @model_name ||= self.class.to_s.gsub('Controller', '').underscore
+  def table_name
+    @table_name ||= self.class.to_s.gsub('Controller', '').underscore
   end
 
   def model_singular
-    @model_singular ||= model_name.singularize
+    @model_singular ||= table_name.singularize
   end
 
   def session_model_params
@@ -116,13 +117,13 @@ private
   end
 
   def klass
-    @klass ||= model_name.singularize.camelize.constantize
+    @klass ||= table_name.singularize.camelize.constantize
   end
 
  # Methods below know Election Profiles exist
   
   def election_profiles_controller?
-    model_name == 'election_profiles'
+    table_name == 'election_profiles'
   end
 
   def election_profile_session
@@ -167,7 +168,7 @@ end
 
 # class ElectionProfilesController < ApplicationController
 
-# before_action :get_user, :get_model_name
+# before_action :get_user, :get_table_name
 # before_action :get_election_profile_description, :make_chunks,  except: [:destroy]
 # before_action :load_product, :set_election_profile, only: [:show, :update, :edit, :destroy]
 

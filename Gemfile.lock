@@ -221,7 +221,7 @@ GEM
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
-    turbolinks (2.2.2)
+    turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -263,5 +263,5 @@ DEPENDENCIES
   spring-commands-rspec
   sprockets-rails (~> 2.2.2)
   therubyracer
-  turbolinks
+  turbolinks (~> 2.5.3)
   uglifier (>= 1.3.0)
