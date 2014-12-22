@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141222111509) do
+ActiveRecord::Schema.define(version: 20141222131554) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -261,6 +261,7 @@ ActiveRecord::Schema.define(version: 20141222111509) do
     t.boolean  "salbalbetsp_na",   limit: 1,     default: false, null: false
     t.boolean  "salbalhrsps_na",   limit: 1,     default: false, null: false
     t.boolean  "salbalhrsts_na",   limit: 1,     default: false, null: false
+    t.boolean  "salbalcomment_na", limit: 1
   end
 
   create_table "salbcs", force: :cascade do |t|
