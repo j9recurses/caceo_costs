@@ -1,0 +1,61 @@
+.show_item{
+  font-size: 14px;
+}
+
+.show_item_title{
+  padding-top:13px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.show_item_title_main{
+  padding-top:13px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.show_item_title_sub{
+  padding-top:5px;
+  font-size:12px;
+  font-weight:bold;
+  padding-left: 50px;
+}
+
+.show_item_total{
+  padding-top:16px;
+  font-size:25px;
+}
+
+.show_item_title_total{
+  padding-top:16px;
+  font-size:20px;
+  font-weight:bold;
+}
+
+
+.survey-index-title {
+  @include make-sm-column(5);
+}
+
+.survey-index-progress {
+  @include make-sm-column(4);
+}
+
+.survey-index-total {
+  @include make-sm-column(3);
+}
+
+.survey-show-summary {
+}
+.survey-show-summary {
+  @include make-sm-column(10);
+  padding: 0 30px;
+
+}
+.survey-show-question {
+  @include make-sm-column(7);
+}
+
+.survey-show-response {
+  @include make-sm-column(5);
+}

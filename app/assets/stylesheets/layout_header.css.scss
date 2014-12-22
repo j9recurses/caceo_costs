@@ -1,0 +1,48 @@
+
+#caceo-logo {
+  height: 79px;
+  width: 374px;
+}
+
+.mynavbar{
+  height: 109px;
+  // display: inline-block;
+}
+
+#mynav {
+  // padding-top:50px;
+  float:right;
+  // margin-right:30px;
+  border-bottom-width:1px;
+  border-bottom-color:#DDDDDD;
+  // border-bottom-style:solid;
+}
+
+.mynav_login {
+  float: right;
+  top: 10px;
+
+}
+
+.mynav_li {
+height:35px;
+font-size:12px;
+}
+
+// .header_break {
+//   height:120px;
+// }
+
+@media (min-width: $screen-md-min) { 
+  body {
+    padding-top: 120px;
+  }
+}
+
+@media (max-width: ($screen-md-min - 1)) {
+  .navbar-fixed-top {
+    position: relative;
+    border-width: 0 0 1px;
+  }
+
+}

@@ -22,6 +22,7 @@ private
   def current_user
     @current_user = User.find(session[:user_id]) if session[:user_id]
   end
+  helper_method :current_user
 
   def current_resource
     nil
@@ -35,7 +36,10 @@ private
     if current_permissions.allow?(params[:controller], params[:action], current_resource)
     elsif current_permissions.allow?(params[:controller], params[:action], current_session)
     else
-      if request.env["HTTP_REFERER"]
+      referrer = request.referrer
+      referrer_params = Rails.application.routes.recognize_path( referrer )
+      permitted = current_permissions.allow?(referrer_params[:controller], referrer_params[:action], current_resource) || current_permissions.allow?(referrer_params[:controller], referrer_params[:action], current_session)
+      if referrer && permitted
         redirect_to :back
       elsif current_user
         redirect_to home_path
@@ -44,6 +48,7 @@ private
       end
       flash[:error] = "Not Authorized."
     end
+    puts "controller: #{params[:controller]}, action: #{params[:action]}, county: #{current_user ? current_user.county.name : 'not signed in'}"
   end
 
   def current_permissions

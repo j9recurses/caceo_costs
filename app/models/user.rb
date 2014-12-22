@@ -2,6 +2,7 @@
 class User < ActiveRecord::Base
   has_many :role_assignments
   has_many :roles, through: :role_assignments
+  belongs_to :county, class_name: 'CaCountyInfo', foreign_key: 'county', inverse_of: :users
   attr_accessor :password
   before_save :encrypt_password
   after_save :clear_password

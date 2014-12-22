@@ -23,40 +23,16 @@ class SurveyPresenter
     end
   end
 
-  def current_step
-    survey.data.current_step
-  end
-
-  def first_step? 
-    survey.data.first_step?
-  end
-
-  def last_step?
-    survey.data.last_step?
-  end
-
-  def total_steps
-    survey.data.total_steps
-  end
-
   def form_pages
-    @form_pages ||= survey.form.compact.in_groups_of(12)
-  end
-
-  def survey_name
-    @survey_name ||= survey.form.pluck(:name).first.titleize
+    @form_pages ||= if survey.election_profile?
+      survey.form.compact.in_groups_of(16)
+    else
+      survey.form.compact.in_groups_of(12)
+    end
   end
 
   def title_show
-    "#{survey_name.gsub('Salaries Related To', '')} #{'Salaries' if survey.salary?} Summary for the"
-  end
-
-  def cost_type
-    if survey.salary?
-      'salaries'
-    elsif survey.service_supply?
-      'services_supplies'
-    end
+    "#{survey.title.gsub('Salaries Related To', '')} #{'Salaries' if survey.salary?} Summary for the"
   end
 
   def header_text

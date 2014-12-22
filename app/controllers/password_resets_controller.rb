@@ -29,7 +29,7 @@ class PasswordResetsController < ApplicationController
         if @user.update_attributes( encrypted_password: encrypted_password )
           flash[:notice]  = "Succeessfully Updated Your Password"
           session[:user_id] = @user.id
-          session[:county] = @user.county
+          session[:county_id] = @user.county.id
           redirect_to(profile_user_path (@user))
         else
           flash[:error] = "Unable to save your new password. Please try again."

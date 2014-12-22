@@ -19,7 +19,7 @@ SimpleForm.setup do |config|
 
     # Calculates placeholders automatically from I18n
     # You can also pass a string as f.input placeholder: "Placeholder"
-    b.use :false
+    b.use :placeholder
 
     ## Optional extensions
     # They are disabled unless you pass `f.input EXTENSION_NAME => :lookup`
@@ -40,7 +40,7 @@ SimpleForm.setup do |config|
     b.optional :readonly
 
     ## Inputs
-    b.use :label_input
+    # b.use :label_input
     b.use :hint,  wrap_with: { tag: :span, class: :hint }
     b.use :error, wrap_with: { tag: :span, class: :error }
   end
@@ -95,7 +95,7 @@ SimpleForm.setup do |config|
   # config.label_text = lambda { |label, required| "#{required} #{label}" }
 
   # You can define the class to use on all labels. Default is nil.
-  config.label_class = 'control-label'
+  # config.label_class = 'control-label'
 
   # You can define the class to use on all forms. Default is simple_form.
   # config.form_class = :simple_form

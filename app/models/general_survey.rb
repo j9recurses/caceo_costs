@@ -1,10 +1,14 @@
 class GeneralSurvey
+  extend Forwardable
+
   def initialize(survey_data)
     @data = survey_data
     form
     # sort_form_items # taken out when I put in xlsx reports, gen surv is widely used, don't need to sort except for totals
   end
   attr_reader :data, :form
+
+  def_delegators :@data, :current_step, :total_steps, :first_step?, :last_step?
 
   def model_name
     @model_name ||= "#{@data.class.to_s.underscore}s"
@@ -28,14 +32,52 @@ class GeneralSurvey
     @form ||= form_klass.where(model_name: model_name).where.not('label LIKE "%Percent%" AND model_name != "salbals"')
   end
 
+  def type
+    if election_profile?
+      'election_profile'
+    elsif salary?
+      'salaries'
+    elsif service_supply?
+      'services_supplies'
+    end
+  end
+
+  def title
+    @title ||= if election_profile?
+      'Election Profile'
+    else
+      form.pluck(:name).first.titleize
+    end
+  end
+
+  def countable_form
+    @countable_form ||= form.where(question_type: nil)
+  end
+
   def count_questions
-    @total_questions ||= form.count
+    @total_questions ||= countable_form.count
   end
 
   def count_answers
-    @total_responses ||= form.inject(0) do |sum, form_item|
-      answered?( form_item ) ? sum + 1 : sum
-    end
+    @total_responses ||= countable_form.inject(0) { |sum, form_item|
+      if na?( form_item )
+        sum + 1
+      elsif answered?( form_item )
+        sum + 1
+      else
+        sum
+      end
+    }
+  end
+
+  def count_na
+    @count_na ||= countable_form.inject(0) { |sum, form_item|
+      na?( form_item ) ? sum + 1 : sum
+    }
+  end
+
+  def na?( form_item )
+    self.data[ "#{form_item.field}_na" ]
   end
 
   def answered?( form_item )
@@ -51,7 +93,7 @@ class GeneralSurvey
   end
 
   def category
-    @category ||= Category.find_by(election_year_id: data.election_year_id, county: data.county,  model_name: "#{klass.to_s.underscore}s")
+    @category ||= Category.find_by(election_year_id: data.election_year_id, county: data.county_id,  model_name: "#{klass.to_s.underscore}s")
   end
 
   def election_profile?
@@ -67,15 +109,19 @@ class GeneralSurvey
   end
 
   def election
-    # if data.persisted?
-      @election ||= if election_profile?
-        ElectionYearProfile.find( data.election_year_profile_id )
-      else
-        ElectionYear.find( data.election_year_id )
-      end
-    # else
-    #   nil
-    # end
+    @election ||= if election_profile?
+      ElectionYearProfile.find( data.election_year_profile_id )
+    else
+      ElectionYear.find( data.election_year_id )
+    end
+  end
+
+  def election=(id)
+    if election_profile?
+      data.election_year_profile_id = id
+    else
+      data.election_year_id = id
+    end
   end
 
   SURVEY_SECTIONS = %w{ salary_estimate benefits_percent benefits_dollar hours comment salary service_supply election_profile }
@@ -87,24 +133,29 @@ class GeneralSurvey
 
     define_method("#{name}_total") do
       sort_form_items unless @sorted
-      self.send("#{name}_items").compact.inject(0) do |sum, item|    
-        response = response_for( item )
-        if response.is_a? Numeric
-          sum + response
-        else
-          sum
+      if instance_variable_defined?("@#{name}_total")
+        instance_variable_get("@#{name}_total")
+      else
+        val = self.send("#{name}_items").compact.inject(0) do |sum, item|    
+          response = response_for( item )
+          if response.is_a?(Numeric) && !na?(item)
+            sum + response
+          else
+            sum
+          end
         end
+        instance_variable_set("@#{name}_total", val)
       end
     end
   end
 
   def service_supply_total
     sort_form_items unless @sorted
-    self.service_supply_items.reject { |item| 
+    @service_supply_total ||= self.service_supply_items.reject { |item| 
       item.field == 'ssbalpriprou'
     }.compact.inject(0) do |sum, item| 
       response = response_for( item )
-      if response.is_a? Numeric
+      if response.is_a?(Numeric) && !na?(item)
         sum + response
       else
         sum
@@ -189,11 +240,13 @@ class GeneralSurvey
     benefits_percent_items.size > 0
   end
   
-  def response_for( item, numeric_dollars: false, nil_zeros: true )
+  def response_for( item, numeric_dollars: false, nil_zeros: false )
     match = /(ssbalpri|eplang)(\w+)ml/.match item.field
     value = self.data[ item.field ]
 
-    if match
+    if na?(item)
+      response = 'N/A'
+    elsif match
       response = self.data.send("#{match[1]}#{match[2]}_multi_lang")
       if response.blank?
         response = 'No language selected'
@@ -220,7 +273,7 @@ class GeneralSurvey
       response = value
     else
       if value.nil?
-        response = nil_zeros ? 0 : value
+        response = nil_zeros ? 0 : 'No Response'
       else
         response = value
       end

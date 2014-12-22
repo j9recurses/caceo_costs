@@ -42,7 +42,20 @@ end
       .gsub("Sb90","SB90")
       .gsub("Vb Ms", "VBMs")
       .gsub("Icrp", "ICRP")
+      .gsub("Vra", "VRA")
+      .gsub("Dr Es", "DREs")
+      .gsub("Hava", "HAVA")
+      .gsub("Ca Ec", "CA EC")
     end
+  end
+
+  def format_category(text)
+      text.titleize
+      .gsub('Vbm', "VBM")
+      .gsub('Doj', "DOJ")
+      .gsub("Salaries Related To ", '')
+      .gsub("Salaries For", "")
+      .gsub(" Services And Supplies", '')
   end
 end
 

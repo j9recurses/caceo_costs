@@ -1,13 +1,18 @@
 class GeneralSurveysController < ApplicationController
+  before_action :election_profile_session, only: :index
   before_action :require_election
   before_action :survey_from_record_id, only: [:show, :edit, :update, :destroy]
 
   def index
-    @category= Category.find_by(election_year_id: session[:election_year], county: current_user[:county],  model_name: model_name)
-    if @category.started == true
+    if election_profiles_controller?
+      surv_status = ElectionProfile.find_by(county: current_user[:county], election_year_profile_id: params[:election_year_profile_id])
+      id = surv_status.id if surv_status
+    else
+      surv_status = Category.find_by(election_year_id: session[:election_year], county: current_user[:county],  model_name: model_name)
+      id = klass.where(county_id: current_user[:county], election_year_id: session[:election_year]).pluck(:id).last
+    end
 
-      id = klass.where(county: current_user[:county], election_year_id: session[:election_year]).pluck(:id).last
-
+    if surv_status && surv_status.started?
       redirect_to send("#{model_singular}_path", id)
     else
       redirect_to send("new_#{model_singular}_path")
@@ -20,7 +25,7 @@ class GeneralSurveysController < ApplicationController
 
   def new
     @survey = GeneralSurvey.new( klass.new )
-    @survey.data.election_year_id = session[:election_year]
+    @survey.election = session_election
     session[session_model_params] = {}
     render file: "#{ Rails.root.join('app/views/general_surveys/new') }"
   end
@@ -89,9 +94,7 @@ private
   end
 
   def current_session
-    # session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
-    @current_session = params[model_singular]
-    # session[session_model_params] if session[session_model_params]
+    params[model_singular]
   end
 
   def survey_from_record_id
@@ -99,7 +102,7 @@ private
   end
 
   def model_name
-    @model_name ||= self.class.to_s.gsub('Controller', '').downcase
+    @model_name ||= self.class.to_s.gsub('Controller', '').underscore
   end
 
   def model_singular
@@ -111,8 +114,27 @@ private
   end
 
   def klass
-    @klass ||= model_name.singularize.capitalize.constantize
+    @klass ||= model_name.singularize.camelize.constantize
   end
+
+ # Methods below know Election Profiles exist
+  
+  def election_profiles_controller?
+    model_name == 'election_profiles'
+  end
+
+  def election_profile_session
+    session[:election_year_profile] = params[:election_year_profile_id]
+  end
+
+  def session_election
+    if election_profiles_controller?
+      session[:election_year_profile]
+    else
+      session[:election_year]
+    end
+  end
+  helper_method :session_election
 
   def flash_message
     if self.action_name == 'create'
@@ -121,7 +143,7 @@ private
       action_msg = 'Successfully Updated'
     end
 
-    if model_singular == 'election_profile'
+    if election_profiles_controller?
       msg = "#{action_msg} Election Profile Information for the #{@survey.election.year}"
     else
       msg = "#{action_msg} #{view_context.format_survey_label @survey.category.name} Costs for the #{@survey.election.year}"
@@ -129,21 +151,16 @@ private
   end
 
   def require_election
-    redirect_to home_path unless session[:election_year]
+    unless session_election
+      if election_profiles_controller?
+        redirect_to election_profile_home_path
+      else
+        redirect_to home_path
+      end
+    end
   end
 
-  # def set_session_election_year_profile_index
-  #   @election_year_profile = ElectionYearProfile.find(params[:election_year_profile_id])
-  #   session[:election_profile_year] = @election_year_profile[:id]
-  # end
 
-  # def get_session_election_year_profile
-  #   if session[:election_profile_year]
-  #     @election_year_profile = ElectionYearProfile.find(session[:election_profile_year])
-  #   else
-  #     redirect_to election_profile_home_path
-  #   end
-  # end
 end
 
 # class ElectionProfilesController < ApplicationController
@@ -153,7 +170,6 @@ end
 # before_action :load_product, :set_election_profile, only: [:show, :update, :edit, :destroy]
 
 # before_action :set_session_election_year_profile_index, only: [:index]
-# #before_action :set_session_election_year_profile_edit, only: [:edit]
 # before_action :get_session_election_year_profile, only: [:create, :update, :show, :new, :edit]
 
 # def index
@@ -199,121 +215,3 @@ end
 #     @election_profile.destroy
 #     redirect_to election_profiles_path(:election_year_profile_id => @election_profile[:election_year_profile_id]  )
 #   end
-
-
-
-#   private
-
-#   def set_session_election_year_profile_index
-#      @election_year_profile = ElectionYearProfile.find(params[:election_year_profile_id])
-#      session[:election_profile_year] = @election_year_profile[:id]
-#     end
-
-#  def get_session_election_year_profile
-#      if session[:election_profile_year]
-#         @election_year_profile = ElectionYearProfile.find(session[:election_profile_year])
-#        else
-#         redirect_to election_profile_home_path
-#       end
-#     end
-
-
-#     def set_election_profile
-#       @election_profile = ElectionProfile.find(params[:id])
-#     end
-
-#     def get_model_name
-#       @model_name = "election_profiles"
-#     end
-
-#   def load_wizard
-#     @wizard = ModelWizard.new(@election_profile || ElectionProfile, session, params)
-#     if self.action_name.in? %w[new edit]
-#       @wizard.start
-#     elsif self.action_name.in? %w[create update]
-#       @wizard.process
-#     end
-#   end
-
-#     def load_product
-#     @election_profile = ElectionProfile.find(params[:id])
-#   end
-
-#    def get_election_profile_description
-#     @category_description = ElectionProfileDescription.where(model_name: @model_name)
-#     # @category_name = ElectionProfileDescription.where(model_name: @model_name).pluck(:label ).first.titleize
-#      @modal_stuff  = ElectionProfile.make_modals(@category_description)
-#   end
-
-#   def make_chunks
-#     @form_chunks = ElectionProfile.make_chunks(@model_name)
-#   end
-
-#     def election_profile_params
-#       params.require(:election_profile).permit(
-#       :epems,
-#      :eppphwscan,
-#      :eppphwdre,
-#      :eppphwmarkd,
-#      :eppphwpollbk,
-#      :eppphwoth,
-#      :epetallysys,
-#      :epppbalpap,
-#      :epppbalaccsd,
-#      :eprv,
-#      :eppploc,
-#      :epprecwpp,
-#      :epprecvbm,
-#      :epbaltype,
-#      :epbalpage,
-#      :epbalsampvip,
-#      :epvipinsrt,
-#      :epbalofficl,
-#      :epvbmmail,
-#      :epvbmmailprm,
-#    :epvbmmailmbp,
-#    :epvbmmailuo,
-#    :epvbmotc,
-#    :epvbmret,
-#    :epvbmretprm,
-#    :epvbmretmbp,
-#    :epvbmretuo,
-#    :epvbmundel,
-#    :epvbmchal,
-#    :epvbmprovc,
-#    :epvbmprovnc,
-#    :eplangnoeng,
-#    :epcand,
-#    :epcandfsc,
-#    :epcandcd,
-#     :epcandwi,
-#      :epcandwifsc,
-#      :epcandwicd,
-#      :epmeasr,
-#      :epmeasrfsc,
-#      :epmeasrcd,
-#     :epicrp,
-#      :epicrpfed,
-#      :epicrpcounty,
-#      :epicrpown,
-#      :epicrpoth,
-#      :eptotindirc,
-#      :eptotelectc,
-#      :epcostallrg,
-#      :epcostallpre,
-#      :epcostallopp,
-#      :epcostalloth,
-#      :eptotbilled,
-#      :eptotcounty,
-#      :eptotsb90c,
-#      :eptotsb90r,
-#      :epmandates,
-#      :started,
-#      :complete,
-#          :current_step,
-#          :county,
-#          :election_year_profile_id,
-#       )
-#     end
-
-# end

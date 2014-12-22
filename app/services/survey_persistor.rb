@@ -1,7 +1,6 @@
 class SurveyPersistor
 
   def initialize(survey)
-    # @survey_data = survey_data
     @survey = survey
   end
   attr_accessor :survey
@@ -11,15 +10,14 @@ class SurveyPersistor
   end
 
   def save
+    save_success = survey.data.save
+    status_success = update_status
     if survey.election_profile?
-      # do something
+      election_success = true
     else
-      save_success = survey.data.save
-      # a year_element, aka lookup table entry for election_year/survey, to deal with polymorphic survey, is created when survey is created
       election_success = survey.election.year_elements.find_or_create_by( element: survey_data )
-      status_success = update_status
-      save_success && election_success && status_success
     end
+    save_success && election_success && status_success
   end
 
   def destroy
@@ -52,10 +50,6 @@ class SurveyPersistor
   def klass
     @klass ||= survey_data.class
   end
-
-  # def category
-  #   @category ||= Category.find_by(election_year_id: survey_data.election_year_id, county: survey_data.county,  model_name: "#{klass.to_s.downcase}s")
-  # end
 
 #   def self.category_status(category_id, model_stuff)
 #     model_fields =  Salpw.column_names
