@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   delegate :allow?, to: :current_permissions
   helper_method :allow?
 
-  before_filter :authorize
+  before_filter :authorize, :print_session
 
   def get_user
     if session[:user_id]
@@ -19,6 +19,13 @@ class ApplicationController < ActionController::Base
   end
 
 private
+  def print_session
+    vars = session.instance_variables
+    vars.each do |v|
+      puts "#{v}: #{session.instance_variable_get(v)}"
+    end
+  end
+
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end

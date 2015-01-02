@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141222132213) do
+ActiveRecord::Schema.define(version: 20141230232555) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(version: 20141222132213) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "county_id",        limit: 4
+  end
+
+  create_table "announcement_states", force: :cascade do |t|
+    t.boolean "dismissed",       limit: 1
+    t.integer "announcement_id", limit: 4
+    t.integer "user_id",         limit: 4
   end
 
   create_table "announcements", force: :cascade do |t|
