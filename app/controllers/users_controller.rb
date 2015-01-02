@@ -10,8 +10,7 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    # because of county ambiguity, foreign key vs model
-    @user.update_attribute(:county, CaCountyInfo.find( params[:user][:county].to_i ) ) 
+    @user.update_attribute(:county_id, params[:user][:county_id].to_i ) 
     redirect_to :back
   end
 
@@ -26,7 +25,7 @@ class UsersController < ApplicationController
           flash[:notice] = "You signed up successfully"
           @uid = @user.id
           session[:user_id] = @user.id
-          session[:county_id] =  @user.county.id
+          session[:county_id] =  @user.county_id
           session[:expires_at] = Time.current + 3.hours
           
           SupportMailer.signup_notification(@user).deliver
@@ -59,7 +58,7 @@ class UsersController < ApplicationController
     if @chkd
        flash[:notice] =  "Welcome again, you logged in as #{@authorized_user.username}"
       @uid =  @authorized_user.id
-      @ucounty =  @authorized_user.county.id
+      @ucounty =  @authorized_user.county_id
       session[:user_id] = @authorized_user.id
       session[:county_id] = @ucounty
       session[:expires_at] = Time.current + 3.hours
@@ -137,7 +136,7 @@ class UsersController < ApplicationController
 
   def profile
     @user = get_user
-    @county =  CaCountyInfo.where(:id => @user[:county]).first!
+    @county =  CaCountyInfo.where(:id => @user[:county_id]).first!
   end
 
     def isEmail(str)
@@ -146,7 +145,7 @@ class UsersController < ApplicationController
 
 
   def user_params
-    params.require(:user).permit(:status, :username, :email, :county,   :password, :password_confirmation, :access_code, :security_question, :security_answer, :username_or_email )
+    params.require(:user).permit(:status, :username, :email, :county_id,   :password, :password_confirmation, :access_code, :security_question, :security_answer, :username_or_email )
   end
 
 

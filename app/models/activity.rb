@@ -43,7 +43,7 @@ class Activity
     end
   end
 
-# maintina 'county' not county_id
+# maintain 'county' not county_id
   def self.tech_query(klass)
     table_name = klass.to_s.underscore.pluralize
     relation = klass.select("MAX(#{table_name}.id) AS id, '#{table_name}' AS table_name, county, #{table_name}.updated_at")

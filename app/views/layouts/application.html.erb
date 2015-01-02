@@ -64,7 +64,7 @@
                 <% if current_user && current_user.observer? %>
                   <div class="observer_county_select">
                     <%= form_for(current_user, method: :patch) do |f| %>
-                      <%= f.collection_select(:county, CaCountyInfo.all, :id, :name) %>
+                      <%= f.collection_select(:county_id, CaCountyInfo.all, :id, :name) %>
                       <%= submit_tag "Change County" %>
                     <% end %>
                   </div>

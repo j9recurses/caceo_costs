@@ -13,7 +13,7 @@
 
     <%= f.hidden_field :current_step, value: @election_profile.current_step %>
     <%=f.input :election_year_profile_id ,  as: :hidden, :input_html => { :value => session[:election_profile_year]} %>
-    <%=f.input :county ,  as: :hidden, :input_html => { :value => session[:county]} %>
+    <%=f.input :county_id,  as: :hidden, :input_html => { :value => session[:county_id]} %>
 
     <%= render "election_profiles/steps/page#{@election_profile.current_step + 1}", f: f %>
 
