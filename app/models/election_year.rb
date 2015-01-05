@@ -17,8 +17,8 @@ class ElectionYear < ActiveRecord::Base
        election_yr_overview = Hash.new()
         election_yr_overview[:year_dt] = y.to_s
         year_elections_ids =  ElectionYear.where(year_dt: y).pluck(:id)
-       election_year_started_yr = Category.where( county: user[:county], started: 1, election_year_id: year_elections_ids)
-       election_year_complete_yr = Category.where( county: user[:county], complete: 1,  election_year_id: year_elections_ids)
+       election_year_started_yr = Category.where( county: user[:county_id], started: 1, election_year_id: year_elections_ids)
+       election_year_complete_yr = Category.where( county: user[:county_id], complete: 1,  election_year_id: year_elections_ids)
       if election_year_started_yr.size > 0
         election_yr_overview[:started] ="<span style=\"color:blue\"> &#10004</span>"
       else
@@ -36,8 +36,8 @@ class ElectionYear < ActiveRecord::Base
       single = Array.new()
       single << ye[:id]
       single <<  ye[:year]
-      election_year_started= Category.where( county: user[:county], started: 1, election_year_id: ye[:id])
-      election_year_complete= Category.where( county: user[:county], complete: 1, election_year_id: ye[:id])
+      election_year_started= Category.where( county: user[:county_id], started: 1, election_year_id: ye[:id])
+      election_year_complete= Category.where( county: user[:county_id], complete: 1, election_year_id: ye[:id])
       if election_year_started.size > 0
         single<< "<span style=\"color:blue\"> &#10004</span>"
       else
@@ -48,7 +48,7 @@ class ElectionYear < ActiveRecord::Base
       else
          single<<   "<span style=\"color:red\">&#x2717</span>"
       end
-       costs_ary =  Category.where(election_year_id: ye, county: user[:county]).pluck(:model_total)
+       costs_ary =  Category.where(election_year_id: ye, county: user[:county_id]).pluck(:model_total)
        #convert the nils to 0, then add
        category_costs = costs_ary.map {|e| e ? e : 0}
        yearlytotalcosts =  category_costs.sum

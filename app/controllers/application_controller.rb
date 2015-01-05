@@ -55,7 +55,7 @@ private
       end
       flash[:error] = "Not Authorized."
     end
-    puts "controller: #{params[:controller]}, action: #{params[:action]}, county: #{current_user ? current_user.county.id : 'not signed in'}, session[:county_id]: #{current_session ? current_session[:county_id].to_s : 'no session' }, equality: #{ current_session ? current_user.county.id == current_session[:county_id].to_i
+    puts "controller: #{params[:controller]}, action: #{params[:action]}, county: #{current_user ? current_user.county_id : 'not signed in'}, session[:county_id]: #{current_session ? current_session[:county_id].to_s : 'no session' }, equality: #{ current_session ? current_user.county.id == current_session[:county_id].to_i
  : 'no current_session!'}"
   end
 

@@ -5,8 +5,8 @@ class TechVotingMachinesController < ApplicationController
   # GET /tech_voting_machines
   # GET /tech_voting_machines.json
   def index
-    @county_name  = CaCountyInfo.where(id: @user[:county]).pluck(:name)
-    @tech_voting_machines = TechVotingMachine.where(county: @user[:county])
+    @county_name  = CaCountyInfo.where(id: @user[:county_id]).pluck(:name)
+    @tech_voting_machines = TechVotingMachine.where(county: @user[:county_id])
   end
 
   # GET /tech_voting_machines/1
@@ -28,14 +28,14 @@ class TechVotingMachinesController < ApplicationController
   # POST /tech_voting_machines
   # POST /tech_voting_machines.json
   def create
-    @tech_voting_machines = TechVotingMachine.where(county: @user[:county])
+    @tech_voting_machines = TechVotingMachine.where(county: @user[:county_id])
     @tech_voting_machine = TechVotingMachine.create(tech_voting_machine_params)
   end
 
   # PATCH/PUT /tech_voting_machines/1
   # PATCH/PUT /tech_voting_machines/1.json
   def update
-       @tech_voting_machines = TechVotingMachine.where(county: @user[:county])
+       @tech_voting_machines = TechVotingMachine.where(county: @user[:county_id])
       @tech_voting_machine.update(tech_voting_machine_params)
   end
 
@@ -44,7 +44,7 @@ class TechVotingMachinesController < ApplicationController
   end
 
   def destroy
-    @tech_voting_machines = TechVotingMachine.where(county: @user[:county])
+    @tech_voting_machines = TechVotingMachine.where(county: @user[:county_id])
     @tech_voting_machine = TechVotingMachine.find(params[:id])
    @tech_voting_machine.destroy
   end

@@ -4,13 +4,13 @@ class User < ActiveRecord::Base
   has_many :roles, through: :role_assignments
   has_many :announcement_states, inverse_of: :user
   has_many :announcements, through: :announcement_states
-  belongs_to :county, class_name: 'CaCountyInfo', foreign_key: 'county', inverse_of: :users
+  belongs_to :county, class_name: 'CaCountyInfo', foreign_key: 'county_id', inverse_of: :users
   attr_accessor :password
   before_save :encrypt_password
   after_save :clear_password
   validates :username, :presence => true, :uniqueness => true, :length => { :in => 4..20 }
   validates :email, :presence => true, :uniqueness => true,   :email => true
-  validates :county, :presence => true
+  validates :county_id, :presence => true
   validates :password, :confirmation => true #password_confirmation attr
   validates_presence_of :password, :on => :create
   validates_length_of :password, :in => 5..20, :on => :create
@@ -49,9 +49,9 @@ class User < ActiveRecord::Base
   end
 
   def self.has_access_code?(user_params)
-    if !(user_params[:access_code] && user_params[:county])
+    if !(user_params[:access_code] && user_params[:county_id])
       false
-    elsif AccessCode.find_by(user_access_code: user_params[:access_code]).county_id.to_s == user_params[:county]
+    elsif AccessCode.find_by(user_access_code: user_params[:access_code]).county_id.to_s == user_params[:county_id]
       true
     else
       false

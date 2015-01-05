@@ -11,7 +11,7 @@
     <%=simple_form_for(@user)  do |f| %>
     <%= f.input :username, label: "Username", required:true %>
     <%= f.input :email, label: "Email", as: :email,  required:true %>
-    <%= f.input :county, collection: @counties,  prompt: "Select Your County Affiliation"%>
+    <%= f.input :county_id, collection: @counties,  prompt: "Select Your County Affiliation"%>
     <%= f.input :password, label: "Password", as: :password,  required:true %>
     <%= f.input :password_confirmation, label: "Password Confirmation" %>
     <%= f.input :access_code , label: "Enter Your Access Code" %>

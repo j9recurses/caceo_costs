@@ -5,11 +5,11 @@ class GeneralSurveysController < ApplicationController
 
   def index
     if election_profiles_controller?
-      surv_status = ElectionProfile.find_by(county_id: current_user[:county], election_year_profile_id: params[:election_year_profile_id])
+      surv_status = ElectionProfile.find_by(county_id: current_user[:county_id], election_year_profile_id: params[:election_year_profile_id])
       id = surv_status.id if surv_status
     else
-      surv_status = Category.find_by(election_year_id: session[:election_year], county: current_user[:county],  table_name: table_name)
-      id = klass.where(county_id: current_user[:county], election_year_id: session[:election_year]).pluck(:id).last
+      surv_status = Category.find_by(election_year_id: session[:election_year], county: current_user[:county_id],  table_name: table_name)
+      id = klass.where(county_id: current_user[:county_id], election_year_id: session[:election_year]).pluck(:id).last
     end
 
     if surv_status && surv_status.started?
@@ -127,8 +127,7 @@ private
     @klass ||= table_name.singularize.camelize.constantize
   end
 
- # Methods below know Election Profiles exist
-  
+  # Methods below know Election Profiles exist
   def election_profiles_controller?
     table_name == 'election_profiles'
   end
@@ -169,59 +168,4 @@ private
       end
     end
   end
-
-
 end
-
-# class ElectionProfilesController < ApplicationController
-
-# before_action :get_user, :get_table_name
-# before_action :get_election_profile_description, :make_chunks,  except: [:destroy]
-# before_action :load_product, :set_election_profile, only: [:show, :update, :edit, :destroy]
-
-# before_action :set_session_election_year_profile_index, only: [:index]
-# before_action :get_session_election_year_profile, only: [:create, :update, :show, :new, :edit]
-
-# def index
-#   @election_profile_stuff = ElectionProfile.where(county: @user[:county], election_year_profile_id: params[:election_year_profile_id]).pluck(:id)
-#   if @election_profile_stuff.size == 0
-#      redirect_to new_election_profile_path(params[:election_year_profile_id])
-#   else
-#     redirect_to election_profile_path(@election_profile_stuff)
-#   end
-# end
-
-#  def show
-#     @election_profile = ElectionProfile.find(params[:id])
-#   end
-
-#   def new
-#      @election_profile = @wizard.object
-#   end
-
-#   def edit
-#   end
-
-#   def create
-#     @election_profile = @wizard.object
-#     if @wizard.save
-#         ElectionProfile.category_status(@election_profile[:id], @election_profile)
-#         redirect_to @election_profile, notice: "The  Election Profile Information for the " + @election_year_profile[:year] + " That You Entered Was Successfully Updated"
-#       else
-#         render :new
-#        end
-#     end
-
-#   def update
-#      if @wizard.save
-#       ElectionProfile.category_status( @election_profile[:id], @election_profile)
-#       redirect_to @election_profile, notice: "The  Election Profile Information for the "  + @election_year_profile[:year] + "That You Entered Was Successfully Updated"
-#     else
-#       render action: 'edit'
-#     end
-#   end
-
-#     def destroy
-#     @election_profile.destroy
-#     redirect_to election_profiles_path(:election_year_profile_id => @election_profile[:election_year_profile_id]  )
-#   end
