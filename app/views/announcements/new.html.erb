@@ -1,0 +1,13 @@
+<div class="row">
+  <h1 class="col-sm-5 col-sm-offset-1">Announcements</h1>
+</div>
+<div class="row">
+  <div class="col-sm-5 col-sm-offset-1">
+    <%= form_for @announcement do |f| %>
+      <%= f.text_area :message %>
+      <%= f.submit "Create" %>
+    <% end %>
+  </div>
+</div>
+
+<%= render partial: 'announcement', collection: @announcements %>

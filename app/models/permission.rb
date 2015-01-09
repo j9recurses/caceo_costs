@@ -34,6 +34,7 @@ class Permission
 
       if user.admin?
         allow :activities, [:index, :show]
+        allow :announcements, [:new, :create, :destroy]
       end
     end
   end

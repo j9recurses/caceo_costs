@@ -1,0 +1,10 @@
+<div class="row announcement-row">
+  <div class="col-sm-1"><%= render "new_badge" unless announcement.viewed_by?(current_user) %></div>
+  <strong class="col-sm-1"><%= announcement.created_at.strftime('%m/%d/%Y') %></strong>
+  <span class="col-sm-8"><%= announcement.message %></span>
+  <% if allow? :announcements, :destroy %>
+    <div class="col-sm-1">
+      <%= link_to 'delete', announcement, {method: :delete,  data: {confirm:"Are you sure?"}, class: 'btn btn-default'} %>
+    </div>
+  <% end %>
+</div>

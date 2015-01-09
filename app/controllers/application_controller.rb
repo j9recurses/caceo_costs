@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   delegate :allow?, to: :current_permissions
   helper_method :allow?
 
-  before_filter :authorize, :print_session
+  before_filter :authorize
 
   def get_user
     if session[:user_id]

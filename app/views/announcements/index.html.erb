@@ -1,6 +1,13 @@
-<h1>What's New</h1>
 
-<div>
-  <strong><%= @announcement.created_at.strftime('%m/%d/%Y') %></strong>
-  <%= @announcement.message %>
+<div class="row">
+  <div class="col-sm-5 col-sm-offset-1">
+    <h1>Announcements</h1> 
+    <% if allow? :announcements, :new %>
+    <span> 
+      <%= link_to 'Create a new announcement', {controller: :announcements, action: :new}, {class: 'btn btn-default'} %>
+    </span>
+    <% end %>
+  </div>
 </div>
+
+<%= render partial: 'announcement', collection: @announcements %>

@@ -1,8 +1,10 @@
 FactoryGirl.define do
   factory :user do
-    username 'zbo'
+    username 'zblotnik'
     email 'example@website.com'
     county_id 59
+    password 'secret'
+    password_confirmation 'secret'
   end
 
   factory :observer, class: User do
@@ -14,5 +16,9 @@ FactoryGirl.define do
 
   factory :observer_role, class: Role do
     name 'observer'
+  end
+
+  factory :announcement do
+    message 'new news!'
   end
 end
