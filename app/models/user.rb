@@ -51,10 +51,13 @@ class User < ActiveRecord::Base
   def self.has_access_code?(user_params)
     if !(user_params[:access_code] && user_params[:county_id])
       false
-    elsif AccessCode.find_by(user_access_code: user_params[:access_code]).county_id.to_s == user_params[:county_id]
-      true
     else
-      false
+      code = AccessCode.find_by( user_access_code: user_params[:access_code] )
+      if ( code && ( code.county_id.to_s == user_params[:county_id] ) )
+        true
+      else
+        false
+      end
     end
   end
 
