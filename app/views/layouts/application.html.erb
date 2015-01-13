@@ -70,6 +70,17 @@
                   </div>
                 <% end %>
 
+                <% if allow? :announcements, :index %>
+                  <li>
+                    <a href=<%= announcements_path %>>Announcements
+                      <% announcement_count = Announcement.count_new_for(current_user) %>
+                      <% if announcement_count > 0 %>
+                        <span class="badge"> <%= announcement_count %> </span>
+                      <% end %>
+                    </a>
+                  </li>
+                <% end %>
+
                 <% if allow? :categories, :index %>
                   <li class="dropdown">
                     <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
@@ -77,7 +88,7 @@
                       <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                      <%= render partial: "layouts/nav_links", locals: { session: session } %>
+                      <%= render partial: "layouts/surveys_nav", locals: { session: session } %>
                     </ul>
                   </li>
                 <% end %>

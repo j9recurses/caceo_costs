@@ -4,8 +4,8 @@
 <div class="row">
   <div class="col-sm-5 col-sm-offset-1">
     <%= form_for @announcement do |f| %>
-      <%= f.text_area :message %>
-      <%= f.submit "Create" %>
+      <%= f.text_area :message, rows:5, cols:100 %>
+      <%= f.submit "Create", class: 'btn btn-default' %>
     <% end %>
   </div>
 </div>

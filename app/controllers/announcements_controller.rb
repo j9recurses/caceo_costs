@@ -1,12 +1,14 @@
 class AnnouncementsController < ApplicationController
+  after_filter :touch_viewed_at, only: :index
+
   def index
     @last_viewed = current_user.announcements_viewed_at
-    current_user.touch(:announcements_viewed_at)
     @announcements = Announcement.all
   end
 
   def new
     @announcement = Announcement.new
+    @announcements = Announcement.all
   end
 
   def create
@@ -25,6 +27,9 @@ class AnnouncementsController < ApplicationController
   end
 
   private
+  def touch_viewed_at
+    current_user.touch(:announcements_viewed_at)
+  end
 
   def announcement_params
     params.require(:announcement).permit(:message, :id)

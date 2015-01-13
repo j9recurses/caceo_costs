@@ -1,9 +1,9 @@
 <div class="row announcement-row">
-  <div class="col-sm-1"><%= render "new_badge" unless announcement.viewed_by?(current_user) %></div>
-  <strong class="col-sm-1"><%= announcement.created_at.strftime('%m/%d/%Y') %></strong>
-  <span class="col-sm-8"><%= announcement.message %></span>
+  <div class="col-sm-1 col-xs-2"><%= render "new_badge" unless announcement.viewed_by?(current_user) %></div>
+  <div class="col-sm-1 col-xs-3"><%= announcement.created_at.strftime('%m/%d/%Y') %></div>
+  <span class="col-sm-8 col-xs-5"><%= announcement.message %></span>
   <% if allow? :announcements, :destroy %>
-    <div class="col-sm-1">
+    <div class="col-sm-1 col-xs-2">
       <%= link_to 'delete', announcement, {method: :delete,  data: {confirm:"Are you sure?"}, class: 'btn btn-default'} %>
     </div>
   <% end %>
