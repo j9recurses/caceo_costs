@@ -1,7 +1,7 @@
 class ElectionYearProfile < ActiveRecord::Base
   validates :year, :presence => true, :uniqueness => true
   has_many :election_profiles, inverse_of: :election_year_profile
-  #find all the election years and make show if they have been worked on or are finished
+
   default_scope { order(election_dt: :desc) }
   scope :county_profile, ->(county_id) { includes(:election_profiles).where('election_profiles.county_id = ? OR election_profiles.id IS NULL', county_id).references(:election_profiles) }
 
