@@ -27,6 +27,7 @@ end
 
 group :development, :production do
   gem 'hirb'
+  gem 'autonumeric-rails'
 end
 
 group :test do

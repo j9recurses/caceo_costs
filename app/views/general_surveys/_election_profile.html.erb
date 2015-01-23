@@ -10,7 +10,7 @@
           <li class="list-group-item row">
             <span class="survey-show-question"><%= format_survey_label item.label %></span>
             <span class="survey-show-response">
-              <%= survey.response_for( item, numeric_dollars: false ) %>
+              <%= survey.response_for( item ) %>
             </span>
           </li>
         <% end %>

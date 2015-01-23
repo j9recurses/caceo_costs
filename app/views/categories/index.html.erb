@@ -21,7 +21,7 @@
     <div class="row">
       <div class="survey-index-title show_item_title_total">Total Direct Costs from Salary and Benefits</div>
       <div class="survey-index-progress"></div>
-      <div class="survey-index-total show_item_total">$<%= salary_responses.inject(0) {|sum, g_surv| g_surv.total + sum} %></div>
+      <div class="survey-index-total show_item_total">$<%=number_with_delimiter salary_responses.inject(0) {|sum, g_surv| g_surv.total + sum} %></div>
     </div>
   </div>
 </div>
@@ -41,13 +41,13 @@
     <div class="row">
       <div class="survey-index-title show_item_title_total">Total Direct Costs from Services and Supplies</div>
       <div class="survey-index-progress"></div>
-      <div class="survey-index-total show_item_total">$<%= service_supply_responses.inject(0) {|sum, g_surv| g_surv.total + sum} %></div>
+      <div class="survey-index-total show_item_total">$<%=number_with_delimiter service_supply_responses.inject(0) {|sum, g_surv| g_surv.total + sum} %></div>
     </div>
   </div>
 </div>
 
 <h3 class="col-sm-9">Total Direct Costs for the <%= @election_year[:year].titleize %></h3>
-<h3 class="survey-index-total">$<%= @responses.inject(0) {|sum, gen_surv| gen_surv.total ? sum + gen_surv.total : sum }%></h3>
+<h3 class="survey-index-total">$<%=number_with_delimiter @responses.inject(0) {|sum, gen_surv| gen_surv.total ? sum + gen_surv.total : sum }%></h3>
 
 <div class="category_break"></div>
 

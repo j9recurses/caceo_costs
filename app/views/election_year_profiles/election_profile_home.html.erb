@@ -1,39 +1,64 @@
 
-<h2 class ="myh2yr">Election Profile Year Overview For <%= @county_name[0] %></h2>
+<h2 class ="myh2yr">Election Profile Year Overview For <%= current_user.county.name %></h2>
 <div class ="instructs"> (Click on a Year, then on an Election to Begin)</div>
+
 <table class="table table-condensed" style="border-collapse:collapse;">
+  <colgroup>
+    <col width="35%"></col>
+    <col width="40%"></col>
+    <col width="20%"></col>
+    <col width="15%"></col>
+  </colgroup>
   <thead>
     <tr>
-      <th> Year</th>
-      <th>Started</th>
-     <th>Complete</th>
+      <th>Election</th>
+      <th>Percent Complete</th>
+      <th></th>
+      <th>Direct Costs</th>
     </tr>
   </thead>
     <tbody>
-    <%counter = 1 %>
-    <% @profile_years.each do  |yr| %>
-        <tr data-toggle="collapse" data-target=".demo<%= counter.to_s %>" class="accordion-toggle">
-            <td> <%=  yr[:year_dt] %> Statewide Elections </td>
-            <td>  <%=  yr[:started].html_safe  %> </td>
-            <td><%=  yr[:done].html_safe  %> </td>
-        </tr>
-        <% yr[:all_years_electionz].each do |y| %>
-        <tr>
-           <td class="hiddenRow">
-                <div class="accordian-body collapse demo<%= counter.to_s%>">
-                 <div class= "myaccordion"> <%=link_to y[1], election_profiles_path( :election_year_profile_id => y[0]  ) %></div></div>
-            </td>
-            <td class="hiddenRow">
-                <div class="accordian-body collapse demo<%= counter.to_s %>">
-                <div class= "checkline"> <%= y[2] .html_safe %></div></div>
-            </td>
-            <td class="hiddenRow">
-                   <div class="accordian-body collapse demo<%= counter.to_s %>">
-                    <div class= "checkline"> <%=y[3] .html_safe %></div></div>
-            </td>
-        </tr>
-         <% end %>
-        <%counter = counter + 1 %>
-        <% end %>
-    </tbody>
+    <% @election_years.each do |election_year| %>
+      <% if election_year.election_profiles.blank? %>
+        <% url = url_for(controller: :election_profile, action: 'new' )%>
+        <% election_profile = nil %>
+      <% else %>
+        <% url = url_for( election_year.election_profiles.last ) %>
+        <% election_profile = GeneralSurvey.new( election_year.election_profiles.last ) %>
+      <% end %>
+
+      <tr>
+        <td><%= link_to election_year.year, url %></td>
+          <td>
+            <div class="progress election-year">
+            <% if election_profile %>
+              <div class="progress-bar" 
+                role="progressbar" 
+                aria-valuenow=<%="#{election_profile.percent_complete}"%> 
+                aria-valuemin="0" 
+                aria-valuemax="100" 
+                style="<%="width: #{election_profile.percent_complete}%;" %>">
+                  <%= election_profile.percent_complete %>%
+              </div> 
+            <% else %>
+              <div class="progress-bar" 
+                role="progressbar" 
+                aria-valuenow=<%="0"%> 
+                aria-valuemin="0" 
+                aria-valuemax="100" 
+                style="width: 0%;">
+              </div> 
+            <% end %>
+            </div>
+          </td>
+          <td></td>
+          <td>
+            <% unless election_profile %>
+              <span class="text-muted">Not Started<span>
+            <% end %>
+          </td>      
+      </tr>
+    <% end %>
+  </tbody>
 </table>
+

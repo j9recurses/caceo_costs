@@ -9,7 +9,7 @@
         <% survey_presenter.service_supply_items.each do | item | %>
           <li class="list-group-item row">
             <span class="survey-show-question"><%= format_survey_label item.label %></span>
-            <span class="survey-show-response"><%= survey.response_for( item, numeric_dollars: true ) %></span>
+            <span class="survey-show-response"><%= survey_presenter.as_dollars survey.response_for( item ) %></span>
           </li>
         <% end %>
         <% survey.comment_items.each do | q | %>
@@ -23,7 +23,7 @@
 
     <div class="row">
       <div class="survey-show-question show_item_title_total">Total</div>
-      <div class="survey-show-response show_item_total"><%="$#{ survey_presenter.service_supply_total }" %></div>
+      <div class="survey-show-response show_item_total"><%="$#{ survey.service_supply_total }" %></div>
     </div>
   </div>
 </div>

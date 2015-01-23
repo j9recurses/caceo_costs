@@ -1,6 +1,11 @@
 class GeneralSurvey
   extend Forwardable
 
+  DIRECT_COST_SURVEYS = [Postage, Salbal, Salbc, Salcan, Saldojo, Salmed, Saloth, Salpp, Salpw, Salvbm, Ssbal, Ssbc, Sscan, Ssmed, Ssoth, Sspp, Sspw, Ssveh]
+  TECH_SURVEYS = [TechVotingMachine, TechVotingSoftware]
+  ELECTION_PROFILE = [ElectionProfile]
+  COUNTY_IDS = Array(1..58)
+
   def initialize(survey_data)
     @data = survey_data
     form
@@ -29,6 +34,7 @@ class GeneralSurvey
 
 ####### class Survey
   def form
+    # because we took out benefits by Percent except in salbals
     @form ||= form_klass.where(table_name: table_name).where.not('label LIKE "%Percent%" AND table_name != "salbals"')
   end
 
@@ -240,12 +246,14 @@ class GeneralSurvey
     benefits_percent_items.size > 0
   end
   
-  def response_for( item, numeric_dollars: false, numeric_percent: false, nil_zeros: false )
+  # big method mixing presentation logic and question type logics
+  def response_for( item )
     match = /ssbalpri(\w+)ml/.match( item.field ) || /eplang(vra|caec)/.match( item.field )
     value = self.data[ item.field ]
 
     if na?(item)
       response = 'N/A'
+    # Language Select questions
     elsif match
       if match[1] == 'vra' || match[1] == 'caec'
         ml_method_name = "eplang#{match[1]}_multi_lang".to_sym
@@ -258,39 +266,15 @@ class GeneralSurvey
       else
         response = response.join(', ')
       end
-    elsif item.respond_to?(:fieldtype) # only ElectionProfileDescription
-      if item.fieldtype.chomp == 'boolean'
-        if value == true
-          response = 'Yes'
-        elsif value == false
-          response = 'No'
-        end
-      elsif item.fieldtype.chomp == "string"
-        response = value
-      elsif item.fieldtype.chomp == "integer"
-        if value.nil?
-          response = nil_zeros ? 0 : value
-        else
-          response = value
-        end        
+    # Presentation logic for Election Profile booleans... move elsewhere
+    elsif item.respond_to?(:fieldtype) && item.fieldtype.chomp == 'boolean' # only ElectionProfileDescription
+      if value == true
+        response = 'Yes'
+      elsif value == false
+        response = 'No'
       end
-    elsif comments_filter.include? item.field
-      response = value
     else
-      if value.nil?
-        response = nil_zeros ? 0 : value
-      else
-        response = value
-      end
-      # response = value.nil? ? 0 : value
-    end
-
-    if response.is_a?(Numeric)
-      if numeric_dollars
-        response = "$#{response}"
-      elsif numeric_percent
-        response = "#{response}%"
-      end
+      response = value
     end
 
     return response

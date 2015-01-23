@@ -1,48 +1,52 @@
 
-<h2 class ="myh2yr">Direct Cost Categories Year Overview for <%= @county_name %></h2>
+<h2 class ="myh2yr">Direct Cost Categories Year Overview for <%= current_user.county.name %></h2>
 <div class ="instructs"> (Click on a Year, then on an Election to Begin)</div>
 
 <table class="table table-condensed" style="border-collapse:collapse;">
+  <colgroup>
+    <col width="35%"></col>
+    <col width="40%"></col>
+    <col width="10%"></col>
+    <col width="15%"></col>
+  </colgroup>
   <thead>
     <tr>
-      <th> Year</th>
-      <th>Started</th>
-     <th>Complete</th>
-     <th>Direct Costs</th>
+      <th>Election</th>
+      <th>Percent Complete</th>
+      <th></th>
+      <th>Direct Costs</th>
     </tr>
   </thead>
     <tbody>
-    <%counter = 1 %>
-    <% @years.each do  |yr| %>
-        <tr data-toggle="collapse" data-target=".demo<%= counter.to_s %>" class="accordion-toggle">
-            <td> <%=  yr[:year_dt] %> Statewide  Elections </td>
-            <td>  <%=  yr[:started].html_safe  %> </td>
-            <td><%=  yr[:done].html_safe  %> </td>
-            <td></td>
-        </tr>
-        <% yr[:all_years_electionz].each do |y| %>
-        <tr>
-           <td class="hiddenRow">
-                <div class="accordian-body collapse demo<%= counter.to_s%>">
-                 <div class= "myaccordion"> <%=link_to y[1],  election_year_categories_path(y[0])  %></div></div>
-            </td>
-            <td class="hiddenRow">
-                <div class="accordian-body collapse demo<%= counter.to_s %>">
-                <div class= "checkline"> <%= y[2].html_safe %></div></div>
-            </td>
-            <td class="hiddenRow">
-                   <div class="accordian-body collapse demo<%= counter.to_s %>">
-                    <div class= "checkline"> <%=y[3].html_safe %></div></div>
-            </td>
-            <td class="hiddenRow">
-                   <div class="accordian-body collapse demo<%= counter.to_s %>">
-                  <div class= "checkline">$ <%=y[4].to_s %></div></div>
-            </td>
-        </tr>
-         <% end %>
-        <%counter = counter + 1 %>
-        <% end %>
-    </tbody>
+    <% @election_years.each do |election_year| %>
+      <tr>
+        <td><%= link_to election_year.year, election_year_categories_path(election_year) %></td>
+          <td>
+            <div class="progress election-year">
+            <div class="progress-bar" 
+              role="progressbar" 
+              aria-valuenow=<%="#{election_year.percent_answered_direct_cost( current_user )}"%> 
+              aria-valuemin="0" 
+              aria-valuemax="100" 
+              style="<%="width: #{election_year.percent_answered_direct_cost( current_user )}%;" %>">
+              <% if election_year.surveys_open?(current_user) %>
+                <%= election_year.percent_answered_direct_cost( current_user ) %>%
+              <% else %>
+              <% end %>
+            </div> 
+            </div>
+          </td>
+          <td></td>
+          <td>
+            <% if election_year.surveys_open?(current_user) %>
+              $<%= number_with_delimiter election_year.total_direct_cost_for( current_user ) %>
+            <% else %>
+              <span class="text-muted">Not Started<span>
+            <% end %>
+          </td>      
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
-<h2 class ="myh2yr_tot"> TOTAL DIRECT COSTS FOR ALL ELECTIONS: $<%= @total_election_year_costs %></h2>
+<h2 class ="myh2yr_tot"> TOTAL DIRECT COSTS FOR ALL ELECTIONS: $<%= number_with_delimiter @election_years.inject(0) {|memo, y| memo + y.total_direct_cost_for( current_user ) } %></h2>

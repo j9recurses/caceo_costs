@@ -5,7 +5,7 @@ class SurveyPresenter
     @survey = survey
     @template = template
   end
-  attr_reader :survey
+  attr_reader :survey, :template
 
   survey_section_methods = []
   GeneralSurvey::SURVEY_SECTIONS.each do |section|
@@ -23,6 +23,26 @@ class SurveyPresenter
     end
   end
 
+  def as_percent( value )
+    if value.is_a?(Numeric)
+      "#{template.number_with_delimiter value}%"
+    else
+      value
+    end
+  end
+
+  def as_dollars( value )
+    if value.is_a?(Numeric)
+      "$#{template.number_with_delimiter value}"
+    else
+      value
+    end
+  end
+
+  def delimited( value )
+    "#{template.number_with_delimiter value}"
+  end
+  
   def form_pages
     @form_pages ||= if survey.election_profile?
       survey.form.to_a.compact.in_groups_of(16)

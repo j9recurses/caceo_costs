@@ -1,6 +1,7 @@
 class ElectionProfile< ActiveRecord::Base
  include MultiStepModel
   belongs_to :county, inverse_of: :election_profiles
+  belongs_to :election_year_profile, inverse_of: :election_profiles
   validates :county_id, presence: true
   validates :election_year_profile_id, presence: true
   validates  :epppbalpap, :epppbalaccsd, :eprv, :eppploc,:epprecwpp,

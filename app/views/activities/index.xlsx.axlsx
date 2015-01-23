@@ -12,7 +12,7 @@ wb = xlsx_package.workbook
                       survey.count_questions,
                       survey.count_answers,
                       survey.percent_complete,
-                      *( survey.form.map { |q| survey.response_for( q, nil_zeros: false) } ) ]
+                      *( survey.form.map { |q| survey.response_for( q ) } ) ]
     end
   end
 end
