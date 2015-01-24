@@ -6,25 +6,26 @@
   <colgroup>
     <col width="35%"></col>
     <col width="40%"></col>
-    <col width="20%"></col>
-    <col width="15%"></col>
+    <col width="10%"></col>
+    <col width="25%"></col>
   </colgroup>
   <thead>
     <tr>
       <th>Election</th>
       <th>Percent Complete</th>
       <th></th>
-      <th>Direct Costs</th>
+      <th></th>
     </tr>
   </thead>
     <tbody>
     <% @election_years.each do |election_year| %>
-      <% if election_year.election_profiles.blank? %>
-        <% url = url_for(controller: :election_profile, action: 'new' )%>
+      <% election_profile = election_year.county_profile( current_user.county_id ) %>
+      <% if election_profile.blank? %>
+        <% url = url_for(controller: :election_profiles, action: 'new' )%>
         <% election_profile = nil %>
       <% else %>
         <% url = url_for( election_year.election_profiles.last ) %>
-        <% election_profile = GeneralSurvey.new( election_year.election_profiles.last ) %>
+        <% survey = GeneralSurvey.new( election_profile ) %>
       <% end %>
 
       <tr>
@@ -34,11 +35,11 @@
             <% if election_profile %>
               <div class="progress-bar" 
                 role="progressbar" 
-                aria-valuenow=<%="#{election_profile.percent_complete}"%> 
+                aria-valuenow=<%="#{survey.percent_complete}"%> 
                 aria-valuemin="0" 
                 aria-valuemax="100" 
-                style="<%="width: #{election_profile.percent_complete}%;" %>">
-                  <%= election_profile.percent_complete %>%
+                style="<%="width: #{survey.percent_complete}%;" %>">
+                  <%= survey.percent_complete %>%
               </div> 
             <% else %>
               <div class="progress-bar" 
