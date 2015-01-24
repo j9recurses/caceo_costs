@@ -10,7 +10,7 @@ class Ssoth < ActiveRecord::Base
     :ssothwebsite, :ssothcpst, :ssothoth, 
     numericality: { only_integer: true, 
       :greater_than_or_equal_to => 0, 
-      :less_than_or_equal_to  => 30000000,
+      :less_than_or_equal_to  => 500000000,
       :allow_nil => true,
       :allow_blank => false,
       message: " Entry is not valid. Please check your entry" }
