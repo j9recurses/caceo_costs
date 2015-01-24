@@ -21,7 +21,7 @@
     <% @election_years.each do |election_year| %>
       <% election_profile = election_year.county_profile( current_user.county_id ) %>
       <% if election_profile.blank? %>
-        <% url = url_for(controller: :election_profiles, action: 'new' )%>
+        <% url = url_for(controller: :election_profiles, action: 'new', election_year_profile_id: election_year.id )%>
         <% election_profile = nil %>
       <% else %>
         <% url = url_for( election_year.election_profiles.last ) %>
