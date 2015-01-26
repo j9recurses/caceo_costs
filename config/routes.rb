@@ -1,5 +1,7 @@
 CaceoCosts::Application.routes.draw do
 
+  resources :faqs
+
   resources :activities
   resources :announcements
   resources :password_resets

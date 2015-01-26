@@ -87,7 +87,8 @@ class GeneralSurvey
   end
 
   def answered?( form_item )
-    !self.data[ form_item.field ].blank?
+    item = self.data[ form_item.field ]
+    !item.blank? || item.is_a?(FalseClass)
   end
 
   def completed_ratio

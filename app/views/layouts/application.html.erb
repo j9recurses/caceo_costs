@@ -72,6 +72,12 @@
 
                 <% if allow? :announcements, :index %>
                   <li>
+                    <%= link_to 'FAQs', faqs_path %>
+                  </li>
+                <% end %>
+
+                <% if allow? :faqs, :index %>
+                  <li>
                     <a href=<%= announcements_path %>>Announcements
                       <% announcement_count = Announcement.count_new_for(current_user) %>
                       <% if announcement_count > 0 %>

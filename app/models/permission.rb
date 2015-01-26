@@ -13,6 +13,7 @@ class Permission
       allow :categories, :index
       allow :election_year_profiles, :election_profile_home
       allow :announcements, :index
+      allow :faqs, :index
       if user.observer?
         allow :users, :update
         allow :election_profiles, [:index, :show]
@@ -35,6 +36,7 @@ class Permission
       if user.admin?
         allow :activities, [:index, :show]
         allow :announcements, [:new, :create, :destroy]
+        allow :faqs, [:new, :create, :edit, :update, :destroy]
       end
     end
   end

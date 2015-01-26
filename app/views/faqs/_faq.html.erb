@@ -1,0 +1,16 @@
+<div class="faq-item">
+  <div class="row">
+    <span class="col-sm-9 col-xs-5 col-xs-offset-1"><strong>Q:</strong> <%= faq.question %></span>
+    <span class="col-sm-9 col-xs-5 col-xs-offset-1"><strong>A:</strong> <%= faq.answer %></span>
+    <% if allow? :faqs, :edit %>
+      <div class="col-sm-1 col-xs-2">
+        <%= link_to 'Edit', edit_faq_path(faq), class: 'btn btn-default' %>
+      </div>
+    <% end %>
+    <% if allow? :faqs, :destroy %>
+      <div class="col-sm-1 col-xs-2">
+        <%= link_to 'Delete', faq, {method: :delete,  data: {confirm:"Are you sure?"}, class: 'btn btn-default'} %>
+      </div>
+    <% end %>
+  </div>
+</div>

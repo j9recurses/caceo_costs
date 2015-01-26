@@ -3,6 +3,8 @@ class GeneralSurveysController < ApplicationController
   before_action :require_election
   before_action :survey_from_record_id, only: [:show, :edit, :update, :destroy]
 
+
+  # right now just used for election profile?
   def index
     if election_profiles_controller?
       surv_status = ElectionProfile.find_by(county_id: current_user[:county_id], election_year_profile_id: params[:election_year_profile_id])

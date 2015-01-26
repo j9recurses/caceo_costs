@@ -45,7 +45,7 @@
           <%= f.check_box "#{survey_field}_na" %> N/A
         </label>
       <% end %>
-      <%= f.input_field survey_field, class: "form-control #{ survey_question.election_profile? ? 'election-profile' : ''}", data: {autonumeric: {aSign: 'USD ', mDec: 0}} %>
+      <%= f.input_field survey_field, class: "form-control #{ survey_question.election_profile? ? 'election-profile' : ''}" %>
     </div>
   </div>
 <% end %>

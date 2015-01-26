@@ -1,0 +1,13 @@
+<%= render 'title' %>
+
+<div class="row">
+  <div class="col-xs-11 col-xs-offset-1">
+    <% if allow? :faqs, :new %>
+      <span> 
+        <%= link_to 'Create a new Q/A', new_faq_path, {class: 'btn btn-default announcement-row'} %>
+      </span>
+    <% end %>
+  </div>
+</div>
+
+<%= render partial: 'faq', collection: @faqs %>
