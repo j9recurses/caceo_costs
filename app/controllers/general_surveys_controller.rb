@@ -3,19 +3,16 @@ class GeneralSurveysController < ApplicationController
   before_action :require_election
   before_action :survey_from_record_id, only: [:show, :edit, :update, :destroy]
 
-
   # right now just used for election profile?
   def index
     if election_profiles_controller?
-      surv_status = ElectionProfile.find_by(county_id: current_user[:county_id], election_year_profile_id: params[:election_year_profile_id])
-      id = surv_status.id if surv_status
+      survey = ElectionProfile.find_by(county_id: current_user[:county_id], election_year_profile_id: params[:election_year_profile_id])
     else
-      surv_status = Category.find_by(election_year_id: session[:election_year], county: current_user[:county_id],  table_name: table_name)
-      id = klass.where(county_id: current_user[:county_id], election_year_id: session[:election_year]).pluck(:id).last
+      survey = klass.where(county_id: current_user[:county_id], election_year_id: session[:election_year]).pluck(:id).last
     end
 
-    if surv_status && surv_status.started?
-      redirect_to send("#{model_singular}_path", id)
+    if survey
+      redirect_to send("#{model_singular}_path", survey)
     else
       redirect_to send("new_#{model_singular}_path")
     end
@@ -86,22 +83,14 @@ private
     end
   end
 
-  # def require_session
-  #   unless session[session_model_params]
-  #     puts 'this is happening THIS IS HAPPENING'
-  #     flash[:error] = "Your session has expired. To continue working on this survey, please click the EDIT link."
-  #     redirect_to action: :index
-  #   end
-  # end
-
+  # for permissions
   def current_resource
     @current_resource = klass.find(params[:id]) if params[:id]
   end
 
+  # for permissions
   def current_session
     params[model_singular]
-    # session
-    # session[session_model_params]
   end
 
   def survey_session
@@ -157,7 +146,7 @@ private
     if election_profiles_controller?
       msg = "#{action_msg} Election Profile Information for the #{@survey.election.year}"
     else
-      msg = "#{action_msg} #{view_context.format_survey_label @survey.category.name} Costs for the #{@survey.election.year}"
+      msg = "#{action_msg} #{view_context.format_survey_label @survey.name} Costs for the #{@survey.election.year}"
     end
   end
 

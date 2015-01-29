@@ -13,7 +13,7 @@ class ElectionProfile< ActiveRecord::Base
     :eptotindirc,:eptotelectc,:eptotbilled,:eptotcounty,:eptotsb90c,
     :eptotsb90r, numericality: { only_integer: true, 
       :greater_than_or_equal_to => 0, 
-      :less_than_or_equal_to  => 100000000, 
+      :less_than_or_equal_to  => 1000000000
       :allow_nil => true, 
       :allow_blank => false, 
       message: " Entry is not valid. Please check your entry"  }
@@ -47,29 +47,4 @@ CAEC_LANGUAGES = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean',
   def eplangvra_multi_lang
     VRA_LANGUAGES.reject { |l| ((eplangvra || 0) & 2**VRA_LANGUAGES.index(l)).zero? }
   end
-
-#update the category table to indicate that something was started or completed
-def self.category_status(election_profile_id, model_stuff)
-  model_fields =  ElectionProfile.column_names
-  model_fields_size = model_fields.size
-  model_fields_size = model_fields_size -1
-  fields_complete = model_fields_size
-  complete = true
-  started  = true
-  model_fields.each do |c |
-  if eval("model_stuff[:" + c+ "]").nil?
-    fields_complete = fields_complete -1
-    end
-  end
-  amt_complete = fields_complete.to_f / model_fields_size.to_f
-  if amt_complete < 0.50
-   complete = false
-    ElectionProfile.update(election_profile_id, complete: complete)
- else
-    ElectionProfile.update(election_profile_id, complete: true)
-end
- ElectionProfile.update(election_profile_id, started: started)
-
-end
-
 end

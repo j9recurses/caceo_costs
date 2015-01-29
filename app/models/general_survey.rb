@@ -103,6 +103,10 @@ class GeneralSurvey
     @category ||= Category.find_by(election_year_id: data.election_year_id, county: data.county_id,  table_name: "#{klass.to_s.underscore}s")
   end
 
+  def name
+    @survey_name ||= Category.find_by(table_name: "#{klass.to_s.underscore}s").name
+  end
+
   def election_profile?
     klass == ElectionProfile ? true : false
   end
