@@ -13,6 +13,12 @@ namespace :caceo do
     Faq.create(question: "What is the timeline for working on the survey?", answer: "Please complete one election of the survey but the end of January 16, 2015. Please complete all elections in the survey by March 20, 2016.")
   end
 
+  desc 'add 2014 general election'
+  task election2014: :environment do
+    ElectionYear.create(year: "2014 General Election", election_dt: Date.new(2014, 11, 4))
+    ElectionYearProfile.create(year: "2014 General Election", election_dt: Date.new(2014, 11, 4))
+  end
+
   namespace :setup do
     # desc 'run all setup tasks'
     # task :all => [:]
