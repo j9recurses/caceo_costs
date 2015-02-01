@@ -15,14 +15,14 @@ namespace :caceo do
       logger.info "AFTER -- \n#{after}"
     end
 
-    all_status GeneralSurvey::DIRECT_COST_SURVEYS.inject(true) do |memo, klass|
-      memo && delete_with_logs(klass)
+    all_status = GeneralSurvey::DIRECT_COST_SURVEYS.all? do |klass|
+      delete_with_logs(klass)
     end
 
     if all_status
-      logger.info 'DELETE DUPS ALL STATUS: COMPLETED SUCCESSFULLY'
+      Rails.logger.info 'DELETE DUPS ALL STATUS: COMPLETED SUCCESSFULLY'
     else
-      logger.info 'ERROR IN DELETE DUPS'
+      Rails.logger.info 'ERROR IN DELETE DUPS'
     end
   end
 end
