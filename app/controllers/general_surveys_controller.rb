@@ -1,22 +1,7 @@
 class GeneralSurveysController < ApplicationController
-  before_action :election_profile_session, only: :index
+  before_action :election_profile_session
   before_action :require_election
   before_action :survey_from_record_id, only: [:show, :edit, :update, :destroy]
-
-  # right now just used for election profile?
-  def index
-    if election_profiles_controller?
-      survey = ElectionProfile.find_by(county_id: current_user[:county_id], election_year_profile_id: params[:election_year_profile_id])
-    else
-      survey = klass.where(county_id: current_user[:county_id], election_year_id: session[:election_year]).pluck(:id).last
-    end
-
-    if survey
-      redirect_to send("#{model_singular}_path", survey)
-    else
-      redirect_to send("new_#{model_singular}_path")
-    end
-  end
 
   def show
     render file: "#{ Rails.root.join('app/views/general_surveys/show') }"
@@ -51,7 +36,11 @@ class GeneralSurveysController < ApplicationController
 
   def destroy
     SurveyPersistor.new( @survey ).destroy
-    redirect_to send("#{table_name}_path")
+    if election_profiles_controller?
+      redirect_to election_profile_home_path
+    else
+      redirect_to election_year_categories_path(session[:election_year])
+    end
   end
 
 private
@@ -124,7 +113,9 @@ private
   end
 
   def election_profile_session
-    session[:election_year_profile] = params[:election_year_profile_id]
+    if election_profiles_controller? && params[:election_year_profile_id]
+      session[:election_year_profile] = params[:election_year_profile_id]
+    end
   end
 
   def session_election
@@ -135,6 +126,14 @@ private
     end
   end
   helper_method :session_election
+
+  def election_year_home_path
+    if election_profiles_controller?
+      election_profile_home_path
+    else
+      home_path
+    end
+  end
 
   def flash_message
     if self.action_name == 'create'
@@ -152,11 +151,7 @@ private
 
   def require_election
     unless session_election
-      if election_profiles_controller?
-        redirect_to election_profile_home_path
-      else
-        redirect_to home_path
-      end
+      redirect_to election_year_home_path
     end
   end
 end
