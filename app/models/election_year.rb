@@ -1,6 +1,6 @@
 class ElectionYear < ActiveRecord::Base
   validates :year, :presence => true, :uniqueness => true
-  has_many :year_elements, dependent: :destroy
+  has_many :survey_responses, dependent: :destroy
   #has_many :postages, :through => :year_elements, :source => :element, :source_type => 'postages' , dependent: :destroy
   default_scope { order(election_dt: :desc) }
 
@@ -9,7 +9,7 @@ class ElectionYear < ActiveRecord::Base
   end
 
   def direct_cost_questions
-    @total_direct_cost_questions ||= CategoryDescription
+    @total_direct_cost_questions ||= Question
       .where( table_name: direct_cost_table_names )
       .where.not('label LIKE "%Percent%" AND table_name != "salbals"')
       .where(question_type: nil)

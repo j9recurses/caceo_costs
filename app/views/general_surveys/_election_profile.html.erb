@@ -6,7 +6,7 @@
           <h4 class="survey-show-question">Question</h4>
           <h4 class="survey-show-response">Response</h4>
         </li>
-        <% survey_presenter.election_profile_items.each do | item | %>
+        <% survey.election_profile_items.each do | item | %>
           <li class="list-group-item row">
             <span class="survey-show-question"><%= format_survey_label item.label %></span>
             <span class="survey-show-response">

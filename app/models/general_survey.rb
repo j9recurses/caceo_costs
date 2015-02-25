@@ -15,6 +15,7 @@ class GeneralSurvey
 
   def_delegators :@data, :current_step, :total_steps, :first_step?, :last_step?
 
+###### metadata
   def table_name
     @table_name ||= "#{@data.class.to_s.underscore}s"
   end
@@ -28,16 +29,18 @@ class GeneralSurvey
   end
 
   def form_klass
-    @form_klass ||= election_profile? ? ElectionProfileDescription : CategoryDescription
+    @form_klass ||= election_profile? ? ElectionProfileDescription : Question
   end
 #######
 
-####### class Survey
+#######
   def form
     # because we took out benefits by Percent except in salbals
     @form ||= form_klass.where(table_name: table_name).where.not('label LIKE "%Percent%" AND table_name != "salbals"')
   end
+#######
 
+####### class Survey
   def type
     if election_profile?
       'election_profile'
@@ -48,6 +51,18 @@ class GeneralSurvey
     end
   end
 
+  def election_profile?
+    klass == ElectionProfile ? true : false
+  end
+
+  def salary?
+    klass.to_s.match( /^Sal/ ) ? true : false
+  end
+
+  def service_supply?
+    klass.to_s.match( /^(Ss|Postage)/ ) ? true : false
+  end
+
   def title
     @title ||= if election_profile?
       'Election Profile'
@@ -56,6 +71,7 @@ class GeneralSurvey
     end
   end
 
+####### module Totalable
   def countable_form
     @countable_form ||= if election_profile? then form else form.where(question_type: nil) end
   end
@@ -98,25 +114,15 @@ class GeneralSurvey
   def percent_complete
     (completed_ratio * 100).to_i
   end
+#######
 
+####### Associations
   def category
     @category ||= Category.find_by(election_year_id: data.election_year_id, county: data.county_id,  table_name: "#{klass.to_s.underscore}s")
   end
 
   def name
     @survey_name ||= Category.find_by(table_name: "#{klass.to_s.underscore}s").name
-  end
-
-  def election_profile?
-    klass == ElectionProfile ? true : false
-  end
-
-  def salary?
-    klass.to_s.match( /^Sal/ ) ? true : false
-  end
-
-  def service_supply?
-    klass.to_s.match( /^(Ss|Postage)/ ) ? true : false
   end
 
   def election
@@ -134,7 +140,9 @@ class GeneralSurvey
       data.election_year_id = id
     end
   end
+#######
 
+#######
   SURVEY_SECTIONS = %w{ salary_estimate benefits_percent benefits_dollar hours comment salary service_supply election_profile }
 
   SURVEY_SECTIONS.each do |name|

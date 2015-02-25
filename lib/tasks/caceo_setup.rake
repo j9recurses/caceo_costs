@@ -37,7 +37,7 @@ namespace :caceo do
 
     desc "update 'what's this?' on single language ballots"
     task language: :environment do
-      rel = CategoryDescription.where('description like "%English%"')
+      rel = Question.where('description like "%English%"')
       languages = ["English", "Chinese", "Korean", "Spanish", "Vietnamese", "Japanese", "Tagalog", "Khmer", "Hindi", "Thai", "Other languages"]
 
       rel.each do |r|

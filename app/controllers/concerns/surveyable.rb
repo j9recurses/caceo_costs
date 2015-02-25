@@ -12,7 +12,7 @@ module Surveyable
 
   # to not interfere with #get_category_descriptions defined on all controllers
   def make_survey_annotations
-    @survey_annotations ||= CategoryDescription.where(model_name: memo_model_name)
+    @survey_annotations ||= Question.where(model_name: memo_model_name)
   end
 
   def make_survey_pages

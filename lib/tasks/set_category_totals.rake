@@ -8,7 +8,7 @@ namespace :caceo do
       surv = klass.where(county: cat.county, election_year_id: cat.election_year_id).last
 
       g = GeneralSurvey.new(surv)
-      p = SurveyPersistor.new(g)
+      p = ResponsePersistor.new(g)
       p.save
     end
   end

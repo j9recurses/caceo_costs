@@ -36,8 +36,8 @@ class Activity
     end
 
     if klass != ElectionProfile
-      relation = relation.select("category_descriptions.name AS survey_name")
-      .joins("INNER JOIN category_descriptions ON category_descriptions.table_name = '#{table_name}'")
+      relation = relation.select("questions.name AS survey_name")
+      .joins("INNER JOIN questions ON questions.table_name = '#{table_name}'")
     else
       relation = relation.select("'Election Profile' AS survey_name")
     end
@@ -64,7 +64,7 @@ class Activity
         .joins("INNER JOIN #{election_model} ON #{election_model}.id = #{table_name}.#{election_foreign_key}")
       
       if klass != ElectionProfile
-        survey_name = CategoryDescription.where("table_name = '#{table_name}'").limit(1).first.name
+        survey_name = Question.where("table_name = '#{table_name}'").limit(1).first.name
       else
         survey_name = 'Election Profile'
       end

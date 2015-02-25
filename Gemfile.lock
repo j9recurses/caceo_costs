@@ -256,7 +256,7 @@ DEPENDENCIES
   json
   letter_opener
   mysql2
-  rails (~> 4.1)
+  rails (~> 4.2)
   rb-fsevent
   rb-inotify
   rspec-rails

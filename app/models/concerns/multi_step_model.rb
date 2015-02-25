@@ -1,5 +1,4 @@
 module MultiStepModel
-
   def current_step
     @current_step ||= 0
   end
@@ -29,29 +28,12 @@ module MultiStepModel
     if self.class == ElectionProfile
       ElectionProfileDescription.where(table_name: 'election_profiles').in_groups_of(16).size - 1
     else
-      @total_steps ||= CategoryDescription.where(table_name: "#{self.class.to_s.downcase}s" ).where.not('label LIKE "%Percent%" AND table_name != "salbals"').in_groups_of(12).size - 1
+      @total_steps ||= Question.where(table_name: "#{self.class.to_s.downcase}s" ).where.not('label LIKE "%Percent%" AND table_name != "salbals"').in_groups_of(12).size - 1
     end
   end
 
   def first_step?
     current_step == 0
-  end
-  
-  def all_steps_valid?
-    valid?
-    # (0...self.class.total_steps).all? do |step|
-    #   @current_step = step
-    #   current_step_valid?
-    # end
-  end
-
-  def some_steps_valid?
-    valid?
-    # @onthisstep = @current_step.to_i
-    # (0..@onthisstep).all? do |step|
-    #   @current_step = step
-    #   current_step_valid?
-    # end
   end
 
   def method_missing(method_name, *args, &block)

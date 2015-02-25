@@ -14,31 +14,23 @@
   wrapper: :horizontal_form do |f| %>
   <%= f.hidden_field (@survey.election_profile? ? :election_year_profile_id : :election_year_id), value: session_election %>
   <%= f.hidden_field :county_id, value: session[:county_id] %>
+  <%= f.hidden_field :current_step, value: survey.current_step %>
 
+  <%= render partial: "general_surveys/survey_question", 
+    collection: survey_presenter.form_pages[ survey.current_step ].compact, 
+    locals: { f: f } %>
 
-  <% if params[:all] %>
-    <%= hidden_field_tag :all, 1 %>
-    <%= render partial: "general_surveys/survey_question", collection: survey_presenter.form_pages, locals: { f: f } %>
-    <%= f.submit %>
-  <% else %>
-    <%= f.hidden_field :current_step, value: survey.current_step %>
-
-    <%= render partial: "general_surveys/survey_question", 
-      collection: survey_presenter.form_pages[ survey.current_step ].compact, 
-      locals: { f: f } %>
-
-    <div class="form-actions">
-      <% unless survey.first_step?  %>
-        <%= f.submit "Back", name: "back_button" %>
-      <% end %>
-      
-      <% if survey.last_step? %>
-        <%= f.submit "Submit #{ survey.title } Costs for #{ survey.election.year }" %>
-      <% else %>
-        <%= f.submit "Save and Exit", name: "save_and_exit" %>
-        <%= f.submit "Save and Continue", name: "save_and_continue", method: :patch %>
-        <%= f.submit "Next", name: "next_button" %>
-      <%end %>
-    </div>
-  <% end %>
+  <div class="form-actions">
+    <% unless survey.first_step?  %>
+      <%= f.submit "Back", name: "back_button" %>
+    <% end %>
+    
+    <% if survey.last_step? %>
+      <%= f.submit "Submit #{ survey.title } Costs for #{ survey.election.year }" %>
+    <% else %>
+      <%= f.submit "Save and Exit", name: "save_and_exit" %>
+      <%= f.submit "Save and Continue", name: "save_and_continue", method: :patch %>
+      <%= f.submit "Next", name: "next_button" %>
+    <%end %>
+  </div>
 <% end %>

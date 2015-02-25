@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150126122425) do
+ActiveRecord::Schema.define(version: 20150223223855) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -48,26 +48,19 @@ ActiveRecord::Schema.define(version: 20150126122425) do
     t.datetime "updated_at"
   end
 
-  create_table "category_descriptions", force: :cascade do |t|
-    t.string   "field",         limit: 255
-    t.string   "name",          limit: 255
-    t.string   "label",         limit: 255
-    t.text     "description",   limit: 65535
-    t.string   "table_name",    limit: 255
-    t.string   "cost_type",     limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "question_type", limit: 255
-  end
-
   create_table "election_profile_descriptions", force: :cascade do |t|
-    t.string   "field",       limit: 255
-    t.string   "label",       limit: 255
-    t.string   "table_name",  limit: 255
-    t.text     "description", limit: 65535
+    t.string   "field",              limit: 255
+    t.string   "label",              limit: 255
+    t.string   "table_name",         limit: 255
+    t.text     "description",        limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "fieldtype",   limit: 255
+    t.string   "fieldtype",          limit: 255
+    t.string   "survey_category",    limit: 255
+    t.string   "question_type",      limit: 255
+    t.string   "subsection",         limit: 255
+    t.integer  "validation_type_id", limit: 4
+    t.integer  "survey_id",          limit: 4
   end
 
   create_table "election_profiles", force: :cascade do |t|
@@ -218,6 +211,26 @@ ActiveRecord::Schema.define(version: 20150126122425) do
     t.boolean  "ssposoth_na",      limit: 1,     default: false, null: false
     t.boolean  "ssposaddsepm_na",  limit: 1,     default: false, null: false
   end
+
+  create_table "questions", force: :cascade do |t|
+    t.string   "field",              limit: 255
+    t.string   "name",               limit: 255
+    t.string   "label",              limit: 255
+    t.text     "description",        limit: 65535
+    t.string   "table_name",         limit: 255
+    t.string   "cost_type",          limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "question_type",      limit: 255
+    t.integer  "validation_type_id", limit: 4
+    t.integer  "subsection_id",      limit: 4
+    t.integer  "survey_id",          limit: 4,                     null: false
+    t.boolean  "sum_able",           limit: 1,     default: false, null: false
+    t.boolean  "na_able",            limit: 1,     default: false, null: false
+  end
+
+  add_index "questions", ["subsection_id"], name: "fk_rails_cd974ed945", using: :btree
+  add_index "questions", ["validation_type_id"], name: "fk_rails_57d52342fc", using: :btree
 
   create_table "role_assignments", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -839,6 +852,39 @@ ActiveRecord::Schema.define(version: 20150126122425) do
     t.boolean  "ssvehins_na",      limit: 1,     default: false, null: false
   end
 
+  create_table "subsections", force: :cascade do |t|
+    t.string  "title",     limit: 255
+    t.boolean "totalable", limit: 1
+  end
+
+  create_table "survey_responses", force: :cascade do |t|
+    t.integer  "response_id",   limit: 4,   null: false
+    t.integer  "election_id",   limit: 4,   null: false
+    t.string   "response_type", limit: 255, null: false
+    t.integer  "survey_id",     limit: 4,   null: false
+    t.integer  "county_id",     limit: 4,   null: false
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
+
+  create_table "survey_subsections", force: :cascade do |t|
+    t.integer "survey_id",     limit: 4
+    t.integer "subsection_id", limit: 4
+  end
+
+  add_index "survey_subsections", ["subsection_id"], name: "index_survey_subsections_on_subsection_id", using: :btree
+  add_index "survey_subsections", ["survey_id"], name: "index_survey_subsections_on_survey_id", using: :btree
+
+  create_table "surveys", force: :cascade do |t|
+    t.string   "title",         limit: 255
+    t.string   "response_type", limit: 255
+    t.string   "category",      limit: 255
+    t.string   "table_name",    limit: 255
+    t.string   "subject",       limit: 255
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
+
   create_table "tech_voting_machines", force: :cascade do |t|
     t.string   "voting_equip_type",       limit: 255
     t.date     "purchase_dt"
@@ -883,10 +929,14 @@ ActiveRecord::Schema.define(version: 20150126122425) do
     t.datetime "announcements_viewed_at"
   end
 
-  create_table "year_elements", force: :cascade do |t|
-    t.integer "element_id",       limit: 4
-    t.integer "election_year_id", limit: 4
-    t.string  "element_type",     limit: 255
+  create_table "validation_types", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "updated_at"
+    t.datetime "created_at"
   end
 
+  add_foreign_key "questions", "subsections"
+  add_foreign_key "questions", "validation_types"
+  add_foreign_key "survey_subsections", "subsections"
+  add_foreign_key "survey_subsections", "surveys"
 end

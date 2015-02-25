@@ -1,7 +1,7 @@
 require 'csv'
 
 namespace :caceo do
-  desc 'update CategoryDescription description text from csv'
+  desc 'update Question description text from csv'
   task update_descriptions: :environment do
     altered = []
     CSV.foreach( Rails.root.join('resources/direct_cost_categories-dec8_changes_3.csv'), col_sep: "\t" ) do |row|
@@ -11,7 +11,7 @@ namespace :caceo do
     end
 
     altered.each do |hash|
-      record = CategoryDescription.find_by(model_name: hash[:model_name], field: hash[:field])
+      record = Question.find_by(model_name: hash[:model_name], field: hash[:field])
       record.update_attribute(:description, hash[:updated_description])
     end
   end

@@ -12,9 +12,6 @@ class SurveyPresenter
     survey_section_methods.concat ["#{section}_items".to_sym, "#{section}_total".to_sym]
   end
 
-  def_delegators :@survey, :form, :data, :election
-  def_delegators :@survey, *survey_section_methods, :response_for
-
   def method_missing(name, *args)
     if @survey.respond_to?(name)
       @survey.send(name, *args)

@@ -1,6 +1,11 @@
 class ElectionProfile< ActiveRecord::Base
- include MultiStepModel
-  belongs_to :county, inverse_of: :election_profiles
+  include Responseable
+  include NotApplicable
+  has_one :survey_response, as: :response, dependent: :destroy
+  accepts_nested_attributes_for :survey_response
+  has_one :election_year, :through => :survey_response
+  
+  belongs_to :county, inverse_of: :election_profiles, class_name: "CaCountyInfo"
   belongs_to :election_year_profile, inverse_of: :election_profiles
   validates :county_id, presence: true
   validates :election_year_profile_id, presence: true

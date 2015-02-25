@@ -1,8 +1,9 @@
 class Salbal < ActiveRecord::Base
- include MultiStepModel
-  has_one :year_element, :as =>:element, dependent: :destroy
-  accepts_nested_attributes_for :year_element
-  has_one :election_year, :through => :year_elements
+  include Responseable
+ # include MultiStepModel
+  # has_one :year_element, :as =>:element, dependent: :destroy
+  # accepts_nested_attributes_for :year_element
+  # has_one :election_year, :through => :year_elements
   belongs_to :county, inverse_of: :salbals
   validates :county_id, presence: true
   validates :election_year_id, presence: true
