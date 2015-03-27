@@ -1,0 +1,47 @@
+<% present_survey(@survey) do |survey_presenter| %>
+  <% @survey.sort_form_items %>
+
+  <h2 class ="myh2show">
+    <%= "#{format_survey_label survey_presenter.title_show} #{ @survey.election.year }" %>
+  </h2>
+
+  <%= render partial: "general_surveys/#{ @survey.type }", locals: { survey_presenter: survey_presenter, survey: @survey } %>
+  
+  <div class="end_link">
+    <%= link_to 'Edit', send("edit_#{ @survey.model_singular }_path", @survey.data.id) %> |
+    <%= link_to 'Delete This Page', send("#{ @survey.model_singular }_path"), method: :delete, data: { confirm: 'Are you sure?' } %> |
+    <% if @survey.election_profile? %>
+      <%= link_to "Election Profile Home", election_profile_home_path  %>
+    <% else %>
+      <%= link_to "Back to Direct Cost Categories for #{ @survey.election.year }", election_year_categories_path( @survey.election.id ) %> |
+      <%= link_to "Direct Cost Category Home", home_path  %>
+    <% end %>
+  </div>
+<% end %>
+
+<% present_survey(@survey) do |survey_presenter| %>
+  <% @survey.sort_form_items %>
+
+<h2 class ="myh2show">
+  <%= "#{ survey_presenter.title_show } #{ @response_form.election.year (name?) }" %>
+</h2>
+
+<% if @response_form.questions.pluck(:subcategory).size > 0 %>
+<%= render partial:  %>
+
+<%= render partial: "general_surveys/#{ @survey.type }" %>
+
+<div class="end_link">
+  <%= link_to 'Edit', send("edit_#{ @response_form.response_type.camelize }_path", @response_form.response_id) %> |
+  <%= link_to 'Delete This Page', send("#{ @response_form.response_type.camelize }_path"), method: :delete, data: { confirm: 'Are you sure?' } %> |
+  <% if @survey.election_profile? %>
+    <%= link_to "Election Profile Home", election_profile_home_path  %>
+  <% else %>
+    <%= link_to "Back to Surveys for #{ @response_form.election.year }", election_year_categories_path( @response_form.election_id ) %> |
+    <%= link_to "Direct Cost Category Home", home_path  %>
+  <% end %>
+</div>
+
+
+<% end %>
+

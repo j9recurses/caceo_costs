@@ -1,0 +1,71 @@
+<% match = /ssbalpri(\w+)ml/.match( survey_question.field ) || /eplang(vra|caec)/.match( survey_question.field ); langs = nil %>
+
+<% if match %>
+  <% if match[1] == 'vra' || match[1] == 'caec'%>
+    <% langs = "ElectionProfile::#{match[1].upcase}_LANGUAGES".constantize
+    survey_field = "eplang#{match[1]}_multi_lang".to_sym %>
+  <% else %>
+    <% langs = Ssbal::LANGUAGES
+    survey_field = "ssbalpri#{match[1]}_multi_lang".to_sym %>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label( survey_field, class: 'control-label caceo-form-label' ) do %>
+      <%= "#{ format_survey_label( survey_question.label ) }" %>
+      <span class="info">
+        <a href= <%= "##{survey_question.field}_modal" %> data-toggle='modal'>(what's this?)</a>
+      </span>
+    <% end %>
+
+    <div class="caceo-form-input input-group">
+      <% unless survey_question.comment? || survey_question.election_profile? %>
+        <label class="input-group-addon">
+          <%= f.check_box "#{survey_question.field}_na" %> N/A
+        </label>
+      <% end %>
+      <div class="caceo_checkbox_group">
+        <%= f.input_field survey_field, collection: langs, as: :check_boxes %>
+        </div>
+    </div>
+  </div>
+
+<% elsif survey_question.election_profile? %>
+  <% survey_field = survey_question.field.to_sym %>
+  <div class="form-group">
+    <%= f.label( survey_field, class: 'control-label caceo-form-label' ) do %>
+      <%= "#{ format_survey_label( survey_question.label ) }" %>
+      <span class="info">
+        <a href= <%= "##{survey_question.field}_modal" %> data-toggle='modal'>(what's this?)</a>
+      </span>
+    <% end %>
+
+    <div class="caceo-form-input input-group">
+      <% unless survey_question.comment? %>
+        <label class="input-group-addon">
+          <%= f.check_box "#{survey_field}_na" %> N/A
+        </label>
+      <% end %>
+      <%= f.input_field "#{survey_field}_value", class: "form-control #{ survey_question.election_profile? ? 'election-profile' : ''}" %>
+    </div>
+  </div>
+
+<% else %>
+  <% survey_field = survey_question.field.to_sym %>
+  <div class="form-group">
+    <%= f.label( survey_field, class: 'control-label caceo-form-label' ) do %>
+      <%= "#{ format_survey_label( survey_question.label ) }" %>
+      <span class="info">
+        <a href= <%= "##{survey_question.field}_modal" %> data-toggle='modal'>(what's this?)</a>
+      </span>
+    <% end %>
+
+    <div class="caceo-form-input input-group">
+      <% unless survey_question.comment? || survey_question.election_profile? %>
+        <label class="input-group-addon">
+          <%= f.check_box "#{survey_field}_na" %> N/A
+        </label>
+      <% end %>
+      <%= f.input_field survey_field, class: "form-control #{ survey_question.election_profile? ? 'election-profile' : ''}" %>
+    </div>
+  </div>
+<% end %>

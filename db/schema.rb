@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150223223855) do
+ActiveRecord::Schema.define(version: 20150327021903) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -29,12 +29,6 @@ ActiveRecord::Schema.define(version: 20150223223855) do
     t.datetime "updated_at"
   end
 
-  create_table "ca_county_infos", force: :cascade do |t|
-    t.string  "name", limit: 255
-    t.integer "fips", limit: 4
-    t.string  "url",  limit: 255
-  end
-
   create_table "categories", force: :cascade do |t|
     t.string   "cost_type",        limit: 255
     t.string   "name",             limit: 255
@@ -46,6 +40,12 @@ ActiveRecord::Schema.define(version: 20150223223855) do
     t.integer  "election_year_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "counties", force: :cascade do |t|
+    t.string  "name", limit: 255
+    t.integer "fips", limit: 4
+    t.string  "url",  limit: 255
   end
 
   create_table "election_profile_descriptions", force: :cascade do |t|
@@ -149,6 +149,88 @@ ActiveRecord::Schema.define(version: 20150223223855) do
     t.text     "eplangloc",                limit: 65535
     t.integer  "eptotcandca",              limit: 4
     t.integer  "eptotvolunth",             limit: 4
+    t.integer  "eplangvrao",               limit: 4
+    t.integer  "eplangcaeco",              limit: 4
+    t.boolean  "epems_na",                 limit: 1,                             default: false, null: false
+    t.boolean  "eppphwscan_na",            limit: 1,                             default: false, null: false
+    t.boolean  "eppphwdre_na",             limit: 1,                             default: false, null: false
+    t.boolean  "eppphwmarkd_na",           limit: 1,                             default: false, null: false
+    t.boolean  "eppphwpollbk_na",          limit: 1,                             default: false, null: false
+    t.boolean  "eppphwoth_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epetallysys_na",           limit: 1,                             default: false, null: false
+    t.boolean  "epppbalpap_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epppbalaccsd_na",          limit: 1,                             default: false, null: false
+    t.boolean  "eprv_na",                  limit: 1,                             default: false, null: false
+    t.boolean  "eppploc_na",               limit: 1,                             default: false, null: false
+    t.boolean  "epprecwpp_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epprecvbm_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epbaltype_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epbalpage_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epbalsampvip_na",          limit: 1,                             default: false, null: false
+    t.boolean  "epvipinsrt_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epbalofficl_na",           limit: 1,                             default: false, null: false
+    t.boolean  "epvbmmail_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epvbmmailprm_na",          limit: 1,                             default: false, null: false
+    t.boolean  "epvbmmailmbp_na",          limit: 1,                             default: false, null: false
+    t.boolean  "epvbmmailuo_na",           limit: 1,                             default: false, null: false
+    t.boolean  "epvbmotc_na",              limit: 1,                             default: false, null: false
+    t.boolean  "epvbmret_na",              limit: 1,                             default: false, null: false
+    t.boolean  "epvbmretprm_na",           limit: 1,                             default: false, null: false
+    t.boolean  "epvbmretmbp_na",           limit: 1,                             default: false, null: false
+    t.boolean  "epvbmretuo_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epvbmundel_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epvbmchal_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epvbmprovc_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epvbmprovnc_na",           limit: 1,                             default: false, null: false
+    t.boolean  "epcand_na",                limit: 1,                             default: false, null: false
+    t.boolean  "epcandfsc_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epcandcd_na",              limit: 1,                             default: false, null: false
+    t.boolean  "epcandwi_na",              limit: 1,                             default: false, null: false
+    t.boolean  "epcandwifsc_na",           limit: 1,                             default: false, null: false
+    t.boolean  "epcandwicd_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epmeasr_na",               limit: 1,                             default: false, null: false
+    t.boolean  "epmeasrfsc_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epmeasrcd_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epicrp_na",                limit: 1,                             default: false, null: false
+    t.boolean  "epicrpfed_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epicrpcounty_na",          limit: 1,                             default: false, null: false
+    t.boolean  "epicrpown_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epicrpoth_na",             limit: 1,                             default: false, null: false
+    t.boolean  "eptotindirc_na",           limit: 1,                             default: false, null: false
+    t.boolean  "eptotelectc_na",           limit: 1,                             default: false, null: false
+    t.boolean  "epcostallrg_na",           limit: 1,                             default: false, null: false
+    t.boolean  "epcostallpre_na",          limit: 1,                             default: false, null: false
+    t.boolean  "epcostallopp_na",          limit: 1,                             default: false, null: false
+    t.boolean  "epcostalloth_na",          limit: 1,                             default: false, null: false
+    t.boolean  "eptotbilled_na",           limit: 1,                             default: false, null: false
+    t.boolean  "eptotcounty_na",           limit: 1,                             default: false, null: false
+    t.boolean  "eptotsb90c_na",            limit: 1,                             default: false, null: false
+    t.boolean  "eptotsb90r_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epmandates_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epppbalpapar_na",          limit: 1,                             default: false, null: false
+    t.boolean  "epppbalpapbu_na",          limit: 1,                             default: false, null: false
+    t.boolean  "epppbalpapot_na",          limit: 1,                             default: false, null: false
+    t.boolean  "epvbmretpp_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epvbmirevl_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epvbmrrevl_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epprovcwbt_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epprovcwp_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epprovncvnr_na",           limit: 1,                             default: false, null: false
+    t.boolean  "epprovncbrva_na",          limit: 1,                             default: false, null: false
+    t.boolean  "epprovncoth_na",           limit: 1,                             default: false, null: false
+    t.boolean  "epprovvbm_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epprovnor_na",             limit: 1,                             default: false, null: false
+    t.boolean  "epprovhava_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epprovunivs_na",           limit: 1,                             default: false, null: false
+    t.boolean  "epprovoutr_na",            limit: 1,                             default: false, null: false
+    t.boolean  "epcanvdrere_na",           limit: 1,                             default: false, null: false
+    t.boolean  "eplangvra_na",             limit: 1,                             default: false, null: false
+    t.boolean  "eplangcaec_na",            limit: 1,                             default: false, null: false
+    t.boolean  "eplangloc_na",             limit: 1,                             default: false, null: false
+    t.boolean  "eptotcandca_na",           limit: 1,                             default: false, null: false
+    t.boolean  "eptotvolunth_na",          limit: 1,                             default: false, null: false
+    t.boolean  "eplangvrao_na",            limit: 1,                             default: false, null: false
+    t.boolean  "eplangcaeco_na",           limit: 1,                             default: false, null: false
   end
 
   create_table "election_technologies", force: :cascade do |t|
@@ -190,6 +272,11 @@ ActiveRecord::Schema.define(version: 20150223223855) do
     t.datetime "updated_at"
   end
 
+  create_table "options", force: :cascade do |t|
+    t.string  "name",        limit: 255, null: false
+    t.integer "question_id", limit: 4,   null: false
+  end
+
   create_table "postages", force: :cascade do |t|
     t.integer  "election_year_id", limit: 4
     t.integer  "county_id",        limit: 4
@@ -227,6 +314,8 @@ ActiveRecord::Schema.define(version: 20150223223855) do
     t.integer  "survey_id",          limit: 4,                     null: false
     t.boolean  "sum_able",           limit: 1,     default: false, null: false
     t.boolean  "na_able",            limit: 1,     default: false, null: false
+    t.string   "data_type",          limit: 255
+    t.string   "na_field",           limit: 255
   end
 
   add_index "questions", ["subsection_id"], name: "fk_rails_cd974ed945", using: :btree
@@ -874,6 +963,13 @@ ActiveRecord::Schema.define(version: 20150223223855) do
 
   add_index "survey_subsections", ["subsection_id"], name: "index_survey_subsections_on_subsection_id", using: :btree
   add_index "survey_subsections", ["survey_id"], name: "index_survey_subsections_on_survey_id", using: :btree
+
+  create_table "survey_totals_subsections", id: false, force: :cascade do |t|
+    t.integer "survey_id",     limit: 4, null: false
+    t.integer "subsection_id", limit: 4, null: false
+  end
+
+  add_index "survey_totals_subsections", ["survey_id", "subsection_id"], name: "index_survey_totals_subsections_on_survey_id_and_subsection_id", using: :btree
 
   create_table "surveys", force: :cascade do |t|
     t.string   "title",         limit: 255

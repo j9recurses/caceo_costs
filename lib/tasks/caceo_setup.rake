@@ -50,7 +50,7 @@ namespace :caceo do
 
     desc "generate access codes for counties"
     task county_access: :environment do
-      CaCountyInfo.all.each do |county|
+      County.all.each do |county|
         AccessCode.create(county: county, 
           user_access_code: SecureRandom.urlsafe_base64(8), 
           access_type: 'county_user')

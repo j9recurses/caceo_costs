@@ -117,12 +117,12 @@ class GeneralSurvey
 #######
 
 ####### Associations
-  def category
-    @category ||= Category.find_by(election_year_id: data.election_year_id, county: data.county_id,  table_name: "#{klass.to_s.underscore}s")
-  end
+  # def category
+  #   @category ||= Category.find_by(election_year_id: data.election_year_id, county: data.county_id,  table_name: "#{klass.to_s.underscore}s")
+  # end
 
   def name
-    @survey_name ||= Category.find_by(table_name: "#{klass.to_s.underscore}s").name
+    @survey_name ||= Survey.find_by(table_name: "#{klass.to_s.underscore}s").title
   end
 
   def election

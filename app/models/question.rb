@@ -1,23 +1,21 @@
 class Question < ActiveRecord::Base
   belongs_to :survey, inverse_of: :questions
+  belongs_to :survey_response, inverse_of: :questions
   belongs_to :validation_type, inverse_of: :questions
   belongs_to :subsection, inverse_of: :questions
+  has_many :options, inverse_of: :question
 
+  def field_type
+    if data_type == 'integer' || data_type == 'string' || data_type == 'decimal'
+      input = 'input'
+    else
+      input = data_type
+    end
 
-  # uses response model
-  def data_type
-    @data_type ||= survey.response_type.constantize.column_types[ self.field ].type
+    "#{input}#{question_type.blank? ? '' : '_'+question_type }"
   end
-
-  def na?
-
-  end
-
-
-
 
 # legacy?
-
   def election_profile?
     false
   end

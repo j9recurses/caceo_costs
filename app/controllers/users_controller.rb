@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def new
     @user ||= User.new
-    @counties ||= CaCountyInfo.where.not(name: "Test County")
+    @counties ||= County.where.not(name: "Test County")
   end
 
   def update
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
    if  user_params[:password] ==  user_params[:password_confirmation]
     access = User.has_access_code?(user_params)
     @user = User.new(user_params)
-    @counties ||= CaCountyInfo.where.not(name: "Test County")
+    @counties ||= County.where.not(name: "Test County")
     puts "access: #{access}"
       if access
         if @user.save
@@ -136,7 +136,7 @@ class UsersController < ApplicationController
 
   def profile
     @user = get_user
-    @county =  CaCountyInfo.where(:id => @user[:county_id]).first!
+    @county =  County.where(:id => @user[:county_id]).first!
   end
 
     def isEmail(str)

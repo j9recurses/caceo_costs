@@ -48,8 +48,8 @@ class Activity
     table_name = klass.to_s.underscore.pluralize
     relation = klass.select("MAX(#{table_name}.id) AS id, '#{table_name}' AS table_name, county, #{table_name}.updated_at")
       .where.not(county: 59)
-      .select("ca_county_infos.name AS county_name, #{table_name}.*")
-      .joins("INNER JOIN ca_county_infos on ca_county_infos.id = #{table_name}.county")
+      .select("counties.name AS county_name, #{table_name}.*")
+      .joins("INNER JOIN counties on counties.id = #{table_name}.county")
   end
 
   def self.county_query(id)
@@ -70,9 +70,9 @@ class Activity
       end
       result.push( { survey_name => relation } )
     end
-    { CaCountyInfo.find(id).name => result }
+    { County.find(id).name => result }
   end
-      # relation = klass.where(county_id: id).select("ca_county_infos.name AS county_name").select("#{table_name}.*, #{election_model}.year AS election_name, #{election_model}.election_dt AS election_date").joins("INNER JOIN #{election_model} ON #{election_model}.id = #{table_name}.#{election_foreign_key}").joins("INNER JOIN ca_county_infos on ca_county_infos.id = #{table_name}.county_id")
+      # relation = klass.where(county_id: id).select("counties.name AS county_name").select("#{table_name}.*, #{election_model}.year AS election_name, #{election_model}.election_dt AS election_date").joins("INNER JOIN #{election_model} ON #{election_model}.id = #{table_name}.#{election_foreign_key}").joins("INNER JOIN counties on counties.id = #{table_name}.county_id")
         
   def self.elections
     ElectionYear.order(election_dt: :asc).pluck(:year)
@@ -90,8 +90,8 @@ class Activity
   def self.report(klass)
     table_name = klass.to_s.underscore.pluralize
     Activity.query(klass)
-      .select("ca_county_infos.name AS county_name, #{table_name}.*")
-      .joins("INNER JOIN ca_county_infos on ca_county_infos.id = #{table_name}.county_id")
+      .select("counties.name AS county_name, #{table_name}.*")
+      .joins("INNER JOIN counties on counties.id = #{table_name}.county_id")
   end
 
   def self.report_tech
@@ -121,7 +121,7 @@ class Activity
         survey_hash[elec] = survs.sort {|x,y| y.updated_at <=> x.updated_at }
       end
 
-      { county_name: CaCountyInfo.find(county_id).name,
+      { county_name: County.find(county_id).name,
         elections: survey_hash }
     end
   end

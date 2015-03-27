@@ -6,7 +6,7 @@ RSpec::Matchers.define :allow do |*args|
   end
 end
 
-RSpec.describe Permission, focus: true do
+RSpec.describe Permission do
   let(:observer) { Permission.new( build(:observer) ) }
   let(:user) { Permission.new( FactoryGirl.build(:user) ) }
   let(:guest) { Permission.new( nil ) }

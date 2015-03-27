@@ -5,7 +5,7 @@ class TechVotingSoftwaresController < ApplicationController
   # GET /tech_voting_machines
   # GET /tech_voting_machines.json
   def index
-    @county_name  = CaCountyInfo.where(id: @user[:county_id]).pluck(:name)
+    @county_name  = County.where(id: @user[:county_id]).pluck(:name)
     @tech_voting_softwares = TechVotingSoftware.where(county: @user[:county_id])
   end
 

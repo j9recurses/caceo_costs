@@ -5,7 +5,7 @@ class ElectionProfile< ActiveRecord::Base
   accepts_nested_attributes_for :survey_response
   has_one :election_year, :through => :survey_response
   
-  belongs_to :county, inverse_of: :election_profiles, class_name: "CaCountyInfo"
+  belongs_to :county, inverse_of: :election_profiles
   belongs_to :election_year_profile, inverse_of: :election_profiles
   validates :county_id, presence: true
   validates :election_year_profile_id, presence: true
@@ -35,6 +35,14 @@ VRA_LANGUAGES = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean',
                   'American Indian (Central & South American)',
                   'American Indian (Yuman)' ]
 CAEC_LANGUAGES = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
+                  'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ]
+
+EPLANGVRA = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
+                  'Tagalog (Filipino)', 'Asian Indian (Hindi)', 
+                  'Other Asian - Not Specified (Gujarati, Bengali)', 
+                  'American Indian (Central & South American)',
+                  'American Indian (Yuman)' ]
+EPLANGCAEC = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
                   'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ]
 
   def eplangcaec_multi_lang=(languages)

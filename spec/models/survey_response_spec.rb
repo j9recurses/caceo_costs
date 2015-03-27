@@ -15,8 +15,8 @@ RSpec.describe SurveyResponse do
       }
 
       it "allows county=" do
-        @survey_response.county = CaCountyInfo.last
-        expect(@survey_response.county_id).to eq(CaCountyInfo.last.id)
+        @survey_response.county = County.last
+        expect(@survey_response.county_id).to eq(County.last.id)
       end
 
       it "allows survey=" do
