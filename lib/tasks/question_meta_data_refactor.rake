@@ -100,20 +100,33 @@ namespace :caceo do
     end
   end
 
-
   desc "fill out survey_responses"
   task fill_survey_responses: :environment do
     GeneralSurvey::DIRECT_COST_SURVEYS.each do |name|
       klass.all.each do |r|
-        survey_response = SurveyResponse.find_by(response: r)
-        if survey_response
-          survey_response.update(county: r.county)
-        else
-          # SurveyResponse.find_or_create_by(response: )
-          # r.find_or_create
-        end
+        SurveyResponse.find_or_create_by!(
+          county_id: r.county_id,
+          response: r,
+          survey: Survey.find_by(response_type: klass),
+          election_id: r.election_id 
+        )
       end
     end
+
+    ElectionProfile.all.each do |ep|
+      SurveyResponse.find_or_create_by!(
+        county_id: r.county_id,
+        response: r,
+        survey: Survey.find_by(response_type: ElectionProfile),
+        election: ElectionYear.find_by( year: ElectionYearProfile.find( ep.election_year_profile_id ).year )
+      )
+    end
+  end
+
+
+  desc "generate survey_responses for each survey response"
+  task task_name: [:dependent, :tasks] do
+    
   end
 
   def format_survey_label(text)

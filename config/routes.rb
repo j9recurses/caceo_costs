@@ -33,6 +33,12 @@ CaceoCosts::Application.routes.draw do
      post :updatepassword_submit , :on => :member
   end
 
+
+  # redo
+  # resources :elections do
+  #   resources :surveys
+  # end
+
   #resources :election_year_profiles
   get "home", :to => "election_years#home", as: "home"
   get "election_profile_home", :to => "election_year_profiles#election_profile_home", as: "election_profile_home"
