@@ -21,13 +21,13 @@ RSpec.describe SurveyResponse do
 
       it "allows survey=" do
         @survey_response.survey = Survey.last
-        expect(@survey_response.survey_id).to eq(Survey.last.id)
+        expect(@survey_response.survey).to eq(Survey.last)
       end      
 
       it "allows election=" do
         @survey_response.election = ElectionYear.last
         expect(@survey_response.election_id).to eq(ElectionYear.last.id)
-      end      
+      end
 
       it "allows response=" do
         @survey_response.response = @election_profile
@@ -43,6 +43,8 @@ RSpec.describe SurveyResponse do
       end
 
       context "saving" do
+        # they raise errors because these fields are NOT NULL
+        # with validations they won't
         before(:each) {
           @valid_sr = SurveyResponse.new(@survey_response.attributes)
         }
@@ -50,6 +52,7 @@ RSpec.describe SurveyResponse do
         it 'requires election' do
           @valid_sr.election = nil
           expect { @valid_sr.save }.to raise_error
+          # expect( @valid_sr.save ).to be true
         end        
 
         it 'requires survey' do
@@ -64,7 +67,15 @@ RSpec.describe SurveyResponse do
 
         it 'requires county' do
           @valid_sr.county = nil
-          expect { @valid_sr.save }.to raise_error
+          # expect { @valid_sr.save }.to raise_error
+                    expect( @valid_sr.valid? ).to be false
+
+        end
+
+        it 'requires county_id' do
+          @valid_sr.county_id = nil
+          # puts @valid_sr.inspect
+          expect( @valid_sr.valid? ).to be false
         end
       end
     end

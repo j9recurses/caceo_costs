@@ -49,6 +49,10 @@ namespace :caceo do
 
     salary_totals = Subsection.where("title = 'Salaries - Types of Staff and Pay' OR title = 'Benefits - in Dollars'")
     Survey.where(category: "Salaries").each {|s| s.update_attributes(totals_subsections: salary_totals)}
+
+    salary_subsections = Subsection.where.not("title LIKE '%percent%'")
+    Survey.where(category: "Salaries").each {|s| s.subsections << salary_subsections}
+    Survey.find_by(table_name: 'salbals').subsections << Subsection.where("title LIKE '%percent%'")
   end
 
   ###### QUESTIONS
@@ -111,7 +115,6 @@ namespace :caceo do
       end
     end
   end
-
 
   def format_survey_label(text)
     if text.nil?
