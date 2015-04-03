@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150327021903) do
+ActiveRecord::Schema.define(version: 20150331224350) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -950,7 +950,6 @@ ActiveRecord::Schema.define(version: 20150327021903) do
     t.integer  "response_id",   limit: 4,   null: false
     t.integer  "election_id",   limit: 4,   null: false
     t.string   "response_type", limit: 255, null: false
-    t.integer  "survey_id",     limit: 4,   null: false
     t.integer  "county_id",     limit: 4,   null: false
     t.datetime "updated_at"
     t.datetime "created_at"

@@ -8,6 +8,8 @@ class SurveyResponse < ActiveRecord::Base
   has_many :totals_subsections, through: :survey, class_name: 'Subsection'
 
   validates :county, presence: true
+  validates :election, presence: true
+  validates :response, presence: true
 
   def set_null_fields_to_na
     questions.where(na_able: true).select(:field, :na_field).each do |r|
