@@ -17,7 +17,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'activerecord-session_store'
 
 group :test, :development, :production do
-  gem 'rails', '~> 4.1'
+  gem 'rails', '~> 4.2.1'
   gem 'mysql2'
   gem 'axlsx'
   gem 'axlsx_rails'
