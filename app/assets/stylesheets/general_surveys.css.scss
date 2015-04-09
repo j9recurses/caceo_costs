@@ -1,6 +1,13 @@
 @import "bootstrap/variables";
 @import "bootstrap/mixins";
 
+.survey-question .value-field {
+  margin: 0;
+}
+
+.value-field input[type="checkbox"] {
+  @extend .form-control;
+}
 
 .show_item{
   font-size: 14px;

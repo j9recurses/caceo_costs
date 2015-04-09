@@ -28,15 +28,12 @@ class GeneralSurvey
     @klass ||= data.class
   end
 
-  def form_klass
-    @form_klass ||= election_profile? ? ElectionProfileDescription : Question
-  end
 #######
 
 #######
   def form
     # because we took out benefits by Percent except in salbals
-    @form ||= form_klass.where(table_name: table_name).where.not('label LIKE "%Percent%" AND table_name != "salbals"')
+    @form ||= Question.where(table_name: table_name).where.not('label LIKE "%Percent%" AND table_name != "salbals"')
   end
 #######
 

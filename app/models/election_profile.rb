@@ -1,6 +1,6 @@
 class ElectionProfile< ActiveRecord::Base
   include Responseable
-  include NotApplicable
+  # include NotApplicable
   has_one :survey_response, as: :response, dependent: :destroy
   accepts_nested_attributes_for :survey_response
   has_one :election_year, :through => :survey_response

@@ -18,7 +18,7 @@
 
   <% if @survey.election_profile? %>
     <% survey_presenter.form_pages[ survey.current_step ].each do |question| %>
-      <%= render partial: "general_surveys/#{question.field_type}_field", question: question, f: f  %>
+      <%= render partial: "general_surveys/questions/input_field", locals: { question: question, f: f}  %>
     <% end %>
 
   <% else %>

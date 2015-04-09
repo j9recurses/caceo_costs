@@ -2,7 +2,7 @@ class GeneralSurveysController < ApplicationController
   before_action :election_profile_session
   before_action :require_election
   before_action :survey_from_record_id, only: [:show, :edit, :update, :destroy]
-  before_action :merge_session
+  # before_action :merge_session
 
   # show action (implicit)
 
@@ -44,28 +44,28 @@ class GeneralSurveysController < ApplicationController
 
 private
   def wizard_action
-    if election_profiles_controller?
-      @survey.data.assign_attributes( survey_session )
-      if @survey.data.valid?
-        if params[:back_button]
-          @survey.data.step_back
-        elsif params[:next_button]
-          @survey.data.step_forward  
-        elsif params[:save_and_continue]
-          if ResponsePersistor.new( @survey.data ).save
-            flash.now['success'] = "Your progress has been saved."
-            @survey.data.step_forward
-          end      
-        elsif params[:save_and_exit] || @survey.data.last_step?
-          if ResponsePersistor.new( @survey.data ).save
-            flash['success'] = flash_message
-            survey_session = nil
-            redirect_to( @survey.data )
-          end
-        end
-        survey_session[:current_step] = @survey.data.current_step if survey_session
-      end
-    else
+    # if election_profiles_controller?
+    #   @survey.data.assign_attributes( survey_session )
+    #   if @survey.data.valid?
+    #     if params[:back_button]
+    #       @survey.data.step_back
+    #     elsif params[:next_button]
+    #       @survey.data.step_forward  
+    #     elsif params[:save_and_continue]
+    #       if ResponsePersistor.new( @survey.data ).save
+    #         flash.now['success'] = "Your progress has been saved."
+    #         @survey.data.step_forward
+    #       end      
+    #     elsif params[:save_and_exit] || @survey.data.last_step?
+    #       if ResponsePersistor.new( @survey.data ).save
+    #         flash['success'] = flash_message
+    #         survey_session = nil
+    #         redirect_to( @survey.data )
+    #       end
+    #     end
+    #     survey_session[:current_step] = @survey.data.current_step if survey_session
+    #   end
+    # else
       session[session_model_params] ||= {}
       session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
       @survey.data.assign_attributes( session[session_model_params] )
@@ -88,7 +88,7 @@ private
           session[session_model_params][:current_step] = @survey.data.current_step if session[session_model_params]
         end
       end
-    end
+    # end
   end
 
   def merge_session
