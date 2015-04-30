@@ -1,7 +1,12 @@
 namespace :caceo do
+
+  desc "generate surveys, questions, survey_responses"
+  task :g_meta => [:g_surveys, :g_questions] do
+    
+  end
   ###### SURVEYS
   desc "generate Surveys"
-  task g_surveys: [:make_surveys, :format_surveys, :make_subsections] do
+  task g_surveys: [:make_surveys, :format_surveys] do
   end
 
   desc "fill ouy Survey table"
@@ -10,10 +15,10 @@ namespace :caceo do
       type = s.table_name.singularize.camelize
       category = s.cost_type == "salaries" ? "Salaries" : "Services and Supplies"
 
-      Survey.create!(title: s.name, response_type: type, table_name: s.table_name, category: category)
+      Survey.create!(title: s.name, id: type, table_name: s.table_name, category: category)
     end
     Survey.create!( title: "Election Profile", 
-      response_type: "ElectionProfile", 
+      id: "ElectionProfile", 
       table_name: "election_profiles", 
       category: "Election Profile")
   end
@@ -27,8 +32,9 @@ namespace :caceo do
     end
   end
 
+  ###### SUBSECTIONS
   desc "create and populate subsections"
-  task make_subsections: :environment do
+  task g_subsections: :environment do
     Subsection.first_or_create(title: 'Salaries - Tasks',                   totalable: true)
     Subsection.first_or_create(title: 'Salaries - Types of Staff and Pay',  totalable: true)
     Subsection.first_or_create(title: 'Benefits - in Dollars',              totalable: true)
@@ -57,7 +63,7 @@ namespace :caceo do
 
   ###### QUESTIONS
   desc "generate Questions"
-  task make_questions: [:make_ep_questions, :update_questions]
+  task g_questions: [:make_ep_questions, :update_questions]
 
   desc "fill election profile na and question_type"
   task make_ep_questions: :environment do

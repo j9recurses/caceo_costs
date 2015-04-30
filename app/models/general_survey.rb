@@ -8,18 +8,18 @@ class GeneralSurvey
 
   def initialize(survey_data)
     @data = survey_data
-    form
-    # sort_form_items # taken out when I put in xlsx reports, gen surv is widely used, don't need to sort except for totals
+    @survey_response = data.survey_response || 
+      data.build_survey_response(election_id: data.election_year_id, county_id: data.county_id)
   end
-  attr_reader :data, :form
+  attr_reader :data
 
   def_delegators :@data, :current_step, :total_steps, :first_step?, :last_step?
 
-###### metadata
-  def table_name
-    @table_name ||= "#{@data.class.to_s.underscore}s"
-  end
+  # both of these lines require a survey_response
+  def_delegators :response_survey, :title, :table_name, :election_profile?, :salary?, :service_supply?
+  def_delegators :@data, :election, :county, :survey, :questions
 
+###### metadata
   def model_singular
     @model_singular ||= table_name.singularize
   end
@@ -27,10 +27,25 @@ class GeneralSurvey
   def klass
     @klass ||= data.class
   end
+#######
 
+####### SurveyResponse fill
+  def_delegators :response_survey, :title, :table_name, :election_profile?, :salary?, :service_supply?
+
+  def election
+    ElectionYear.find( data.election_year_id )
+  end
+
+  def title
+
+  end
 #######
 
 #######
+  def response_survey
+    Survey.find klass
+  end
+
   def form
     # because we took out benefits by Percent except in salbals
     @form ||= Question.where(table_name: table_name).where.not('label LIKE "%Percent%" AND table_name != "salbals"')
@@ -45,26 +60,6 @@ class GeneralSurvey
       'salaries'
     elsif service_supply?
       'services_supplies'
-    end
-  end
-
-  def election_profile?
-    klass == ElectionProfile ? true : false
-  end
-
-  def salary?
-    klass.to_s.match( /^Sal/ ) ? true : false
-  end
-
-  def service_supply?
-    klass.to_s.match( /^(Ss|Postage)/ ) ? true : false
-  end
-
-  def title
-    @title ||= if election_profile?
-      'Election Profile'
-    else
-      form.pluck(:name).first.titleize
     end
   end
 
@@ -114,29 +109,13 @@ class GeneralSurvey
 #######
 
 ####### Associations
-  # def category
-  #   @category ||= Category.find_by(election_year_id: data.election_year_id, county: data.county_id,  table_name: "#{klass.to_s.underscore}s")
+  # def election=(id)
+  #   if election_profile?
+  #     data.election_year_profile_id = id
+  #   else
+  #     data.election_year_id = id
+  #   end
   # end
-
-  def name
-    @survey_name ||= Survey.find_by(table_name: "#{klass.to_s.underscore}s").title
-  end
-
-  def election
-    @election ||= if election_profile?
-      ElectionYearProfile.find( data.election_year_profile_id )
-    else
-      ElectionYear.find( data.election_year_id )
-    end
-  end
-
-  def election=(id)
-    if election_profile?
-      data.election_year_profile_id = id
-    else
-      data.election_year_id = id
-    end
-  end
 #######
 
 #######
@@ -197,10 +176,6 @@ class GeneralSurvey
     end
   end
 
-  def comments_filter
-    @comments_filter ||= FilterCost.find_by(filtertype: "comment").fieldlist
-  end
-
   def survey_item_lists
     @item_lists ||= {}
   end
@@ -237,11 +212,11 @@ class GeneralSurvey
   end
 
   def sort_services_supplies
-    form.each do |item|
-      if comments_filter.include?(item.field)
-        comment_items.push item
+    form.each do |question|
+      if question.question_type == 'comment'
+        comment_items.push question
       else
-        service_supply_items.push item
+        service_supply_items.push question
       end
     end
   end

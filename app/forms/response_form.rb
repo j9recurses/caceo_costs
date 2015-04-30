@@ -2,7 +2,7 @@ module ResponseAttributable
   include Virtus.model
 
   def self.included(klass) do |klass|
-    survey = Survey.find_by_response_type klass
+    survey = Survey.find klass
     survey.questions.select(:field, :data_type).each do |q|
       attribute q.field, q.data_type.titleize.constantize
     end

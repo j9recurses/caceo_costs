@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331224350) do
+ActiveRecord::Schema.define(version: 20150409200312) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -231,7 +231,10 @@ ActiveRecord::Schema.define(version: 20150331224350) do
     t.boolean  "eptotvolunth_na",          limit: 1,                             default: false, null: false
     t.boolean  "eplangvrao_na",            limit: 1,                             default: false, null: false
     t.boolean  "eplangcaeco_na",           limit: 1,                             default: false, null: false
+    t.integer  "election_year_id",         limit: 4
   end
+
+  add_index "election_profiles", ["election_year_id"], name: "index_election_profiles_on_election_year_id", using: :btree
 
   create_table "election_technologies", force: :cascade do |t|
     t.datetime "created_at"
@@ -1030,6 +1033,7 @@ ActiveRecord::Schema.define(version: 20150331224350) do
     t.datetime "created_at"
   end
 
+  add_foreign_key "election_profiles", "election_years"
   add_foreign_key "questions", "subsections"
   add_foreign_key "questions", "validation_types"
   add_foreign_key "survey_subsections", "subsections"

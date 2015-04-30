@@ -12,7 +12,7 @@
 
 <%= simple_form_for survey.data, html: { class: 'form-horizontal' },
   wrapper: :horizontal_form do |f| %>
-  <%= f.hidden_field (@survey.election_profile? ? :election_year_profile_id : :election_year_id), value: session_election %>
+  <%= f.hidden_field :election_year_id, value: session[:election_id] %>
   <%= f.hidden_field :county_id, value: session[:county_id] %>
   <%= f.hidden_field :current_step, value: survey.current_step %>
 

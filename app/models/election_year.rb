@@ -1,8 +1,12 @@
 class ElectionYear < ActiveRecord::Base
   validates :year, :presence => true, :uniqueness => true
-  has_many :survey_responses, dependent: :destroy
+  has_many :survey_responses, dependent: :destroy, inverse_of: :election
   #has_many :postages, :through => :year_elements, :source => :element, :source_type => 'postages' , dependent: :destroy
   default_scope { order(election_dt: :desc) }
+
+  def county_profile( county_id )
+    ElectionProfile.where( county_id: county_id, election_year_id: id ).last
+  end
 
   def direct_cost_table_names
     GeneralSurvey::DIRECT_COST_SURVEYS.map { |t| t.to_s.underscore.pluralize }

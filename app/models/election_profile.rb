@@ -1,14 +1,9 @@
 class ElectionProfile< ActiveRecord::Base
   include Responseable
-  # include NotApplicable
-  has_one :survey_response, as: :response, dependent: :destroy
-  accepts_nested_attributes_for :survey_response
-  has_one :election_year, :through => :survey_response
-  
   belongs_to :county, inverse_of: :election_profiles
-  belongs_to :election_year_profile, inverse_of: :election_profiles
+  belongs_to :election_year
   validates :county_id, presence: true
-  validates :election_year_profile_id, presence: true
+  validates :election_year_id, presence: true
   validates  :epppbalpap, :epppbalaccsd, :eprv, :eppploc,:epprecwpp,
     :epbaltype,:epbalsampvip,:epvipinsrt,:epbalofficl,:epvbmmail,
     :epvbmmailprm,:epvbmmailmbp,:epvbmmailuo,:epvbmotc,:epvbmret,

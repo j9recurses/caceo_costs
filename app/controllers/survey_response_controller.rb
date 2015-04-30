@@ -1,66 +1,56 @@
 class SurveyResponseController < ApplicationController
-  before_action :merge_session
-  before_action :session_response_form
-  # , only: [:new, :create, :show, :edit, :update]
-  # before_action :find_survey_response_form, only: [:show, :edit, :update]
-  # def index
-  # end
+  before_action :new_survey_response, only: [:new, :create]
+  before_action :get_survey_response, only: [:edit, :update, :destroy]
+  before_action :setup_session, only: [:new, :edit]
+  before_action :merge_session, only: [:create, :update]
+  before_action :wizard_action, only: [:create, :update]
+
+private
+  def get_survey_response
+    @survey_response = SurveyResponse.find(params[:id])
+    @response = @survey_response.response
+    @survey = @survey_response.survey
+  end
+
+  def new_survey_response
+    # survey_id?
+    @response = params[:response_type].constantize.new
+    @survey_response = SurveyResponse.new(
+      county_id:   session[:county_id], 
+      election_id: session[:election_id],
+      response: @response
+      )
+    @survey = @survey_response.survey
+  end
+
+  def setup_session
+    session[:response] = {}
+  end
 
   def merge_session
-    session[:response_form].deep_merge!(params[:response_form])
+    session[:response].deep_merge!( params[:response] )
   end
-
-  def session_response_form
-    @response_form = ResponseForm.new( session[:response_form] )
-  end
-
-  # def session_response_form
-  #   @response_form = ResponseForm.new(
-  #     SurveyResponse.new(
-  #     county_id:   session[:county_id],
-  #     election_id: session[:election_id],
-  #     survey_id:   session[:survey_id]
-  #     )
-  #   )
-  # end
-
-  # def find_survey_response_form
-  #   @response_form = ResponseForm.new( SurveyResponse.find params[:id] )
-  # end
-
-  def create
-    wizard_action
-  end
-
-  def update
-    wizard_action
-  end
-private
-
-  # session[session_model_params] ||= {}
-  # session[session_model_params].deep_merge!(params[model_singular]) if params[model_singular]
-
 
   def wizard_action
-    @response_form.assign_attributes( merged_session )
-    if @response_form.valid?
+    @response.assign_attributes( session[:response] )
+    if @response.valid?
       if params[:back_button]
-        @response_form.step_back
+        @response.step_back
       elsif params[:next_button]
-        @response_form.step_forward  
+        @response.step_forward  
       elsif params[:save_and_continue]
-        if @response_form.submit
+        if SurveyResponsePersistor.new( @survey_response ).save
           flash.now['success'] = "Your progress has been saved."
-          @response_form.step_forward
+          @response.step_forward
         end      
-      elsif params[:save_and_exit] || @response_form.last_step?
-        if @response_form.submit
-          flash['success'] = flash_message
+      elsif params[:save_and_exit] || @response.last_step?
+        if SurveyResponsePersistor.new( @survey_response ).save
+          flash['success'] = "Your response has saved successfully."
           survey_session = nil
-          redirect_to( @response_form.survey_response )
+          redirect_to( @response.survey_response )
         end
       end
-      survey_session[:current_step] = @response_form.current_step if survey_session
+      session[:response][:current_step] = @response.current_step if session[:response]
     end
   end
 end

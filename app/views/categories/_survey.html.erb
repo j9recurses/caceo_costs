@@ -1,15 +1,15 @@
-<% response = responses.detect { |r| r.klass.to_s.underscore.pluralize == survey_form.table_name } %>
-<% if response %>
+<% response = responses.detect { |r| r.klass.to_s.underscore.pluralize == survey.table_name } %>
+<% if response.data.persisted? %>
   <% total = response.total %>
   <% percent = response.percent_complete %>
-  <% url = url_for( controller: survey_form.table_name, action: 'show', id: response.data.id ) %>
+  <% url = url_for( controller: survey.table_name, action: 'show', id: response.data.id ) %>
 <% else %>
-  <% url = url_for( controller: survey_form.table_name, action: 'new' ) %>
+  <% url = url_for( controller: survey.table_name, action: 'new' ) %>
 <% end %>
 
 <div class="row">
   <div class="survey-index-title">
-    <span><%= link_to( format_category(survey_form.name), url ) %></span>
+    <span><%= link_to( survey.title, url ) %></span>
   </div>
 
 
