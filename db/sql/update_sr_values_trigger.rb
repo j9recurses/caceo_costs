@@ -1,4 +1,4 @@
-class AddValueAndQuestionTriggers < ActiveRecord::Migration
+class ResponseValueTrigger
   def up
     execute(<<-SQL)
       USE `#{Rails.configuration.database_configuration["production"]["database"]}`;

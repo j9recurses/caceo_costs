@@ -4,7 +4,7 @@ class Question < ActiveRecord::Base
   belongs_to :validation_type, inverse_of: :questions
   belongs_to :subsection, inverse_of: :questions
   has_many :options, inverse_of: :question
-  has_many :values, inverse_of: :question, class_name: 'SurveyResponseValue'
+  has_many :values, inverse_of: :question, class_name: 'ResponseValue'
 
   def field_type
     if data_type == 'integer' || data_type == 'string' || data_type == 'decimal'

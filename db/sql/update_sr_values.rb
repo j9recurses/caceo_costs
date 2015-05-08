@@ -1,4 +1,4 @@
-class AddUpdateValueTriggerOnSurveyResponse < ActiveRecord::Migration
+class AddUpdateValueTriggerOnSurveyResponse
   def up
     execute(<<-SQL)
       USE `#{Rails.configuration.database_configuration["production"]["database"]}`;

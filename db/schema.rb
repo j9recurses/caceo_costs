@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409200312) do
+ActiveRecord::Schema.define(version: 20150504221056) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -314,15 +314,34 @@ ActiveRecord::Schema.define(version: 20150409200312) do
     t.string   "question_type",      limit: 255
     t.integer  "validation_type_id", limit: 4
     t.integer  "subsection_id",      limit: 4
-    t.integer  "survey_id",          limit: 4,                     null: false
     t.boolean  "sum_able",           limit: 1,     default: false, null: false
     t.boolean  "na_able",            limit: 1,     default: false, null: false
     t.string   "data_type",          limit: 255
     t.string   "na_field",           limit: 255
+    t.string   "survey_id",          limit: 20
   end
 
   add_index "questions", ["subsection_id"], name: "fk_rails_cd974ed945", using: :btree
   add_index "questions", ["validation_type_id"], name: "fk_rails_57d52342fc", using: :btree
+
+  create_table "response_values", force: :cascade do |t|
+    t.integer  "survey_response_id", limit: 4
+    t.integer  "question_id",        limit: 4
+    t.string   "data_type",          limit: 255
+    t.integer  "integer_value",      limit: 4
+    t.decimal  "decimal_value",                    precision: 10
+    t.string   "string_value",       limit: 255
+    t.text     "text_value",         limit: 65535
+    t.boolean  "na_value",           limit: 1
+    t.datetime "created_at",                                                      null: false
+    t.datetime "updated_at",                                                      null: false
+    t.boolean  "answered",           limit: 1,                    default: false, null: false
+    t.boolean  "boolean_value",      limit: 1
+  end
+
+  add_index "response_values", ["question_id"], name: "index_response_values_on_question_id", using: :btree
+  add_index "response_values", ["survey_response_id", "question_id"], name: "index_on_survey_response_values_survey_response_questions", unique: true, using: :btree
+  add_index "response_values", ["survey_response_id"], name: "index_response_values_on_survey_response_id", using: :btree
 
   create_table "role_assignments", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -950,35 +969,31 @@ ActiveRecord::Schema.define(version: 20150409200312) do
   end
 
   create_table "survey_responses", force: :cascade do |t|
-    t.integer  "response_id",   limit: 4,   null: false
-    t.integer  "election_id",   limit: 4,   null: false
-    t.string   "response_type", limit: 255, null: false
-    t.integer  "county_id",     limit: 4,   null: false
+    t.integer  "response_id",   limit: 4,  null: false
+    t.integer  "election_id",   limit: 4,  null: false
+    t.string   "response_type", limit: 20, null: false
+    t.integer  "county_id",     limit: 4,  null: false
     t.datetime "updated_at"
     t.datetime "created_at"
   end
 
   create_table "survey_subsections", force: :cascade do |t|
-    t.integer "survey_id",     limit: 4
     t.integer "subsection_id", limit: 4
+    t.string  "survey_id",     limit: 20
   end
 
   add_index "survey_subsections", ["subsection_id"], name: "index_survey_subsections_on_subsection_id", using: :btree
-  add_index "survey_subsections", ["survey_id"], name: "index_survey_subsections_on_survey_id", using: :btree
 
   create_table "survey_totals_subsections", id: false, force: :cascade do |t|
-    t.integer "survey_id",     limit: 4, null: false
-    t.integer "subsection_id", limit: 4, null: false
+    t.integer "subsection_id", limit: 4,  null: false
+    t.string  "survey_id",     limit: 20
   end
 
-  add_index "survey_totals_subsections", ["survey_id", "subsection_id"], name: "index_survey_totals_subsections_on_survey_id_and_subsection_id", using: :btree
-
   create_table "surveys", force: :cascade do |t|
-    t.string   "title",         limit: 255
-    t.string   "response_type", limit: 255
-    t.string   "category",      limit: 255
-    t.string   "table_name",    limit: 255
-    t.string   "subject",       limit: 255
+    t.string   "title",      limit: 255
+    t.string   "category",   limit: 255
+    t.string   "table_name", limit: 255
+    t.string   "subject",    limit: 255
     t.datetime "updated_at"
     t.datetime "created_at"
   end
@@ -1036,6 +1051,7 @@ ActiveRecord::Schema.define(version: 20150409200312) do
   add_foreign_key "election_profiles", "election_years"
   add_foreign_key "questions", "subsections"
   add_foreign_key "questions", "validation_types"
+  add_foreign_key "response_values", "questions"
+  add_foreign_key "response_values", "survey_responses"
   add_foreign_key "survey_subsections", "subsections"
-  add_foreign_key "survey_subsections", "surveys"
 end

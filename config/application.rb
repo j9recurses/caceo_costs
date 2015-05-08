@@ -35,6 +35,6 @@ module CaceoCosts
     config.action_mailer.default_url_options = { host: 'caceoelectioncosts.org' }
     config.time_zone = 'Pacific Time (US & Canada)'
 
-    config.active_record.schema_format = :sql
+    config.active_record.schema_format = :ruby
   end
 end

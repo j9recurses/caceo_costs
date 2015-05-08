@@ -12,7 +12,6 @@
     <span><%= link_to( survey.title, url ) %></span>
   </div>
 
-
   <div class="survey-index-progress">
     <div class="progress">
       <% if response %>
@@ -26,5 +25,4 @@
   <div class="survey-index-total">
     <%= total ? "$#{number_with_delimiter total}" : 'Not Started'%>
   </div>
-
 </div>

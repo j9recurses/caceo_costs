@@ -5,7 +5,7 @@ RSpec.describe SurveyResponse do
     context "on new record" do
       before(:context) {
         @survey_response = SurveyResponse.new
-        @election_profile = ElectionProfile.create!(county_id: 59, election_year_profile_id: ElectionYearProfile.last.id)
+        @election_profile = ElectionProfile.create!(county_id: 59, election_year_id: ElectionYear.last.id)
         @salbal = Salbal.create!(county_id: 59, election_year_id: ElectionYear.last.id)
       }
 
@@ -38,7 +38,6 @@ RSpec.describe SurveyResponse do
       it "updates response" do
         expect(@survey_response.response_type).to eq("ElectionProfile")
         @survey_response.response = @salbal
-
         expect(@survey_response.response_type).to eq("Salbal")
       end
 
@@ -51,31 +50,45 @@ RSpec.describe SurveyResponse do
 
         it 'requires election' do
           @valid_sr.election = nil
-          expect { @valid_sr.save }.to raise_error
+          expect { @valid_sr.save! }.to raise_error
           # expect( @valid_sr.save ).to be true
         end        
 
         it 'requires survey' do
           @valid_sr.survey = nil
-          expect { @valid_sr.save }.to raise_error
+          expect { @valid_sr.save! }.to raise_error
         end        
 
         it 'requires response' do
           @valid_sr.response = nil
-          expect { @valid_sr.save }.to raise_error
+          expect { @valid_sr.save! }.to raise_error
         end        
 
         it 'requires county' do
           @valid_sr.county = nil
-          # expect { @valid_sr.save }.to raise_error
-                    expect( @valid_sr.valid? ).to be false
-
+          expect( @valid_sr.valid? ).to be false
         end
 
         it 'requires county_id' do
           @valid_sr.county_id = nil
           # puts @valid_sr.inspect
           expect( @valid_sr.valid? ).to be false
+        end
+      end
+
+      context 'response convenience method' do
+        before(:all) do
+          @survey_response.response = @election_profile
+          @question = @survey_response.questions.where(data_type: 'integer').first
+        end
+        it '#respond sets response value' do
+          @survey_response.respond(@question, 1245)
+          expect(@election_profile.send(@question.field)).to eq 1245
+        end
+
+        it '#respond updates value' do
+          @survey_response.respond(@question, 5421)
+          expect(@election_profile.send(@question.field)).to eq 5421
         end
       end
     end

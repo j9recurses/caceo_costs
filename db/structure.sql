@@ -295,7 +295,7 @@ CREATE TABLE `election_profiles` (
   PRIMARY KEY (`id`),
   KEY `index_election_profiles_on_election_year_id` (`election_year_id`),
   CONSTRAINT `fk_rails_d54ef70374` FOREIGN KEY (`election_year_id`) REFERENCES `election_years` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -545,7 +545,7 @@ CREATE TABLE `salbals` (
   `salbalhrsps_na` tinyint(1) NOT NULL DEFAULT '0',
   `salbalhrsts_na` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1335,6 +1335,7 @@ CREATE TABLE `survey_response_values` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `answered` tinyint(1) NOT NULL DEFAULT '0',
+  `boolean_value` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_on_survey_response_values_survey_response_questions` (`survey_response_id`,`question_id`),
   KEY `index_survey_response_values_on_survey_response_id` (`survey_response_id`),
@@ -1343,32 +1344,6 @@ CREATE TABLE `survey_response_values` (
   CONSTRAINT `fk_rails_8fb9648b92` FOREIGN KEY (`survey_response_id`) REFERENCES `survey_responses` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_ALL_TABLES' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER set_sr_value_updated_at
-      BEFORE UPDATE ON survey_response_values FOR EACH ROW 
-      BEGIN
-        IF OLD.integer_value = NEW.integer_value AND
-          OLD.decimal_value = NEW.decimal_value AND
-          OLD.string_value = NEW.string_value AND
-          OLD.text_value = NEW.text_value AND
-          OLD.na_value = NEW.na_value
-        THEN
-          SET NEW.updated_at = OLD.updated_at;
-        END IF;
-      END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `survey_responses`
@@ -1386,42 +1361,8 @@ CREATE TABLE `survey_responses` (
   `updated_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=321 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=323 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_ALL_TABLES' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER make_values_on_create
-      AFTER INSERT ON survey_responses FOR EACH ROW
-      CALL update_sr_values(NEW.id) */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_ALL_TABLES' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER make_values_on_update
-      AFTER UPDATE ON survey_responses FOR EACH ROW
-      CALL update_sr_values(NEW.id) */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `survey_subsections`
@@ -1571,7 +1512,7 @@ CREATE TABLE `validation_types` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-30 12:05:24
+-- Dump completed on 2015-05-01 16:49:14
 INSERT INTO schema_migrations (version) VALUES ('20140812112433');
 
 INSERT INTO schema_migrations (version) VALUES ('20140812141501');
@@ -1738,7 +1679,5 @@ INSERT INTO schema_migrations (version) VALUES ('20150423233804');
 
 INSERT INTO schema_migrations (version) VALUES ('20150424052642');
 
-INSERT INTO schema_migrations (version) VALUES ('20150428220951');
-
-INSERT INTO schema_migrations (version) VALUES ('20150430184729');
+INSERT INTO schema_migrations (version) VALUES ('20150501234847');
 
