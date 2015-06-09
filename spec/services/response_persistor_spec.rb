@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ResponsePersistor do
-  context 'saving a new survey' do
+  context 'submitting a new survey' do
     before(:each) {
-      @response = ElectionProfile.new(county_id: 59, election_year_profile_id: ElectionYearProfile.last.id)
+      @response = ElectionProfile.new(county_id: 59, election_year_id: ElectionYear.last.id )
       @sr_count = SurveyResponse.count
     }
     after(:each) {
@@ -11,8 +11,10 @@ RSpec.describe ResponsePersistor do
     }
 
     it "creates a new SurveyResponse record" do
-      ResponsePersistor.new(@response).save
-      expect(SurveyResponse.count).to be(@sr_count + 1)
+      expect(@response.valid?).to be(true)
+      puts @response.errors
+      ResponsePersistor.new(@response).submit
+      expect(@response.persisted?).to be(true)
     end
   end
 end

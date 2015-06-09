@@ -5,7 +5,7 @@ class FormPages
   end
 
   def total_steps
-    @pages.size - 1
+    @pages.size
   end
 
   def current_step
@@ -14,6 +14,10 @@ class FormPages
 
   def current_step=(step)
     @current_step = step.to_i
+  end
+
+  def current_page
+    @pages[@current_step]
   end
 
   def step_forward
@@ -25,18 +29,10 @@ class FormPages
   end
 
   def last_step?
-    current_step == total_steps
+    current_step == (total_steps - 1)
   end
 
   def first_step?
     current_step == 0
-  end
-
-  def method_missing(method_name, *args, &block)
-    if /^step(\d+)\?$/ =~ method_name
-      step?($1.to_i)
-    else
-      super
-    end
   end
 end

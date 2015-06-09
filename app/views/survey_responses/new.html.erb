@@ -1,18 +1,18 @@
 <% present_survey(@survey) do |survey_presenter| %>
 
   <h2 class ="myh2yr">
-    <%= "#{format_survey_label @survey.title } #{survey_presenter.header_text} #{ @survey.election.year }" %>
-  &rarr;  Step <%= @survey.data.current_step + 1 %> of <%= @survey.data.total_steps + 1 %>
+    <%= "#{ @response_form.survey.title } for the #{ @response_form.survey_response.election.year }" %>
+  &rarr;  Step <%= @response_form.pages.current_step + 1 %> of <%= @response_form.pages.total_steps %>
   </h2>
 
   <%= render partial: 'general_surveys/survey', 
-    locals: { survey_presenter: survey_presenter, survey: @survey } %>
+    locals: { survey: @survey } %>
 
   <div class="end_link">
     <% if @survey.election_profile? %>
       <%= link_to "Election Profile Home", election_profile_home_path  %>
     <% else %>
-      <%= link_to "Back to Direct Cost Categories for #{ @survey.election.year }", election_year_categories_path( @survey.election.id ) %> |
+      <%= link_to "Back to Direct Cost Categories for #{ @survey.election.year }", election_year_categories_path( @response_form.election.id ) %> |
       <%= link_to "Direct Cost Category Home", home_path  %>
     <% end %>
   </div>

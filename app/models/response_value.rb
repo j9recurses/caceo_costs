@@ -4,9 +4,7 @@ class ResponseValue < ActiveRecord::Base
 
   def self.sync_survey_response_question(survey_response, question)
     val = ResponseValue.find_by(survey_response: survey_response, question: question)
-    if val
-      val
-    else
+    unless val
       val = ResponseValue.new(survey_response: survey_response, question: question)
     end
     

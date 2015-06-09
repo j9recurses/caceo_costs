@@ -26,7 +26,7 @@ RSpec.describe Question do
     }
 
     it 'knows its data type' do
-      expect(@question.data_type).to eq(:integer)
+      expect(@question.data_type).to eq('integer')
     end
   end
 end

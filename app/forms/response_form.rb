@@ -22,6 +22,7 @@ class ResponseForm
   def initialize(survey_response, response = nil)
     @survey_response = survey_response
     @response        = response
+
     if @survey_response.response
       @response = @survey_response.response
     elsif @response
@@ -33,9 +34,8 @@ class ResponseForm
     @pages = FormPages.new( @survey_response.survey )
   end
   attr_accessor :survey_response, :response, :pages
-  def_delegators :@survey_response, :questions, :survey, :valid?
-  # def_delegators :@pages, :total_steps, :current_step, :current_step=, 
-    # :step_forward, :step_back, :first_step?, :last_step?
+  def_delegators :@survey_response, :questions, :survey, :valid?, :county_id, :election_id
+  def_delegator :@pages, :current_step=  # for virtual attribute in controller
 
   def enter(param_hash)
     @response.assign_attributes( param_hash )

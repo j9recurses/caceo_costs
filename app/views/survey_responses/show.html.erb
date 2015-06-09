@@ -11,12 +11,12 @@
 <%= render partial: "response_summary" %>
 
 <div class="end_link">
-  <%= link_to 'Edit', edit_survey_responses_path, @response_form.id) %> |
-  <%= link_to 'Delete Survey Response', survey_responses_path( @response_form.id ),
+  <%= link_to 'Edit', edit_survey_response_path( @response_form.survey_response.id ) %> |
+  <%= link_to 'Delete Survey Response', survey_response_path( @response_form.id ),
         method: :delete, data: { confirm: 'Are you sure?' } %> |
   <%= link_to "Back to Surveys for #{ @response_form.election.year }", 
         election_surveys_path( @response_form.election_id ) %> |
-  <%= link_to 'Elections', home_path  %>
+  <%= link_to 'All Elections', home_path  %>
 </div>
 
 <%
@@ -27,3 +27,5 @@
 # - response_form forwarding methods to survey_response
 # - election_controller, surveys_controller
 %>
+
+  <%= render partial: "general_surveys/#{ @survey.type }", locals: { survey_presenter: survey_presenter, survey: @survey } %>

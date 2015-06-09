@@ -9,11 +9,8 @@
   <div class="caceo-form-input input-group survey-question">
     <% if question.na_able? %>
       <label class="input-group-addon">
-        <%= f.check_box "#{question.field}_na", class: "na-checkbox" %> N/A
-      </label>
-      <%= f.input_field "#{question.field}_value", class: "form-control value-field" %>
-    <% else %>
-      <%= f.input_field question.field, class: "form-control" %>
+        <%= f.check_box "#{question.field}_na", class: "na-checkbox" %> N/A</label>
     <% end %>
+    <%= f.input_field question.field, boolean_style: :inline, class: "form-control value-field" %>
   </div>
 </div>

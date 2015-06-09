@@ -106,6 +106,20 @@ namespace :caceo do
     end
   end
 
+  desc "Create Options on multi_select Questions"
+  task g_options: :environment do
+    Ssbal::LANGUAGES.each do |lang|
+      Option.find_or_create_by!(name: lang)
+    end
+
+    
+    ssbal_langs = Option.where(name: Ssbal::LANGUAGES)
+
+    Question.where('field LIKE "ssbalpri%ml"').each do |q|
+      q.options <<  ssbal_langs
+    end
+  end
+
   #### SURVEY RESPONSES
   desc "generate survey_responses for each response for election profiles and direct cost surveys"
   task make_survey_responses: :environment do
@@ -135,6 +149,7 @@ namespace :caceo do
       text.titleize
         .gsub("Uocava","UOCAVA")
         .gsub("Vbm","VBM")
+        .gsub('Doj', "DOJ")
         .gsub("Dre","DRE")
         .gsub("Sb90","SB90")
         .gsub("Vb Ms", "VBMs")

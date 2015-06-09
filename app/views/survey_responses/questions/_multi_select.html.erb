@@ -6,6 +6,8 @@
     </span>
   <% end %>
 
+  <% langs = "LanguageOptions::#{question.survey_id.upcase}_#{question.field.upcase}".constantize %>
+
   <div class="caceo-form-input input-group">
     <% if question.na_able? %>
       <label class="input-group-addon">
