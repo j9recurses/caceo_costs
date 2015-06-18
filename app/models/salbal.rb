@@ -1,7 +1,5 @@
 class Salbal < ActiveRecord::Base
   include Responseable
-  validates :county_id, presence: true
-  validates :election_year_id, presence: true
   validates :salbaldesign, :salbaltrans, :salbalorder, 
     :salbalmail, :salbalother, :salbalpsrp, :salbalpsop, 
     :salbaltsrp, :salbaltsop, :salbalbeps, :salbalbepsp, 

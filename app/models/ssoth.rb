@@ -1,7 +1,5 @@
 class Ssoth < ActiveRecord::Base
   include Responseable
-  validates :county_id, presence: true
-  validates :election_year_id, presence: true
   validates :ssothoutrea, :ssothwareh, :ssothelcom, :ssothphbank, 
     :ssothwebsite, :ssothcpst, :ssothoth, 
     numericality: { only_integer: true, 

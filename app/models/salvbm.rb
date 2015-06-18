@@ -1,7 +1,5 @@
 class Salvbm < ActiveRecord::Base
   include Responseable
-  validates :county_id, presence: true
-  validates :election_year_id, presence: true
   validates :salvbmoutr, :salvbmappro, :salvbmuoapp, :salvbmproces, 
     :salvbmoth, :salvbmpsrp, :salvbmpsop, :salvbmtsrp, :salvbmtsop, 
     :salvbmbeps, :salvbmbepsp, :salvbmbets, :salvbmbetsp, :salvbmhrsps, :salvbmhrsts, 

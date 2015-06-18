@@ -1,2 +1,0 @@
-class SaldojosController < GeneralSurveysController
-end

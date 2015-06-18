@@ -1,7 +1,5 @@
 class Salpw < ActiveRecord::Base
   include Responseable
-  validates :county_id, presence: true
-  validates :election_year_id, presence: true
   validates :salpwrec, :salpwdvtrain, :salpwtrain, :salpwpay, 
     :salpwoth, :salpwpsrp, :salpwpsop, :salpwtsrp, :salpwrtsop, 
     :salpwbeps, :salpwbepsp, :salpwbets, :salpwbetsp, 

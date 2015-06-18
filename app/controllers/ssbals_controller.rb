@@ -1,2 +1,0 @@
-class SsbalsController < GeneralSurveysController
-end

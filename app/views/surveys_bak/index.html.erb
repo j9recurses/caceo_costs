@@ -1,0 +1,55 @@
+<H2 class="myh2cats"> <%= "Direct Cost Categories Summary for the " + @election_year[:year].to_s %> </H2>
+<h2><small>Click on a Cost Category to Begin</small></h2>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row">
+      <h3 class="survey-index-title">Salaries</h3>
+      <h3 class="survey-index-progress">Progress Completing Survey</h3>
+      <h3 class="survey-index-total">Totals</h3>
+    </div>
+  </div>
+  <div class="panel-body">
+    <%= render partial: 'survey', collection: @salary_surveys, locals: { responses: @salary_responses } %>
+  </div>
+  <div class="panel-footer">
+    <div class="row">
+      <div class="survey-index-title show_item_title_total">Total Direct Costs from Salary and Benefits</div>
+      <div class="survey-index-progress"></div>
+      <div class="survey-index-total show_item_total">$<%=number_with_delimiter @salary_responses.inject(0) {|sum, g_surv| g_surv.total + sum} %></div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row">
+      <h3 class="survey-index-title">Services and Supplies</h3>
+      <h3 class="survey-index-progress">Progress Completing Survey</h3>
+      <h3 class="survey-index-total">Totals</h3>
+    </div>
+  </div>
+  <div class="panel-body">
+    <%= render partial: 'survey', collection: @supply_surveys, locals: { responses: @supply_responses } %>
+  </div>
+  <div class="panel-footer">
+    <div class="row">
+      <div class="survey-index-title show_item_title_total">Total Direct Costs from Services and Supplies</div>
+      <div class="survey-index-progress"></div>
+      <div class="survey-index-total show_item_total">$<%=number_with_delimiter @supply_responses.inject(0) {|sum, g_surv| g_surv.total + sum} %></div>
+    </div>
+  </div>
+</div>
+
+<h3 class="col-sm-9">Total Direct Costs for the <%= @election_year[:year].titleize %></h3>
+  <% salary_total = @salary_responses.inject(0) { |sum, gsurv| gsurv.total ? sum + gsurv.total : sum } %>
+  <% supply_total = @supply_responses.inject(0) { |sum, gsurv| gsurv.total ? sum + gsurv.total : sum } %>
+<h3 class="survey-index-total">$<%= number_with_delimiter( salary_total + supply_total ) %></h3>
+
+<div class="category_break"></div>
+
+
+<div class="category_end_link">
+<%= link_to "Direct Cost Categories Home", home_path  %>
+</div>
+

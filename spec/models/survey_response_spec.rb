@@ -1,6 +1,41 @@
 require 'rails_helper'
 
 RSpec.describe SurveyResponse do
+  describe "totaling" do
+    let(:survey_response) do 
+      r = Ssveh.new(county_id: 59, election_year_id: 18)
+      sr = SurveyResponse.new( response: r, county_id: 59, election_id: 18 )
+      sr.response.survey_response = sr
+      sr
+    end
+    let(:int_questions) { survey_response.questions.where(data_type: 'integer') }
+    let(:sr_with_values) {
+      survey_response.respond(int_questions[0], 6666)
+      survey_response.respond(int_questions[1], 12)
+      survey_response
+    }
+    let(:sr_form) { SurveyResponseForm.survey('Ssveh').new( survey_response ) }
+    let(:sr_form_with_values) { SurveyResponseForm.survey('Ssveh').new( sr_with_values ) }
+    let(:saved_sr) { sr_form.submit; SurveyResponse.find(survey_response.id) }
+
+    let(:saved_sr_with_values) { sr_form_with_values.submit; SurveyResponse.find(sr_with_values.id) }
+
+    let(:second_saved_sr_with_values) do
+      r = Ssveh.new(county_id: 59, election_year_id: 19)
+      sr = SurveyResponse.new(response: r, county_id: 59, election_id: 19)
+      sr.respond(int_questions[2], 100)
+      sr.respond(int_questions[1], 900)
+      srf = SurveyResponseForm.survey(Ssveh).new(sr)
+      srf.submit 
+      SurveyResponse.find sr.id
+    end
+
+
+    it 'adds up multiple survey_responses' do
+      expect(SurveyResponse.total(saved_sr_with_values, second_saved_sr_with_values)).to eq(7678)
+    end
+  end
+
   describe "associations" do
     context "on new record" do
       let(:survey_response) { SurveyResponse.new }

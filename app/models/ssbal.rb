@@ -1,7 +1,5 @@
 class Ssbal < ActiveRecord::Base
   include Responseable
-  validates :county_id, presence: true
-  validates :election_year_id, presence: true
   validates :ssballayout, :ssbaltransl, :ssbalpri, :ssbalprisb, 
     :ssbalprisben, :ssbalprisbch, :ssbalprisbko, :ssbalprisbsp, 
     :ssbalrpisbvi, :ssbalprisbja, :ssbalprisbta, :ssbalprisbkh, 

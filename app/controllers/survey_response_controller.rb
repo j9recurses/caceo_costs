@@ -8,13 +8,13 @@ class SurveyResponseController < ApplicationController
 private
 
   def new_form
-    @response_form = ResponseForm.new(
+    @response_form = SurveyResponseForm.new(
       SurveyResponse.new( county_id: session[:county_id], election_id: session[:election_id] ),
       params[:response_type].constantize.new)
   end
 
   def get_form
-    @response_form = ResponseForm.new( SurveyResponse.find params[:id] )
+    @response_form = SurveyResponseForm.new( SurveyResponse.find params[:id] )
   end
 
   def setup_session
@@ -31,12 +31,12 @@ private
       if params[:back_button]
         @response_form.pages.step_back
       elsif params[:next_button]
-        @response_form.pages.step_forward  
+        @response_form.pages.step_forward
       elsif params[:save_and_continue]
         if @response_form.submit
           flash.now['success'] = "Your progress has been saved."
           @response_form.pages.step_forward
-        end      
+        end
       elsif params[:save_and_exit] || @response_form.pages.last_step?
         if @response_form.submit
           flash['success'] = "Your response has been saved successfully."

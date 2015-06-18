@@ -1,2 +1,0 @@
-class SalmedsController < GeneralSurveysController 
-end

@@ -1,7 +1,5 @@
 class Salbc < ActiveRecord::Base
   include Responseable
-  validates :county_id, presence: true
-  validates :election_year_id, presence: true
   validates :salbcsec, :sabcoth, :salbcpsrp, :salbcpsop, 
     :salbctsrp, :salbctsop, :salbcbeps, :salbcbepsp, 
     :salbcbets, :salbcbetsp, :salbchrsps, :salbchrsts, :salbcnvbmp,

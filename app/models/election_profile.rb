@@ -2,8 +2,6 @@ class ElectionProfile< ActiveRecord::Base
   include Responseable
   belongs_to :county, inverse_of: :election_profiles
   belongs_to :election_year
-  validates :county_id, presence: true
-  validates :election_year_id, presence: true
   validates  :epppbalpap, :epppbalaccsd, :eprv, :eppploc,:epprecwpp,
     :epbaltype,:epbalsampvip,:epvipinsrt,:epbalofficl,:epvbmmail,
     :epvbmmailprm,:epvbmmailmbp,:epvbmmailuo,:epvbmotc,:epvbmret,

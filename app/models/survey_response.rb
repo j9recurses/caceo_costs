@@ -13,9 +13,6 @@ class SurveyResponse < ActiveRecord::Base
   validates :election, presence: true
   validates :response, presence: true
 
-  after_save :sync_values
-  after_touch :sync_values
-
   def set_null_fields_to_na
     questions.where(na_able: true).select(:field, :na_field).each do |r|
       if response[r.field] == nil
@@ -25,10 +22,32 @@ class SurveyResponse < ActiveRecord::Base
   end
 
   def respond(question, value)
-    response.send(question.field + '=', value)
+    case question
+    when Question
+      response.send(question.field + '=', value)
+    when String
+      response.send(question + '=', value)
+    end
+  end
+
+  def self.value_ids
+    joins(:values)
+    .pluck('response_values.id')
+  end
+
+  def self.total
+    response_value_total( self.value_ids )
+  end
+
+  def total
+    response_value_total( self.value_ids )
   end
 
 private
+  def response_value_total(rv_ids)
+    ResponseValue.where(id: rv_ids).total
+  end
+
   def sync_values
     ResponseValue.sync_survey_response self
   end

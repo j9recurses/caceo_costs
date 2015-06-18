@@ -1,2 +1,0 @@
-class SspwsController < GeneralSurveysController
-end

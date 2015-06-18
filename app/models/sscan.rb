@@ -1,7 +1,5 @@
 class Sscan < ActiveRecord::Base
   include Responseable
-  validates :county_id, presence: true
-  validates :election_year_id, presence: true
   validates :sscanprint, 
     numericality: { only_integer: true, 
       :greater_than_or_equal_to => 0, 

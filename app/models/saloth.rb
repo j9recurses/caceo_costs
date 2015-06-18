@@ -1,7 +1,5 @@
 class Saloth < ActiveRecord::Base
   include Responseable
-  validates :county_id, presence: true
-  validates :election_year_id, presence: true
   validates :salothvoed, :salothvore, :salothelcal, :salothstind, 
     :salothvoros, :salother, :salothpsrp, :salothpsop, :salothtsrp, 
     :salothtsop, :salothbeps, :salothbepsp, :salothbets, :salothbetsp, 

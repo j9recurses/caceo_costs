@@ -1,0 +1,30 @@
+<% if status[:survey_response] == nil %>
+  <% url = new_survey_response_path(
+    election_id: params[:election_year_id], 
+    county_id: current_user.county_id, 
+    response_type: status[:survey].id
+    ) %>
+<% else %>
+  <% total = status[:survey_response].total %>
+  <% percent = status[:survey_response].percent_complete %>
+  <% url = survey_response_path( status[:survey_response].id )
+<% end %>
+
+<div class="row">
+  <div class="survey-index-title">
+    <span><%= link_to( survey.title, url ) %></span>
+  </div>
+
+  <div class="survey-index-progress">
+    <div class="progress">
+      <% unless status[:survey_response] == nil %>
+        <div class="progress-bar" role="progressbar" aria-valuenow=<%="#{percent}"%> aria-valuemin="0" aria-valuemax="100" style="<%="width: #{percent}%;" %>">
+          <%= percent ? "#{percent}%" : '' %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="survey-index-total">
+    <%= total ? "$#{number_with_delimiter total}" : 'Not Started'%>
+  </div>
+</div>

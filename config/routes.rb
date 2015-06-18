@@ -38,9 +38,9 @@ CaceoCosts::Application.routes.draw do
   resources :elections do
     resources :surveys
   end  
-  resources :surveys do
-    resources :elections
-  end
+  # resources :surveys do
+  #   resources :elections
+  # end
   resources :survey_responses
 
   #resources :election_year_profiles

@@ -7,7 +7,7 @@ class ResponseValue < ActiveRecord::Base
     unless val
       val = ResponseValue.new(survey_response: survey_response, question: question)
     end
-    
+
     resp = survey_response.response
     # set na_value and data_type_value
     if question.na_able?
@@ -22,13 +22,16 @@ class ResponseValue < ActiveRecord::Base
     persisted_val = ResponseValue.
       where( survey_response: val.survey_response, question: val.question).first
     val.save! unless persisted_val && persisted_val.attributes.values == val.attributes.values
+    # raise
   end
 
   def self.sync_survey_response(survey_response)
     raise 'SurveyResponse has no Response present' unless survey_response.response
+    success = false
     survey_response.questions.each do |q|
       sync_survey_response_question survey_response, q
     end
+    true #else sync_survey_response_question should raise error
   end
 
   def self.total

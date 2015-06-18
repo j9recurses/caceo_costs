@@ -1,2 +1,0 @@
-class SsmedsController < GeneralSurveysController
-end

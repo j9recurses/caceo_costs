@@ -1,7 +1,5 @@
 class Ssbc < ActiveRecord::Base
   include Responseable
-  validates :county_id, presence: true
-  validates :election_year_id, presence: true
   validates :ssbcprocvbh, :ssbcprocpbh, :ssbcprocs, :ssbcbcounth, 
     :ssbcbcounts, :ssbccanvh, :ssbccanvs, :ssbcpcsec,
     numericality: { only_integer: true, 

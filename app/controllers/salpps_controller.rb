@@ -1,2 +1,0 @@
-class SalppsController < GeneralSurveysController 
-end

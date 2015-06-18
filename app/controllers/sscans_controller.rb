@@ -1,2 +1,0 @@
-class SscansController < GeneralSurveysController
-end
