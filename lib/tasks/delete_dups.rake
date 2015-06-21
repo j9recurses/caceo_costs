@@ -1,5 +1,26 @@
 namespace :caceo do
   desc 'delete all old surveys, leaving only the most recent'
+  desc "Task description"
+  task delete_sr_dups: :environment do
+  
+    query = <<-SQL
+    DELETE survey_responses.*
+    FROM survey_responses
+    INNER JOIN
+    (
+      SELECT MAX(id) id, county_id, election_id, response_type 
+      FROM survey_responses 
+      GROUP BY county_id, election_id, response_type
+    ) d 
+    ON d.county_id  = survey_responses.county_id AND 
+    d.election_id   = survey_responses.election_id AND 
+    d.response_type = survey_responses.response_type AND 
+    d.id <> survey_responses.id
+    SQL
+
+    ActiveRecord::Base.connection.execute(query)
+  end
+
   task delete_dups: :environment do
     def delete_with_logs(klass)
       s = SurveySql.new(klass)

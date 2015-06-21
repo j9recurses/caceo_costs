@@ -6,7 +6,7 @@ class SurveyResponse < ActiveRecord::Base
   has_many :questions, foreign_key: 'survey_id', primary_key: 'response_type'
   has_many :subsections, through: :survey
   has_many :totals_subsections, through: :survey, class_name: 'Subsection'
-  has_many :values, inverse_of: :survey_response, class_name: 'ResponseValue', dependent: :destroy
+  has_many :values, inverse_of: :survey_response, class_name: 'ResponseValue'
 
   validates_associated :response
   validates :county, presence: true
@@ -36,18 +36,17 @@ class SurveyResponse < ActiveRecord::Base
   end
 
   def self.total
-    response_value_total( self.value_ids )
+    ResponseValue.where(id: value_ids).total
   end
 
   def total
-    response_value_total( self.value_ids )
+    ResponseValue.where(id: value_ids).total
   end
 
+  def percent_answered
+    values.percent_answered
+  end
 private
-  def response_value_total(rv_ids)
-    ResponseValue.where(id: rv_ids).total
-  end
-
   def sync_values
     ResponseValue.sync_survey_response self
   end

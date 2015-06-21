@@ -40,15 +40,39 @@ class ResponseValue < ActiveRecord::Base
       .sum(:integer_value)
   end
 
+  def self.answered_ratio
+    (answered.to_f / count.to_f).round(2)
+  end
+
   def self.percent_answered
-    answered_questions.to_f / count
+    (self.answered_ratio * 100).to_i
   end
 
-  def self.answered_questions
-    where(answered: true).count
+  def self.answered
+    # where(answered: true).count
+    where(<<-SQL 
+      NOT(
+      integer_value IS NULL AND
+      decimal_value IS NULL AND
+      string_value  IS NULL AND
+      text_value    IS NULL AND
+      boolean_value IS NULL AND
+      na_value = 0)
+      SQL
+      )
+    .count
   end
 
-  def self.questions_count
-    count
+  def answered?
+    if integer_value == nil &&
+      decimal_value == nil &&
+      string_value == nil &&
+      text_value == nil &&
+      boolean_value == nil &&
+      na_value == false
+      false
+    else
+      true
+    end
   end
 end

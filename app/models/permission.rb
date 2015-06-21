@@ -10,6 +10,8 @@ class Permission
     if user
       allow :users, [:profile, :logout]
       allow :election_years, :home
+      allow :elections, :index
+      allow :surveys, :index
       allow :categories, :index
       allow :election_year_profiles, :election_profile_home
       allow :announcements, :index

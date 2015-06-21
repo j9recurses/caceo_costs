@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504221056) do
+ActiveRecord::Schema.define(version: 20150620165711) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -332,10 +332,9 @@ ActiveRecord::Schema.define(version: 20150504221056) do
     t.decimal  "decimal_value",                    precision: 10
     t.string   "string_value",       limit: 255
     t.text     "text_value",         limit: 65535
-    t.boolean  "na_value",           limit: 1
+    t.boolean  "na_value",           limit: 1,                    default: false, null: false
     t.datetime "created_at",                                                      null: false
     t.datetime "updated_at",                                                      null: false
-    t.boolean  "answered",           limit: 1,                    default: false, null: false
     t.boolean  "boolean_value",      limit: 1
   end
 
@@ -977,6 +976,8 @@ ActiveRecord::Schema.define(version: 20150504221056) do
     t.datetime "created_at"
   end
 
+  add_index "survey_responses", ["county_id", "election_id", "response_type"], name: "index_survey_responses_on_county_election_and_survey", unique: true, using: :btree
+
   create_table "survey_subsections", force: :cascade do |t|
     t.integer "subsection_id", limit: 4
     t.string  "survey_id",     limit: 20
@@ -1052,6 +1053,6 @@ ActiveRecord::Schema.define(version: 20150504221056) do
   add_foreign_key "questions", "subsections"
   add_foreign_key "questions", "validation_types"
   add_foreign_key "response_values", "questions"
-  add_foreign_key "response_values", "survey_responses"
+  add_foreign_key "response_values", "survey_responses", on_delete: :cascade
   add_foreign_key "survey_subsections", "subsections"
 end
