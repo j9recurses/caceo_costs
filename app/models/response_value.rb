@@ -41,7 +41,8 @@ class ResponseValue < ActiveRecord::Base
   end
 
   def self.answered_ratio
-    (answered.to_f / count.to_f).round(2)
+    rat = (answered.to_f / count.to_f).round(2)
+    rat.nan? ? 0 : rat
   end
 
   def self.percent_answered
@@ -73,6 +74,15 @@ class ResponseValue < ActiveRecord::Base
       false
     else
       true
+    end
+  end
+
+  def value
+    value_field = self.question.data_type + '_value'
+    if question.na_able?
+      na_value ? "N/A" : send(value_field)
+    else
+      send value_field
     end
   end
 end

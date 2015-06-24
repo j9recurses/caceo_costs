@@ -45,7 +45,15 @@ private
     else
       referrer = request.referrer
       referrer_params = Rails.application.routes.recognize_path( referrer )
-      permitted = current_permissions.allow?(referrer_params[:controller], referrer_params[:action], current_resource) || current_permissions.allow?(referrer_params[:controller], referrer_params[:action], current_session)
+      permitted = current_permissions.allow?(
+        referrer_params[:controller], 
+        referrer_params[:action], 
+        current_resource
+        ) || 
+        current_permissions.allow?(
+          referrer_params[:controller], 
+          referrer_params[:action], 
+          current_session)
       if referrer && permitted
         redirect_to :back
       elsif current_user

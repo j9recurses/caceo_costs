@@ -33,6 +33,7 @@ class Permission
         SURVEY_NAMES.each do |name|
           allow_survey(name)
         end
+        allow_survey(:survey_responses)
       end
 
       if user.admin?

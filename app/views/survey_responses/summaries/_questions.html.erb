@@ -1,8 +1,6 @@
 <div class="panel panel-default">
-  <div class="panel-heading"><%= subsection.title %></div>
-
 <table class="table">
-  <% subsection.values_for(@survey_response).each do |v| %>
+  <% values.each do |v| %>
   <tr>
     <td><%= v.question.label %></td>
     <td><%= v.value %></td>

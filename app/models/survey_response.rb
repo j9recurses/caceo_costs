@@ -4,7 +4,7 @@ class SurveyResponse < ActiveRecord::Base
   belongs_to :survey, inverse_of: :survey_responses, foreign_key: :response_type
   belongs_to :county, inverse_of: :survey_responses
   has_many :questions, foreign_key: 'survey_id', primary_key: 'response_type'
-  has_many :subsections, through: :survey
+  # has_many :subsections, through: :survey
   has_many :totals_subsections, through: :survey, class_name: 'Subsection'
   has_many :values, inverse_of: :survey_response, class_name: 'ResponseValue'
 

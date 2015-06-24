@@ -1,35 +1,83 @@
 require 'rails_helper'
 
 RSpec.describe ResponseValue, type: :model do
-  let(:survey_response) do 
-    r = Ssveh.new(county_id: 59, election_year_id: 18)
-    sr = SurveyResponse.new( response: r, county_id: 59, election_id: 18 )
-    sr.response.survey_response = sr
-    sr
+  let(:survey_response) do
+     sr = FactoryGirl.create(:survey_response_with_values)
+     ResponseValue.sync_survey_response sr
+     sr
   end
-  let(:int_questions) { survey_response.questions.where(data_type: 'integer') }
-  let(:sr_with_values) {
-    survey_response.respond(int_questions[0], 6666)
-    survey_response.respond(int_questions[1], 12)
-    survey_response
-  }
-  let(:sr_form) { SurveyResponseForm.survey('Ssveh').new( survey_response ) }
-  let(:sr_form_with_values) { SurveyResponseForm.survey('Ssveh').new( sr_with_values ) }
-  let(:saved_sr) { sr_form.submit; SurveyResponse.find(survey_response.id) }
+  let(:empty_sr) { create :survey_response }
 
-  describe 'totaling' do
+  describe '::total' do
     it 'adds up' do
-      sr_form_with_values.submit
-      expect(sr_form_with_values.model.values.total).to eq(6666 + 12)
+      expect(survey_response.values.total).to eq(135+20+165)
+    end
+    it 'adds up after changes' do
+      survey_response.respond(Question.find_by(field: :ssvehrent), 100)
+      survey_response.save!
+      ResponseValue.sync_survey_response survey_response
+      expect(survey_response.values.total).to eq(135+100+165)      
+    end
+  end
+
+  describe '::answered & #answered?' do
+    it 'count questions with values' do
+      answer_count = survey_response.values.inject(0) { |memo, val|
+        val.answered? ? memo + 1 : memo
+      }
+      expect(answer_count).to eq 3
+      expect(survey_response.values.answered).to eq 3
     end
 
-    it 'adds up after changes' do
-      expect(sr_form_with_values.submit).to be true
-      srf = SurveyResponseForm.survey(Ssveh).new(SurveyResponse.find(sr_with_values.id))
-      srf.response.send("#{int_questions[0].field}=", 20)
-      srf.submit
-      expect(srf.persisted?).to be true
-      expect(srf.model.values.total).to eq(20 + 12)
+    it 'no false positives' do
+      answer_count = empty_sr.values.inject(0) { |memo, val|
+        val.answered? ? memo + 1 : memo
+      }
+      expect(answer_count).to eq 0
+      expect(empty_sr.values.answered).to eq 0
+    end
+
+    describe '::answered_ratio' do
+      it 'works with 0/0' do
+        expect(empty_sr.values.answered_ratio).to eq 0.0
+      end
+
+      it 'works' do
+        expect(survey_response.values.answered_ratio).to eq 0.6
+      end
+    end
+
+    describe '::percent_answered' do
+      it 'returns 0' do
+        perc = empty_sr.values.percent_answered
+        expect(perc).to eq 0
+        expect(perc.is_a? Integer).to be true
+      end
+
+      it 'returns an integer' do
+        perc = survey_response.values.percent_answered
+        expect(perc).to eq 60
+        expect(perc.is_a? Integer).to be true
+      end
+    end
+  end
+
+  describe '#value' do
+    it 'returns an integer for an int question' do
+      expect(survey_response.values.first.value.is_a? Integer).to be true
+    end
+
+    it 'returns the correct value' do
+      q = survey_response.questions.find_by(field: :ssvehrent)
+      v = survey_response.values.find_by(question: q)
+      expect(v.value).to eq 20
+    end
+
+    it 'returns "N/A" for no_value == true' do
+      v = survey_response.values.first
+      v.na_value = true
+      v.save!
+      expect(v.value).to eq('N/A')
     end
   end
 end

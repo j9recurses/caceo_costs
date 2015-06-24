@@ -1,21 +1,15 @@
 <h2 class ="myh2show">
-  <%= "#{@response_form.survey.title} Summary for the #{ @response_form.election.year }" %>
+  <%= "#{@survey_response.survey.title} Summary for the #{ @survey_response.election.year }" %>
 </h2>
 
-@survey_response.subsections
-
-<% if @response_form.subsections.count > 0 %>
-  <%= render partial: "survey_subsection", collection: @response_form.subsections %>
-<% end %>
-
-<%= render partial: "response_summary" %>
+<%= render partial: "survey_responses/summaries/response" %>
 
 <div class="end_link">
-  <%= link_to 'Edit', edit_survey_response_path( @response_form.survey_response.id ) %> |
-  <%= link_to 'Delete Survey Response', survey_response_path( @response_form.id ),
+  <%= link_to 'Edit', edit_survey_response_path( @survey_response.id ) %> |
+  <%= link_to 'Delete Survey Response', survey_response_path( @survey_response.id ),
         method: :delete, data: { confirm: 'Are you sure?' } %> |
-  <%= link_to "Back to Surveys for #{ @response_form.election.year }", 
-        election_surveys_path( @response_form.election_id ) %> |
+  <%= link_to "Back to Surveys for #{ @survey_response.election.year }", 
+        election_surveys_path( @survey_response.election_id ) %> |
   <%= link_to 'All Elections', home_path  %>
 </div>
 
@@ -27,5 +21,3 @@
 # - response_form forwarding methods to survey_response
 # - election_controller, surveys_controller
 %>
-
-  <%= render partial: "general_surveys/#{ @survey.type }", locals: { survey_presenter: survey_presenter, survey: @survey } %>

@@ -20,7 +20,7 @@ class Survey < ActiveRecord::Base
   has_many :ssbals,   through: :survey_responses, source: :response, source_type: 'Ssbal'
   has_many :ssbcs,    through: :survey_responses, source: :response, source_type: 'Ssbc'
   has_many :election_profiles, through: :survey_responses, source: :response, source_type: 'ElectionProfile'
-  has_and_belongs_to_many :subsections, join_table: "survey_subsections", class_name: 'Subsection'
+  # has_and_belongs_to_many :subsections, join_table: "survey_subsections", class_name: 'Subsection'
   has_and_belongs_to_many :totals_subsections, join_table: "survey_totals_subsections", class_name: 'Subsection'
   default_scope { order(title: :desc) }
 
@@ -28,6 +28,10 @@ class Survey < ActiveRecord::Base
 
   def responses
     send table_name
+  end
+
+  def subsections
+    Subsection.where(id: questions.pluck(:subsection_id).uniq)
   end
 
   def election_profile?

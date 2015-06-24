@@ -1,3 +1,5 @@
+load './app/models/response_value.rb'
+
 FactoryGirl.define do
   factory :user do
     username 'zblotnik'
@@ -20,5 +22,30 @@ FactoryGirl.define do
 
   factory :announcement do
     message 'new news!'
+  end
+
+  factory :survey_response do
+    county_id 59
+    election_id 19
+    response
+  end
+
+  factory :survey_response_with_values, class: SurveyResponse do
+    county_id 59
+    election_id 19
+    association :response, factory: :response_with_values
+    # after(:create) do |sr|
+    #   ResponseValue.sync_survey_response sr
+    # end   
+  end
+
+  factory :response, class: Ssveh do
+    county_id 59
+    election_year_id 19
+    factory :response_with_values do
+      ssvehfuel 135
+      ssvehrent 20
+      ssvehcount 165
+    end
   end
 end
