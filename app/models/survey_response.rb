@@ -1,5 +1,5 @@
 class SurveyResponse < ActiveRecord::Base
-  belongs_to :election, class_name: "ElectionYear"
+  belongs_to :election, class_name: "ElectionYear", foreign_key: 'election_id'
   belongs_to :response, polymorphic: true, autosave: true, dependent: :destroy
   belongs_to :survey, inverse_of: :survey_responses, foreign_key: :response_type
   belongs_to :county, inverse_of: :survey_responses
@@ -45,6 +45,11 @@ class SurveyResponse < ActiveRecord::Base
 
   def percent_answered
     values.percent_answered
+  end
+
+  def values_in_subsection(subsection)
+    q_ids = Question.where(subsection: subsection, survey_id: response_type).pluck(:id)
+    values.where(question: q_ids)
   end
 private
   def sync_values

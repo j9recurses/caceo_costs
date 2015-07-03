@@ -2,7 +2,11 @@
   <%= "#{@survey_response.survey.title} Summary for the #{ @survey_response.election.year }" %>
 </h2>
 
-<%= render partial: "survey_responses/summaries/response" %>
+<% if @survey.subsections.count > 0 %>
+  <%= render partial: "survey_responses/summaries/subsection", collection: @survey.subsections %>
+<% else %>
+  <%= render partial: "survey_responses/summaries/questions", locals: { values: @survey_response.values } %>
+<% end %>
 
 <div class="end_link">
   <%= link_to 'Edit', edit_survey_response_path( @survey_response.id ) %> |
@@ -12,12 +16,3 @@
         election_surveys_path( @survey_response.election_id ) %> |
   <%= link_to 'All Elections', home_path  %>
 </div>
-
-<%
-# promises
-# - subsections
-# - subsection_summary and response_summary partials
-# - totaling in partials.
-# - response_form forwarding methods to survey_response
-# - election_controller, surveys_controller
-%>

@@ -1,0 +1,1960 @@
+ssvehrent:
+  id: 448
+  field: ssvehrent
+  name: Vehicle services and supplies
+  label: Rented Vehicles
+  description: 'Costs to rent vehicles for election related transportation, excluding
+    polling place deliveries and pick-ups. '
+  table_name: ssvehs
+  cost_type: services & supplies
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: ssvehrent_na
+  survey_id: Ssveh
+
+ssvehcount:
+  id: 449
+  field: ssvehcount
+  name: Vehicle services and supplies
+  label: County Vehicles
+  description: Costs to use county vehicles for election related transportation, excluding
+    polling place deliveries and pick-ups.
+  table_name: ssvehs
+  cost_type: services & supplies
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: ssvehcount_na
+  survey_id: Ssveh
+
+ssvehfuel:
+  id: 450
+  field: ssvehfuel
+  name: Vehicle services and supplies
+  label: Fuel
+  description: 'Costs to purchase fuel for vehicles used for election related transportation,
+    excluding polling place deliveries and pick-ups. '
+  table_name: ssvehs
+  cost_type: services & supplies
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: ssvehfuel_na
+  survey_id: Ssveh
+
+ssvehins:
+  id: 451
+  field: ssvehins
+  name: Vehicle services and supplies
+  label: Insurance
+  description: Costs to insure vehicles used for election related transportation, excluding
+    polling place deliveries and pick-ups.
+  table_name: ssvehs
+  cost_type: services & supplies
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: ssvehins_na
+  survey_id: Ssveh
+
+ssvehcomment:
+  id: 452
+  field: ssvehcomment
+  name: Vehicle services and supplies
+  label: General Comments & Concerns About This Section
+  description: General Comments & Concerns about this section
+  table_name: ssvehs
+  cost_type: services & supplies
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: comment
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: false
+  data_type: text
+  na_field: 
+  survey_id: Ssveh
+
+#SALBAL
+salbaldesign:
+  id: 218
+  field: salbaldesign
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Ballot Layout and Design in House
+  description: Costs to layout, design and proof the ballots by the in-house staff.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:27:50.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 1
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbaldesign_na
+  survey_id: Salbal
+
+salbaltrans:
+  id: 219
+  field: salbaltrans
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Ballot Translation in House
+  description: Costs to translate the ballots by the in-house staff.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:27:50.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 1
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbaltrans_na
+  survey_id: Salbal
+
+salbalorder:
+  id: 220
+  field: salbalorder
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Ballot Ordering
+  description: Ballot ordering includes preparation of competitive bids, analysis of
+    bids, contract preparation and review, bid award process, and other by in-house
+    staff.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 1
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbalorder_na
+  survey_id: Salbal
+
+salbalmail:
+  id: 221
+  field: salbalmail
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: 'Sample Ballot Mailing '
+  description: Sample ballot mailing includes coordinating with USPS, contract with
+    mail vendor, labeling sample ballots, and other ballot mailing activities performed
+    by in-house staff.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 1
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbalmail_na
+  survey_id: Salbal
+
+salbalother:
+  id: 222
+  field: salbalother
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: 'Other '
+  description: Other in-house labor costs related to the ballots include data entry,
+    quality control, invoice review and payment, etc.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 1
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbalother_na
+  survey_id: Salbal
+
+salbalpsrp:
+  id: 223
+  field: salbalpsrp
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Salaries Permanent Staff Regular Pay
+  description: Permanent staff regular pay for performing tasks related to sample,
+    official, provisional and VBM ballots, including ballot layout and design, ballot
+    translation, ballot ordering, sample ballot mailing arrangements, and other.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 2
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbalpsrp_na
+  survey_id: Salbal
+
+salbalpsop:
+  id: 224
+  field: salbalpsop
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Salaries Permanent Staff Overtime Pay
+  description: Permanent staff overtime pay for performing tasks related to sample,
+    official, provisional and VBM ballots, including ballot layout and design, ballot
+    translation, ballot ordering, sample ballot mailing arrangements, and other.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 2
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbalpsop_na
+  survey_id: Salbal
+
+salbaltsrp:
+  id: 225
+  field: salbaltsrp
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Salaries Temporary Staff Regular Pay
+  description: Temporary staff regular pay for performing tasks related to sample,
+    official, provisional and VBM ballots, including ballot layout and design, ballot
+    translation, ballot ordering, sample ballot mailing arrangements, and other.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 2
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbaltsrp_na
+  survey_id: Salbal
+
+
+salbaltsop:
+  id: 226
+  field: salbaltsop
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Salaries Temporary Staff Overtime Pay
+  description: Temporary staff overtime pay for performing tasks related to sample,
+    official, provisional and VBM ballots, including ballot layout and design, ballot
+    translation, ballot ordering, sample ballot mailing arrangements, and other.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 2
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbaltsop_na
+  survey_id: Salbal
+
+salbalbeps:
+  id: 227
+  field: salbalbeps
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Benefits Permanent Staff in Dollars
+  description: Total benefits in dollars for permanent staff performing tasks related
+    to sample, official, provisional and VBM ballots, including ballot layout and design,
+    ballot translation, ballot ordering, sample ballot mailing arrangements, and other.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 3
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbalbeps_na
+  survey_id: Salbal
+
+
+salbalbepsp:
+  id: 228
+  field: salbalbepsp
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Benefits Permanent Staff in Percent
+  description: Total benefits as a percentage of salaries for the permanent staff performing
+    tasks related to the sample, official, provisional and VBM ballots, including ballot
+    layout and design, ballot translation, ballot ordering, sample ballot mailing and
+    other.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 4
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbalbepsp_na
+  survey_id: Salbal
+
+
+salbalbets:
+  id: 229
+  field: salbalbets
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Benefits Temporary Staff  in Dollars
+  description: Total benefits in dollars for temporary staff performing tasks related
+    to sample, official, provisional and VBM ballots, including ballot layout and design,
+    ballot translation, ballot ordering, sample ballot mailing arrangements, and other.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 3
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbalbets_na
+  survey_id: Salbal
+
+salbalbetsp:
+  id: 230
+  field: salbalbetsp
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Benefits Temporary Staff in Percent
+  description: Total benefits as a percentage of salaries for the temporary staff performing
+    tasks related to the sample, official, provisional and VBM ballots, including ballot
+    layout and design, ballot translation, ballot ordering, sample ballot mailing and
+    other.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 4
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbalbetsp_na
+  survey_id: Salbal
+
+salbalhrsps:
+  id: 231
+  field: salbalhrsps
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Hours Worked Permanent Staff
+  description: Hours worked by permanent staff on tasks related to sample, official,
+    provisional and VBM ballots, including ballot layout and design, ballot translation,
+    ballot ordering, sample ballot mailing arrangements, and other.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 5
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbalhrsps_na
+  survey_id: Salbal
+
+
+salbalhrsts:
+  id: 232
+  field: salbalhrsts
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: Hours Worked Temporary Staff
+  description: Hours worked by temporary staff on tasks related to sample, official,
+    provisional and VBM ballots, including ballot layout and design, ballot translation,
+    ballot ordering, sample ballot mailing arrangements, and other.
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 5
+  sum_able: true
+  na_able: true
+  data_type: integer
+  na_field: salbalhrsts_na
+  survey_id: Salbal
+
+salbalcomment:
+  id: 233
+  field: salbalcomment
+  name: Salaries related to sample, official, provisional and VBM ballots
+  label: General Comments & Concerns About This Section
+  description: General Comments & Concerns about this section
+  table_name: salbals
+  cost_type: salaries
+  created_at: 2014-11-17 08:37:19.000000000 Z
+  updated_at: 2015-04-23 17:28:00.000000000 Z
+  question_type: comment
+  validation_type_id: 
+  subsection_id: 1
+  sum_able: false
+  na_able: false
+  data_type: text
+  na_field: 
+  survey_id: Salbal
+
+  # ELECTION PROFILE
+epems:
+  id: 471
+  field: epems
+  name: 
+  label: Election Management System Used
+  description: Which election management system was in use at that election?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: string
+  na_field: epems_na
+  survey_id: ElectionProfile
+
+eppphwscan:
+  id: 472
+  field: eppphwscan
+  name: 
+  label: 'Election Hardware in Polling Place: Scanners'
+  description: Were scanners used in polling places for this election?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: eppphwscan_na
+  survey_id: ElectionProfile
+
+eppphwdre:
+  id: 473
+  field: eppphwdre
+  name: 
+  label: 'Election Hardware in Polling Place: DRE'
+  description: Were DREs used in polling places for this election?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: eppphwdre_na
+  survey_id: ElectionProfile
+
+eppphwmarkd:
+  id: 474
+  field: eppphwmarkd
+  name: 
+  label: 'Election Hardware in Polling Place: Marking Devices'
+  description: Were Marking Devices used in polling places for this election?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: eppphwmarkd_na
+  survey_id: ElectionProfile
+
+eppphwpollbk:
+  id: 475
+  field: eppphwpollbk
+  name: 
+  label: 'Election Hardware in Polling Place: Poll Book'
+  description: Were Poll Books used in polling places for this election?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: eppphwpollbk_na
+  survey_id: ElectionProfile
+
+eppphwoth:
+  id: 476
+  field: eppphwoth
+  name: 
+  label: 'Election Hardware in Polling Place: Other'
+  description: Was there a different type of election hardware used in the polling place?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: eppphwoth_na
+  survey_id: ElectionProfile
+
+epetallysys:
+  id: 477
+  field: epetallysys
+  name: 
+  label: Election Tally System Used
+  description: Which tally system was used?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: string
+  na_field: epetallysys_na
+  survey_id: ElectionProfile
+
+epppbalpap:
+  id: 478
+  field: epppbalpap
+  name: 
+  label: Number of Ballots Cast on Paper at The Polls
+  description: What was the total number of ballots cast ON PAPER at the polls?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epppbalpap_na
+  survey_id: ElectionProfile
+
+epppbalpapar:
+  id: 479
+  field: epppbalpapar
+  name: 
+  label: 'Paper Ballot Used in Polling Place: Complete The Arrow'
+  description: Did you use the "complete the arrow" paper ballot in the polling place?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: epppbalpapar_na
+  survey_id: ElectionProfile
+
+epppbalpapbu:
+  id: 480
+  field: epppbalpapbu
+  name: 
+  label: 'Paper Ballot Used in Polling Place: Fill in The Oval/Rectangle'
+  description: Did you use the "fill in the oval/rectangle" paper ballot in the polling
+    place?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: epppbalpapbu_na
+  survey_id: ElectionProfile
+
+epppbalpapot:
+  id: 481
+  field: epppbalpapot
+  name: 
+  label: 'Paper Ballot Used in Polling Place: Other'
+  description: Did you use other paper ballot types in the polling place?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: epppbalpapot_na
+  survey_id: ElectionProfile
+
+epppbalaccsd:
+  id: 482
+  field: epppbalaccsd
+  name: 
+  label: Number of Ballots Cast on Accessible Device (Excluding Automark)
+  description: How many ballots were cast on an accessible device? Please don't include
+    ballots that were cast on the Automark.
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epppbalaccsd_na
+  survey_id: ElectionProfile
+
+eprv:
+  id: 483
+  field: eprv
+  name: 
+  label: 'Number of Registered Voters '
+  description: What was the number of registered voters for this election?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: eprv_na
+  survey_id: ElectionProfile
+
+eppploc:
+  id: 484
+  field: eppploc
+  name: 
+  label: 'Number of Polling Place Locations '
+  description: How many buildings/sites were used to locate polling places? If there
+    were 2 polling places in one building, please count this as 1.
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: eppploc_na
+  survey_id: ElectionProfile
+
+epprecwpp:
+  id: 485
+  field: epprecwpp
+  name: 
+  label: Number of Voting Precincts Assigned to Polling Place Locations
+  description: How many of your precincts had a polling place allocated to it?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epprecwpp_na
+  survey_id: ElectionProfile
+
+epprecvbm:
+  id: 486
+  field: epprecvbm
+  name: 
+  label: Number of Mail Ballot Precincts
+  description: How many mail-ballot only precincts did you have (that did not have polling
+    places)?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epprecvbm_na
+  survey_id: ElectionProfile
+
+epbaltype:
+  id: 487
+  field: epbaltype
+  name: 
+  label: Number of Ballot Types
+  description: How many ballot types did you have in this election?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epbaltype_na
+  survey_id: ElectionProfile
+
+epbalpage:
+  id: 488
+  field: epbalpage
+  name: 
+  label: Number of Pages or Range of Pages Printed in Sample Ballot and Voter Information
+    Pamphlets
+  description: What was the number of pages in your sample ballot booklet (if more than
+    one booklet please give the range from smallest to largest).
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: string
+  na_field: epbalpage_na
+  survey_id: ElectionProfile
+
+epbalsampvip:
+  id: 489
+  field: epbalsampvip
+  name: 
+  label: Number of Sample Ballot and Voter Information Pamphlets Printed
+  description: Please include all printed sample ballot and voter information pamphlets
+    in all languages.
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epbalsampvip_na
+  survey_id: ElectionProfile
+
+epvipinsrt:
+  id: 490
+  field: epvipinsrt
+  name: 
+  label: Number of Voter Information Pamphlet Inserts Printed
+  description: If a voter information pamphlet insert was sent with VBM ballots instead
+    of a Sample Ballot book, how many were printed? Please include all languages.
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvipinsrt_na
+  survey_id: ElectionProfile
+
+epbalofficl:
+  id: 491
+  field: epbalofficl
+  name: 
+  label: Number of Official Ballots Ordered
+  description: How many official ballots were ordered (include all languages)?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epbalofficl_na
+  survey_id: ElectionProfile
+
+epvbmmail:
+  id: 492
+  field: epvbmmail
+  name: 
+  label: 'Total Number of VBM Ballots Mailed '
+  description: Please include all VBM ballots - perms, requests, seconds, UOCAVA, and
+    those for mail ballot precincts.
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmmail_na
+  survey_id: ElectionProfile
+
+epvbmmailprm:
+  id: 493
+  field: epvbmmailprm
+  name: 
+  label: Of The VBM Ballots Mailed, How Many Were Mailed to Permanent Vote by Mail Voters
+  description: How many of those were mailed to permanent VBM voters?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmmailprm_na
+  survey_id: ElectionProfile
+
+epvbmmailmbp:
+  id: 494
+  field: epvbmmailmbp
+  name: 
+  label: Of The VBM Ballots Mailed, How Many Were Mailed to Voters in Mail Ballot Precincts
+  description: How many of those were mailed to VBM voters that live in all mail-ballot
+    precincts?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmmailmbp_na
+  survey_id: ElectionProfile
+
+epvbmmailuo:
+  id: 495
+  field: epvbmmailuo
+  name: 
+  label: Of The VBM Ballots Mailed, How Many Were Mailed to UOCAVA Voters
+  description: How many of those were mailed to UOCAVA voters?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmmailuo_na
+  survey_id: ElectionProfile
+
+epvbmotc:
+  id: 496
+  field: epvbmotc
+  name: 
+  label: Number of VBM Ballots Issued Over The Counter
+  description: How many mail-ballots were issued over the counter?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmotc_na
+  survey_id: ElectionProfile
+
+epvbmret:
+  id: 497
+  field: epvbmret
+  name: 
+  label: Total Number of VBM Ballots Counted
+  description: Also known as "good" VBMs, how many were returned and counted? Please
+    include all VBM from all sources.
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmret_na
+  survey_id: ElectionProfile
+
+epvbmretprm:
+  id: 498
+  field: epvbmretprm
+  name: 
+  label: Of The Counted VBMs, How Many Were Returned by Permanent Vote by Mail Voters
+  description: Of the counted VBMs, how many came from permanent VBM voters?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmretprm_na
+  survey_id: ElectionProfile
+
+epvbmretmbp:
+  id: 499
+  field: epvbmretmbp
+  name: 
+  label: Of The Counted VBMs, How Many Were Returned From Voters in Mail Ballot Precincts
+  description: Of the counted VBMs, how many came from voters in Mail-Ballot precincts?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmretmbp_na
+  survey_id: ElectionProfile
+
+epvbmretuo:
+  id: 500
+  field: epvbmretuo
+  name: 
+  label: Of The Counted VBMs, How Many Were Returned From UOCAVA Voters
+  description: Of the counted VBMs, how many came from UOCAVA voters?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmretuo_na
+  survey_id: ElectionProfile
+
+epvbmundel:
+  id: 501
+  field: epvbmundel
+  name: 
+  label: Total Number of VBM Ballots Returned Undeliverable
+  description: How many VBMs were returned by the post office as undeliverable?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmundel_na
+  survey_id: ElectionProfile
+
+epvbmretpp:
+  id: 502
+  field: epvbmretpp
+  name: 
+  label: Total Number of VBM Ballots Returned at Polling Places
+  description: What was the number of VBM ballots returned by the polling places?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmretpp_na
+  survey_id: ElectionProfile
+
+epvbmchal:
+  id: 503
+  field: epvbmchal
+  name: 
+  label: Total Number of VBM Ballots Challenged
+  description: What was the total number of total VBMs challenged?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmchal_na
+  survey_id: ElectionProfile
+
+epvbmirevl:  
+  id: 504
+  field: epvbmirevl
+  name: 
+  label: Number of Ballots Issued at Remote and Early Voting Locations
+  description: What was the total number of ballots issued at remote and early voting
+    location?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmirevl_na
+  survey_id: ElectionProfile
+
+epvbmrrevl:
+  id: 505
+  field: epvbmrrevl
+  name: 
+  label: Number of Ballots Returned at Remote and Early Voting Locations
+  description: What was the total number of ballots returned at remote and early voting
+    location?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmrrevl_na
+  survey_id: ElectionProfile
+
+epvbmprovc:
+  id: 506
+  field: epvbmprovc
+  name: 
+  label: Total Number of Provisional Ballots Counted or Partially Counted
+  description: What was the number of provisional ballots that were completely or partially
+    counted?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmprovc_na
+  survey_id: ElectionProfile
+
+epvbmprovnc:
+  id: 507
+  field: epvbmprovnc
+  name: 
+  label: Total Number of Provisional Ballots Not Counted
+  description: What was the total number of provisional ballots that were not counted?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epvbmprovnc_na
+  survey_id: ElectionProfile
+
+epprovcwbt:
+  id: 508
+  field: epprovcwbt
+  name: 
+  label: Total Number of Counted Provisional Ballots Cast on Wrong Ballot Type
+  description: What was the total number of counted provisional ballots cast on wrong
+    ballot type?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epprovcwbt_na
+  survey_id: ElectionProfile
+
+epprovcwp:
+  id: 509
+  field: epprovcwp
+  name: 
+  label: Total Number of Counted Provisional Ballots Cast in Wrong Precinct
+  description: What was the total number of counted provisional ballots cast in wrong
+    precinct?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epprovcwp_na
+  survey_id: ElectionProfile
+
+epprovncvnr:
+  id: 510
+  field: epprovncvnr
+  name: 
+  label: 'Total Number of Provisional Ballots Not Counted: Voter Not Registered'
+  description: What was the total number of provisional ballots not counted because
+    voter was not registered?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:23.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epprovncvnr_na
+  survey_id: ElectionProfile
+
+epprovncbrva:
+  id: 511
+  field: epprovncbrva
+  name: 
+  label: 'Total Number of Provisional Ballots Not Counted: Ballot Returned or Noted
+      Already'
+  description: What was the total number of provisional ballots not counted because
+    the ballot had been returned or voted already?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epprovncbrva_na
+  survey_id: ElectionProfile
+
+epprovncoth:
+  id: 512
+  field: epprovncoth
+  name: 
+  label: 'Total Number of Provisional Ballots Not Counted: Other Reasons'
+  description: What was the total number of provisional ballots not counted for other
+    reasons?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epprovncoth_na
+  survey_id: ElectionProfile
+
+epprovvbm:
+  id: 513
+  field: epprovvbm
+  name: 
+  label: 'Total Number of VBM Voters Voting Provisionally '
+  description: What was the total number of VBM voters voting provisionally?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epprovvbm_na
+  survey_id: ElectionProfile
+
+epprovnor:
+  id: 514
+  field: epprovnor
+  name: 
+  label: 'Total Number of Non VBM Voters Voting Provisionally: Not on Roster'
+  description: What was the total number of non-VBM voters voting provisionally because
+    they were not on the roster?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epprovnor_na
+  survey_id: ElectionProfile
+
+epprovhava:
+  id: 515
+  field: epprovhava
+  name: 
+  label: 'Total Number of Non VBM Voters Voting Provisionally: HAVA ID'
+  description: What was the total number of non-VBM voters voting provisionally because
+    due to HAVA ID?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epprovhava_na
+  survey_id: ElectionProfile
+
+epprovunivs:
+  id: 516
+  field: epprovunivs
+  name: 
+  label: Total Number of Provisional Votes Cast on University Campuses by Students Only
+  description: What was the total number of provisional votes cast on university campuses
+    by students only?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epprovunivs_na
+  survey_id: ElectionProfile
+
+epprovoutr:
+  id: 517
+  field: epprovoutr
+  name: 
+  label: Total Number of Provisional Voters Flagged for Outreach
+  description: What was the total number of provisional voters flagged for outreach?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epprovoutr_na
+  survey_id: ElectionProfile
+
+epcanvdrere:
+  id: 518
+  field: epcanvdrere
+  name: 
+  label: Percent of DREs Manually Recounted
+  description: What percentage of the DREs were manually recounted?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epcanvdrere_na
+  survey_id: ElectionProfile
+
+eplangvra:
+  id: 519
+  field: eplangvra
+  name: 
+  label: 'Languages Assistance Under: VRA'
+  description: For what languages did you provide assistance under the VRA?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: multi_select
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: eplangvra_na
+  survey_id: ElectionProfile
+
+eplangcaec:
+  id: 520
+  field: eplangcaec
+  name: 
+  label: 'Languages Assistance Under: CA EC 12303 and 14201'
+  description: For what languages did you provide assistance under the CA EC 12303 and
+    14201?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: multi_select
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: eplangcaec_na
+  survey_id: ElectionProfile
+
+eplangloc:
+  id: 521
+  field: eplangloc
+  name: 
+  label: 'Languages Assistance Under: Agreements With Local Jurisdictions'
+  description: Please fill in languages that you are providing per agreements with local
+    jurisdictions.
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: text
+  na_field: eplangloc_na
+  survey_id: ElectionProfile
+
+epcand:
+  id: 522
+  field: epcand
+  name: 
+  label: Number of Candidates on The Ballot
+  description: What was the total number of candidates on the ballot?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epcand_na
+  survey_id: ElectionProfile
+
+epcandfsc:
+  id: 523
+  field: epcandfsc
+  name: 
+  label: 'Number of Candidates for Federal/State/County '
+  description: Of the total number of candidates on the ballot, how many were running
+    for federal/state/county offices?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epcandfsc_na
+  survey_id: ElectionProfile
+
+epcandcd:
+  id: 524
+  field: epcandcd
+  name: 
+  label: 'Number of Candidates for Cities/Districts '
+  description: Of the total number of candidates on the ballot, how many were running
+    for city/district offices?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epcandcd_na
+  survey_id: ElectionProfile
+
+epcandwi:
+  id: 525
+  field: epcandwi
+  name: 
+  label: Number of Write in Candidates
+  description: What was the total number of qualified write-in candidates?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epcandwi_na
+  survey_id: ElectionProfile
+
+epcandwifsc:
+  id: 526
+  field: epcandwifsc
+  name: 
+  label: 'Number of Write in Candidates for Federal/State/County '
+  description: Of the total number of write-in candidates, how many were running for
+    federal/state/county offices?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epcandwifsc_na
+  survey_id: ElectionProfile
+
+epcandwicd:
+  id: 527
+  field: epcandwicd
+  name: 
+  label: 'Number of Write in Candidates for Cities/Districts '
+  description: Of the total number of write-in candidates, how many were running for
+    city/district offices?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epcandwicd_na
+  survey_id: ElectionProfile
+
+epmeasr:
+  id: 528
+  field: epmeasr
+  name: 
+  label: Number of Measures on The Ballot
+  description: What was the total number of measures on the ballot?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epmeasr_na
+  survey_id: ElectionProfile
+
+epmeasrfsc:
+  id: 529
+  field: epmeasrfsc
+  name: 
+  label: 'Number of Measures for Federal/State/County '
+  description: Of the total number of measures on the ballot, how many were for federal/state/county?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epmeasrfsc_na
+  survey_id: ElectionProfile
+
+epmeasrcd:
+  id: 530
+  field: epmeasrcd
+  name: 
+  label: 'Number of Measures for Cities/Districts '
+  description: Of the total number of measures on the ballot, how many were for cities
+    and districts?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: epmeasrcd_na
+  survey_id: ElectionProfile
+
+epicrp:
+  id: 531
+  field: epicrp
+  name: 
+  label: 'Indirect Cost Rate (ICRP) '
+  description: Please give the percent Indirect Cost rate that was used in this election.
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: decimal
+  na_field: epicrp_na
+  survey_id: ElectionProfile
+
+epicrpfed:
+  id: 532
+  field: epicrpfed
+  name: 
+  label: 'Indirect Cost Rate Method Used: Federal Indirect Cost Allocation Plan'
+  description: Which method did you use to arrive at your indirect cost rate? Did you
+    use the Federal Indirect Cost Allocation Plan to arrive at the Indirect Cost rate?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: epicrpfed_na
+  survey_id: ElectionProfile
+
+epicrpcounty:
+  id: 533
+  field: epicrpcounty
+  name: 
+  label: 'Indirect Cost Rate Method Used: County Auditor'
+  description: Which method did you use to arrive at your indirect cost rate? Did you
+    use the County Auditor's rate?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: epicrpcounty_na
+  survey_id: ElectionProfile
+
+epicrpown:
+  id: 534
+  field: epicrpown
+  name: 
+  label: 'Indirect Cost Rate Method Used: Construct Own Rate'
+  description: Which method did you use to arrive at your indirect cost rate? Did you
+    construct your own rate?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: epicrpown_na
+  survey_id: ElectionProfile
+
+epicrpoth:
+  id: 535
+  field: epicrpoth
+  name: 
+  label: 'Indirect Cost Rate Method Used: Other'
+  description: Which method did you use to arrive at your indirect cost rate? Did you
+    use arrive at your rate differently from the methods above?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: epicrpoth_na
+  survey_id: ElectionProfile
+
+eptotindirc:
+  id: 536
+  field: eptotindirc
+  name: 
+  label: Total Indirect Cost Amount
+  description: What was your total indirect cost amount?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: eptotindirc_na
+  survey_id: ElectionProfile
+
+eptotelectc:
+  id: 537
+  field: eptotelectc
+  name: 
+  label: 'Total Election Costs '
+  description: What were your total election costs for this election?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: eptotelectc_na
+  survey_id: ElectionProfile
+
+epcostallrg:
+  id: 538
+  field: epcostallrg
+  name: 
+  label: 'Method of Allocating Costs to Cities and Districts: Cost Allocation by Number
+    of Registered Voters'
+  description: How did you allocate your costs to cities and districts? Did you use
+    the number of registered voters to allocate your costs to cities and districts?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:02.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: epcostallrg_na
+  survey_id: ElectionProfile
+
+epcostallpre:
+  id: 539
+  field: epcostallpre
+  name: 
+  label: 'Method of Allocating Costs to Cities and Districts: Cost Allocation by Number
+    of Precincts'
+  description: How did you allocate your costs to cities and districts? Did you use
+    the number of precincts to allocate your costs to cities and districts?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:03.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: epcostallpre_na
+  survey_id: ElectionProfile
+
+epcostallopp:
+  id: 540
+  field: epcostallopp
+  name: 
+  label: 'Method of Allocating Costs to Cities and Districts: Cost Allocation by Number
+    of Polling Places'
+  description: How did you allocate your costs to cities and districts? Did you use
+    the number of polling places to allocate your costs to cities and districts?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:03.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: epcostallopp_na
+  survey_id: ElectionProfile
+
+epcostalloth:
+  id: 541
+  field: epcostalloth
+  name: 
+  label: 'Method of Allocating Costs to Cities and Districts: Cost Allocation by Other
+    Method'
+  description: How did you allocate your costs to cities and districts? Did you use
+    some other method not mentioned above to allocate your costs to cities and districts?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:03.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: boolean
+  na_field: epcostalloth_na
+  survey_id: ElectionProfile
+
+eptotbilled:
+  id: 542
+  field: eptotbilled
+  name: 
+  label: 'Total Amount Billed to Jurisdictions '
+  description: What was the total amount that was billed to all jurisdictions?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:03.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: eptotbilled_na
+  survey_id: ElectionProfile
+
+eptotcounty:
+  id: 543
+  field: eptotcounty
+  name: 
+  label: Total Costs Absorbed by The County
+  description: What was the total amount of costs that the county absorbed?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:03.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: eptotcounty_na
+  survey_id: ElectionProfile
+
+eptotsb90c:
+  id: 544
+  field: eptotsb90c
+  name: 
+  label: Total SB90 Costs
+  description: What were the total SB90 costs?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:03.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: eptotsb90c_na
+  survey_id: ElectionProfile
+
+eptotsb90r:
+  id: 545
+  field: eptotsb90r
+  name: 
+  label: Total SB90 Reimbursements
+  description: What were the total SB90 reimbursements?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:03.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: eptotsb90r_na
+  survey_id: ElectionProfile
+
+eptotcandca:
+  id: 546
+  field: eptotcandca
+  name: 
+  label: Total Candidate Costs Billed to The Candidates
+  description: What was the total amount that was billed to the candidates?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:03.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: eptotcandca_na
+  survey_id: ElectionProfile
+
+eptotvolunth:
+  id: 547
+  field: eptotvolunth
+  name: 
+  label: Total Number of Volunteer Hours
+  description: How many volunteer hours did you use?
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:03.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: integer
+  na_field: eptotvolunth_na
+  survey_id: ElectionProfile
+
+epmandates:
+  id: 548
+  field: epmandates
+  name: 
+  label: Any Mandate That Increased Costs?
+  description: Were there federal or state mandates that increased costs in this specific
+    election? Add previous mandates that were not implemented until this election.
+  table_name: election_profiles
+  cost_type: 
+  created_at: 2015-02-23 22:09:24.000000000 Z
+  updated_at: 2015-04-23 17:28:03.000000000 Z
+  question_type: 
+  validation_type_id: 
+  subsection_id: 
+  sum_able: false
+  na_able: true
+  data_type: text
+  na_field: epmandates_na
+  survey_id: ElectionProfile

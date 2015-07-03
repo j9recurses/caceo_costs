@@ -1,0 +1,164 @@
+ssveh:
+  title: Vehicle Services and Supplies
+  id: Ssveh
+  category: Services and Supplies
+  table_name: ssvehs
+  subject: Vehicle
+
+election_profile:
+  title: Election Profile
+  id: ElectionProfile
+  category: Election Profile
+  table_name: election_profiles
+  subject: Election Profile
+
+salbal:
+  title: Salaries Related to Sample, Official, Provisional and VBM Ballots
+  id: Salbal
+  category: Salaries
+  table_name: salbals
+  subject: Sample, Official, Provisional and VBM Ballots
+
+# salvbm:
+#   title: Salaries Related to VBM
+#   id: Salvbm
+#   category: Salaries
+#   table_name: salvbms
+#   subject: VBM
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# salpp:
+#   title: Salaries Related to Polling Places (Including Early Voting Locations)
+#   id: Salpp
+#   category: Salaries
+#   table_name: salpps
+#   subject: Polling Places (Including Early Voting Locations)
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# salpw:
+#   title: Salaries Related to Poll Workers (Including Early Voting Locations)
+#   id: Salpw
+#   category: Salaries
+#   table_name: salpws
+#   subject: Poll Workers (Including Early Voting Locations)
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# salmed:
+#   title: Salaries Related to Media
+#   id: Salmed
+#   category: Salaries
+#   table_name: salmeds
+#   subject: Media
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# saldojo:
+#   title: Salaries Related to Doj and Other Stakeholders
+#   id: Saldojo
+#   category: Salaries
+#   table_name: saldojos
+#   subject: DOJ and Other Stakeholders
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# salcan:
+#   title: Salaries Related to Candidates
+#   id: Salcan
+#   category: Salaries
+#   table_name: salcans
+#   subject: Candidates
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# salbc:
+#   title: Salaries Related to Ballot Counting
+#   id: Salbc
+#   category: Salaries
+#   table_name: salbcs
+#   subject: Ballot Counting
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# saloth:
+#   title: Salaries for Other Election Activities
+#   id: Saloth
+#   category: Salaries
+#   table_name: saloths
+#   subject: Other Election Activities
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# postage:
+#   title: Postage Services and Supplies
+#   id: Postage
+#   category: Services and Supplies
+#   table_name: postages
+#   subject: Postage
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# sspp:
+#   title: Polling Place Services and Supplies
+#   id: Sspp
+#   category: Services and Supplies
+#   table_name: sspps
+#   subject: Polling Place
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# sspw:
+#   title: Poll Worker Services and Supplies
+#   id: Sspw
+#   category: Services and Supplies
+#   table_name: sspws
+#   subject: Poll Worker
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# ssoth:
+#   title: Other Services and Supplies
+#   id: Ssoth
+#   category: Services and Supplies
+#   table_name: ssoths
+#   subject: Other
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# ssmed:
+#   title: Media Services and Supplies
+#   id: Ssmed
+#   category: Services and Supplies
+#   table_name: ssmeds
+#   subject: Media
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# sscan:
+#   title: Candidate Services and Supplies
+#   id: Sscan
+#   category: Services and Supplies
+#   table_name: sscans
+#   subject: Candidate
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# ssbal:
+#   title: Ballot Printing Services and Supplies
+#   id: Ssbal
+#   category: Services and Supplies
+#   table_name: ssbals
+#   subject: Ballot Printing
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z
+
+# ssbc:
+#   title: Ballot Counting Services and Supplies
+#   id: Ssbc
+#   category: Services and Supplies
+#   table_name: ssbcs
+#   subject: Ballot Counting
+#   updated_at: 2015-02-22 00:47:53.000000000 Z
+#   created_at: 2015-02-22 00:47:53.000000000 Z

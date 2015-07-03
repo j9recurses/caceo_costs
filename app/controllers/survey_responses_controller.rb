@@ -14,7 +14,7 @@ class SurveyResponsesController < ApplicationController
   private
   # for permissions
   def current_resource
-    @current_resource = SurveyResponse.find(params[:id]) if params[:id]
+    @current_resource ||= SurveyResponse.find(params[:id]) if params[:id]
   end
 
   # for permissions

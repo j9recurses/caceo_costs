@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe ResponseValue, type: :model do
   let(:survey_response) do
-     sr = FactoryGirl.create(:survey_response_with_values)
+     sr = FactoryGirl.create(:survey_response_ss_with_values)
      ResponseValue.sync_survey_response sr
      sr
   end
-  let(:empty_sr) { create :survey_response }
+  let(:empty_sr) { create :survey_response_ss }
 
   describe '::total' do
     it 'adds up' do

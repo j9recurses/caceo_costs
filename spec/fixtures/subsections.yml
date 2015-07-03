@@ -1,0 +1,24 @@
+salary_tasks: 
+  id: 1
+  title: Salaries - Tasks
+  totalable: true
+
+salary_types:
+  id: 2
+  title: Salaries - Types of Staff and Pay
+  totalable: true
+
+benefits_dollars:
+  id: 3
+  title: Benefits - in Dollars
+  totalable: true
+
+benefits_percent:
+  id: 4
+  title: Benefits - in Percent
+  totalable: false
+
+hours:
+  id: 5
+  title: Hours Worked
+  totalable: true

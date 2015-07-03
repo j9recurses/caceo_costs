@@ -1,25 +1,32 @@
-include Forwardable
+# include Forwardable
 
 class SurveyResponseForm < Reform::Form
-  extend Forwardable
-  property :county_id
-  property :election_id
-  property :response_type
-  property :response_id
+  include Composition
 
-  # def initialize(model, survey)
-  #   super(model)
-  #   self.include 
+  property :county_id, on: :survey_response
+  property :election_id, on: :survey_response
+  property :response_type, on: :survey_response
+  property :response_id, on: :survey_response
+
+  # property(:pages, virtual: true)
+   # do
+  property :current_step, on: :pages
   # end
+
+  def initialize(survey_response)
+    super( 
+      survey_response: survey_response, 
+      pages: (FormPages.new( survey_response.survey )) )
+  end
 
   def self.survey(survey)
     include(ResponseForm.build(survey))
   end
 
-  def pages
-    @pages ||= FormPages.new( @survey_response.survey )
-  end
-  def_delegator :pages, :current_step=  # for virtual attribute in controller
+  # def pages
+  #   @pages ||= FormPages.new( @model.survey )
+  # end
+  # def_delegators :pages, :current_step=, :current_step  # for virtual attribute in controller
 
   def submit
     raise 'No Response' unless response

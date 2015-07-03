@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe GeneralSurvey  do
-  let(:ssbal) { Ssbal.new(ssbalpriprou: 0.23, ssballayout: 1000, ssbaltransl: 25) }
-  let(:survey) { GeneralSurvey.new(ssbal) }
+  let(:response) { create :ss_response_with_values }
+  let(:survey) { GeneralSurvey.new(response) }
   subject { survey }
 
   describe 'survey type' do
@@ -15,7 +15,7 @@ RSpec.describe GeneralSurvey  do
 
   describe 'survey_total' do
     it 'has the right policy for service_supply' do
-      expect(survey.service_supply_total).to be 1025
+      expect(survey.service_supply_total).to eq 320
     end
   end
 

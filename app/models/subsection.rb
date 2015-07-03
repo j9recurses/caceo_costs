@@ -8,4 +8,9 @@ class Subsection < ActiveRecord::Base
   def values_for(survey_response)
     ResponseValue.where(question_id: self.questions.pluck(:id), survey_response: survey_response )
   end
+
+  def questions_for(survey)
+
+    Question.where(survey: survey, subsection_id: id)
+  end
 end

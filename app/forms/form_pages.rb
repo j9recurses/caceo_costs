@@ -17,15 +17,17 @@ class FormPages
   end
 
   def current_page
-    @pages[@current_step]
+    @pages[current_step]
   end
 
   def step_forward
     self.current_step = self.current_step + 1
+    self
   end
 
   def step_back
     self.current_step = self.current_step - 1
+    self
   end
 
   def last_step?

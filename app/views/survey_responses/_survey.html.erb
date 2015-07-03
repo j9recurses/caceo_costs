@@ -1,15 +1,15 @@
-<% if survey.data.errors.any? %>
+<% if @response_form.errors.any? %>
   <div id="error_explanation">
     <ul>
-      <% survey.data.errors.each do |field, msg| %>
+      <% @response_form.errors.each do |field, msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
   </div>
 <% end %>
 
-<%= render partial: 'question_modals', collection: @response_form.pages.current_page %>
-<%= simple_form_for @response_form, html: { class: 'form-horizontal' },
+<%= render partial: 'question_modal', collection: @response_form.pages.current_page %>
+<%= simple_form_for @response_form.response, url: survey_responses_path, html: { class: 'form-horizontal' },
   wrapper: :horizontal_form do |f| %>
   <%= f.hidden_field :election_year_id, value: @response_form.election_id %>
   <%= f.hidden_field :county_id,        value: @response_form.county_id %>
@@ -25,7 +25,7 @@
     <% end %>
     
     <% if @response_form.pages.last_step? %>
-      <%= f.submit "Submit #{ survey.title } Costs for #{ survey.election.year }" %>
+      <%= f.submit "Submit #{ survey.title } Costs for #{ @response_form.model.election.year }" %>
     <% else %>
       <%= f.submit "Save and Exit", name: "save_and_exit" %>
       <%= f.submit "Save and Continue", name: "save_and_continue", method: :patch %>

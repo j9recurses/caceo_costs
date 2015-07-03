@@ -3,7 +3,7 @@ class ChangeQuestionSurveyIdToResponseTypeString < ActiveRecord::Migration
     # questions don't have response_type, need to empty column and re-fill
     remove_column :questions, :survey_id
     add_column :questions, :survey_id, :string, limit: 20
-    
+
     # just putting limit on length
     change_column :survey_responses, :response_type, :string, limit: 20
 

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe SurveyResponseForm do
-  let(:survey_response) { build :survey_response }
-  let(:response)        { build :response }
+  let(:survey_response) { build :survey_response_ss }
+  let(:response)        { build :ss_response }
   let(:sr_form) {
     SurveyResponseForm.include(ResponseForm.build('Ssveh')).new( survey_response )
   }
-  let(:saved_sr)        { create :survey_response }
-  let(:sr_with_values)  { build :survey_response_with_values }
+  let(:saved_sr)        { create :survey_response_ss }
+  let(:sr_with_values)  { build :survey_response_ss_with_values }
   let(:sr_form_responded) {
     SurveyResponseForm.survey('Ssveh').new(sr_with_values)
   }
@@ -16,6 +16,7 @@ RSpec.describe SurveyResponseForm do
     SurveyResponse.find(sr_form_responded.model.id)
   end
   let(:int_qs) { survey_response.questions.where(data_type: 'integer') }
+  let(:election) { create :election }
 
   context '#submit' do
     it 'initializes values' do
@@ -40,7 +41,7 @@ RSpec.describe SurveyResponseForm do
 
     describe 'filled in manually' do
       it 'persists' do
-        ssveh_hash = { county_id: 4, election_id: 6, 
+        ssveh_hash = { county_id: 59, election_year_id: election.id, 
           response: { ssvehrent: 120, ssvehfuel: 123} }
         expect(sr_form.validate(ssveh_hash)).to be true
         expect(sr_form.response.valid?).to be true

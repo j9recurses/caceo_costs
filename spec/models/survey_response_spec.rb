@@ -1,13 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe SurveyResponse do
-  let(:saved_sr_with_values)  { create :survey_response_with_values }
+  let(:saved_sr_with_values)      { create :survey_response_sal_with_values }
+  let(:saved_sr_sal_with_values) do
+    sr = create :survey_response_sal_with_values
+    ResponseValue.sync_survey_response sr
+    sr
+  end
+  let(:election) { create :election }
 
   describe "totaling" do
     let(:int_questions) { Question.where(data_type: 'integer', survey_id: Ssveh) }
     let(:second_saved_sr_with_values) do
-      r = Ssveh.new(county_id: 59, election_year_id: 12)
-      sr = SurveyResponse.new(response: r, county_id: 59, election_id: 12)
+      r = Ssveh.new(county_id: 59, election_year_id: election.id)
+      sr = SurveyResponse.new(response: r, county_id: 59, election: election)
       sr.respond(int_questions[2], 100)
       sr.respond(int_questions[1], 900)
       srf = SurveyResponseForm.survey(Ssveh).new(sr)
@@ -24,7 +30,27 @@ RSpec.describe SurveyResponse do
     it 'adds up multiple survey_responses' do
       ResponseValue.sync_survey_response saved_sr_with_values
       second_saved_sr_with_values
-      expect(SurveyResponse.where(response_type: Ssveh, county_id: 59).total).to eq(1320)
+      expect(SurveyResponse.all.total).to eq(1320)
+    end
+  end
+
+  describe "#values_in_subsection" do
+    describe 'with no subsections' do
+      it 'returns empty relation' do
+        vs = saved_sr_with_values.values_in_subsection(Subsection.first)
+        expect( vs.count ).to eq 0
+        expect( vs.is_a? ActiveRecord::Relation ).to be true
+      end
+    end
+
+    it 'returns correct relation' do
+      surv = Survey.find('Salbal')
+      sub = surv.subsections.first
+      qs = sub.questions_for(surv)
+      values = saved_sr_sal_with_values.values_in_subsection(sub)
+
+      expect(values.count).to eq(qs.count)
+      expect(Question.where(id: values.pluck(:question_id)).pluck(:id)).to eq(qs.pluck(:id))
     end
   end
 

@@ -8,5 +8,11 @@
     <td><%= v.value %></td>
   </tr>
   <% end %>
+  <% if subsection.totalable? %>
+    <tr>
+      <td>Subsection Total:</td>
+      <td><%= @survey_response.values_in_subsection(subsection).total %></td>
+    </tr>
+  <% end %>
 </table>
 </div>

@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 20150620165711) do
     t.datetime "updated_at"
   end
 
+  add_index "categories", ["election_year_id"], name: "index_categories_on_election_year_id", using: :btree
+
   create_table "counties", force: :cascade do |t|
     t.string  "name", limit: 255
     t.integer "fips", limit: 4
@@ -234,6 +236,7 @@ ActiveRecord::Schema.define(version: 20150620165711) do
     t.integer  "election_year_id",         limit: 4
   end
 
+  add_index "election_profiles", ["current_step"], name: "index_election_profiles_on_current_step", using: :btree
   add_index "election_profiles", ["election_year_id"], name: "index_election_profiles_on_election_year_id", using: :btree
 
   create_table "election_technologies", force: :cascade do |t|
@@ -321,8 +324,8 @@ ActiveRecord::Schema.define(version: 20150620165711) do
     t.string   "survey_id",          limit: 20
   end
 
-  add_index "questions", ["subsection_id"], name: "fk_rails_cd974ed945", using: :btree
-  add_index "questions", ["validation_type_id"], name: "fk_rails_57d52342fc", using: :btree
+  add_index "questions", ["subsection_id"], name: "fk_rails_5c3afb9e86", using: :btree
+  add_index "questions", ["validation_type_id"], name: "fk_rails_2138119a33", using: :btree
 
   create_table "response_values", force: :cascade do |t|
     t.integer  "survey_response_id", limit: 4
@@ -977,6 +980,7 @@ ActiveRecord::Schema.define(version: 20150620165711) do
   end
 
   add_index "survey_responses", ["county_id", "election_id", "response_type"], name: "index_survey_responses_on_county_election_and_survey", unique: true, using: :btree
+  add_index "survey_responses", ["election_id"], name: "index_survey_responses_on_election_id", using: :btree
 
   create_table "survey_subsections", force: :cascade do |t|
     t.integer "subsection_id", limit: 4
@@ -1042,6 +1046,8 @@ ActiveRecord::Schema.define(version: 20150620165711) do
     t.datetime "password_reset_sent_at"
     t.datetime "announcements_viewed_at"
   end
+
+  add_index "users", ["county_id"], name: "index_users_on_county_id", using: :btree
 
   create_table "validation_types", force: :cascade do |t|
     t.string   "name",       limit: 255
