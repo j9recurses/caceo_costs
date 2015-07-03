@@ -1,15 +1,12 @@
 <h2 class ="myh2yr">
   <%= "#{ @response_form.model.survey.title } for the #{ @response_form.model.election.year }" %>
-&rarr;  Step <%= @response_form.pages.current_step + 1 %> of <%= @response_form.pages.total_steps %>
+&rarr;  Step <%= @response_form.current_step + 1 %> of <%= @response_form.model.total_steps %>
 </h2>
 
 <%= render partial: 'survey_responses/survey', locals: { survey: @survey } %>
 
 <div class="end_link">
-  <% if @survey.election_profile? %>
-    <%= link_to "Election Profile Home", election_profile_home_path  %>
-  <% else %>
-    <%= link_to "Back to Direct Cost Categories for #{ @survey.election.year }", election_year_categories_path( @response_form.election.id ) %> |
-    <%= link_to "Direct Cost Category Home", home_path  %>
-  <% end %>
+  <%= link_to "Back to Surveys for #{ @response_form.model.election.year }", 
+    election_surveys_path( @response_form.election_id ) %> |
+  <%= link_to "All Elections", home_path  %>
 </div>

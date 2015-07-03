@@ -8,23 +8,23 @@
   </div>
 <% end %>
 
-<%= render partial: 'question_modal', collection: @response_form.pages.current_page %>
+<%= render partial: 'question_modal', collection: @response_form.model.current_page %>
 <%= simple_form_for @response_form.response, url: survey_responses_path, html: { class: 'form-horizontal' },
   wrapper: :horizontal_form do |f| %>
   <%= f.hidden_field :election_year_id, value: @response_form.election_id %>
   <%= f.hidden_field :county_id,        value: @response_form.county_id %>
   <%= f.hidden_field :current_step,     value: @response_form.current_step %>
 
-  <% @response_form.pages.current_page.each do |question| %>
-    <%= render partial: "questions/input_field", locals: { question: question, f: f}  %>
+  <% @response_form.model.current_page.each do |question| %>
+    <%= render partial: "survey_responses/questions/input_field", locals: { question: question, f: f}  %>
   <% end %>
 
   <div class="form-actions">
-    <% unless @response_form.pages.first_step?  %>
+    <% unless @response_form.model.first_step?  %>
       <%= f.submit "Back", name: "back_button" %>
     <% end %>
     
-    <% if @response_form.pages.last_step? %>
+    <% if @response_form.model.last_step? %>
       <%= f.submit "Submit #{ survey.title } Costs for #{ @response_form.model.election.year }" %>
     <% else %>
       <%= f.submit "Save and Exit", name: "save_and_exit" %>

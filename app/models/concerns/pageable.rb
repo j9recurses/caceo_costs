@@ -1,23 +1,27 @@
-class FormPages
-  def initialize(survey)
-    @questions = survey.questions
-    @pages = @questions.to_a.compact.in_groups_of(12, false)
+module Pageable
+
+  def questions
+    @questions ||= survey.questions
+  end
+
+  def pages
+    @pages ||= questions.to_a.compact.in_groups_of(12, false)
   end
 
   def total_steps
-    @pages.size
+    pages.size
   end
 
   def current_step
     @current_step ||= 0
   end
 
-  def current_step=(step)
-    @current_step = step.to_i
+  def current_step=(page)
+    @current_step = page.to_i
   end
 
   def current_page
-    @pages[current_step]
+    pages[current_step]
   end
 
   def step_forward

@@ -94,4 +94,38 @@ RSpec.describe SurveyResponseForm do
       end
     end
   end
+
+  context 'pages' do
+    let(:s_r_p) { build( :survey_response_sal ).extend(Pageable) }
+    let(:questions) { Question.where(survey_id: 'Salbal') }
+
+    describe '#current_page' do
+      it 'has 12 questions' do
+        expect(s_r_p.current_page.size).to be 12
+      end
+
+      it 'returns questions' do
+        expect(s_r_p.current_page.all? { |q| q.is_a? Question }).to be true
+      end
+
+      it 'flips page' do
+        page_one_ids = s_r_p.current_page.map { |q| q.id }
+        s_r_p.step_forward
+        page_two_ids = s_r_p.current_page.map { |q| q.id }
+        expect(page_one_ids & page_two_ids).to eq []
+      end
+    end
+
+    describe '#total_steps' do
+      it 'correct' do
+        expect(s_r_p.total_steps).to eq (questions.size / 12.to_f).ceil
+      end
+    end
+
+    it 'second page truncated, no nils' do
+      second_page = s_r_p.step_forward.current_page
+      expect(second_page.size).to be 4
+      expect(second_page.compact.size).to be 4
+    end
+  end
 end
