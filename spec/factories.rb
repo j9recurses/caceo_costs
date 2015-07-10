@@ -36,16 +36,15 @@ FactoryGirl.define do
     initialize_with { County.find_or_initialize_by(id: id, name: name) }
   end
 
-  factory :survey_response do
+  factory :sr, class: SurveyResponse do
     county
     election
-
     factory :survey_response_ss  do association :response, factory: :ss_response  end
     factory :survey_response_sal do association :response, factory: :sal_response end
     factory :survey_response_ep  do association :response, factory: :ep_response  end
     factory :survey_response_ss_with_values do
       association :response, factory: :ss_response_with_values end
-    factory :survey_response_sal_with_values do
+    factory :survey_response_sal_with_values, aliases: [:survey_response] do
       association :response, factory: :sal_response_with_values end
     factory :survey_response_ep_with_values do
       association :response, factory: :ep_response_with_values end

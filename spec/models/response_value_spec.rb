@@ -23,18 +23,23 @@ RSpec.describe ResponseValue, type: :model do
   describe '#sync' do
     let(:q) {Question.find_by(field: 'salbaldesign')}
     let(:sr_salbal) { build :survey_response_sal }
+    let(:rv) {ResponseValue.new(survey_response: sr_salbal, question: q)}
+
     it 'syncs n/a' do
-      # q = Question.find_by(field: 'salbaldesign')
-      # sr_salbal = SurveyResponse.new(county_id: 1, election_id: 18, response: Salbal.new(election_year_id: 18, county_id:1))
       sr_salbal.respond(q, na: true)
-      rv = ResponseValue.new(survey_response: sr_salbal, question: q)
       rv.sync
       expect(rv.na_value).to be true 
+    end
+
+    it 'syncs value' do
+      sr_salbal.respond(q, 808)
+      rv.sync
+      expect(rv.na_value).to be false
+      expect(rv.integer_value).to be 808
     end
   end
 
   describe '::sync_survey_response' do
-
   end
 
   describe '::answered & #answered?' do

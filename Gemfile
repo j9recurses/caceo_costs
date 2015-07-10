@@ -24,6 +24,7 @@ group :test, :development, :production do
   gem 'simple_form', '~> 3.1'
   gem 'turbolinks', '~> 2.5.3'
   gem 'reform'
+  gem 'active_model_serializers'
 end
 
 group :development, :production do
@@ -36,7 +37,6 @@ group :test do
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
   gem 'capybara'
-  gem 'database_cleaner'
 end
 
 group :darwin do

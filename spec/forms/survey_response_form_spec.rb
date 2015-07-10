@@ -94,7 +94,6 @@ RSpec.describe SurveyResponseForm do
       end
     end
   end
-  
 
   context 'pages' do
     let(:s_r_p) { build( :survey_response_sal ).extend(Pageable) }
