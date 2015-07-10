@@ -1,17 +1,21 @@
 class ResponseForm
-  def initialize(response_name)
-    @response_name = response_name
-    @mod = Module.new
-    @mod.class_eval <<-RUBY
-      include Reform::Form::Module 
-        property :response do
-          property :county_id
-          property :election_year_id
-          #{property_list(@response_name)}
-        end
-      RUBY
+  def self.new(obj)
+    ResponseFormBuilder.build(obj)
   end
-  attr_accessor :mod, :response_name
+end
+
+class ResponseFormBuilder
+  def initialize(response_obj)
+    @response_instance = response_obj
+    @response_name = response_obj.class.to_s
+    @klass = Class.new(Reform::Form)
+    @klass.class_eval <<-RUBY
+      property :county_id
+      property :election_year_id
+      #{property_list(@response_name)}
+    RUBY
+  end
+  attr_accessor :klass, :response_name
 
   def property_list(survey_name)
     @properties = ""
@@ -24,7 +28,7 @@ class ResponseForm
     @properties
   end
 
-  def self.build(response_name)
-    new(response_name).mod
+  def self.build(response_inst)
+    new(response_inst).klass.new(response_inst)
   end
 end

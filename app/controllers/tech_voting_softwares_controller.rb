@@ -49,17 +49,19 @@ class TechVotingSoftwaresController < ApplicationController
    @tech_voting_software.destroy
   end
 
+private
+  def current_resource
+    @current_resource ||= TechVotingSoftware.find(params[:id]) if params[:id]
+  end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tech_voting_software
+    @tech_voting_software = TechVotingSoftware.find(params[:id])
+  end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tech_voting_software
-      @tech_voting_software = TechVotingSoftware.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def tech_voting_software_params
-      params.require(:tech_voting_software).permit(:county, :software_item, :purchase_dt, :purchase_price_hardware, :purchase_price_software, :quantity, :mat_charges, :labor_costs)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def tech_voting_software_params
+    params.require(:tech_voting_software).permit(:county, :software_item, :purchase_dt, :purchase_price_hardware, :purchase_price_software, :quantity, :mat_charges, :labor_costs)
+  end
 end
 
 

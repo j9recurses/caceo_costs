@@ -16,7 +16,7 @@ RSpec.describe SurveyResponse do
       sr = SurveyResponse.new(response: r, county_id: 59, election: election)
       sr.respond(int_questions[2], 100)
       sr.respond(int_questions[1], 900)
-      srf = SurveyResponseForm.survey(Ssveh).new(sr)
+      srf = SurveyResponseForm.new(sr)
       srf.submit 
       SurveyResponse.find sr.id
     end
@@ -57,11 +57,11 @@ RSpec.describe SurveyResponse do
   describe "associations" do
     context "on new record" do
       let(:survey_response) { SurveyResponse.new }
-      let(:election_profile) { ElectionProfile.new(county_id: 59, election_year_id: ElectionYear.last.id) }
-      let(:salbal) { Salbal.new(county_id: 59, election_year_id: ElectionYear.last.id) }
+      let(:election_profile) { build :ep_response }
+      let(:salbal) { build :sal_response }
 
       it "allows county=" do
-        survey_response.county = County.last
+        survey_response.county = County.create!(name: 'Fake thing in fake file')
         expect(survey_response.county_id).to eq(County.last.id)
       end
 
@@ -71,7 +71,7 @@ RSpec.describe SurveyResponse do
       end      
 
       it "allows election=" do
-        survey_response.election = ElectionYear.last
+        survey_response.election = ElectionYear.create!(year: 'New Thing')
         expect(survey_response.election_id).to eq(ElectionYear.last.id)
       end
 

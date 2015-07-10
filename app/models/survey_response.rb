@@ -21,12 +21,16 @@ class SurveyResponse < ActiveRecord::Base
     end
   end
 
-  def respond(question, value)
+  def respond(question, value = nil, na:false)
     case question
     when Question
       response.send(question.field + '=', value)
     when String
       response.send(question + '=', value)
+    end
+
+    if na
+      response.send(question.na_field+'=', true)
     end
   end
 
@@ -47,10 +51,35 @@ class SurveyResponse < ActiveRecord::Base
     values.percent_answered
   end
 
+  def self.percent_answered
+    ResponseValue.where(id: value_ids).percent_answered
+  end
+
   def values_in_subsection(subsection)
     q_ids = Question.where(subsection: subsection, survey_id: response_type).pluck(:id)
     values.where(question: q_ids)
   end
+
+  # def survey_names
+  #   @survey_names ||= Survey.pluck(:id).map(&:underscore)
+  # end
+
+  # ONLY used in forms because Reform does not have good support
+  # for polymorphic associations.
+  # def method_missing(m, *args, &block)
+  #   if m.to_s.match(/(.+)=/) && survey_names.include?($1)
+  #     send(:response=, *args)
+  #   elsif survey_names.include?(m.to_s)
+  #     send(:response)
+  #   else
+  #     super
+  #   end
+  # end
+
+  # def respond_to_missing?(m, include_private = false)
+  #   m = m.match(/(.+)=/)[1]
+  #   survey_names.include?(m) || super
+  # end
 private
   def sync_values
     ResponseValue.sync_survey_response self

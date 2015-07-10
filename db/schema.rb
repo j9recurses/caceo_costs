@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150620165711) do
+ActiveRecord::Schema.define(version: 20150706033944) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -1013,7 +1013,7 @@ ActiveRecord::Schema.define(version: 20150620165711) do
     t.integer  "offset_amount",           limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "county",                  limit: 4
+    t.integer  "county_id",               limit: 4
     t.boolean  "purchase_price_services", limit: 1
   end
 
@@ -1024,7 +1024,7 @@ ActiveRecord::Schema.define(version: 20150620165711) do
     t.integer  "purchase_price_software", limit: 4
     t.integer  "mat_charges",             limit: 4
     t.integer  "labor_costs",             limit: 4
-    t.integer  "county",                  limit: 4
+    t.integer  "county_id",               limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end

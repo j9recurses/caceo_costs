@@ -1,14 +1,17 @@
-<h1><%= @title %></h1>
-
-<% @activities.each do |county_activity| %>
-  <h3><%= county_activity[:county_name] %></h3>
-
-  <% county_activity[:elections].each do |election_name, surveys| %>
-    <p><%= election_name %></p>
-    <% surveys.each do |survey| %>
-      <ul>
-        <li class="minimal-li"><%= "#{survey.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime('%F')}: #{survey.survey_name}" %></li>
-      </ul>
-    <% end %>
+<h1>All Survey Activity</h1>
+<table style="width: 100%">
+  <tr>
+    <th>Last Updated</th>
+    <th>County</th>
+    <th>Election</th>
+    <th>Survey</th>
+  </tr>
+  <% @activities.each do |a| %>
+    <tr>
+      <td><%= a.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime('%F') %></td>
+      <td><%= a.county_name   %></td>
+      <td><%= a.election_year %></td>
+      <td><%= a.survey_title  %></td>
+    </tr>
   <% end %>
-<% end %>
+</table>

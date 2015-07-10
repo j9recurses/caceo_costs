@@ -46,6 +46,9 @@ class UsersController < ApplicationController
   end
 
   def login
+    if current_user
+      redirect_to profile_user_path(current_user)
+    end
   end
 
   def logout

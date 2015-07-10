@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
     @message = Message.new(params[:message])
     if @message.valid?
       SupportMailer.contact_us(@message).deliver
-      redirect_to home_path, :notice => "Thanks! Your message was sent."
+      redirect_to profile_path, notice: "Thanks! Your message was sent."
       return
     else
       render :new

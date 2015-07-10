@@ -2,42 +2,61 @@ class ResponseValue < ActiveRecord::Base
   belongs_to :survey_response, inverse_of: :values
   belongs_to :question, inverse_of: :values
 
-  def self.sync_survey_response_question(survey_response, question)
-    val = ResponseValue.find_by(survey_response: survey_response, question: question)
-    unless val
-      val = ResponseValue.new(survey_response: survey_response, question: question)
-    end
+  def data_types
+    ['integer', 'text', 'decimal', 'string', 'boolean']
+  end
 
-    resp = survey_response.response
-    # set na_value and data_type_value
+  def set_off_values_to_nil
+    ( data_types - [question.data_type] ).each do |d_type|
+      send( "#{d_type}_value=", nil)
+    end
+  end
+
+  def set_na_value
     if question.na_able?
-      val.na_value = resp[question.na_field]
+      self.na_value = response[question.na_field]
     end
-    val.send(question.data_type + '_value=', resp[question.field])
-    # clear all other value fields
-    Question.pluck(:data_type).uniq.reject { |d| d == question.data_type }.each do |dt|
-      val.send( dt + '_value=', nil)
-    end
-    # save only if we changed it
-    persisted_val = ResponseValue.
-      where( survey_response: val.survey_response, question: val.question).first
-    val.save! unless persisted_val && persisted_val.attributes.values == val.attributes.values
-    # raise
+  end
+
+  def set_data_type_value
+    send(question.data_type + '_value=', response[question.field])
+  end
+
+  def response
+    survey_response.response
+  end
+
+  def sync
+    raise 'SurveyResponse, Question not associated' unless survey_response && question
+    set_na_value
+    set_data_type_value
+    set_off_values_to_nil
+
+    persisted_v = ResponseValue.find_by( survey_response: survey_response,
+      question: question)
+    save! unless persisted_v && persisted_v.attributes.values == attributes.values
   end
 
   def self.sync_survey_response(survey_response)
-    raise 'SurveyResponse has no Response present' unless survey_response.response
-    success = false
-    survey_response.questions.each do |q|
-      sync_survey_response_question survey_response, q
+    raise 'Response not associated' unless survey_response.response
+    transaction do
+      survey_response.questions.each do |q|
+        v = find_by(survey_response: survey_response, question: q)
+        v ||= new(  survey_response: survey_response, question: q)
+        v.sync
+      end
     end
-    true #else sync_survey_response_question should raise error
+    true
   end
 
   def self.total
     joins(:question, :survey_response)
-      .where('sum_able = true AND (na_able = false OR na_value = false) AND questions.data_type = "integer"')
-      .sum(:integer_value)
+      .where(<<-SQL
+        sum_able = true
+        AND (na_able = false OR na_value = false)
+        AND questions.data_type = "integer"
+      SQL
+      ).sum(:integer_value)
   end
 
   def self.answered_ratio
@@ -50,8 +69,7 @@ class ResponseValue < ActiveRecord::Base
   end
 
   def self.answered
-    # where(answered: true).count
-    where(<<-SQL 
+    where(<<-SQL
       NOT(
       integer_value IS NULL AND
       decimal_value IS NULL AND
@@ -65,11 +83,11 @@ class ResponseValue < ActiveRecord::Base
   end
 
   def answered?
-    if integer_value == nil &&
-      decimal_value == nil &&
-      string_value == nil &&
-      text_value == nil &&
-      boolean_value == nil &&
+    if integer_value  == nil &&
+      decimal_value   == nil &&
+      string_value    == nil &&
+      text_value      == nil &&
+      boolean_value   == nil &&
       na_value == false
       false
     else
@@ -80,7 +98,7 @@ class ResponseValue < ActiveRecord::Base
   def value
     value_field = self.question.data_type + '_value'
     if question.na_able?
-      na_value ? "N/A" : send(value_field)
+      na_value ? "NOT APPLICABLE" : send(value_field)
     else
       send value_field
     end

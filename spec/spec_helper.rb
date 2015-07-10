@@ -28,6 +28,19 @@ RSpec.configure do |config|
     #   # => "be bigger than 2"
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
+
+  ###### NEED FIXTURES
+  # config.before(:suite) do
+  #   DatabaseCleaner.strategy = :transaction
+  #   DatabaseCleaner.clean_with(:truncation)
+  # end
+
+  # config.around(:each) do |example|
+  #   DatabaseCleaner.cleaning do
+  #     example.run
+  #   end
+  # end
+
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
   # rspec-mocks config goes here. You can use an alternate test double

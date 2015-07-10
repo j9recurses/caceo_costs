@@ -73,6 +73,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.1)
+    database_cleaner (1.4.1)
     diff-lcs (1.2.5)
     disposable (0.0.9)
       representable (~> 2.0)
@@ -259,6 +260,7 @@ DEPENDENCIES
   bootstrap-sass
   capybara
   coffee-rails (~> 4.0.0)
+  database_cleaner
   email_validator
   factory_girl_rails
   growl

@@ -11,65 +11,85 @@ class SurveyResponsesController < ApplicationController
     @survey = @survey_response.survey
   end
 
+  def edit
+  end
+
+  def create
+    puts @response_form.inspect
+    puts @survey_response.election.inspect
+    if @response_form.model.new_record?
+      render :new
+    else
+      render :edit unless performed?
+    end
+  end
+
+  def update
+    render :edit unless performed?
+  end
+
+  def destroy
+  end
+
   private
-  # for permissions
   def current_resource
     @current_resource ||= SurveyResponse.find(params[:id]) if params[:id]
   end
 
-  # for permissions
-  # def current_session
-  #   params[model_name]
-  # end
+  def current_session
+    params['survey_response']
+  end
 
   def new_form
-    @response = params[:response_type].constantize.new(
-      county_id: session[:county_id], 
-      election_year_id: session[:election_id] )
+    @response = params[:survey_id].constantize.new(
+      county_id:        params[:county_id], 
+      election_year_id: params[:election_id] )
     @survey_response = SurveyResponse.new( 
-      county_id: session[:county_id], 
-      election_id: session[:election_id],
-      response: @response )
-    @response_form = SurveyResponseForm.survey( params[:response_type] ).new(
-      @survey_response )
+      county_id:        params[:county_id], 
+      election_id:      params[:election_id],
+      response:         @response )
+    @response_form = SurveyResponseForm.new @survey_response
+    @survey = @survey_response.survey
   end
 
   def get_form
     @survey_response = SurveyResponse.find params[:id]
-    @response_form = SurveyResponseForm.survey( @survey_response.response_type ).
-      new( @survey_response )
+    @response_form = SurveyResponseForm.new @survey_response
+    @survey = @survey_response.survey
+    @response_form.current_step = session[:survey_response][:current_step]
   end
 
   def setup_session
-    session[:response_form] = {}
+    session[:survey_response] = {}
   end
 
   def merge_session
-    session[:response_form].deep_merge!( params[:response_form] )
+    session[:survey_response].deep_merge!( params[:survey_response] )
   end
 
   def wizard_action
-    @response_form.enter( session[:response_form] )
-    if @response_form.valid?
+    if @response_form.validate( session[:survey_response] )
       if params[:back_button]
-        @response_form.pages.step_back
+        @response_form.step_back
       elsif params[:next_button]
-        @response_form.pages.step_forward
+        @response_form.step_forward
       elsif params[:save_and_continue]
         if @response_form.submit
           flash.now['success'] = "Your progress has been saved."
-          @response_form.pages.step_forward
+          @response_form.step_forward
         end
-      elsif params[:save_and_exit] || @response_form.pages.last_step?
+      elsif params[:save_and_exit] || @response_form.last_step?
         if @response_form.submit
           flash['success'] = "Your response has been saved successfully."
-          session[:response_form] = nil
-          redirect_to( @response_form.survey_response )
+          session[:survey_response] = nil
+          @response_form.sync
+          redirect_to( @response_form.model )
         end
       end
-      if session[:response_form]
-        session[:response_form][:current_step] = @response_form.pages.current_step
+      if session[:survey_response]
+        session[:survey_response][:current_step] = @response_form.current_step
       end
     end
+    @response_form.sync
   end
 end

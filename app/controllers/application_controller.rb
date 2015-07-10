@@ -57,14 +57,25 @@ private
       if referrer && permitted
         redirect_to :back
       elsif current_user
-        redirect_to home_path
+        redirect_to profile_user_path
       else
         redirect_to login_path
       end
       flash[:error] = "Not Authorized."
     end
-    puts "controller: #{params[:controller]}, action: #{params[:action]}, county: #{current_user ? current_user.county_id : 'not signed in'}, session[:county_id]: #{current_session ? current_session[:county_id].to_s : 'no session' }, equality: #{ current_session ? current_user.county.id == current_session[:county_id].to_i
- : 'no current_session!'}"
+    devmode_authorize_output
+  end
+
+  def devmode_authorize_output
+    if Rails.env.development?
+    puts <<-TEXT 
+    AUTHORIZATION--controller: #{params[:controller]}
+    AUTHORIZATION--action: #{params[:action]}
+    AUTHORIZATION--county: #{current_user ? current_user.county_id : 'not signed in'}
+    AUTHORIZATION--session[:county_id]: #{current_session ? current_session[:county_id].to_s : 'no session' }
+    AUTHORIZATION--resource[:county_id]: #{current_resource ? current_resource[:county_id].to_s : 'no resource' }
+    TEXT
+    end
   end
 
   def current_permissions

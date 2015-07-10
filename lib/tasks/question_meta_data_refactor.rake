@@ -1,26 +1,27 @@
 namespace :caceo do
 
   desc "generate surveys, questions, survey_responses"
-  task :g_meta => [:g_surveys, :g_questions] do
-    
-  end
-  ###### SURVEYS
-  desc "generate Surveys"
-  task g_surveys: [:make_surveys, :format_surveys] do
-  end
+  task g_meta: [:g_surveys, :g_questions, :g_subsections, :g_survey_responses]
 
-  desc "fill ouy Survey table"
+  desc "generate Surveys"
+  task g_surveys: [:make_surveys, :format_surveys]
+
+  desc "generate SurveyResponess and ResponseValues"
+  task g_survey_responses: [:make_survey_responses, :make_response_values]
+
+  desc "fill out Survey table"
   task make_surveys: :environment do
     Question.group(:name).each do |s|
       type = s.table_name.singularize.camelize
       category = s.cost_type == "salaries" ? "Salaries" : "Services and Supplies"
-
       Survey.create!(title: s.name, id: type, table_name: s.table_name, category: category)
     end
+
     Survey.create!( title: "Election Profile", 
       id: "ElectionProfile", 
       table_name: "election_profiles", 
-      category: "Election Profile")
+      category: "Election Profile"
+    )
   end
 
   desc "format survey titles and add subject"
@@ -128,7 +129,9 @@ namespace :caceo do
         SurveyResponse.find_or_create_by!(
           county_id: r.county_id,
           response: r,
-          election_id: r.election_year_id 
+          election_id: r.election_year_id,
+          created_at: r.created_at,
+          updated_at: r.updated_at
         )
       end
     end
@@ -137,7 +140,9 @@ namespace :caceo do
       SurveyResponse.find_or_create_by!(
         county_id: ep.county_id,
         response: ep,
-        election: ElectionYear.find_by( year: ElectionYearProfile.find( ep.election_year_profile_id ).year )
+        election: ElectionYear.find_by( year: ElectionYearProfile.find( ep.election_year_profile_id ).year ),
+        created_at: ep.created_at,
+        updated_at: ep.updated_at
       )
     end
   end

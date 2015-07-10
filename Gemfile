@@ -36,6 +36,7 @@ group :test do
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
   gem 'capybara'
+  gem 'database_cleaner'
 end
 
 group :darwin do

@@ -1,8 +1,8 @@
 <% if status[:survey_response] == nil %>
   <% url = new_survey_response_path(
-    election_id: params[:election_year_id], 
+    election_id: params[:election_id], 
     county_id: current_user.county_id, 
-    response_type: status[:survey].id
+    survey_id: status[:survey].id
     ) %>
 <% else %>
   <% total = status[:survey_response].total %>

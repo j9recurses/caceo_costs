@@ -1,0 +1,43 @@
+<nav>
+  <ul class="pagination">
+
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+
+<nav>
+  <ul class="pagination">
+    <%= @response_form.total_steps.times do |n| %>
+      <li class="<%= 'active' if n == @response_form.current_step %>"><%= n+1 %></li>
+    <% end %>
+  </ul>
+</nav>
+
+  <div class="form-actions">
+    <% unless @response_form.first_step?  %>
+      <%= f.submit "Back", name: "back_button" %>
+    <% end %>
+    
+    <% if @response_form.last_step? %>
+      <%= f.submit "Submit #{ survey.title } Costs for #{ @response_form.model.election.year }" %>
+    <% else %>
+      <%= f.submit "Save and Exit", name: "save_and_exit" %>
+      <%= f.submit "Save and Continue", name: "save_and_continue", method: :patch %>
+      <%= f.submit "Next", name: "next_button" %>
+    <%end %>
+  </div>

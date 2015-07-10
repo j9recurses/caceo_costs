@@ -1,17 +1,17 @@
 class SurveyResponseForm < Reform::Form
+  extend Forwardable
+
   def initialize(survey_response)
-    super( survey_response.extend Pageable )
+    survey_response.extend Pageable
+    super( survey_response )
   end
+  attr_accessor :response_type
+  def_delegators :model, *Pageable.instance_methods
   property :county_id
   property :election_id
   property :response_type
   property :response_id
-
-  property :current_step, virtual: true 
-
-  def self.survey(survey)
-    include(ResponseForm.build(survey))
-  end
+  property :response, form: ResponseForm
 
   def submit
     raise 'No Response' unless response
@@ -19,12 +19,13 @@ class SurveyResponseForm < Reform::Form
     response.model.county_id        = model.county_id
     response.model.election_year_id = model.election_id
     if SurveyResponse.transaction do
-      response.save!
+      response.model.save!
       model.response = response.model
       model.save!
       ResponseValue.sync_survey_response model
     end then true else false end
   end
+
 
   def empty_na
     na_qs = Question.where(

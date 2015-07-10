@@ -8,28 +8,35 @@
   </div>
 <% end %>
 
-<%= render partial: 'question_modal', collection: @response_form.model.current_page %>
-<%= simple_form_for @response_form.response, url: survey_responses_path, html: { class: 'form-horizontal' },
-  wrapper: :horizontal_form do |f| %>
-  <%= f.hidden_field :election_year_id, value: @response_form.election_id %>
-  <%= f.hidden_field :county_id,        value: @response_form.county_id %>
-  <%= f.hidden_field :current_step,     value: @response_form.current_step %>
+<%= render partial: 'question_modal', collection: @response_form.current_page %>
 
-  <% @response_form.model.current_page.each do |question| %>
-    <%= render partial: "survey_responses/questions/input_field", locals: { question: question, f: f}  %>
-  <% end %>
+<%= simple_form_for @response_form, url: survey_responses_path,
+ html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f| %>
+  <%= hidden_field_tag 'survey_id', @survey.id %>
+  <%= f.hidden_field :election_id,  value: @response_form.election_id %>
+  <%= f.hidden_field :county_id,    value: @response_form.county_id %>
+  <%= f.hidden_field :current_step, value: @response_form.current_step %>
 
-  <div class="form-actions">
-    <% unless @response_form.model.first_step?  %>
-      <%= f.submit "Back", name: "back_button" %>
+  <%= f.simple_fields_for :response do |r| %>
+    <%= r.hidden_field :election_year_id, value: @response_form.election_id %>
+    <%= r.hidden_field :county_id,        value: @response_form.county_id %>
+    <% @response_form.current_page.each do |q| %>
+      <%= render partial: "survey_responses/questions/input_field", locals: { question: q, f: r}  %>
     <% end %>
-    
-    <% if @response_form.model.last_step? %>
-      <%= f.submit "Submit #{ survey.title } Costs for #{ @response_form.model.election.year }" %>
-    <% else %>
-      <%= f.submit "Save and Exit", name: "save_and_exit" %>
-      <%= f.submit "Save and Continue", name: "save_and_continue", method: :patch %>
-      <%= f.submit "Next", name: "next_button" %>
-    <%end %>
-  </div>
+
+    <div class="form-actions">
+      <% unless @response_form.first_step?  %>
+        <%= f.submit "Back", name: "back_button" %>
+      <% end %>
+      
+      <% if @response_form.last_step? %>
+        <%= f.submit "Submit #{ survey.title } Costs for #{ @response_form.model.election.year }" %>
+      <% else %>
+        <%= f.submit "Save and Exit", name: "save_and_exit" %>
+        <%= f.submit "Save and Continue", name: "save_and_continue", method: :patch %>
+        <%= f.submit "Next", name: "next_button" %>
+      <%end %>
+    </div>
+  <% end %>
 <% end %>
+

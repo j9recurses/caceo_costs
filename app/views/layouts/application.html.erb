@@ -51,15 +51,13 @@
               <a class="navbar-brand" href="/"><img src="/images/CACEO_logo.gif" alt="logo" /></a>
             <% end %>
 
-
             <button type="button" class="navbar-toggle collapsed" data-target="#mynav" data-toggle="collapse">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-              
-            <div class="collapse navbar-collapse" id="mynav">
 
+            <div class="collapse navbar-collapse" id="mynav">
               <ul class="nav navbar-nav list-unstyled">
                 <% if current_user && current_user.observer? %>
                   <div class="observer_county_select">
@@ -106,12 +104,14 @@
                       <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                      <li class="mynav_li"><%= link_to "Daily Activity", activities_path(day: true)%></li>
-                      <li class="mynav_li"><%= link_to "Weekly Activity", activities_path(week: true)%></li>
-                      <li class="mynav_li"><%= link_to "All Activity", activities_path(all: true)%></li>
-                      <li class="divider"></li>
-                      <li class="mynav_li"><%= link_to "Surveys Report", activities_path(full_report: true, format: :xlsx)%></li>
-                      <li class="mynav_li"><%= link_to "Counties Report", activity_path(id: 'county', format: :xlsx)%></li>
+                      <li class="mynav_li"><%= link_to "All Survey Activity", activities_path%></li>
+                      <% if allow? :reports, :progress, :responses %>
+                        <li class="divider"></li>
+                        <li class="mynav_li"><%= link_to "Survey Responses Report", 
+                          responses_report_path(format: :xlsx)%></li>
+                        <li class="mynav_li"><%= link_to "County Progress Report", 
+                          progress_report_path(format: :xlsx)%></li>
+                      <% end %>
                     </ul>
                   </li>
                 <% end %>

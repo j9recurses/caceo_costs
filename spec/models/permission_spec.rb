@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec::Matchers.define :allow do |*args|
   match do |permission|
@@ -10,7 +10,8 @@ RSpec.describe Permission do
   let(:observer) { Permission.new( build(:observer) ) }
   let(:user) { Permission.new( FactoryGirl.build(:user) ) }
   let(:guest) { Permission.new( nil ) }
-  let(:user_salbal) { Salbal.where(county: 59).last }
+
+  let(:user_sr) { create :survey_response_ss }
 
   describe "as guest" do
     it 'permits properly' do
@@ -19,7 +20,7 @@ RSpec.describe Permission do
       expect( guest ).to allow :messages, :new
       expect( guest ).to allow :messages, :create
       expect( guest ).not_to allow :users, :profile
-      expect( guest ).not_to allow :salbals, :show, user_salbal
+      expect( guest ).not_to allow :salbals, :show, user_sr
     end
   end
 
@@ -28,7 +29,7 @@ RSpec.describe Permission do
       expect( user ).to allow :users, :login
       expect( user ).to allow :messages, :new
       expect( user ).to allow :messages, :create
-      expect( user ).to allow :salbals, :index
+      expect( user ).to allow :survey_responses, :index
       expect( user ).to allow :users, :login
       expect( user ).to allow :users, :login
       expect( user ).to allow :users, :login

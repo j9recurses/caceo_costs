@@ -1,0 +1,28 @@
+wb = xlsx_package.workbook
+
+@responses_array.each do |c|
+  survey_id, survey_title = c.keys.first
+  responses = c.values.first
+  question_fields, question_descriptions = @questions[survey_id]
+
+  wb.add_worksheet(name: survey_id) do |sheet|
+    sheet.add_row [survey_title, Time.current.strftime('%F %T%:z'),'','',''].
+      concat( @questions[[survey_id, :field]] )
+    sheet.add_row( ['County', 'Election', 'Questions', 'Responses', 'Response Sum'].
+      concat(@questions[[survey_id, :description]]),
+      widths: Array.new(5) {:auto}.concat( @questions[[survey_id, :field]].map {:ignore} ) )
+    responses.each do |r|
+      sheet.add_row r
+    end
+  end
+end
+
+@tech_responses_array.each do |t_hash|
+  survey_id = t_hash.keys.first
+  responses = t_hash.values.first
+  wb.add_worksheet(name: survey_id) do |sheet|
+    responses.each do |row|
+      sheet.add_row row
+    end
+  end
+end

@@ -1,6 +1,6 @@
 module Responseable
   extend ActiveSupport::Concern
-  include MultiStepModel
+  # include MultiStepModel
 
   included do
     has_one :survey_response, as: :response, dependent: :destroy

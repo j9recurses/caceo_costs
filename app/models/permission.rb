@@ -1,6 +1,4 @@
 class Permission
-  SURVEY_NAMES = %i(postages salbals salbcs salcans saldojos salmeds saloths salpps salpws salvbms ssbals ssbcs sscans ssmeds ssoths sspps sspws ssvehs)
-
   def initialize(user)
     @user = user
     allow :users, [:new, :create, :security_question, :securityquestion, :securityquestion_submit]
@@ -20,44 +18,41 @@ class Permission
         allow :users, :update
         allow :election_profiles, [:index, :show]
         allow :election_technologies, :index
-        allow :tech_voting_machines, [:index, :show]
-        allow :tech_voting_softwares, [:index, :show]
-        SURVEY_NAMES.each do |name|
-          allow_observe_survey(name)
-        end
+        allow_observe :tech_voting_machines
+        allow_observe :tech_voting_softwares
+        allow_observe :survey_responses
       else
         allow :election_profiles, [:index, :new, :create, :show, :edit, :update, :destroy]
         allow :election_technologies, :index
-        allow :tech_voting_machines, [:index, :new, :create, :show, :edit, :update, :destroy, :delete]
-        allow :tech_voting_softwares, [:index, :new, :create, :show, :edit, :update, :destroy, :delete]
-        SURVEY_NAMES.each do |name|
-          allow_survey(name)
-        end
-        allow_survey(:survey_responses)
+        allow_respond :tech_voting_machines
+        allow_respond :tech_voting_softwares
+        allow_respond :survey_responses
       end
 
       if user.admin?
         allow :activities, [:index, :show]
+        allow :reports, [:progress, :responses]
         allow :announcements, [:new, :create, :destroy]
         allow :faqs, [:new, :create, :edit, :update, :destroy]
       end
     end
   end
 
-  def allow_survey(survey_name)
-    allow survey_name, [:index, :new]
-    allow survey_name, [:create] do |session|
+  def allow_respond(resource)
+    allow resource, [:index, :new]
+    allow resource, [:create] do |session|
       @user.county.id == session[:county_id].to_i
     end
-    allow survey_name, [:show, :edit, :update, :destroy] do |survey|
-      @user.county.id == survey.county_id
+    # only tech surveys have a delete action
+    allow resource, [:show, :edit, :update, :destroy, :delete] do |resource|
+      @user.county.id == resource.county_id
     end
   end
 
-  def allow_observe_survey(survey_name)
-    allow survey_name, [:index]
-    allow survey_name, [:show] do |survey|
-      @user.county.id == survey.county_id
+  def allow_observe(resource)
+    allow resource, [:index]
+    allow resource, [:show] do |r|
+      @user.county.id == r.county_id
     end
   end
 
@@ -78,5 +73,4 @@ class Permission
       end
     end
   end
-
 end

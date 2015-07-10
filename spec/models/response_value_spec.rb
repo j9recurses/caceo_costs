@@ -20,6 +20,23 @@ RSpec.describe ResponseValue, type: :model do
     end
   end
 
+  describe '#sync' do
+    let(:q) {Question.find_by(field: 'salbaldesign')}
+    let(:sr_salbal) { build :survey_response_sal }
+    it 'syncs n/a' do
+      # q = Question.find_by(field: 'salbaldesign')
+      # sr_salbal = SurveyResponse.new(county_id: 1, election_id: 18, response: Salbal.new(election_year_id: 18, county_id:1))
+      sr_salbal.respond(q, na: true)
+      rv = ResponseValue.new(survey_response: sr_salbal, question: q)
+      rv.sync
+      expect(rv.na_value).to be true 
+    end
+  end
+
+  describe '::sync_survey_response' do
+
+  end
+
   describe '::answered & #answered?' do
     it 'count questions with values' do
       answer_count = survey_response.values.inject(0) { |memo, val|
@@ -77,7 +94,7 @@ RSpec.describe ResponseValue, type: :model do
       v = survey_response.values.first
       v.na_value = true
       v.save!
-      expect(v.value).to eq('N/A')
+      expect(v.value).to eq('NOT APPLICABLE')
     end
   end
 end

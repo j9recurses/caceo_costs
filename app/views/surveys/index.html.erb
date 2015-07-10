@@ -1,5 +1,5 @@
-<H2 class="myh2cats"> <%= "Direct Cost Categories Summary for the " + @election_year[:year].to_s %> </H2>
-<h2><small>Click on a Cost Category to Begin</small></h2>
+<H2 class="myh2cats"> <%= "Survey Summary for the " + @election_year[:year].to_s %> </H2>
+<h2><small>Click on a Survey to Begin</small></h2>
 
 <%= render partial: 'survey_status_panel', locals: { panel_total: @salary_total, survey_hash: @salary_hash } %>
 <%= render partial: 'survey_status_panel', locals: { panel_total: @supply_total, survey_hash: @supply_hash } %>
@@ -8,7 +8,5 @@
 <h3 class="survey-index-total">$<%= number_with_delimiter( @srs.total ) %></h3>
 
 <div class="category_break"></div>
-<div class="category_end_link">
-<%= link_to "Direct Cost Categories Home", home_path  %>
-</div>
+<div class="category_end_link"><%= link_to "All Elections", elections_path  %></div>
 

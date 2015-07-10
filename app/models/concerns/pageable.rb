@@ -1,9 +1,4 @@
 module Pageable
-
-  def questions
-    @questions ||= survey.questions
-  end
-
   def pages
     @pages ||= questions.to_a.compact.in_groups_of(12, false)
   end
@@ -25,13 +20,11 @@ module Pageable
   end
 
   def step_forward
-    self.current_step = self.current_step + 1
-    self
+    self.current_step = self.current_step + 1 unless current_step == total_steps - 1
   end
 
   def step_back
-    self.current_step = self.current_step - 1
-    self
+    current_step = current_step - 1 unless current_step == 0
   end
 
   def last_step?

@@ -4,12 +4,12 @@ RSpec.describe SurveyResponseForm do
   let(:survey_response) { build :survey_response_ss }
   let(:response)        { build :ss_response }
   let(:sr_form) {
-    SurveyResponseForm.include(ResponseForm.build('Ssveh')).new( survey_response )
+    SurveyResponseForm.new( survey_response )
   }
   let(:saved_sr)        { create :survey_response_ss }
   let(:sr_with_values)  { build :survey_response_ss_with_values }
   let(:sr_form_responded) {
-    SurveyResponseForm.survey('Ssveh').new(sr_with_values)
+    SurveyResponseForm.new(sr_with_values)
   }
   let(:saved_sr_responded) do
     sr_form_responded.submit
@@ -17,6 +17,7 @@ RSpec.describe SurveyResponseForm do
   end
   let(:int_qs) { survey_response.questions.where(data_type: 'integer') }
   let(:election) { create :election }
+
 
   context '#submit' do
     it 'initializes values' do
@@ -60,8 +61,7 @@ RSpec.describe SurveyResponseForm do
     end
 
     it 'updates updated_at only on altered field' do
-      srf = SurveyResponseForm.include(ResponseForm.build(Ssveh)).new(
-        SurveyResponse.find(saved_sr_responded.id))
+      srf = SurveyResponseForm.new(SurveyResponse.find(saved_sr_responded.id))
 
       srf.response.ssvehins = 55
       srf.submit
@@ -94,6 +94,7 @@ RSpec.describe SurveyResponseForm do
       end
     end
   end
+  
 
   context 'pages' do
     let(:s_r_p) { build( :survey_response_sal ).extend(Pageable) }
@@ -123,7 +124,8 @@ RSpec.describe SurveyResponseForm do
     end
 
     it 'second page truncated, no nils' do
-      second_page = s_r_p.step_forward.current_page
+      s_r_p.step_forward
+      second_page = s_r_p.current_page
       expect(second_page.size).to be 4
       expect(second_page.compact.size).to be 4
     end
