@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SurveyResponse do
   let(:saved_sr_with_values)      { create :survey_response_sal_with_values }
+  let(:saved_ss_sr_with_values) { create :survey_response_ss_with_values }
   let(:saved_sr_sal_with_values) do
     sr = create :survey_response_sal_with_values
     ResponseValue.sync_survey_response sr
@@ -21,11 +22,6 @@ RSpec.describe SurveyResponse do
       SurveyResponse.find sr.id
     end
 
-    # DEPRECATED
-    # it 'adds up multiple survey_responses' do
-    #   expect(SurveyResponse.total(saved_sr_with_values, second_saved_sr_with_values)).to eq(7678)
-    # end
-
     # Unless we switch to a clean db, this can be easily corrupted
     it 'adds up multiple survey_responses' do
       ResponseValue.sync_survey_response saved_sr_with_values
@@ -37,7 +33,7 @@ RSpec.describe SurveyResponse do
   describe "#values_in_subsection" do
     describe 'with no subsections' do
       it 'returns empty relation' do
-        vs = saved_sr_with_values.values_in_subsection(Subsection.first)
+        vs = saved_ss_sr_with_values.values_in_subsection(Subsection.first)
         expect( vs.count ).to eq 0
         expect( vs.is_a? ActiveRecord::Relation ).to be true
       end

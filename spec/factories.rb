@@ -43,11 +43,17 @@ FactoryGirl.define do
     factory :survey_response_sal do association :response, factory: :sal_response end
     factory :survey_response_ep  do association :response, factory: :ep_response  end
     factory :survey_response_ss_with_values do
-      association :response, factory: :ss_response_with_values end
+      association :response, factory: :ss_response_with_values 
+      after(:create) { |sr| ResponseValue.sync_survey_response sr }
+    end
     factory :survey_response_sal_with_values, aliases: [:survey_response] do
-      association :response, factory: :sal_response_with_values end
+      association :response, factory: :sal_response_with_values 
+      after(:create) { |sr| ResponseValue.sync_survey_response sr }
+    end
     factory :survey_response_ep_with_values do
-      association :response, factory: :ep_response_with_values end
+      association :response, factory: :ep_response_with_values 
+      after(:create) { |sr| ResponseValue.sync_survey_response sr }
+    end
   end
 
   factory :ss_response, class: Ssveh do

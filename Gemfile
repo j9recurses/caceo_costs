@@ -2,12 +2,9 @@ source 'https://rubygems.org'
 
 
 gem 'therubyracer', platforms: :ruby
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-
 gem 'autoprefixer-rails'
-
 gem 'sprockets-rails', '~> 2.2.2'
 gem 'bootstrap-sass'
 gem 'sass-rails', '~> 4.0.0'
@@ -24,7 +21,7 @@ group :test, :development, :production do
   gem 'simple_form', '~> 3.1'
   gem 'turbolinks', '~> 2.5.3'
   gem 'reform'
-  gem 'active_model_serializers'
+  gem 'active_model_serializers', '~>0.10.0.rc2'
 end
 
 group :development, :production do
