@@ -5,6 +5,15 @@ class SurveyResponsesController < ApplicationController
   before_action :merge_session, only: [:create, :update]
   before_action :wizard_action, only: [:create, :update]
 
+  def index
+    respond_to do |format|
+      format.json do
+        render json: SurveyResponse.limit(10)
+      end
+    end  
+
+  end
+
   def show
     @survey_response = SurveyResponse.includes(:election, :survey, :response).find(params[:id])
     @election = @survey_response.election
