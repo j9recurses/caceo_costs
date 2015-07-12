@@ -12,6 +12,7 @@ CaceoCosts::Application.routes.draw do
   resources :questions,       only: [:index]
   resources :response_values, only: [:index]
   resources :counties,        only: [:index]
+  resources :surveys,         only: [:index]
 
   resources :faqs
   resources :activities

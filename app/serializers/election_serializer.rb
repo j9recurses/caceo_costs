@@ -1,4 +1,4 @@
-class ElectionSerializer < ActiveModel::Serializer
+class ElectionYearSerializer < ActiveModel::Serializer
   def name
     object.year
   end
