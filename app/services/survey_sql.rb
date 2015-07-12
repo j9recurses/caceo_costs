@@ -38,9 +38,31 @@ class SurveySql
     SQL
   end
 
-  def delete_dups
+  def delete_direct_cost_query_ignore_year_elements
+    <<-SQL
+    DELETE #{table_name}
+    FROM #{table_name}
+    INNER JOIN
+    (
+      SELECT MAX(id) id, county_id, election_year_id
+        FROM #{table_name}
+       GROUP BY county_id, election_year_id
+    ) d
+    ON  d.county_id = #{table_name}.county_id
+    AND d.election_year_id = #{table_name}.election_year_id
+    AND d.id <> #{table_name}.id;
+    SQL
+  end
+
+  def delete_dups(year_elements: false, election_profile: false)
     initial_maxid = cat_maxid
-    ActiveRecord::Base.connection.execute(delete_direct_cost_query)
+    if year_elements
+      ActiveRecord::Base.connection.execute(delete_direct_cost_query)
+    elsif election_profile
+      ActiveRecord::Base.connection.execute(delete_election_profile_query)
+    else
+      ActiveRecord::Base.connection.execute(delete_direct_cost_query_ignore_year_elements)
+    end
     final_count = cat_count
     final_maxid = cat_maxid
     if final_count.values.all? { |v| v == 1 } && final_maxid.values == initial_maxid.values

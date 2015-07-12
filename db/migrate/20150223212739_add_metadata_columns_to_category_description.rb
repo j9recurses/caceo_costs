@@ -9,6 +9,6 @@ class AddMetadataColumnsToCategoryDescription < ActiveRecord::Migration
 
     add_foreign_key :category_descriptions, :validation_types
     add_foreign_key :category_descriptions, :subsections
-    add_foreign_key :category_descriptions, :surveys
+    # add_foreign_key :category_descriptions, :surveys
   end
 end

@@ -14,14 +14,16 @@ namespace :caceo do
     Question.group(:name).each do |s|
       type = s.table_name.singularize.camelize
       category = s.cost_type == "salaries" ? "Salaries" : "Services and Supplies"
-      Survey.create!(title: s.name, id: type, table_name: s.table_name, category: category)
+      unless Survey.find(type)
+        Survey.find_or_create_by!(title: s.name, id: type, table_name: s.table_name, category: category)
+      end
     end
 
-    Survey.create!( title: "Election Profile", 
+    Survey.find_or_create_by!( title: "Election Profile", 
       id: "ElectionProfile", 
       table_name: "election_profiles", 
       category: "Election Profile"
-    )
+    ) unless Survey.find('ElectionProfile')
   end
 
   desc "format survey titles and add subject"
@@ -36,11 +38,11 @@ namespace :caceo do
   ###### SUBSECTIONS
   desc "create and populate subsections"
   task g_subsections: :environment do
-    Subsection.first_or_create(title: 'Salaries - Tasks',                   totalable: true)
-    Subsection.first_or_create(title: 'Salaries - Types of Staff and Pay',  totalable: true)
-    Subsection.first_or_create(title: 'Benefits - in Dollars',              totalable: true)
-    Subsection.first_or_create(title: 'Benefits - in Percent',              totalable: false)
-    Subsection.first_or_create(title: 'Hours Worked',                       totalable: true)
+    Subsection.find_or_create_by!(title: 'Salaries - Tasks',                   totalable: true)
+    Subsection.find_or_create_by!(title: 'Salaries - Types of Staff and Pay',  totalable: true)
+    Subsection.find_or_create_by!(title: 'Benefits - in Dollars',              totalable: true)
+    Subsection.find_or_create_by!(title: 'Benefits - in Percent',              totalable: false)
+    Subsection.find_or_create_by!(title: 'Hours Worked',                       totalable: true)
 
     Question.where("label LIKE '%Salaries%'")
       .update_all(subsection_id: Subsection.find_by(title: 'Salaries - Types of Staff and Pay').id )
@@ -69,7 +71,7 @@ namespace :caceo do
   desc "fill election profile na and question_type"
   task make_ep_questions: :environment do
     ElectionProfileDescription.all.each do |q|
-      Question.create!(
+      Question.find_or_create_by!(
           label: format_survey_label( q.label ),
           description: q.description,
           field: q.field,
