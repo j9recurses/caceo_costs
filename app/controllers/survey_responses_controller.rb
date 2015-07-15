@@ -8,7 +8,7 @@ class SurveyResponsesController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        render json: SurveyResponse.limit(10)
+        render json: SurveyResponse.where.not(county_id: 59)
       end
     end  
 

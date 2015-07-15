@@ -29,6 +29,7 @@ class SurveysController < ApplicationController
           county: current_user.county,
           election_id: params[:election_id])
         session[:election_id] = params[:election_id]
+      end
     end
   end
 end
