@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   validates :password, :confirmation => true #password_confirmation attr
   validates_presence_of :password, :on => :create
   validates_length_of :password, :in => 5..20, :on => :create
-  validates :security_question, :security_answer, :presence => true, :on => :update
+  # validates :security_question, :security_answer, :presence => true, :on => :update
   validates :fn, :ln, :dob, :presence => true , :if => :active_or_personal?
 
   def observer?
