@@ -10,8 +10,14 @@ class SurveyResponsesController < ApplicationController
       format.json do
         render json: SurveyResponse.where.not(county_id: 59)
       end
-    end  
-
+      format.html do
+        if session[:election_id]
+          redirect_to election_surveys_path(session[:election_id])
+        else
+          redirect_to elections_path
+        end
+      end
+    end
   end
 
   def show
@@ -38,6 +44,8 @@ class SurveyResponsesController < ApplicationController
   end
 
   def destroy
+    @response_form.destroy
+    redirect_to election_surveys_path(session[:election_id])
   end
 
   private
@@ -65,7 +73,7 @@ class SurveyResponsesController < ApplicationController
     @survey_response = SurveyResponse.find params[:id]
     @response_form = SurveyResponseForm.new @survey_response
     @survey = @survey_response.survey
-    @response_form.current_step = session[:survey_response][:current_step]
+    # @response_form.current_step = session[:survey_response][:current_step]
   end
 
   def setup_session
@@ -77,7 +85,7 @@ class SurveyResponsesController < ApplicationController
   end
 
   def wizard_action
-    if @response_form.validate( session[:survey_response] )
+    if @response_form.process( session[:survey_response] )
       if params[:back_button]
         @response_form.step_back
       elsif params[:next_button]

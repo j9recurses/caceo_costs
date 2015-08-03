@@ -91,17 +91,21 @@ class SurveyResponse < ActiveRecord::Base
   end
 
   def self.total_relation(strategy=:policy)
-    ResponseValue.joins(<<-SQL)
-      INNER JOIN (
-        SELECT id AS sr_id
-        FROM survey_responses
-        WHERE survey_responses.id IN( #{ pluck(:id).inject {|memo, obj| memo.to_s + ', ' + obj.to_s} } )
-      ) AS sr
-      ON sr.sr_id = response_values.survey_response_id
-      AND NOT( response_values.question_id IN(
-        #{ SurveyResponse.total_excluded_question_ids_string(strategy) }
-      ))
-    SQL
+    if pluck(:id).blank?
+       ResponseValue.none
+    else
+      ResponseValue.joins(<<-SQL)
+        INNER JOIN (
+          SELECT id AS sr_id
+          FROM survey_responses
+          WHERE survey_responses.id IN( #{ pluck(:id).inject {|memo, obj| memo.to_s + ', ' + obj.to_s} } )
+        ) AS sr
+        ON sr.sr_id = response_values.survey_response_id
+        AND NOT( response_values.question_id IN(
+          #{ SurveyResponse.total_excluded_question_ids_string(strategy) }
+        ))
+      SQL
+    end
   end
 
   def total_relation(strategy=:policy)

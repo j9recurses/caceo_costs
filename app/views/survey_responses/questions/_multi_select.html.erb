@@ -2,23 +2,19 @@
   <%= f.label( question.field, class: 'control-label caceo-form-label' ) do %>
     <%= question.label %>
     <span class="info">
-      <a href= <%= "##{survey_question.field}_modal" %> data-toggle='modal'>(what's this?)</a>
+      <a href= <%= "##{question.field}_modal" %> data-toggle='modal'>(what's this?)</a>
     </span>
   <% end %>
 
-  <% langs = "LanguageOptions::#{question.survey_id.upcase}_#{question.field.upcase}".constantize %>
-
-  <div class="caceo-form-input input-group">
+  <div class="caceo-form-input input-group survey-question">
     <% if question.na_able? %>
       <label class="input-group-addon">
-        <%= f.check_box "#{survey_question.field}_na" %> N/A
+        <%= f.check_box "#{question.field}_na", class: "na-checkbox" %> N/A
       </label>
-      <div class="caceo_checkbox_group">
-        <%= f.input_field "#{question.field}_value", collection: question.options, as: :check_boxes %>
-      </div>
     <% end %>
-    <div class="caceo_checkbox_group">
-      <%= f.input_field survey_field, collection: question.options, as: :check_boxes %>
+      <div class="caceo_checkbox_group">
+        <% langs = "#{question.survey_id}::#{question.field.upcase}".constantize %>
+        <%= f.input_field "#{question.field}_multi_select", collection: langs, as: :check_boxes %>
       </div>
   </div>
 </div>

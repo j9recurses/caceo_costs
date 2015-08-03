@@ -2,7 +2,7 @@ class Salpw < ActiveRecord::Base
   include Responseable
   validates :salpwrec, :salpwdvtrain, :salpwtrain, :salpwpay, 
     :salpwoth, :salpwpsrp, :salpwpsop, :salpwtsrp, :salpwrtsop, 
-    :salpwbeps, :salpwbepsp, :salpwbets, :salpwbetsp, 
+    :salpwbeps, :salpwbets, 
     :salpwhrsps, :salpwhrsts, 
     numericality: { only_integer: true, 
       :greater_than_or_equal_to => 0, 

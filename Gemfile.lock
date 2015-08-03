@@ -275,7 +275,7 @@ DEPENDENCIES
   rails (~> 4.2.1)
   rb-fsevent
   rb-inotify
-  reform
+  reform (= 1.2.6)
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc

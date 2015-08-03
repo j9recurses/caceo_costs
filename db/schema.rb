@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150706033944) do
+ActiveRecord::Schema.define(version: 20150803101840) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -406,9 +406,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.integer  "salbctsrp",        limit: 4
     t.integer  "salbctsop",        limit: 4
     t.integer  "salbcbeps",        limit: 4
-    t.integer  "salbcbepsp",       limit: 4
     t.integer  "salbcbets",        limit: 4
-    t.integer  "salbcbetsp",       limit: 4
     t.integer  "salbchrsps",       limit: 4
     t.integer  "salbchrsts",       limit: 4
     t.text     "salbccomment",     limit: 65535
@@ -432,9 +430,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.boolean  "salbctsrp_na",     limit: 1,     default: false, null: false
     t.boolean  "salbctsop_na",     limit: 1,     default: false, null: false
     t.boolean  "salbcbeps_na",     limit: 1,     default: false, null: false
-    t.boolean  "salbcbepsp_na",    limit: 1,     default: false, null: false
     t.boolean  "salbcbets_na",     limit: 1,     default: false, null: false
-    t.boolean  "salbcbetsp_na",    limit: 1,     default: false, null: false
     t.boolean  "salbchrsps_na",    limit: 1,     default: false, null: false
     t.boolean  "salbchrsts_na",    limit: 1,     default: false, null: false
     t.boolean  "salbcnvbmp_na",    limit: 1,     default: false, null: false
@@ -461,9 +457,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.integer  "salcantsrp",       limit: 4
     t.integer  "salcantsop",       limit: 4
     t.integer  "salcanbeps",       limit: 4
-    t.integer  "salcanbepsp",      limit: 4
     t.integer  "salcanbets",       limit: 4
-    t.integer  "salcanbetsp",      limit: 4
     t.integer  "salcanhrsps",      limit: 4
     t.integer  "salcanhrsts",      limit: 4
     t.text     "salcancomment",    limit: 65535
@@ -477,9 +471,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.boolean  "salcantsrp_na",    limit: 1,     default: false, null: false
     t.boolean  "salcantsop_na",    limit: 1,     default: false, null: false
     t.boolean  "salcanbeps_na",    limit: 1,     default: false, null: false
-    t.boolean  "salcanbepsp_na",   limit: 1,     default: false, null: false
     t.boolean  "salcanbets_na",    limit: 1,     default: false, null: false
-    t.boolean  "salcanbetsp_na",   limit: 1,     default: false, null: false
     t.boolean  "salcanhrsps_na",   limit: 1,     default: false, null: false
     t.boolean  "salcanhrsts_na",   limit: 1,     default: false, null: false
   end
@@ -493,9 +485,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.integer  "saldojotsrp",      limit: 4
     t.integer  "saldojotsop",      limit: 4
     t.integer  "saldojobeps",      limit: 4
-    t.integer  "saldojobepsp",     limit: 4
     t.integer  "saldojobets",      limit: 4
-    t.integer  "saldojobetsp",     limit: 4
     t.integer  "saldojohrsps",     limit: 4
     t.integer  "saldojohrsts",     limit: 4
     t.text     "saldojocomment",   limit: 65535
@@ -507,9 +497,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.boolean  "saldojotsrp_na",   limit: 1,     default: false, null: false
     t.boolean  "saldojotsop_na",   limit: 1,     default: false, null: false
     t.boolean  "saldojobeps_na",   limit: 1,     default: false, null: false
-    t.boolean  "saldojobepsp_na",  limit: 1,     default: false, null: false
     t.boolean  "saldojobets_na",   limit: 1,     default: false, null: false
-    t.boolean  "saldojobetsp_na",  limit: 1,     default: false, null: false
     t.boolean  "saldojohrsps_na",  limit: 1,     default: false, null: false
     t.boolean  "saldojohrsts_na",  limit: 1,     default: false, null: false
   end
@@ -526,9 +514,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.integer  "salmedbe",         limit: 4
     t.integer  "salmedbep",        limit: 4
     t.integer  "salmedbeps",       limit: 4
-    t.integer  "salmedbepsp",      limit: 4
     t.integer  "salmedbets",       limit: 4
-    t.integer  "salmedbetsp",      limit: 4
     t.integer  "salmedhrsps",      limit: 4
     t.integer  "salmedhrsts",      limit: 4
     t.text     "salmedcomment",    limit: 65535
@@ -544,9 +530,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.boolean  "salmedbe_na",      limit: 1,     default: false, null: false
     t.boolean  "salmedbep_na",     limit: 1,     default: false, null: false
     t.boolean  "salmedbeps_na",    limit: 1,     default: false, null: false
-    t.boolean  "salmedbepsp_na",   limit: 1,     default: false, null: false
     t.boolean  "salmedbets_na",    limit: 1,     default: false, null: false
-    t.boolean  "salmedbetsp_na",   limit: 1,     default: false, null: false
     t.boolean  "salmedhrsps_na",   limit: 1,     default: false, null: false
     t.boolean  "salmedhrsts_na",   limit: 1,     default: false, null: false
     t.boolean  "salmedcampm_na",   limit: 1,     default: false, null: false
@@ -566,9 +550,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.integer  "salothtsrp",       limit: 4
     t.integer  "salothtsop",       limit: 4
     t.integer  "salothbeps",       limit: 4
-    t.integer  "salothbepsp",      limit: 4
     t.integer  "salothbets",       limit: 4
-    t.integer  "salothbetsp",      limit: 4
     t.integer  "salothhrsps",      limit: 4
     t.integer  "salothhrsts",      limit: 4
     t.text     "salothcomment",    limit: 65535
@@ -590,9 +572,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.boolean  "salothtsrp_na",    limit: 1,     default: false, null: false
     t.boolean  "salothtsop_na",    limit: 1,     default: false, null: false
     t.boolean  "salothbeps_na",    limit: 1,     default: false, null: false
-    t.boolean  "salothbepsp_na",   limit: 1,     default: false, null: false
     t.boolean  "salothbets_na",    limit: 1,     default: false, null: false
-    t.boolean  "salothbetsp_na",   limit: 1,     default: false, null: false
     t.boolean  "salothhrsps_na",   limit: 1,     default: false, null: false
     t.boolean  "salothhrsts_na",   limit: 1,     default: false, null: false
     t.boolean  "salothvoedm_na",   limit: 1,     default: false, null: false
@@ -617,9 +597,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.integer  "salpptsrp",        limit: 4
     t.integer  "salpptsop",        limit: 4
     t.integer  "salppbeps",        limit: 4
-    t.integer  "salppbepsp",       limit: 4
     t.integer  "salppbets",        limit: 4
-    t.integer  "salppbetsp",       limit: 4
     t.integer  "salpphrsps",       limit: 4
     t.integer  "salpphrsts",       limit: 4
     t.text     "salppcomment",     limit: 65535
@@ -638,9 +616,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.boolean  "salpptsrp_na",     limit: 1,     default: false, null: false
     t.boolean  "salpptsop_na",     limit: 1,     default: false, null: false
     t.boolean  "salppbeps_na",     limit: 1,     default: false, null: false
-    t.boolean  "salppbepsp_na",    limit: 1,     default: false, null: false
     t.boolean  "salppbets_na",     limit: 1,     default: false, null: false
-    t.boolean  "salppbetsp_na",    limit: 1,     default: false, null: false
     t.boolean  "salpphrsps_na",    limit: 1,     default: false, null: false
     t.boolean  "salpphrsts_na",    limit: 1,     default: false, null: false
     t.boolean  "salppemattr_na",   limit: 1,     default: false, null: false
@@ -659,9 +635,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.integer  "salpwtsrp",        limit: 4
     t.integer  "salpwrtsop",       limit: 4
     t.integer  "salpwbeps",        limit: 4
-    t.integer  "salpwbepsp",       limit: 4
     t.integer  "salpwbets",        limit: 4
-    t.integer  "salpwbetsp",       limit: 4
     t.integer  "salpwhrsps",       limit: 4
     t.integer  "salpwhrsts",       limit: 4
     t.text     "salpwhcomment",    limit: 65535
@@ -678,9 +652,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.boolean  "salpwtsrp_na",     limit: 1,     default: false, null: false
     t.boolean  "salpwrtsop_na",    limit: 1,     default: false, null: false
     t.boolean  "salpwbeps_na",     limit: 1,     default: false, null: false
-    t.boolean  "salpwbepsp_na",    limit: 1,     default: false, null: false
     t.boolean  "salpwbets_na",     limit: 1,     default: false, null: false
-    t.boolean  "salpwbetsp_na",    limit: 1,     default: false, null: false
     t.boolean  "salpwhrsps_na",    limit: 1,     default: false, null: false
     t.boolean  "salpwhrsts_na",    limit: 1,     default: false, null: false
     t.boolean  "salpwrecm_na",     limit: 1,     default: false, null: false
@@ -700,9 +672,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.integer  "salvbmtsrp",       limit: 4
     t.integer  "salvbmtsop",       limit: 4
     t.integer  "salvbmbeps",       limit: 4
-    t.integer  "salvbmbepsp",      limit: 4
     t.integer  "salvbmbets",       limit: 4
-    t.integer  "salvbmbetsp",      limit: 4
     t.integer  "salvbmhrsps",      limit: 4
     t.integer  "salvbmhrsts",      limit: 4
     t.text     "salvbmcomment",    limit: 65535
@@ -719,9 +689,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
     t.boolean  "salvbmtsrp_na",    limit: 1,     default: false, null: false
     t.boolean  "salvbmtsop_na",    limit: 1,     default: false, null: false
     t.boolean  "salvbmbeps_na",    limit: 1,     default: false, null: false
-    t.boolean  "salvbmbepsp_na",   limit: 1,     default: false, null: false
     t.boolean  "salvbmbets_na",    limit: 1,     default: false, null: false
-    t.boolean  "salvbmbetsp_na",   limit: 1,     default: false, null: false
     t.boolean  "salvbmhrsps_na",   limit: 1,     default: false, null: false
     t.boolean  "salvbmhrsts_na",   limit: 1,     default: false, null: false
   end
@@ -1058,7 +1026,7 @@ ActiveRecord::Schema.define(version: 20150706033944) do
   add_foreign_key "election_profiles", "election_years"
   add_foreign_key "questions", "subsections"
   add_foreign_key "questions", "validation_types"
-  add_foreign_key "response_values", "questions"
+  add_foreign_key "response_values", "questions", on_delete: :cascade
   add_foreign_key "response_values", "survey_responses", on_delete: :cascade
   add_foreign_key "survey_subsections", "subsections"
 end

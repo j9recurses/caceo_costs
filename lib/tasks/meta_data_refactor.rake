@@ -89,6 +89,13 @@ namespace :caceo do
 
   desc "Clean and update Questions, connect to other models"
   task update_questions: :environment do
+    # benefits percent, non-salbal questions
+    Question.destroy_all(field: ["salbcbepsp", "salbcbetsp", "salcanbepsp", 
+      "salcanbetsp", "saldojobepsp", "saldojobetsp", "salmedbepsp", 
+      "salmedbetsp", "salothbepsp", "salothbetsp", "salppbepsp", 
+      "salppbetsp", "salpwbepsp", "salpwbetsp", "salvbmbepsp", 
+      "salvbmbetsp"])
+
     Question.where("field LIKE 'ssbalpri%b%ml'").update_all(question_type: 'multi_select')
     # were wrongly marked as comments, and in practice not na_able
     Question.where("field LIKE 'ssbalpri%b%mc'").update_all(question_type: nil, na_able: true)
@@ -132,24 +139,26 @@ namespace :caceo do
   task make_survey_responses: :environment do
     GeneralSurvey::DIRECT_COST_SURVEYS.each do |klass|
       klass.all.each do |r|
-        SurveyResponse.find_or_create_by!(
+        sr = SurveyResponse.find_or_create_by!(
           county_id: r.county_id,
           response: r,
-          election_id: r.election_year_id,
-          created_at: r.created_at,
-          updated_at: r.updated_at
+          election_id: r.election_year_id
         )
+        sr.created_at = r.created_at
+        sr.updated_at = r.updated_at
+        sr.save!
       end
     end
 
     ElectionProfile.all.each do |ep|
-      SurveyResponse.find_or_create_by!(
+      sr = SurveyResponse.find_or_create_by!(
         county_id: ep.county_id,
         response: ep,
         election: ElectionYear.find_by( year: ElectionYearProfile.find( ep.election_year_profile_id ).year ),
-        created_at: ep.created_at,
-        updated_at: ep.updated_at
       )
+      sr.created_at = ep.created_at
+      sr.updated_at = ep.updated_at
+      sr.save!
     end
   end
 

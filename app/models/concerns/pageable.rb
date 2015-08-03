@@ -20,11 +20,15 @@ module Pageable
   end
 
   def step_forward
-    self.current_step = self.current_step + 1 unless current_step == total_steps - 1
+    unless current_step == (total_steps - 1)
+      self.current_step = current_step + 1
+    end
   end
 
   def step_back
-    current_step = current_step - 1 unless current_step == 0
+    unless current_step == 0
+      self.current_step = current_step - 1
+    end
   end
 
   def last_step?

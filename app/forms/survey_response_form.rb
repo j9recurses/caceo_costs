@@ -26,6 +26,10 @@ class SurveyResponseForm < Reform::Form
     end then true else false end
   end
 
+  def process(params)
+    params = response.process_bit_masks(params)
+    validate(params)
+  end
 
   def empty_na
     na_qs = Question.where(

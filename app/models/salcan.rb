@@ -1,8 +1,8 @@
 class Salcan < ActiveRecord::Base
   include Responseable
   validates :salcanprep, :salcanproc, :slacanoth, :salcanpsrp, 
-    :salcanpsop, :salcantsrp, :salcantsop, :salcanbeps, :salcanbepsp, 
-    :salcanbets, :salcanbetsp, :salcanhrsps, :salcanhrsts, 
+    :salcanpsop, :salcantsrp, :salcantsop, :salcanbeps, 
+    :salcanbets, :salcanhrsps, :salcanhrsts, 
     numericality: { only_integer: true, 
       :greater_than_or_equal_to => 0, 
       :less_than_or_equal_to  => 500000000,  

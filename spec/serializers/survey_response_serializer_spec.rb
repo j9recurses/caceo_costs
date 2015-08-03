@@ -30,7 +30,8 @@ RSpec.describe 'SurveyReponseSerializer' do
     end
 
     it 'have correct values' do
-      expect(@attributes[:total]).to  eq(320)
+      # maybe unsatisfying total, but correct! with sr total policy
+      expect(@attributes[:total]).to  eq(0)
     end
   end
 

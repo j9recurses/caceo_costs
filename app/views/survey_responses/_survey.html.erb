@@ -10,7 +10,7 @@
 
 <%= render partial: 'question_modal', collection: @response_form.current_page %>
 
-<%= simple_form_for @response_form, url: survey_responses_path,
+<%= simple_form_for @response_form,
  html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f| %>
   <%= hidden_field_tag 'survey_id', @survey.id %>
   <%= f.hidden_field :election_id,  value: @response_form.election_id %>
@@ -21,7 +21,11 @@
     <%= r.hidden_field :election_year_id, value: @response_form.election_id %>
     <%= r.hidden_field :county_id,        value: @response_form.county_id %>
     <% @response_form.current_page.each do |q| %>
-      <%= render partial: "survey_responses/questions/input_field", locals: { question: q, f: r}  %>
+      <% if q.multi_select? %>
+        <%= render partial: "survey_responses/questions/multi_select", locals: { question: q, f: r}  %>
+      <% else %>
+        <%= render partial: "survey_responses/questions/input_field", locals: { question: q, f: r}  %>
+      <% end %>
     <% end %>
 
     <div class="form-actions">

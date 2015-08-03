@@ -6,20 +6,25 @@ class Question < ActiveRecord::Base
   has_many :options, inverse_of: :question
   has_many :values, inverse_of: :question, class_name: 'ResponseValue'
 
-  def field_type
-    if data_type == 'integer' || data_type == 'string' || data_type == 'decimal'
-      input = 'input'
-    else
-      input = data_type
-    end
 
-    "#{input}#{question_type.blank? ? '' : '_'+question_type }"
+  def multi_select?
+    question_type == 'multi_select'
   end
 
-# legacy?
-  def election_profile?
-    false
-  end
+########### legacy?
+  # def field_type
+  #   if data_type == 'integer' || data_type == 'string' || data_type == 'decimal'
+  #     input = 'input'
+  #   else
+  #     input = data_type
+  #   end
+
+  #   "#{input}#{question_type.blank? ? '' : '_'+question_type }"
+  # end
+
+  # def election_profile?
+  #   false
+  # end
  
   def comment?
     question_type == 'comment'

@@ -1,12 +1,12 @@
 <div class="panel panel-default">
   <h3 class="panel-heading panel-title"><%= subsection.title %></h3>
 
-<table class="table">
+<table class="table sr-response-table">
   <% subsection.values_for(@survey_response).each do |v| %>
-  <tr>
-    <td><%= v.question.label %></td>
-    <td><%= v.value %></td>
-  </tr>
+    <tr>
+      <td class="col-show-label"><%= v.question.label %></td>
+      <td class="col-show-response"><%= v.value %></td>
+    </tr>
   <% end %>
   <% if subsection.totalable? %>
     <tr>

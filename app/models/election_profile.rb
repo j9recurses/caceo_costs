@@ -22,35 +22,27 @@ class ElectionProfile< ActiveRecord::Base
     :allow_blank => false,  
     message: 'Indirect cost rate is expected to be between 9999.99 and 0.01' }
 
-VRA_LANGUAGES = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
-                  'Tagalog (Filipino)', 'Asian Indian (Hindi)', 
-                  'Other Asian - Not Specified (Gujarati, Bengali)', 
-                  'American Indian (Central & South American)',
-                  'American Indian (Yuman)' ]
-CAEC_LANGUAGES = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
-                  'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ]
+  EPLANGVRA = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
+    'Tagalog (Filipino)', 'Asian Indian (Hindi)', 
+    'Other Asian - Not Specified (Gujarati, Bengali)', 
+    'American Indian (Central & South American)',
+    'American Indian (Yuman)' ]
+  EPLANGCAEC = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
+    'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ]
 
-EPLANGVRA = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
-                  'Tagalog (Filipino)', 'Asian Indian (Hindi)', 
-                  'Other Asian - Not Specified (Gujarati, Bengali)', 
-                  'American Indian (Central & South American)',
-                  'American Indian (Yuman)' ]
-EPLANGCAEC = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
-                  'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ]
+  # def eplangcaec_multi_lang=(languages)
+  #   self.eplangcaec = (languages & EPLANGCAEC).map { |l| 2**EPLANGCAEC.index(l) }.sum
+  # end
 
-  def eplangcaec_multi_lang=(languages)
-    self.eplangcaec = (languages & CAEC_LANGUAGES).map { |l| 2**CAEC_LANGUAGES.index(l) }.sum
-  end
+  # def eplangcaec_multi_lang
+  #   EPLANGCAEC.reject { |l| ((eplangcaec || 0) & 2**EPLANGCAEC.index(l)).zero? }
+  # end
 
-  def eplangcaec_multi_lang
-    CAEC_LANGUAGES.reject { |l| ((eplangcaec || 0) & 2**CAEC_LANGUAGES.index(l)).zero? }
-  end
+  # def eplangvra_multi_lang=(languages)
+  #   self.eplangvra = (languages & EPLANGVRA).map { |l| 2**EPLANGVRA.index(l) }.sum
+  # end
 
-  def eplangvra_multi_lang=(languages)
-    self.eplangvra = (languages & VRA_LANGUAGES).map { |l| 2**VRA_LANGUAGES.index(l) }.sum
-  end
-
-  def eplangvra_multi_lang
-    VRA_LANGUAGES.reject { |l| ((eplangvra || 0) & 2**VRA_LANGUAGES.index(l)).zero? }
-  end
+  # def eplangvra_multi_lang
+  #   EPLANGVRA.reject { |l| ((eplangvra || 0) & 2**EPLANGVRA.index(l)).zero? }
+  # end
 end

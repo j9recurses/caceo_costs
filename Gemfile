@@ -20,7 +20,7 @@ group :test, :development, :production do
   gem 'axlsx_rails'
   gem 'simple_form', '~> 3.1'
   gem 'turbolinks', '~> 2.5.3'
-  gem 'reform'
+  gem 'reform', '1.2.6'
   gem 'active_model_serializers', '~>0.10.0.rc2'
 end
 
