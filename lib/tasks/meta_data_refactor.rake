@@ -15,7 +15,7 @@ namespace :caceo do
     Question.group(:name).each do |s|
       type = s.table_name.singularize.camelize
       category = s.cost_type == "salaries" ? "Salaries" : "Services and Supplies"
-      unless Survey.find(type)
+      unless Survey.where(id: type).count > 0
         Survey.find_or_create_by!(title: s.name, id: type, table_name: s.table_name, category: category)
       end
     end
@@ -24,7 +24,7 @@ namespace :caceo do
       id: "ElectionProfile", 
       table_name: "election_profiles", 
       category: "Election Profile"
-    ) unless Survey.find('ElectionProfile')
+    ) unless Survey.where(id: 'ElectionProfile').count > 0
   end
 
   desc "format survey titles and add subject"
