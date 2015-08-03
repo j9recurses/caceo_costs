@@ -22,7 +22,7 @@
     <%= r.hidden_field :county_id,        value: @response_form.county_id %>
     <% @response_form.current_page.each do |q| %>
       <% if q.multi_select? %>
-        <%= render partial: "survey_responses/questions/multi_select", locals: { question: q, f: r}  %>
+        <%= render partial: "survey_responses/questions/multi_select", locals: { question: q, r: r}  %>
       <% else %>
         <%= render partial: "survey_responses/questions/input_field", locals: { question: q, f: r}  %>
       <% end %>

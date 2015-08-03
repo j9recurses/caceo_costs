@@ -14,7 +14,7 @@ class ResponseFormBuilder
       property :county_id
       property :election_year_id
       #{property_list(@survey_id)}
-      #{virtual_bit_mask_property_list}
+      #{bit_mask_property_list}
 
       def self.bit_mask_fields() #{ bit_mask_fields } end
       def self.survey_id() #{ @survey_id } end
@@ -49,10 +49,10 @@ class ResponseFormBuilder
   end
 
   # BUILDER Instance method
-  def virtual_bit_mask_property_list
+  def bit_mask_property_list
     bit_mask_properties = ""
     bit_mask_fields.each do |field|
-      prop = "property :#{field}_multi_select, virtual: true \n"
+      prop = "property :#{field}_multi_select, writeable: false \n"
       bit_mask_properties = bit_mask_properties + prop
     end
     bit_mask_properties

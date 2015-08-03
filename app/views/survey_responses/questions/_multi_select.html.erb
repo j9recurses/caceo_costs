@@ -1,5 +1,5 @@
 <div class="form-group">
-  <%= f.label( question.field, class: 'control-label caceo-form-label' ) do %>
+  <%= r.label( question.field, class: 'control-label caceo-form-label' ) do %>
     <%= question.label %>
     <span class="info">
       <a href= <%= "##{question.field}_modal" %> data-toggle='modal'>(what's this?)</a>
@@ -9,12 +9,12 @@
   <div class="caceo-form-input input-group survey-question">
     <% if question.na_able? %>
       <label class="input-group-addon">
-        <%= f.check_box "#{question.field}_na", class: "na-checkbox" %> N/A
+        <%= r.check_box "#{question.field}_na", class: "na-checkbox" %> N/A
       </label>
     <% end %>
       <div class="caceo_checkbox_group">
         <% langs = "#{question.survey_id}::#{question.field.upcase}".constantize %>
-        <%= f.input_field "#{question.field}_multi_select", collection: langs, as: :check_boxes %>
+        <%= r.input_field "#{question.field}_multi_select".to_sym, collection: langs, as: :check_boxes %>
       </div>
   </div>
 </div>

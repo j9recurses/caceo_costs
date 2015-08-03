@@ -27,17 +27,19 @@ class Ssbal < ActiveRecord::Base
   SSBALPRIOB1ML = SSBALPRIOB2ML = SSBALPRIOB3ML = 
   LANGUAGES
 
-  # ML_COLUMNS = Ssbal.column_names.find_all { |n| /^ssbalpri(\w)b(\d)ml$/.match n }
-  # ML_COLUMNS.each do |ml_col|
-  #   ml_setter_method_name = ml_col.gsub('ml', '_multi_select=')
-  #   ml_getter_method_name = ml_col.gsub('ml', '_multi_select')
+  ML_COLUMNS = Ssbal.column_names.find_all { |n| /^ssbalpri(\w)b(\d)ml$/.match n }
+  ML_COLUMNS.each do |ml_col|
+    # ml_setter_method_name = ml_col.gsub('ml', '_multi_select=')
+    # ml_getter_method_name = ml_col.gsub('ml', '_multi_select')
+    ml_setter_method_name = ml_col + '_multi_select='
+    ml_getter_method_name = ml_col + '_multi_select'
 
-  #   define_method( ml_setter_method_name ) do | languages |
-  #     self.send "#{ml_col}=", ( (languages & LANGUAGES).map { |l| 2**LANGUAGES.index(l) }.sum )
-  #   end
+    define_method( ml_setter_method_name ) do | languages |
+      self.send "#{ml_col}=", ( (languages & LANGUAGES).map { |l| 2**LANGUAGES.index(l) }.sum )
+    end
 
-  #   define_method( ml_getter_method_name ) do
-  #     LANGUAGES.reject { |l| ( ( self.send( ml_col ) || 0) & 2**LANGUAGES.index(l)).zero? }
-  #   end
-  # end
+    define_method( ml_getter_method_name ) do
+      LANGUAGES.reject { |l| ( ( self.send( ml_col ) || 0) & 2**LANGUAGES.index(l)).zero? }
+    end
+  end
 end

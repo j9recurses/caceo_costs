@@ -30,19 +30,19 @@ class ElectionProfile< ActiveRecord::Base
   EPLANGCAEC = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
     'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ]
 
-  # def eplangcaec_multi_lang=(languages)
-  #   self.eplangcaec = (languages & EPLANGCAEC).map { |l| 2**EPLANGCAEC.index(l) }.sum
-  # end
+  def eplangcaec_multi_lang=(languages)
+    self.eplangcaec = (languages & EPLANGCAEC).map { |l| 2**EPLANGCAEC.index(l) }.sum
+  end
 
-  # def eplangcaec_multi_lang
-  #   EPLANGCAEC.reject { |l| ((eplangcaec || 0) & 2**EPLANGCAEC.index(l)).zero? }
-  # end
+  def eplangcaec_multi_lang
+    EPLANGCAEC.reject { |l| ((eplangcaec || 0) & 2**EPLANGCAEC.index(l)).zero? }
+  end
 
-  # def eplangvra_multi_lang=(languages)
-  #   self.eplangvra = (languages & EPLANGVRA).map { |l| 2**EPLANGVRA.index(l) }.sum
-  # end
+  def eplangvra_multi_lang=(languages)
+    self.eplangvra = (languages & EPLANGVRA).map { |l| 2**EPLANGVRA.index(l) }.sum
+  end
 
-  # def eplangvra_multi_lang
-  #   EPLANGVRA.reject { |l| ((eplangvra || 0) & 2**EPLANGVRA.index(l)).zero? }
-  # end
+  def eplangvra_multi_lang
+    EPLANGVRA.reject { |l| ((eplangvra || 0) & 2**EPLANGVRA.index(l)).zero? }
+  end
 end
