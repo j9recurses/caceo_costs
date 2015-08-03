@@ -35,7 +35,8 @@ class SurveyResponseForm < Reform::Form
     na_qs = Question.where(
       survey_id: response.model.class, na_able: true).pluck(:field, :na_field)
     na_qs.each do |q|
-      if response.send(q[0]) == nil
+      val = response.send(q[0])
+      if val.blank? && !val==false
         response.send("#{q[1]}=", true)
       end
     end

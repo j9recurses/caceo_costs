@@ -98,7 +98,7 @@ class ResponseValue < ActiveRecord::Base
   def value
     value_field = self.question.data_type + '_value'
     if question.na_able?
-      na_value ? "NOT APPLICABLE" : send(value_field)
+      na_value ? "N/A" : send(value_field)
     else
       send value_field
     end

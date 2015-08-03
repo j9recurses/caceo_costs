@@ -26,10 +26,16 @@
             <div class="progress election-year">
               <div class="progress-bar" 
                 role="progressbar" 
-                aria-valuenow=<%="#{ election_survey_responses.percent_answered }"%> 
+                aria-valuenow=<%="#{ 
+                  election_survey_responses.percent_answered
+                   #( constraints: { county_ids: [current_user.county.id], election_ids: [election.id] } ) 
+                }"%> 
                 aria-valuemin="0" 
                 aria-valuemax="100" 
-                style="<%="width: #{ election_survey_responses.percent_answered }%;" %>">
+                style="<%="width: #{ 
+                  election_survey_responses.percent_answered
+                  # ( constraints: { county_ids: [current_user.county.id], election_ids: [election.id] } ) 
+                }%;" %>">
                 <% unless election_survey_responses.blank? %>
                   <%= election_survey_responses.percent_answered %>%
                 <% end %>

@@ -51,8 +51,24 @@ class SurveyResponse < ActiveRecord::Base
   end
   alias_method :percent_complete, :percent_answered
 
-  def self.percent_answered
-    ResponseValue.where(id: value_ids).percent_answered
+  def self.percent_answered(constraints: nil)
+    if constraints
+      county_ids = constraints[:county_ids]
+      survey_ids = constraints[:survey_ids]
+      election_ids = constraints[:election_ids]
+
+      survey_multiplier = survey_ids ? Question.where(survey_id: survey_ids).count : Question.all
+      county_multiplier = county_ids ? Array(county_ids).size : 58
+      election_multiplier = election_ids ? Array(election_ids).size : ElectionYear.count
+
+      grand_total = survey_multiplier * county_multiplier * election_multiplier
+      ratio = (ResponseValue.where(id: value_ids).answered.to_f / grand_total.to_f).round(2)
+      # rat = (answered.to_f / count.to_f).round(2)
+      ratio = ratio.nan? ? 0 : ratio
+      (ratio * 100).to_i
+    else
+      ResponseValue.where(id: value_ids).percent_answered
+    end
   end
 
   class << self

@@ -35,8 +35,10 @@ module BitMaskable
 
   # FORM Instance method
   def process_bit_masks(params)
-    self.class.bit_mask_pipeline.each do |proc|
-      params = proc.call(params)
+    if params['response_attributes']
+      self.class.bit_mask_pipeline.each do |proc|
+        params = proc.call(params)
+      end
     end
     params
   end

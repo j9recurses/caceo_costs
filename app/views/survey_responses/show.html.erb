@@ -12,6 +12,11 @@
   <h3>Category Total: <%= @survey_response.total %></h3>
 <% end %>
 
+<%= link_to 'Set all empty fields in this survey to N/A', survey_response_path(@survey_response.id,  empty_na: true),
+  {class: 'btn btn-default', method: :patch,
+    data: { confirm: 'Are you sure you want to mark ALL empty fields as Not Applicable?' }}
+%>
+
 <div class="end_link">
   <%= link_to 'Edit', edit_survey_response_path( @survey_response.id ) %> |
   <%= link_to 'Delete Survey Response', survey_response_path( @survey_response.id ),

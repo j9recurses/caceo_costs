@@ -99,7 +99,12 @@ class SurveyResponsesController < ApplicationController
         if @response_form.submit
           flash['success'] = "Your response has been saved successfully."
           session[:survey_response] = nil
-          @response_form.sync
+          redirect_to( @response_form.model )
+        end
+      elsif params[:empty_na]
+        if @response_form.empty_na.submit
+          flash['success'] = "Your response has been updated with N/A values."
+          session[:survey_response] = nil
           redirect_to( @response_form.model )
         end
       end

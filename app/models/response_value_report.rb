@@ -49,7 +49,7 @@ class ResponseValueReport
         sr_hash = @responses_hash[e.survey_id][[e.survey_response_id, e.county_name, e.election_year]] ||= {}
         sr_hash[:stats] ||= [e._total_questions, e._answered, e._total]
         sr_hash[e.field] = if e.na_able? && e.na_value
-            'NOT APPLICABLE'
+            'N/A'
           else 
             e.send("#{e.data_type}_value")
           end
