@@ -2,8 +2,8 @@ class SurveyResponsesController < ApplicationController
   before_action :new_form, only: [:new, :create]
   before_action :get_form, only: [:edit, :update, :destroy]
   before_action :setup_session, only: [:new, :edit]
-  before_action :merge_session, only: [:create, :update]
-  before_action :wizard_action, only: [:create, :update]
+  # before_action :merge_session, only: [:create, :update]
+  # before_action :wizard_action, only: [:create, :update]
 
   def index
     respond_to do |format|
@@ -30,8 +30,9 @@ class SurveyResponsesController < ApplicationController
   end
 
   def create
-    puts @response_form.inspect
-    puts @survey_response.election.inspect
+    wizard_action
+    # puts @response_form.inspect
+    # puts @survey_response.election.inspect
     if @response_form.model.new_record?
       render :new
     else
@@ -40,6 +41,7 @@ class SurveyResponsesController < ApplicationController
   end
 
   def update
+    wizard_action
     render :edit unless performed?
   end
 
@@ -73,19 +75,16 @@ class SurveyResponsesController < ApplicationController
     @survey_response = SurveyResponse.find params[:id]
     @response_form = SurveyResponseForm.new @survey_response
     @survey = @survey_response.survey
-    # @response_form.current_step = session[:survey_response][:current_step]
+    @response_form.current_step = session[:survey_response][:current_step] if session[:survey_response]
   end
 
   def setup_session
     session[:survey_response] = {}
   end
 
-  def merge_session
-    session[:survey_response] ||= {}
-    session[:survey_response].deep_merge!( params[:survey_response] )
-  end
-
   def wizard_action
+    session[:survey_response] ||= {}
+    session[:survey_response].deep_merge!( params[:survey_response] ) if params[:survey_response]
     if @response_form.process( session[:survey_response] )
       if params[:back_button]
         @response_form.step_back
