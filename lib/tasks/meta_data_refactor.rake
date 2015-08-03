@@ -7,7 +7,7 @@ namespace :caceo do
   task g_surveys: [:make_surveys, :format_surveys]
 
   desc "generate SurveyResponess and ResponseValues"
-  task g_survey_responses: [:make_survey_responses, :make_response_values]
+  task g_survey_responses: [:make_direct_cost_survey_responses, :make_election_profile_survey_responses, :make_response_values]
 
   ###### SURVEYS
   desc "fill out Survey table"
@@ -135,8 +135,8 @@ namespace :caceo do
   # end
 
   #### SURVEY RESPONSES
-  desc "generate survey_responses for each response for election profiles and direct cost surveys"
-  task make_survey_responses: :environment do
+  desc "generate survey_responses for each response for direct cost surveys"
+  task make_direct_cost_survey_responses: :environment do
     GeneralSurvey::DIRECT_COST_SURVEYS.each do |klass|
       klass.all.each do |r|
         sr = SurveyResponse.find_or_create_by!(
@@ -149,16 +149,26 @@ namespace :caceo do
         sr.save!
       end
     end
+  end
 
-    ElectionProfile.all.each do |ep|
-      sr = SurveyResponse.find_or_create_by!(
-        county_id: ep.county_id,
-        response: ep,
-        election: ElectionYear.find_by( year: ElectionYearProfile.find( ep.election_year_profile_id ).year ),
-      )
-      sr.created_at = ep.created_at
-      sr.updated_at = ep.updated_at
-      sr.save!
+  desc "generate survey_responses for each response for election profiles and direct cost surveys"
+  task make_election_profile_survey_responses: :environment do
+    ElectionProfile.transaction do
+      ElectionProfile.all.each do |ep|
+        ep.election_year = ElectionYear.find_by( year: ElectionYearProfile.find( ep.election_year_profile_id ).year )
+        ep.save!
+      end
+
+      ElectionProfile.all.each do |ep|
+        sr = SurveyResponse.find_or_create_by!(
+          county_id: ep.county_id,
+          response: ep,
+          election: ep.election_year,
+        )
+        sr.created_at = ep.created_at
+        sr.updated_at = ep.updated_at
+        sr.save!
+      end
     end
   end
 
