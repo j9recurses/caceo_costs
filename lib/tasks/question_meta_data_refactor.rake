@@ -1,6 +1,6 @@
 namespace :caceo do
 
-  desc "generate surveys, questions, survey_responses"
+  desc "generate all new metadata structure and content"
   task g_meta: [:g_surveys, :g_questions, :g_subsections, :g_survey_responses]
 
   desc "generate Surveys"
@@ -9,6 +9,7 @@ namespace :caceo do
   desc "generate SurveyResponess and ResponseValues"
   task g_survey_responses: [:make_survey_responses, :make_response_values]
 
+  ###### SURVEYS
   desc "fill out Survey table"
   task make_surveys: :environment do
     Question.group(:name).each do |s|
@@ -88,40 +89,43 @@ namespace :caceo do
 
   desc "Clean and update Questions, connect to other models"
   task update_questions: :environment do
-    Question.where("field LIKE '%ssbalpri%b%ml'").update_all(question_type: 'multi_select')
+    Question.where("field LIKE 'ssbalpri%b%ml'").update_all(question_type: 'multi_select')
+    # were wrongly marked as comments, and in practice not na_able
+    Question.where("field LIKE 'ssbalpri%b%mc'").update_all(question_type: nil, na_able: true)
     Question.where.not(table_name: "election_profiles").each do |q|
       klass = q.table_name.camelize.singularize.constantize
 
-      sum_able = klass.column_types[q.field].type == :integer && q.question_type != 'multi_select'
+      data_type = klass.column_types[q.field].type.to_s
+      sum_able = data_type == 'integer' && q.question_type != 'multi_select'
       if q.question_type == 'comment'
         na_able = false
       else
         na_able = true
       end
 
-      q.label = format_survey_label( q.label )
-      q.survey = Survey.find_by(table_name: q.table_name)
-      q.sum_able = sum_able
-      q.na_able = na_able
-      q.data_type = klass.column_types[q.field].type.to_s
-      q.na_field = na_able ? "#{q.field}_na" : nil
+      q.label     = format_survey_label( q.label )
+      q.survey    = Survey.find_by(table_name: q.table_name)
+      q.sum_able  = sum_able
+      q.na_able   = na_able
+      q.data_type = data_type
+      q.na_field  = na_able ? "#{q.field}_na" : nil
       q.save!
     end
   end
 
-  desc "Create Options on multi_select Questions"
-  task g_options: :environment do
-    Ssbal::LANGUAGES.each do |lang|
-      Option.find_or_create_by!(name: lang)
-    end
+  # desc "Create Options on multi_select Questions"
+  # task g_options: :environment do
+  #   Ssbal::LANGUAGES.each do |lang|
+  #     Option.find_or_create_by!(name: lang)
+  #   end
 
     
-    ssbal_langs = Option.where(name: Ssbal::LANGUAGES)
+  #   ssbal_langs = Option.where(name: Ssbal::LANGUAGES)
 
-    Question.where('field LIKE "ssbalpri%ml"').each do |q|
-      q.options <<  ssbal_langs
-    end
-  end
+  #   Question.where('field LIKE "ssbalpri%ml"').each do |q|
+  #     q.options <<  ssbal_langs
+  #   end
+  # end
 
   #### SURVEY RESPONSES
   desc "generate survey_responses for each response for election profiles and direct cost surveys"

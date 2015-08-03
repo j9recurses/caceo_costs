@@ -25,14 +25,14 @@ FactoryGirl.define do
   end
 
   factory :election, class:ElectionYear, aliases: [:election_year] do
-    id 2020
-    year 'General Election 2020'
+    id 1
+    year '2014 General Election'
     initialize_with { ElectionYear.find_or_initialize_by(year: year, id: id) }
   end
 
   factory :county do
-    id 59
-    name 'Test County'
+    sequence(:id)   { |n| n }
+    sequence(:name) { |n| "Test#{n} County" }
     initialize_with { County.find_or_initialize_by(id: id, name: name) }
   end
 

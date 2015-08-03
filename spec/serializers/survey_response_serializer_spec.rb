@@ -10,7 +10,7 @@ RSpec.describe 'SurveyReponseSerializer' do
     before(:each) { @relationships = sr_adapter.as_json[:data][:relationships] }
 
     it 'are question and survey_response' do
-      expect(@relationships.keys.sort).to eq([:county, :election])
+      expect(@relationships.keys.sort).to eq([:county, :election, :survey, :values])
     end
 
     it 'include correct question' do
@@ -18,7 +18,8 @@ RSpec.describe 'SurveyReponseSerializer' do
     end
 
     it 'include correct question' do
-      expect(@relationships[:election][:data]).to eq({type:'election_years', id: sr.election.id.to_s})
+      # election_id expected to be ElectionYear#index value
+      expect(@relationships[:election][:data]).to eq({type:'election_years', id: '14'})
     end
   end
 
@@ -43,8 +44,8 @@ RSpec.describe 'SurveyReponseSerializer' do
       @arr_adapter = ActiveModel::Serializer::Adapter::JsonApi.new(arr_serializer)
     end
 
-    it 'lk' do
-      expect(@arr_adapter.as_json).to eq(true)
-    end
+    # it 'readout' do
+    #   expect(@arr_adapter.as_json).to eq(true)
+    # end
   end
 end

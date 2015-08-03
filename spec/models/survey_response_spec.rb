@@ -1,20 +1,49 @@
 require 'rails_helper'
 
 RSpec.describe SurveyResponse do
-  let(:saved_sr_with_values)      { create :survey_response_sal_with_values }
-  let(:saved_ss_sr_with_values) { create :survey_response_ss_with_values }
-  let(:saved_sr_sal_with_values) do
-    sr = create :survey_response_sal_with_values
-    ResponseValue.sync_survey_response sr
-    sr
-  end
+  let(:saved_sr_with_values)     { create :survey_response_sal_with_values }
+  let(:saved_ss_sr_with_values)  { create :survey_response_ss_with_values }
   let(:election) { create :election }
+
+  describe 'total internals' do
+    let(:policy_subsections) { Subsection.where(
+      title: ['Salaries - Types of Staff and Pay', 'Benefits - in Dollars'])
+    }
+
+    describe '#total_relation with salbal (salary total policy)' do
+      it 'returns ids from benefits_dollars and salary_types' do
+        q_ids = Question.where(subsection: policy_subsections, survey_id: 'Salbal').pluck(:id)
+        rv_ids = ResponseValue.where(question_id: q_ids, survey_response_id: saved_sr_with_values.id).pluck(:id)
+
+        expect(saved_sr_with_values.total_relation.pluck(:id).sort).to eq(rv_ids.sort)
+      end
+    end
+
+    describe '::total_relation with salbal (salary total policy)' do
+      it 'returns ids from benefits_dollars and salary_types' do
+        sr1 = FactoryGirl.create :survey_response_sal_with_values
+        sr2 = FactoryGirl.create :survey_response_sal_with_values
+        sr3 = FactoryGirl.create :survey_response_sal_with_values
+        sr_ids = [sr1.id, sr2.id, sr3.id]
+
+        q_ids = Question.where(subsection: policy_subsections, survey_id: 'Salbal').pluck(:id)
+        rv_ids = ResponseValue.where(question_id: q_ids, survey_response_id: sr_ids).pluck(:id)
+
+        expect(SurveyResponse.where(id: sr_ids).total_relation.pluck(:id).sort).to eq(rv_ids.sort)
+      end
+    end
+
+    describe '::value_ids' do
+      # NO TIME TODAY, BUT DO NOT CONSIDER STABLE
+    end
+  end
 
   describe "totaling" do
     let(:int_questions) { Question.where(data_type: 'integer', survey_id: Ssveh) }
     let(:second_saved_sr_with_values) do
-      r = Ssveh.new(county_id: 59, election_year_id: election.id)
-      sr = SurveyResponse.new(response: r, county_id: 59, election: election)
+      c = FactoryGirl.create(:county)
+      r = Ssveh.new(county: c, election_year_id: election.id)
+      sr = SurveyResponse.new(response: r, county_id: c.id, election: election)
       sr.respond(int_questions[2], 100)
       sr.respond(int_questions[1], 900)
       srf = SurveyResponseForm.new(sr)
@@ -24,10 +53,24 @@ RSpec.describe SurveyResponse do
 
     # Unless we switch to a clean db, this can be easily corrupted
     it 'adds up multiple survey_responses' do
-      ResponseValue.sync_survey_response saved_sr_with_values
+      # ResponseValue.sync_survey_response 
+      saved_sr_with_values
       second_saved_sr_with_values
-      expect(SurveyResponse.all.total).to eq(1320)
+      expect(SurveyResponse.all.total).to eq(1000)
+      expect(SurveyResponse.all.total(:inverse)).to eq(1320)
     end
+
+    it 'adds up single record total' do
+      expect(saved_sr_with_values.total).to eq(0)
+      expect(saved_sr_with_values.total(:inverse)).to eq(320)
+
+      tp_q = Subsection.find_by(title: 'Salaries - Types of Staff and Pay').questions.first
+      saved_sr_with_values.respond(tp_q, 9876)
+      saved_sr_with_values.save!
+      ResponseValue.sync_survey_response saved_sr_with_values
+      expect(saved_sr_with_values.total).to eq(9876)
+    end
+
   end
 
   describe "#values_in_subsection" do
@@ -43,7 +86,7 @@ RSpec.describe SurveyResponse do
       surv = Survey.find('Salbal')
       sub = surv.subsections.first
       qs = sub.questions_for(surv)
-      values = saved_sr_sal_with_values.values_in_subsection(sub)
+      values = saved_sr_with_values.values_in_subsection(sub)
 
       expect(values.count).to eq(qs.count)
       expect(Question.where(id: values.pluck(:question_id)).pluck(:id)).to eq(qs.pluck(:id))
@@ -67,8 +110,9 @@ RSpec.describe SurveyResponse do
       end      
 
       it "allows election=" do
-        survey_response.election = ElectionYear.create!(year: 'New Thing')
-        expect(survey_response.election_id).to eq(ElectionYear.last.id)
+        e = ElectionYear.create!(year: 'New Thing')
+        survey_response.election = e
+        expect(survey_response.election).to eq(e)
       end
 
       it "allows response=" do

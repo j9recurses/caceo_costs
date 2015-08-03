@@ -8,6 +8,10 @@
   <%= render partial: "survey_responses/summaries/questions", locals: { values: @survey_response.values } %>
 <% end %>
 
+<% if @survey_response.questions.where(sum_able: true).count > 0 %>
+  <h3>Category Total: <%= @survey_response.total %></h3>
+<% end %>
+
 <div class="end_link">
   <%= link_to 'Edit', edit_survey_response_path( @survey_response.id ) %> |
   <%= link_to 'Delete Survey Response', survey_response_path( @survey_response.id ),

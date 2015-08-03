@@ -12,6 +12,16 @@ class SurveyResponse < ActiveRecord::Base
   validates :county, presence: true
   validates :election, presence: true
   validates :response, presence: true
+  
+  SALARY_TOTALS_SUBSECTIONS = {
+    policy: ['Salaries - Tasks', 'Benefits - in Percent', 'Hours Worked'],
+    inverse: ['Salaries - Types of Staff and Pay', 'Benefits - in Percent', 'Hours Worked']
+  }
+
+  def values_in_subsection(subsection)
+    q_ids = Question.where(subsection: subsection, survey_id: response_type).pluck(:id)
+    values.where(question: q_ids)
+  end
 
   def set_null_fields_to_na
     questions.where(na_able: true).select(:field, :na_field).each do |r|
@@ -34,54 +44,106 @@ class SurveyResponse < ActiveRecord::Base
     end
   end
 
-  def self.value_ids
-    joins(:values)
-    .pluck('response_values.id')
-  end
-
-  def self.total
-    ResponseValue.where(id: value_ids).total
-  end
-
-  def total
-    ResponseValue.where(id: value_ids).total
-  end
+  ###########################Percent Complete
 
   def percent_answered
     values.percent_answered
   end
+  alias_method :percent_complete, :percent_answered
 
   def self.percent_answered
     ResponseValue.where(id: value_ids).percent_answered
   end
 
-  def values_in_subsection(subsection)
-    q_ids = Question.where(subsection: subsection, survey_id: response_type).pluck(:id)
-    values.where(question: q_ids)
+  class << self
+    alias_method :percent_complete, :percent_answered
   end
 
-  # def survey_names
-  #   @survey_names ||= Survey.pluck(:id).map(&:underscore)
-  # end
+  ###########################Totaling
 
-  # ONLY used in forms because Reform does not have good support
-  # for polymorphic associations.
-  # def method_missing(m, *args, &block)
-  #   if m.to_s.match(/(.+)=/) && survey_names.include?($1)
-  #     send(:response=, *args)
-  #   elsif survey_names.include?(m.to_s)
-  #     send(:response)
-  #   else
-  #     super
-  #   end
-  # end
+  def self.value_ids
+    joins(:values)
+    .pluck('response_values.id')
+  end
 
-  # def respond_to_missing?(m, include_private = false)
-  #   m = m.match(/(.+)=/)[1]
-  #   survey_names.include?(m) || super
-  # end
+  # Duplication to work on relations and instances
+  # Strategy passed all the way to ::total_excluded_subsection_ids
+  def self.total(strategy=:policy)
+    case strategy
+    when :policy, :inverse
+      total_relation(strategy).total
+    # when :raw
+    #   value_ids
+    else
+      raise 'Invalid argument'
+    end
+  end
+
+  def total(strategy=:policy)
+    ids = case strategy
+    when :policy, :inverse
+      total_relation(strategy).total
+    # when :raw
+    #   value_ids
+    else
+      raise 'Invalid argument'
+    end
+  end
+
+  def self.total_relation(strategy=:policy)
+    ResponseValue.joins(<<-SQL)
+      INNER JOIN (
+        SELECT id AS sr_id
+        FROM survey_responses
+        WHERE survey_responses.id IN( #{ pluck(:id).inject {|memo, obj| memo.to_s + ', ' + obj.to_s} } )
+      ) AS sr
+      ON sr.sr_id = response_values.survey_response_id
+      AND NOT( response_values.question_id IN(
+        #{ SurveyResponse.total_excluded_question_ids_string(strategy) }
+      ))
+    SQL
+  end
+
+  def total_relation(strategy=:policy)
+    # @total_ids ||= {}
+    # @total_ids[strategy] ||=
+    ResponseValue.where(
+      survey_response_id: self.id
+    ).where.not( response_values: {question_id: 
+      SurveyResponse.total_excluded_question_ids_array(strategy)} 
+    )
+  end
+
+  # total policy
+  def self.total_excluded_question_ids_array(strategy=:policy)
+    # @excluded_question_ids_array ||= {}
+    # @excluded_question_ids_array[strategy] ||= 
+    Question.where(<<-SQL
+      field = 'ssbalpriprou' OR
+      subsection_id IN(#{ SurveyResponse.total_excluded_subsection_ids(strategy) })
+      SQL
+    ).pluck(:id)
+  end
+
+  def self.total_excluded_question_ids_string(strategy=:policy)
+    # @excluded_question_ids_string ||= {}
+    # @excluded_question_ids_string[strategy] ||= 
+    total_excluded_question_ids_array(strategy).
+    inject {|memo, obj| memo.to_s + ', ' + obj.to_s  }
+  end
+
+  def self.total_excluded_subsection_ids(strategy=:policy)
+    Subsection.where( title: SALARY_TOTALS_SUBSECTIONS[strategy] ).
+    pluck(:id).
+    inject {|memo, obj| memo.to_s + ', ' + obj.to_s  }
+  end
+
 private
   def sync_values
     ResponseValue.sync_survey_response self
   end
 end
+
+# module SurveyResponsePolicies
+  # percent_answered and total are identical and can be factored
+# end

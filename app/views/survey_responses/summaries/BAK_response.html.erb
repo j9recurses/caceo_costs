@@ -1,6 +1,7 @@
 <!-- <div class="panel panel-default">
   <div class="panel-heading"><%= @election.year %> <%= @survey.title %></div>
- -->  <% if @survey.subsections.count > 0 %>
+ -->  
+  <% if @survey.subsections.count > 0 %>
     <%= render partial: "survey_responses/summaries/subsection", collection: @survey.subsections %>
   <% end %>
 

@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-  <div class="panel-heading"><%= subsection.title %></div>
+  <h3 class="panel-heading panel-title"><%= subsection.title %></h3>
 
 <table class="table">
   <% subsection.values_for(@survey_response).each do |v| %>
@@ -10,8 +10,8 @@
   <% end %>
   <% if subsection.totalable? %>
     <tr>
-      <td>Subsection Total:</td>
-      <td><%= @survey_response.values_in_subsection(subsection).total %></td>
+      <td><strong>Subsection Total:</strong></td>
+      <td><strong><%= @survey_response.values_in_subsection(subsection).total %></strong></td>
     </tr>
   <% end %>
 </table>
