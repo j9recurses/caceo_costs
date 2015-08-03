@@ -20,20 +20,20 @@ RSpec.describe ResponseValue, type: :model do
     end
   end
 
-  describe '#sync' do
+  describe '#sync!' do
     let(:q) {Question.find_by(field: 'salbaldesign')}
     let(:sr_salbal) { build :survey_response_sal }
     let(:rv) {ResponseValue.new(survey_response: sr_salbal, question: q)}
 
     it 'syncs n/a' do
       sr_salbal.respond(q, na: true)
-      rv.sync
+      rv.sync!
       expect(rv.na_value).to be true 
     end
 
     it 'syncs value' do
       sr_salbal.respond(q, 808)
-      rv.sync
+      rv.sync!
       expect(rv.na_value).to be false
       expect(rv.integer_value).to be 808
     end

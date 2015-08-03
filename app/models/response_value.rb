@@ -26,7 +26,7 @@ class ResponseValue < ActiveRecord::Base
     survey_response.response
   end
 
-  def sync
+  def sync!
     raise 'SurveyResponse, Question not associated' unless survey_response && question
     set_na_value
     set_data_type_value
@@ -43,7 +43,7 @@ class ResponseValue < ActiveRecord::Base
       survey_response.questions.each do |q|
         v = find_by(survey_response: survey_response, question: q)
         v ||= new(  survey_response: survey_response, question: q)
-        v.sync
+        v.sync! # responsible for throwing error
       end
     end
     true

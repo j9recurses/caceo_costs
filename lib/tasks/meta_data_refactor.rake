@@ -162,6 +162,15 @@ namespace :caceo do
     end
   end
 
+  desc "generate response_values for each survey_response"
+  task make_response_values: :environment do
+    SurveyResponse.transaction do
+      SurveyResponse.all.each do |sr|
+        ResponseValue.sync_survey_response(sr)
+      end
+    end
+  end
+
   def format_survey_label(text)
     if text.nil?
       return text
