@@ -1,8 +1,8 @@
 class Salbc < ActiveRecord::Base
  include MultiStepModel
-  has_one :year_element, :as =>:element, dependent: :destroy
-  accepts_nested_attributes_for :year_element
-  has_one :election_year, :through => :year_elements
+  # has_one :year_element, :as =>:element, dependent: :destroy
+  # accepts_nested_attributes_for :year_element
+  # has_one :election_year, :through => :year_elements
   validates :county_id, presence: true
   belongs_to :county, inverse_of: :salbcs
   validates :election_year_id, presence: true
