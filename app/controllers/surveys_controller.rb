@@ -25,6 +25,11 @@ class SurveysController < ApplicationController
           {survey: survey, survey_response: sr }
         end
 
+        @ep_sr = SurveyResponse.find_by(response_type: 'ElectionProfile',
+          county: current_user.county,
+          election_id: params[:election_id])
+        @ep_hash = [{ survey: Survey.find('ElectionProfile'), survey_response: @ep_sr ? @ep_sr : nil }]
+
         @srs = SurveyResponse.where(
           county: current_user.county,
           election_id: params[:election_id])

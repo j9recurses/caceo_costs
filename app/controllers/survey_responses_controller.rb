@@ -81,6 +81,7 @@ class SurveyResponsesController < ApplicationController
   end
 
   def merge_session
+    session[:survey_response] ||= {}
     session[:survey_response].deep_merge!( params[:survey_response] )
   end
 
@@ -95,7 +96,7 @@ class SurveyResponsesController < ApplicationController
           flash.now['success'] = "Your progress has been saved."
           @response_form.step_forward
         end
-      elsif params[:save_and_exit] || @response_form.last_step?
+      elsif params[:save_and_exit] || @response_form.last_step? || params[:commit]
         if @response_form.submit
           flash['success'] = "Your response has been saved successfully."
           session[:survey_response] = nil

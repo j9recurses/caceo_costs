@@ -24,7 +24,9 @@
     </div>
   </div>
 
-  <div class="survey-index-total">
-    <%= total ? "$#{number_with_delimiter total}" : 'Not Started'%>
-  </div>
+  <% unless status[:survey].id == 'ElectionProfile' %>
+    <div class="survey-index-total">
+      <%= total ? "$#{number_with_delimiter total}" : 'Not Started'%>
+    </div>
+  <% end %>
 </div>

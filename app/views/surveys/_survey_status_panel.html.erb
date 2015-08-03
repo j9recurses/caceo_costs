@@ -3,17 +3,26 @@
     <div class="row">
       <h3 class="survey-index-title"><%= survey_hash[0][:survey].category %></h3>
       <h3 class="survey-index-progress">Progress Completing Survey</h3>
-      <h3 class="survey-index-total">Totals</h3>
+      <h3 class="survey-index-total">
+        <% unless survey_hash[0][:survey].id == 'ElectionProfile' %>
+          Totals
+        <% end %>
+      </h3>
+<!--       < class="survey-index-na"></h3>
+ -->    
     </div>
   </div>
   <div class="panel-body">
     <%= render partial: 'status', collection: survey_hash %>
   </div>
-  <div class="panel-footer">
-    <div class="row">
-      <div class="survey-index-title show_item_title_total">Total Direct Costs from Salary and Benefits</div>
-      <div class="survey-index-progress"></div>
-      <div class="survey-index-total show_item_total">$<%=number_with_delimiter panel_total %></div>
+
+  <% if panel_total %> 
+    <div class="panel-footer">
+      <div class="row">
+        <div class="survey-index-title show_item_title_total">Total Costs</div>
+        <div class="survey-index-progress"></div>
+        <div class="survey-index-total show_item_total">$<%=number_with_delimiter panel_total %></div>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>
