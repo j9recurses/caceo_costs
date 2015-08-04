@@ -7,8 +7,6 @@ class ElectionTechnologiesController < ApplicationController
       @county_name  = County.where(id: @user[:county_id]).pluck(:name)
   end
 
-
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def election_technology_params
       params[:election_technology]

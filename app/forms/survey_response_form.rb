@@ -18,12 +18,27 @@ class SurveyResponseForm < Reform::Form
     sync
     response.model.county_id        = model.county_id
     response.model.election_year_id = model.election_id
-    if SurveyResponse.transaction do
-      response.model.save!
-      model.response = response.model
-      model.save!
-      ResponseValue.sync_survey_response model
-    end then true else false end
+
+      # if SurveyResponse.transaction do
+      #   response.model.save!
+      #   model.response = response.model
+      #   model.save!
+      #   ResponseValue.sync_survey_response model
+      # end then true else false end
+
+    begin
+      SurveyResponse.transaction do
+        response.model.save!
+        model.response = response.model
+        model.save!
+        ResponseValue.sync_survey_response model
+      end
+    rescue
+     # ActiveRecord::RecordInvalid
+      false
+    else
+      true
+    end
   end
 
   def process(params)

@@ -1,2 +1,0 @@
-class PostagesController < GeneralSurveysController
-end

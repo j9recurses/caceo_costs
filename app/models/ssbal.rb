@@ -1,26 +1,26 @@
 class Ssbal < ActiveRecord::Base
   include Responseable
-  validates :ssballayout, :ssbaltransl, :ssbalpri, :ssbalprisb, 
-    :ssbalprisben, :ssbalprisbch, :ssbalprisbko, :ssbalprisbsp, 
-    :ssbalrpisbvi, :ssbalprisbja, :ssbalprisbta, :ssbalprisbkh, 
-    :ssbalprisbhi, :ssbalprisbth, :ssbalprisbfi, :ssbalpriob, 
-    :ssbalprioben, :ssbalpriobch, :ssbalpriobko, :ssbalpriobsp, 
-    :ssbalpriobvi, :ssbalpriobja, :ssbalpriobta, :ssbalpriobkh, 
-    :ssbalpriobhi, :ssbalpriobth, :ssbalpriobfi, :ssbalprivbm, 
-    :ssbalpriuo, :ssbalpriprot, :ssbalpriship, :ssbalprioth, 
-    numericality: { only_integer: true, 
-      :greater_than_or_equal_to => 0, 
-      :less_than_or_equal_to  => 500000000, 
-      :allow_nil => true, 
-      :allow_blank => false, 
-      message: " Entry is not valid. Please check your entry" }
+  # validates :ssballayout, :ssbaltransl, :ssbalpri, :ssbalprisb, 
+  #   :ssbalprisben, :ssbalprisbch, :ssbalprisbko, :ssbalprisbsp, 
+  #   :ssbalrpisbvi, :ssbalprisbja, :ssbalprisbta, :ssbalprisbkh, 
+  #   :ssbalprisbhi, :ssbalprisbth, :ssbalprisbfi, :ssbalpriob, 
+  #   :ssbalprioben, :ssbalpriobch, :ssbalpriobko, :ssbalpriobsp, 
+  #   :ssbalpriobvi, :ssbalpriobja, :ssbalpriobta, :ssbalpriobkh, 
+  #   :ssbalpriobhi, :ssbalpriobth, :ssbalpriobfi, :ssbalprivbm, 
+  #   :ssbalpriuo, :ssbalpriprot, :ssbalpriship, :ssbalprioth, 
+  #   numericality: { only_integer: true, 
+  #     :greater_than_or_equal_to => 0, 
+  #     :less_than_or_equal_to  => 500000000, 
+  #     :allow_nil => true, 
+  #     :allow_blank => false, 
+  #     message: " Entry is not valid. Please check your entry" }
 
-  validates :ssbalpriprou, numericality: { 
-    less_than_or_equal_to: 9.99, 
-    greater_than_or_equal_to: 0.01, 
-    :allow_nil => true, 
-    :allow_blank => false, 
-    message: 'Unit price expected to be between 9.99 and 0.01' }
+  # validates :ssbalpriprou, numericality: { 
+  #   less_than_or_equal_to: 9.99, 
+  #   greater_than_or_equal_to: 0.01, 
+  #   :allow_nil => true, 
+  #   :allow_blank => false, 
+  #   message: 'Unit price expected to be between 9.99 and 0.01' }
 
   LANGUAGES = ['English', 'Spanish', 'Tagalog', 'Chinese', 'Vietnamese', 'Korean', 'Japanese', 'Hindi', 'Khmer', 'Thai']
   SSBALPRISB1ML = SSBALPRISB2ML = SSBALPRISB3ML =

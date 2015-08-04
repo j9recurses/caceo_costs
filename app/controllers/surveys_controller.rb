@@ -4,6 +4,11 @@ class SurveysController < ApplicationController
       format.json { render json: Survey.all }
       format.html do
         @election_year = ElectionYear.find(params[:election_id])
+        @srs = SurveyResponse.where(
+          county: current_user.county,
+          election_id: params[:election_id]
+        )
+        session[:election_id] = params[:election_id]
 
         @salary_surveys = Survey.where(category: "Salaries")
         @salary_srs = SurveyResponse.where(response_type: @salary_surveys.pluck(:id), 
@@ -29,11 +34,6 @@ class SurveysController < ApplicationController
           county: current_user.county,
           election_id: params[:election_id])
         @ep_hash = [{ survey: Survey.find('ElectionProfile'), survey_response: @ep_sr ? @ep_sr : nil }]
-
-        @srs = SurveyResponse.where(
-          county: current_user.county,
-          election_id: params[:election_id])
-        session[:election_id] = params[:election_id]
       end
     end
   end

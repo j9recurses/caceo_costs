@@ -1,9 +1,6 @@
 class SurveyResponsesController < ApplicationController
   before_action :new_form, only: [:new, :create]
   before_action :get_form, only: [:edit, :update, :destroy]
-  # before_action :setup_session, only: [:new, :edit]
-  # before_action :merge_session, only: [:create, :update]
-  # before_action :wizard_action, only: [:create, :update]
 
   def index
     respond_to do |format|
@@ -36,8 +33,6 @@ class SurveyResponsesController < ApplicationController
 
   def create
     wizard_action
-    # puts @response_form.inspect
-    # puts @survey_response.election.inspect
     if @response_form.model.new_record?
       render :new
     else
@@ -56,13 +51,6 @@ class SurveyResponsesController < ApplicationController
   end
 
   private
-  def current_resource
-    @current_resource ||= SurveyResponse.find(params[:id]) if params[:id]
-  end
-
-  def current_session
-    params['survey_response']
-  end
 
   def new_form
     @response = params[:survey_id].constantize.new(
@@ -82,10 +70,6 @@ class SurveyResponsesController < ApplicationController
     @survey = @survey_response.survey
     @response_form.current_step = session[:survey_response][:current_step] if session[:survey_response]
   end
-
-  # def setup_session
-  #   session[:survey_response] = {}
-  # end
 
   def wizard_action
     session[:survey_response] ||= {}
@@ -118,5 +102,13 @@ class SurveyResponsesController < ApplicationController
       end
     end
     @response_form.sync
+  end
+
+  def current_resource
+    @current_resource ||= SurveyResponse.find(params[:id]) if params[:id]
+  end
+
+  def current_session
+    params['survey_response']
   end
 end

@@ -1,3 +1,14 @@
+GIT
+  remote: git@github.com:sethdn/reform.git
+  revision: 7b470fca3a7260cc17794300c11465b4fa9b2316
+  branch: anonymous-form-names
+  specs:
+    reform (1.2.6)
+      activemodel
+      disposable (~> 0.0.5)
+      representable (~> 2.1.0)
+      uber (~> 0.0.11)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -174,11 +185,6 @@ GEM
     rdoc (4.1.1)
       json (~> 1.4)
     ref (1.0.5)
-    reform (1.2.6)
-      activemodel
-      disposable (~> 0.0.5)
-      representable (~> 2.1.0)
-      uber (~> 0.0.11)
     representable (2.1.8)
       multi_json
       nokogiri
@@ -275,7 +281,7 @@ DEPENDENCIES
   rails (~> 4.2.1)
   rb-fsevent
   rb-inotify
-  reform (= 1.2.6)
+  reform!
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc
