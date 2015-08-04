@@ -1,5 +1,5 @@
 <% if @response_form.errors.any? %>
-  <div id="error_explanation" style="width:70%;">
+  <div id="error_explanation">
     <ul>
       <% @response_form.response.errors.each do |field, msg| %>
         <li><%= "Your response to #{Question.find_by(field: field.to_s).label} #{msg}" %></li>

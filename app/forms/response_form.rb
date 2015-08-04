@@ -13,10 +13,10 @@ class ResponseFormBuilder
     @klass.class_eval <<-RUBY
       property :county_id
       property :election_year_id
-      #{property_list(@survey_id)}
+
+      #{properties_with_validations(@survey_id)}
       #{bit_mask_property_list}
 
-      #{validation_list(@survey_id)}
       def self.bit_mask_fields() #{ bit_mask_fields } end
       def self.survey_id() #{ @survey_id } end
       include BitMaskable
@@ -27,11 +27,9 @@ class ResponseFormBuilder
   VALIDATE = {
     'integer' => <<-RUBY,
       numericality: { only_integer: true,  greater_than_or_equal_to: 0, less_than: 2147483647, allow_blank: true }
-      # , allow_blank: false
       RUBY
     'decimal' => <<-RUBY,
       numericality: { less_than_or_equal_to: 9.99, greater_than_or_equal_to: 0.01, allow_blank: true }
-      # , allow_blank: false
       RUBY
     'text'    => nil,
     'string'  => nil,
@@ -43,6 +41,23 @@ class ResponseFormBuilder
     new(response_inst).klass.new(response_inst)
   end
 
+  def properties_with_validations(survey_name)
+    list = ''
+
+    Survey.find(survey_name).questions.each do |q|
+      prop = "property :#{q.field}\n"
+      na = q.na_able? ? "property :#{q.na_field}\n" : ''
+      validation = if VALIDATE[q.data_type]
+        "validates :#{q.field}, #{VALIDATE[q.data_type]}\n"
+      else '' end
+
+      list << prop << na << validation
+    end
+
+    list
+  end
+
+
   # BUILDER Instance method
   def property_list(survey_name)
     @properties = ""
@@ -53,6 +68,16 @@ class ResponseFormBuilder
       end
     end
     @properties
+  end
+
+  # BUILDER Instance method
+  def bit_mask_property_list
+    bit_mask_properties = ""
+    bit_mask_fields.each do |field|
+      prop = "property :#{field}_multi_select, writeable: false \n"
+      bit_mask_properties = bit_mask_properties + prop
+    end
+    bit_mask_properties
   end
 
   def validation_list(survey_name)
@@ -72,15 +97,5 @@ class ResponseFormBuilder
       survey_id: @survey_id, 
       question_type: 'multi_select'
     ).pluck(:field)
-  end
-
-  # BUILDER Instance method
-  def bit_mask_property_list
-    bit_mask_properties = ""
-    bit_mask_fields.each do |field|
-      prop = "property :#{field}_multi_select, writeable: false \n"
-      bit_mask_properties = bit_mask_properties + prop
-    end
-    bit_mask_properties
   end
 end

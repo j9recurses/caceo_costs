@@ -19,13 +19,6 @@ class SurveyResponseForm < Reform::Form
     response.model.county_id        = model.county_id
     response.model.election_year_id = model.election_id
 
-      # if SurveyResponse.transaction do
-      #   response.model.save!
-      #   model.response = response.model
-      #   model.save!
-      #   ResponseValue.sync_survey_response model
-      # end then true else false end
-
     begin
       SurveyResponse.transaction do
         response.model.save!
@@ -34,7 +27,6 @@ class SurveyResponseForm < Reform::Form
         ResponseValue.sync_survey_response model
       end
     rescue
-     # ActiveRecord::RecordInvalid
       false
     else
       true
@@ -51,8 +43,8 @@ class SurveyResponseForm < Reform::Form
       survey_id: response.model.class, na_able: true).pluck(:field, :na_field)
     na_qs.each do |q|
       val = response.send(q[0])
-      if val.blank? && !val==false
-        response.send("#{q[1]}=", true)
+      if val.blank? && !(val==false)
+        response.validate(q[1] => true)
       end
     end
     self
