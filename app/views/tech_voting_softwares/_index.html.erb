@@ -1,11 +1,11 @@
 <% @tech_voting_softwares.each do |tech_voting_software| %>
   <tr>
     <td><%= tech_voting_software.software_item  %></td>
-    <td><%= tech_voting_software.purchase_dt%></td>
-        <td><%= tech_voting_software.purchase_price_hardware%></td>
-        <td><%= tech_voting_software.purchase_price_software %></td>
-            <td><%= tech_voting_software.mat_charges%></td>
-         <td><%= tech_voting_software.labor_costs%></td>
+    <td><%= tech_voting_software.purchase_dt    %></td>
+    <td><%= tech_voting_software.purchase_price_hardware  %></td>
+    <td><%= tech_voting_software.purchase_price_software  %></td>
+    <td><%= tech_voting_software.mat_charges  %></td>
+    <td><%= tech_voting_software.labor_costs  %></td>
 
     <td><%= link_to "Edit", edit_tech_voting_software_path(tech_voting_software), remote: true, class: "btn" %></td>
     <td><%= link_to "Delete", tech_voting_software_delete_path(tech_voting_software), remote: true, class: "btn btn-danger" %></td>

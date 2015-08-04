@@ -1,7 +1,7 @@
 class SurveyResponsesController < ApplicationController
   before_action :new_form, only: [:new, :create]
   before_action :get_form, only: [:edit, :update, :destroy]
-  before_action :setup_session, only: [:new, :edit]
+  # before_action :setup_session, only: [:new, :edit]
   # before_action :merge_session, only: [:create, :update]
   # before_action :wizard_action, only: [:create, :update]
 
@@ -26,7 +26,12 @@ class SurveyResponsesController < ApplicationController
     @survey = @survey_response.survey
   end
 
+  def new
+    session[:survey_response] = {}
+  end
+
   def edit
+    session[:survey_response] = {}
   end
 
   def create
@@ -78,9 +83,9 @@ class SurveyResponsesController < ApplicationController
     @response_form.current_step = session[:survey_response][:current_step] if session[:survey_response]
   end
 
-  def setup_session
-    session[:survey_response] = {}
-  end
+  # def setup_session
+  #   session[:survey_response] = {}
+  # end
 
   def wizard_action
     session[:survey_response] ||= {}

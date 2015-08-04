@@ -6,7 +6,7 @@ class TechVotingMachinesController < ApplicationController
   # GET /tech_voting_machines.json
   def index
     @county_name  = County.where(id: @user[:county_id]).pluck(:name)
-    @tech_voting_machines = TechVotingMachine.where(county: @user[:county_id])
+    @tech_voting_machines = TechVotingMachine.where(county_id: @user[:county_id])
   end
 
   # GET /tech_voting_machines/1
@@ -28,14 +28,14 @@ class TechVotingMachinesController < ApplicationController
   # POST /tech_voting_machines
   # POST /tech_voting_machines.json
   def create
-    @tech_voting_machines = TechVotingMachine.where(county: @user[:county_id])
+    @tech_voting_machines = TechVotingMachine.where(county_id: @user[:county_id])
     @tech_voting_machine = TechVotingMachine.create(tech_voting_machine_params)
   end
 
   # PATCH/PUT /tech_voting_machines/1
   # PATCH/PUT /tech_voting_machines/1.json
   def update
-       @tech_voting_machines = TechVotingMachine.where(county: @user[:county_id])
+      @tech_voting_machines = TechVotingMachine.where(county_id: @user[:county_id])
       @tech_voting_machine.update(tech_voting_machine_params)
   end
 
@@ -44,14 +44,23 @@ class TechVotingMachinesController < ApplicationController
   end
 
   def destroy
-    @tech_voting_machines = TechVotingMachine.where(county: @user[:county_id])
+    @tech_voting_machines = TechVotingMachine.where(county_id: @user[:county_id])
     @tech_voting_machine = TechVotingMachine.find(params[:id])
    @tech_voting_machine.destroy
   end
 
 private
+  # for some reason delete has its id in params[tech_voting_machine_id]
   def current_resource
-    @current_resource ||= TechVotingMachine.find(params[:id]) if params[:id]
+    @current_resource ||= if params[:id]
+      TechVotingMachine.find(params[:id])
+    elsif params[:tech_voting_machine_id]
+      TechVotingMachine.find(params[:tech_voting_machine_id])
+    end
+  end
+
+  def current_session
+    params['tech_voting_machine']
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -61,6 +70,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def tech_voting_machine_params
-    params.require(:tech_voting_machine).permit(:county, :purchase_price_services, :voting_equip_type, :purchase_dt, :equip_make, :purchase_price, :quantity, :offset_funds_src, :offset_amount)
+    params.require(:tech_voting_machine).permit(:county_id, :purchase_price_services, :voting_equip_type, :purchase_dt, :equip_make, :purchase_price, :quantity, :offset_funds_src, :offset_amount)
   end
 end
