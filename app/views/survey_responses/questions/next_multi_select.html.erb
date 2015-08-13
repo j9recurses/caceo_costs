@@ -1,0 +1,4 @@
+<div class="caceo_checkbox_group">
+  <% langs = "#{question.survey_id}::#{question.field.upcase}".constantize %>
+  <%= f.input_field "#{question.field}_multi_select".to_sym, collection: langs, as: :check_boxes %>
+</div>

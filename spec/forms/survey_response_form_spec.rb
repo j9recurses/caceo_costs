@@ -42,11 +42,24 @@ RSpec.describe SurveyResponseForm do
 
     describe 'filled in manually' do
       it 'persists' do
-        ssveh_param_hash = { county_id: 59, election_id: election.id, 
-          response_attributes: { ssvehrent: 120, ssvehfuel: 123, county_id: 59, election_year_id: election.id} }
-        expect(sr_form.process(ssveh_param_hash)).to be true
+        ssveh_param_hash = { 
+        "county_id" => "59", "election_id" => "#{election.id}", 
+          "response_attributes" => { "ssvehrent"=>"120", "ssvehfuel"=>"123" } }
+        expect(sr_form.validate(ssveh_param_hash)).to be true
         expect(sr_form.response.valid?).to be true
-        expect(sr_form.submit).to be true
+
+        sr_form.sync
+        expect(sr_form.model.county_id).to eq(59)
+        expect(sr_form.response.model.county_id).to eq(59)
+        expect(sr_form.model.save).to eq(false)
+        expect(sr_form.model.errors).to eq(true)
+
+
+
+        # expect(sr_form.errors.messages).to eq({})
+        # expect(sr_form.submit).to eq(false)
+        #         expect(sr_form.errors.messages).to eq({})
+
       end
     end
   end

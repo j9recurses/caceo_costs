@@ -1,26 +1,5 @@
 class ElectionProfile< ActiveRecord::Base
   include Responseable
-  belongs_to :county, inverse_of: :election_profiles
-  belongs_to :election_year
-  validates  :epppbalpap, :epppbalaccsd, :eprv, :eppploc,:epprecwpp,
-    :epbaltype,:epbalsampvip,:epvipinsrt,:epbalofficl,:epvbmmail,
-    :epvbmmailprm,:epvbmmailmbp,:epvbmmailuo,:epvbmotc,:epvbmret,
-    :epvbmretprm,:epvbmretmbp,:epvbmretuo,:epvbmundel,:epvbmchal,
-    :epvbmprovc,:epvbmprovnc,:epcand,:epcandfsc,:epcandcd,:epcandwi,
-    :epcandwifsc,:epcandwicd,:epmeasr,:epmeasrfsc,:epmeasrcd,
-    :eptotindirc,:eptotelectc,:eptotbilled,:eptotcounty,:eptotsb90c,
-    :eptotsb90r, numericality: { only_integer: true, 
-      :greater_than_or_equal_to => 0, 
-      :less_than_or_equal_to  => 1000000000,
-      :allow_nil => true, 
-      :allow_blank => false, 
-      message: " Entry is not valid. Please check your entry"  }
-  validates  :epicrp, numericality: { 
-    less_than_or_equal_to: 9999.99, 
-    greater_than_or_equal_to: 0.01, 
-    :allow_nil => true, 
-    :allow_blank => false,  
-    message: 'Indirect cost rate is expected to be between 9999.99 and 0.01' }
 
   EPLANGVRA = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
     'Tagalog (Filipino)', 'Asian Indian (Hindi)',
@@ -30,17 +9,17 @@ class ElectionProfile< ActiveRecord::Base
   EPLANGCAEC = [ 'Spanish', 'Chinese', 'Vietnamese', 'Japanese', 'Korean', 
     'Tagalog (Filipino)', 'Hindi', 'Khmer', 'Thai' ]
 
-  def eplangcaec_multi_select=(languages)
-    self.eplangcaec = (languages & EPLANGCAEC).map { |l| 2**EPLANGCAEC.index(l) }.sum
-  end
+  # def eplangcaec_multi_select=(languages)
+  #   self.eplangcaec = (languages & EPLANGCAEC).map { |l| 2**EPLANGCAEC.index(l) }.sum
+  # end
 
   def eplangcaec_multi_select
     EPLANGCAEC.reject { |l| ((eplangcaec || 0) & 2**EPLANGCAEC.index(l)).zero? }
   end
 
-  def eplangvra_multi_select=(languages)
-    self.eplangvra = (languages & EPLANGVRA).map { |l| 2**EPLANGVRA.index(l) }.sum
-  end
+  # def eplangvra_multi_select=(languages)
+  #   self.eplangvra = (languages & EPLANGVRA).map { |l| 2**EPLANGVRA.index(l) }.sum
+  # end
 
   def eplangvra_multi_select
     EPLANGVRA.reject { |l| ((eplangvra || 0) & 2**EPLANGVRA.index(l)).zero? }

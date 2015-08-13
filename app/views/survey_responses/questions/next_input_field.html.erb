@@ -1,0 +1,24 @@
+<div class="form-group">
+  <%= f.label( question.field, class: 'control-label caceo-form-label' ) do %>
+    <%= question.label %>
+    <span class="info">
+      <a href= <%= "##{question.field}_modal" %> data-toggle='modal'>(what's this?)</a>
+    </span>
+  <% end %>
+
+  <div class="caceo-form-input input-group survey-question">
+    <% if question.na_able? %>
+      <label class="input-group-addon">
+        <%= f.check_box "#{question.field}_na", class: "na-checkbox" %> N/A
+      </label>
+    <% end %>
+
+      <% if q.multi_select? %>
+        <%= render partial: "survey_responses/questions/multi_select", locals: { question: q, f: f}  %>
+      <% else %>
+        <%= render partial: "survey_responses/questions/#{q.data_type}", locals: { question: q, f: f}  %>
+      <% end %>
+
+    <%= f.input_field question.field, boolean_style: :inline, class: "form-control value-field" %>
+  </div>
+</div>

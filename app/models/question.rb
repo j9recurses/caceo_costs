@@ -6,6 +6,7 @@ class Question < ActiveRecord::Base
   has_many :options, inverse_of: :question
   has_many :values, inverse_of: :question, class_name: 'ResponseValue'
 
+  scope :multi_select, -> { where(question_type: 'multi_select') }
 
   def multi_select?
     question_type == 'multi_select'

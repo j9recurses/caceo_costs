@@ -33,11 +33,6 @@ class SurveyResponseForm < Reform::Form
     end
   end
 
-  def process(params)
-    params = response.process_bit_masks(params)
-    validate(params)
-  end
-
   def empty_na
     na_qs = Question.where(
       survey_id: response.model.class, na_able: true).pluck(:field, :na_field)

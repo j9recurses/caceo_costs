@@ -74,7 +74,7 @@ class SurveyResponsesController < ApplicationController
   def wizard_action
     session[:survey_response] ||= {}
     session[:survey_response].deep_merge!( params[:survey_response] ) if params[:survey_response]
-    if @response_form.process( session[:survey_response] )
+    if @response_form.validate( session[:survey_response] )
       if params[:back_button]
         @response_form.step_back
       elsif params[:next_button]

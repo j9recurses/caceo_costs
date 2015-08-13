@@ -67,6 +67,16 @@ FactoryGirl.define do
     end
   end
 
+  factory :ssbal, class: Salbal do
+    county_id 59
+    election_year_id 2020
+  end
+
+  factory :ep, class: ElectionProfile do
+    county_id 59
+    election_year_id 2020
+  end
+
   factory :sal_response, class: Salbal do
     county_id 59
     election_year_id 2020
