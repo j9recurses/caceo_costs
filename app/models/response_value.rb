@@ -102,7 +102,7 @@ class ResponseValue < ActiveRecord::Base
     if question.na_able?
       na_value ? "N/A" : send(value_field)
     elsif question.multi_select?
-      v.survey_response.response.send(v.question.field + '_multi_select').to_s.gsub("\"", '').chop.gsub('[', '')
+      survey_response.response.send(question.field + '_multi_select').to_s.gsub("\"", '').chop.gsub('[', '')
     else
       send value_field
     end
