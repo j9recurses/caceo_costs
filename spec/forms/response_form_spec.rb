@@ -34,7 +34,6 @@ RSpec.describe ResponseForm do
       expect(rf.eplangvra_multi_select).to eq(["Vietnamese", "Japanese", "Korean", "Asian Indian (Hindi)"])
     end
 
-
     it 'persists bit value' do
       ep_rf.validate({'eplangvra_multi_select' => ["Vietnamese", "Japanese", "Korean", "Asian Indian (Hindi)", ""]})
       ep_rf.sync

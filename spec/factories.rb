@@ -1,4 +1,5 @@
 load './app/models/response_value.rb'
+require 'election_year'
 
 FactoryGirl.define do
   factory :user do
@@ -25,9 +26,9 @@ FactoryGirl.define do
   end
 
   factory :election, class:ElectionYear, aliases: [:election_year] do
-    id 1
-    year '2014 General Election'
-    initialize_with { ElectionYear.find_or_initialize_by(year: year, id: id) }
+    sequence(:id)   { |n| n }
+    sequence(:year) { |n| "#{(2000 + n).to_s} General Election" }
+    # initialize_with { ElectionYear.find_or_initialize_by(year: year, id: id) }
   end
 
   factory :county do
@@ -58,7 +59,7 @@ FactoryGirl.define do
 
   factory :ss_response, class: Ssveh do
     county_id 59
-    election_year_id 2020
+    election_year
 
     factory :ss_response_with_values do
       ssvehfuel 135
@@ -69,17 +70,17 @@ FactoryGirl.define do
 
   factory :ssbal, class: Salbal do
     county_id 59
-    election_year_id 2020
+    election_year
   end
 
   factory :ep, class: ElectionProfile do
     county_id 59
-    election_year_id 2020
+    election_year
   end
 
   factory :sal_response, class: Salbal do
     county_id 59
-    election_year_id 2020
+    election_year
     factory :sal_response_with_values do
       salbaldesign 135
       salbaltrans 20
@@ -89,7 +90,7 @@ FactoryGirl.define do
 
   factory :ep_response, class: ElectionProfile do
     county_id 59
-    election_year_id 2020
+    election_year
     factory :ep_response_with_values do
       epppbalpapar true
       eprv 20

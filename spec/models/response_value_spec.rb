@@ -1,11 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ResponseValue, type: :model do
-  let(:survey_response) do
-     sr = FactoryGirl.create(:survey_response_ss_with_values)
-     ResponseValue.sync_survey_response sr
-     sr
-  end
+  let(:survey_response) { create(:survey_response_ss_with_values) }
+  let(:ep_sr) { build(:survey_response_ep) }
   let(:empty_sr) { create :survey_response_ss }
 
   describe '::total' do
@@ -99,7 +96,18 @@ RSpec.describe ResponseValue, type: :model do
       v = survey_response.values.first
       v.na_value = true
       v.save!
-      expect(v.value).to eq('NOT APPLICABLE')
+      expect(v.value).to eq('N/A')
+    end
+
+    it 'returns text list of selections for multi_select' do
+      ep_sr.respond(:eplangvra, 92)
+      ep_sr.save!
+      ResponseValue.sync_survey_response ep_sr
+
+
+      rv = ResponseValue.find_by(survey_response: ep_sr, question: Question.find_by(field: 'eplangvra'))
+      expect(rv.question.multi_select?).to eq(true)
+      expect(rv.value).to eq('Vietnamese, Japanese, Korean, Asian Indian (Hindi)')
     end
   end
 end

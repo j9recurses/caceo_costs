@@ -1,7 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'SurveyReponseSerializer' do
-  let(:sr)  { create :survey_response }
+  let(:sr) do
+    sr = create(:survey_response)
+    sr.election.year = '2014 General Election'
+    sr.election.save!
+    sr
+  end
+
   let(:q)   { Question.find_by(field: 'salbaldesign') }
   let(:sr_serializer) { SurveyResponseSerializer.new(sr) }
   let(:sr_adapter)  { ActiveModel::Serializer::Adapter.create(sr_serializer) }
@@ -17,7 +23,7 @@ RSpec.describe 'SurveyReponseSerializer' do
       expect(@relationships[:county][:data]).to eq({type:'counties', id: sr.county.id.to_s})
     end
 
-    it 'include correct question' do
+    it 'include correct election index id' do
       # election_id expected to be ElectionYear#index value
       expect(@relationships[:election][:data]).to eq({type:'election_years', id: '14'})
     end

@@ -37,6 +37,8 @@ class SurveyResponse < ActiveRecord::Base
       response.send(question.field + '=', value)
     when String
       response.send(question + '=', value)
+    when Symbol
+      response.send(question.to_s + '=', value)
     end
 
     if na
