@@ -3,8 +3,7 @@ module BitMaskable
   included do
     questions.multi_select.each do |q|
       options = "#{q.survey_id}::#{q.field.upcase}".constantize
-      # Form Instance method used to populate the virtual fields
-      # How do I ensure that forms already have their fields?
+
       define_method( "#{q.field}_multi_select" ) do
         options.reject { |l| ( ( self.send( q.field ) || 0) & 2**options.index(l)).zero? }
       end

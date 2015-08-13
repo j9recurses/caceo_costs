@@ -16,17 +16,14 @@ class ResponseFormBuilder
 
       #{properties_with_validations(@survey_id)}
       #{bit_mask_property_list}
-      
-      # for bit mask mixins
-      def self.questions
-        @questions ||= Question.where(survey_id: #{ @survey_id })
-      end
-      include BitMaskable
-      ## include BitMaskReadable
-      ## include BitMaskWriteable
     RUBY
   end
   attr_accessor :klass, :survey_id
+
+  # BUILDER Class method
+  def self.build(response_inst)
+    new(response_inst).klass.new(response_inst)
+  end
 
   TYPE_VALIDATE = {
     'integer' => <<-RUBY,
@@ -46,42 +43,39 @@ class ResponseFormBuilder
     RUBY
   }
 
-  # BUILDER Class method
-  def self.build(response_inst)
-    new(response_inst).klass.new(response_inst)
-  end
-
   def properties_with_validations(survey_name)
-    list = ''
-    Survey.find(survey_name).questions.each do |q|
-      prop = "property :#{q.field}\n"
-      na = q.na_able? ? "property :#{q.na_field}\n" : ''
-      validation = if FIELD_VALIDATE[q.field]
-        "validates :#{q.field}, #{FIELD_VALIDATE[q.field]}\n"
-      elsif TYPE_VALIDATE[q.data_type]
-        "validates :#{q.field}, #{TYPE_VALIDATE[q.data_type]}\n"
-      else '' end
-
-      list << prop << na << validation
-    end
-    list
+    survey_questions.no_mask.map { |q|
+      "property :#{q.field}\n" +
+      property_na(q) +
+      property_validation(q)
+    }.join
   end
 
   def bit_mask_property_list
-    bit_mask_properties = ""
-    bit_mask_fields.each do |field|
-      prop = "property :#{field}_multi_select, writeable: false \n"
-      bit_mask_properties = bit_mask_properties + prop
-    end
-    bit_mask_properties
+    survey_questions.multi_select.map { |q|
+      "property :#{q.field}_multi_select\n" +
+      property_na(q)
+      # property_validation(q)
+    }.join
   end
 
-  def bit_mask_fields
-    # atm new responses have nil associations - through sr
-    # @response_instance.questions.multi_select.pluck(:field)
-    Question.where(
-      survey_id: @survey_id, 
-      question_type: 'multi_select'
-    ).pluck(:field)
+  def property_na(q)
+    if q.na_able?
+      "property :#{q.na_field}\n"
+    else
+      ''
+    end
+  end
+
+  def property_validation(q)
+    validation = if FIELD_VALIDATE[q.field]
+      "validates :#{q.field}, #{FIELD_VALIDATE[q.field]}\n"
+    elsif TYPE_VALIDATE[q.data_type]
+      "validates :#{q.field}, #{TYPE_VALIDATE[q.data_type]}\n"
+    else '' end
+  end
+
+  def survey_questions
+    @response_instance.questions
   end
 end
