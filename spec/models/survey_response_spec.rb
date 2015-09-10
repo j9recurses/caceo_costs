@@ -5,6 +5,73 @@ RSpec.describe SurveyResponse do
   let(:saved_ss_sr_with_values)  { create :survey_response_ss_with_values }
   let(:election) { create :election }
 
+  describe 'completeness methods' do
+    describe '::relation_completeness' do
+      before :each do
+        @sr = saved_sr_with_values
+        @sr_rel = SurveyResponse.where(id: @sr.id)
+        @rv_rel = ResponseValue.where(id: @sr_rel.value_ids)
+      end
+
+      it 'returns relation completeness relative to questions in relation' do
+        expect(@rv_rel.answered).to eq(3)
+        expect(@sr.questions.count).to eq(16)
+        expect(@sr_rel.relation_completeness).to eq(19)
+      end
+    end
+
+    describe '::overall_completeness' do
+      before :each do
+        @sr = saved_sr_with_values
+        @sr_rel = SurveyResponse.where(id: @sr.id)
+        @rv_rel = ResponseValue.where(id: @sr_rel.value_ids)
+      end
+
+      it 'returns relation completeness relative to all questions' do
+        expect(@sr_rel.overall_completeness < 1).to eq(true)
+      end
+
+      it 'is continuous with ::relation_completeness when fully specified' do
+        expect(@sr_rel.overall_completeness(
+          surveys: @sr.survey, 
+          counties: @sr.county,
+          elections: @sr.election)
+        ).to eq(19)
+      end
+
+      it 'constrains properly, sans election' do
+        raw_ratio = @rv_rel.answered.to_f / @sr.questions.count.to_f
+        expect(@sr_rel.overall_completeness(
+          surveys: @sr.survey,
+          counties: @sr.county)
+        ).to eq(
+          (((raw_ratio / ElectionYear.count.to_f) * 100).round(0)).to_i
+        )
+      end
+
+      it 'constrains properly, sans county' do
+        raw_ratio = @rv_rel.answered.to_f / @sr.questions.count.to_f
+        expect(@sr_rel.overall_completeness(
+          surveys: @sr.survey,
+          elections: @sr.election)
+        ).to eq(
+          (((raw_ratio / 58.0) * 100).round(0)).to_i
+        )
+      end
+
+      it 'constrains properly, sans survey' do
+        question_ratio = @rv_rel.answered.to_f / Question.where(survey_id: Survey.pluck(:id)).count.to_f
+        expect(@sr_rel.overall_completeness(
+          elections: @sr.election,
+          counties: @sr.county)
+        ).to eq(
+          (((question_ratio) * 100).round(0)).to_i
+        )
+      end
+    end
+  end
+
+
   describe 'total internals' do
     let(:policy_subsections) { Subsection.where(
       title: ['Salaries - Types of Staff and Pay', 'Benefits - in Dollars'])

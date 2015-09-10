@@ -53,28 +53,34 @@ class SurveyResponse < ActiveRecord::Base
   end
   alias_method :percent_complete, :percent_answered
 
-  def self.percent_answered(constraints: nil)
-    if constraints
-      county_ids = constraints[:county_ids]
-      survey_ids = constraints[:survey_ids]
-      election_ids = constraints[:election_ids]
+  # Delegate to all response_values of SRs in the self relation,
+  # return average completeness of entire relation
+  def self.percent_answered
+    ResponseValue.where(id: value_ids).percent_answered
+  end
 
-      survey_multiplier = survey_ids ? Question.where(survey_id: survey_ids).count : Question.all
-      county_multiplier = county_ids ? Array(county_ids).size : 58
-      election_multiplier = election_ids ? Array(election_ids).size : ElectionYear.count
-
-      grand_total = survey_multiplier * county_multiplier * election_multiplier
-      ratio = (ResponseValue.where(id: value_ids).answered.to_f / grand_total.to_f).round(2)
-      # rat = (answered.to_f / count.to_f).round(2)
-      ratio = ratio.nan? ? 0 : ratio
-      (ratio * 100).to_i
+  # Completeness relative to all possible questions in all elections, counties
+  # optionally narrowed down
+  def self.overall_completeness(elections: nil, surveys: nil, counties: nil)
+    survey_multiplier = if surveys
+      Question.where(survey_id: Array(surveys)).count
     else
-      ResponseValue.where(id: value_ids).percent_answered
+      Question.count
     end
+
+    county_multiplier   = counties  ? Array(counties).size  : 58
+    election_multiplier = elections ? Array(elections).size : ElectionYear.count
+
+    grand_total = (survey_multiplier * county_multiplier * election_multiplier).to_f
+    completed = ResponseValue.where(id: value_ids).answered.to_f
+    ratio = (completed / grand_total).round(2)
+    ratio = ratio.nan? ? 0 : ratio
+    (ratio * 100).to_i
   end
 
   class << self
     alias_method :percent_complete, :percent_answered
+    alias_method :relation_completeness, :percent_answered
   end
 
   ###########################Totaling
@@ -84,7 +90,7 @@ class SurveyResponse < ActiveRecord::Base
     .pluck('response_values.id')
   end
 
-  # Duplication to work on relations and instances
+  # Duplication of class and instance to work on relations and instances
   # Strategy passed all the way to ::total_excluded_subsection_ids
   def self.total(strategy=:policy)
     case strategy
@@ -127,8 +133,6 @@ class SurveyResponse < ActiveRecord::Base
   end
 
   def total_relation(strategy=:policy)
-    # @total_ids ||= {}
-    # @total_ids[strategy] ||=
     ResponseValue.where(
       survey_response_id: self.id
     ).where.not( response_values: {question_id: 
@@ -138,8 +142,6 @@ class SurveyResponse < ActiveRecord::Base
 
   # total policy
   def self.total_excluded_question_ids_array(strategy=:policy)
-    # @excluded_question_ids_array ||= {}
-    # @excluded_question_ids_array[strategy] ||= 
     Question.where(<<-SQL
       field = 'ssbalpriprou' OR
       subsection_id IN(#{ SurveyResponse.total_excluded_subsection_ids(strategy) })
@@ -148,8 +150,6 @@ class SurveyResponse < ActiveRecord::Base
   end
 
   def self.total_excluded_question_ids_string(strategy=:policy)
-    # @excluded_question_ids_string ||= {}
-    # @excluded_question_ids_string[strategy] ||= 
     total_excluded_question_ids_array(strategy).
     inject {|memo, obj| memo.to_s + ', ' + obj.to_s  }
   end
