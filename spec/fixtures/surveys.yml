@@ -5,6 +5,13 @@ ssveh:
   table_name: ssvehs
   subject: Vehicle
 
+sspw:
+  title: Poll Worker Services and Supplies
+  id: Sspw
+  category: Services and Supplies
+  table_name: sspws
+  subject: Poll Worker
+
 election_profile:
   title: Election Profile
   id: ElectionProfile

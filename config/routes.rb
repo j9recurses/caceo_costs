@@ -15,10 +15,14 @@ CaceoCosts::Application.routes.draw do
   resources :surveys,         only: [:index]
 
   resources :faqs
-  resources :activities
   resources :announcements
   resources :password_resets
   resources :election_technologies
+
+  get 'activities', to: 'activities#index'
+  get 'activities/summary', to: 'activities#summary', as: 'activity_summary'
+  get 'activities/earlier', to: 'activities#earlier', as: 'activity_earlier'
+
 
   resources :tech_voting_machines do
     get "delete"
@@ -44,37 +48,6 @@ CaceoCosts::Application.routes.draw do
     get   :update_password,         :on => :member
     post  :updatepassword_submit ,  :on => :member
   end
-
-
-
-  #resources :election_year_profiles
-  # get "home", :to => "election_years#home", as: "home"
-  # get "election_profile_home", :to => "election_year_profiles#election_profile_home", as: "election_profile_home"
-  # get "home/:id", :to => "election_years#view_year",  as: "show_election_year"
-  # resources :election_years do
-  #       resources :categories
-  #   end
- #  resources :election_profiles
- #  resources :election_year_profiles
- #  resources :salbals
- #  resources :salpps
- #  resources :ssbcs
- #  resources :salpws
- #  resources :salvbms
- #  resources :salbcs
- #  resources :salcans
- #  resources :salmeds
- #  resources :saldojos
- #  resources :saloths
- #  resources :ssbals
- #  resources :postages
- #  resources :sspws
- #  resources :sspps
- #  resources :ssvehs
- #  resources :sscans
- #  resources :ssmeds
- # resources :ssoths
-
 resources :messages, only: [:new, :create]
 
 end

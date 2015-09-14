@@ -1,0 +1,9 @@
+<h2 class ="myh2yr">Activity Summary by Time Period</h2>
+
+<%= render partial: 'summaries', 
+  locals: {
+    title: 'Older survey activity',
+    range: [@oldest_update, @month_time],
+    summaries: @earlier_activity
+  }
+%>

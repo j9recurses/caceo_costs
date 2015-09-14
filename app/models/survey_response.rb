@@ -78,6 +78,15 @@ class SurveyResponse < ActiveRecord::Base
     (ratio * 100).to_i
   end
 
+  def self.query_completeness(query)
+    rel = self.where(query)
+    rel.overall_completeness(
+      counties:   query[:county],
+      elections:  query[:election],
+      surveys:  query[:survey]
+    )
+  end
+
   class << self
     alias_method :percent_complete, :percent_answered
     alias_method :relation_completeness, :percent_answered
@@ -165,7 +174,3 @@ private
     ResponseValue.sync_survey_response self
   end
 end
-
-# module SurveyResponsePolicies
-  # percent_answered and total are identical and can be factored
-# end

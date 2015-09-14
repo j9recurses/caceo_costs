@@ -57,7 +57,7 @@ private
       if referrer && permitted
         redirect_to :back
       elsif current_user
-        redirect_to profile_user_path
+        redirect_to profile_user_path(current_user)
       else
         redirect_to login_path
       end

@@ -1,0 +1,58 @@
+
+<h3><%= title %>
+  <small>
+    Updated between <%= range[0].strftime("%-m/%-d/%Y") %> and <%= range[1].strftime("%-m/%-d/%Y") %>
+  </small>
+
+</h3>
+
+<% if summaries.blank? %>
+  <h3><small>No Activity</small></h3>
+<% else %>
+  <table class="table table-condensed" style="border-collapse:collapse;">
+    <colgroup>
+      <col width="7%"></col>
+      <col width="8%"></col>
+      <col width="15%"></col>
+      <col width="8%"></col>
+      <col width="30%"></col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Last Update</th>
+        <th>County</th>
+        <th>Election</th>
+        <th>Surveys Updated</th>
+        <th>Election Completeness</th>
+      </tr>
+    </thead>
+      <tbody>
+      <% summaries.each do |summary| %>
+        <% completeness = SurveyResponse.query_completeness({
+            county: County.find_by(name: summary.county_name),
+            election: ElectionYear.find_by(year: summary.election_name) 
+          })
+        %>
+        <tr>
+          <td><%= summary.last_updated.strftime("%-m/%-d/%Y") %></td>
+          <td><%= summary.county_name.gsub(' County', '') %></td>
+          <td><%= summary.election_name.gsub(' Election', '') %></td>
+          <td><%= summary.category_count %></td>
+          <td>
+            <div class="progress election-year">
+              <div class="progress-bar" 
+                role="progressbar" 
+                aria-valuenow=<%="#{ completeness }"%> 
+                aria-valuemin="0" 
+                aria-valuemax="100" 
+                style="<%="width: #{ completeness }%;" %>"
+                >
+                <%= completeness %>%
+              </div>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

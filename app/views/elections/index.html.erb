@@ -20,39 +20,34 @@
     <tbody>
     <% @elections.each do |election| %>
       <% election_survey_responses = SurveyResponse.where( county: current_user.county, election: election) %>
+      <% completeness =  election_survey_responses.overall_completeness(
+        counties: current_user.county,
+        elections: election) 
+      %>
       <tr>
         <td><%= link_to election.year, election_surveys_path(election) %></td>
-          <td>
-            <div class="progress election-year">
-              <div class="progress-bar" 
-                role="progressbar" 
-                aria-valuenow=<%="#{ 
-                  election_survey_responses.overall_completeness(
-                    counties: current_user.county,
-                    elections: election
-                  )
-                }"%> 
-                aria-valuemin="0" 
-                aria-valuemax="100" 
-                style="<%="width: #{ 
-                  election_survey_responses.overall_completeness(
-                    counties: current_user.county,
-                    elections: election
-                  )
-                }%;" %>">
-                <% unless election_survey_responses.blank? %>
-                  <%= election_survey_responses.percent_answered %>%
-                <% end %>
-              </div> 
-            </div>
-          </td><td></td>
-          <td>
-            <% if election_survey_responses.blank? %>
-              <span class="text-muted">Not Started<span>
-            <% else %>
-              $<%= number_with_delimiter election_survey_responses.total %>
-            <% end %>
-          </td>      
+        <td>
+          <div class="progress election-year">
+            <div class="progress-bar" 
+              role="progressbar" 
+              aria-valuenow=<%="#{ completeness }"%> 
+              aria-valuemin="0" 
+              aria-valuemax="100" 
+              style="<%="width: #{ completeness }%;" %>">
+              <% unless election_survey_responses.blank? %>
+                <%= completeness %>%
+              <% end %>
+            </div> 
+          </div>
+        </td>
+        <td></td>
+        <td>
+          <% if election_survey_responses.blank? %>
+            <span class="text-muted">Not Started<span>
+          <% else %>
+            $<%= number_with_delimiter election_survey_responses.total %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

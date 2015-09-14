@@ -31,7 +31,7 @@ class Permission
 
       if user.admin?
         allow [:survey_responses, :response_values, :questions, :counties], [:index]
-        allow :activities, [:index, :show]
+        allow :activities, [:index, :summary, :earlier]
         allow :reports, [:progress, :responses]
         allow :announcements, [:new, :create, :destroy]
         allow :faqs, [:new, :create, :edit, :update, :destroy]
