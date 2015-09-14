@@ -108,4 +108,13 @@ class ResponseValue < ActiveRecord::Base
       send value_field
     end
   end
+
+  def data_value
+    if question.data_type == 'boolean'
+      b_val = send value_field
+      b_val == true ? 1 : 0
+    else
+      value
+    end
+  end
 end

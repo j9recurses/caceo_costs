@@ -14,6 +14,8 @@ CaceoCosts::Application.routes.draw do
   resources :counties,        only: [:index]
   resources :surveys,         only: [:index]
 
+  resources :data, only: [:index]
+
   resources :faqs
   resources :announcements
   resources :password_resets

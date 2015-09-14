@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803125118) do
+ActiveRecord::Schema.define(version: 20150914212339) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -262,6 +262,7 @@ ActiveRecord::Schema.define(version: 20150803125118) do
     t.integer  "year_dt",       limit: 4
     t.string   "election_type", limit: 255
     t.string   "edate_full",    limit: 255
+    t.string   "code",          limit: 255
   end
 
   create_table "faqs", force: :cascade do |t|
