@@ -104,13 +104,17 @@
                       <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                      <li class="mynav_li"><%= link_to "All Survey Activity", activity_summary_path%></li>
+                      <li class="mynav_li"><%= link_to "Survey Activity", activity_summary_path%></li>
                       <% if allow? :reports, :progress, :responses %>
                         <li class="divider"></li>
                         <li class="mynav_li"><%= link_to "Survey Responses Report", 
                           responses_report_path(format: :xlsx)%></li>
                         <li class="mynav_li"><%= link_to "County Progress Report", 
                           progress_report_path(format: :xlsx)%></li>
+                      <% end %>
+                      <% if allow? :data, :index %>
+                        <li class="mynav_li"><%= link_to "Download Datasets", 
+                          data_path%></li>
                       <% end %>
                     </ul>
                   </li>

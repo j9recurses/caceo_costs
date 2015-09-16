@@ -33,7 +33,7 @@ class Permission
         allow [:survey_responses, :response_values, :questions, :counties], [:index]
         allow :activities, [:index, :summary, :earlier]
         allow :reports, [:progress, :responses]
-        allow :data, [:index]
+        # allow :data, [:index]
         allow :announcements, [:new, :create, :destroy]
         allow :faqs, [:new, :create, :edit, :update, :destroy]
       end
