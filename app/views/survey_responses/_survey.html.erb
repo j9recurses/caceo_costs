@@ -20,19 +20,15 @@
   <%= f.simple_fields_for :response do |r| %>
     <%= r.hidden_field :election_year_id, value: @response_form.election_id %>
     <%= r.hidden_field :county_id,        value: @response_form.county_id %>
+
     <% @response_form.current_page.each do |q| %>
-      <% if q.multi_select? %>
-        <%= render partial: "survey_responses/questions/multi_select", locals: { question: q, r: r}  %>
-      <% else %>
-        <%= render partial: "survey_responses/questions/input_field", locals: { question: q, f: r}  %>
-      <% end %>
+      <%= render partial: "survey_responses/questions/input_field", locals: { question: q, f: r}  %>
     <% end %>
 
     <div class="form-actions">
       <% unless @response_form.first_step?  %>
         <%= f.submit "Back", name: "back_button" %>
       <% end %>
-      
       <% if @response_form.last_step? %>
         <%= f.submit "Submit #{ survey.title } Costs for #{ @response_form.model.election.year }" %>
       <% else %>
@@ -43,4 +39,3 @@
     </div>
   <% end %>
 <% end %>
-

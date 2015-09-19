@@ -22,6 +22,18 @@ class DataController < ActionController::Base
                 rv.question.field,
                 rv.data_value]
           end
+
+          [TechVotingMachine, TechVotingSoftware].each do |tech_klass|
+            TechSerializer(tech_klass).each do |trv|
+              csv << [
+                trv.county_id,
+                trv.election_code,
+                trv.survey_id,
+                trv.field,
+                trv.value
+              ]
+            end
+          end
         end
       end
     end

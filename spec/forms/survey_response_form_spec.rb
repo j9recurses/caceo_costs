@@ -40,26 +40,48 @@ RSpec.describe SurveyResponseForm do
       expect { sr_form.submit }.to raise_error('No Response')
     end
 
+    describe 'booleans', focus: true do
+      let(:epf) { SurveyResponseForm.new( create :survey_response_ep ) }
+      before(:each) do
+        params = { "county_id" => "1", "election_id" => "#{election.id}", 
+          "response_attributes" => { 
+            "eppphwscan"=>"true", "eppphwdre"=>"0", "eppphwmarkd" => "yes", "eppphwpollbk" => "1" 
+          } 
+        }
+        epf.validate( params )
+        epf.submit
+        @ep = ElectionProfile.find(epf.response_id)
+      end
+
+      it 'takes "true"' do
+        expect(@ep.eppphwscan).to eq(true)
+      end
+
+      # This reaches activerecord as text
+      # others must be taken care of by reform.
+      it 'rejects "yes"' do
+        expect(@ep.eppphwmarkd).to eq(false)
+      end
+
+      it 'takes 0/1' do
+        expect(@ep.eppphwdre).to eq(false)
+        expect(@ep.eppphwpollbk).to eq(true)
+      end
+    end
+
     describe 'filled in manually' do
       it 'persists' do
         ssveh_param_hash = { 
-        "county_id" => "59", "election_id" => "#{election.id}", 
+        "county_id" => "1", "election_id" => "#{election.id}", 
           "response_attributes" => { "ssvehrent"=>"120", "ssvehfuel"=>"123" } }
-        expect(sr_form.validate(ssveh_param_hash)).to be true
-        expect(sr_form.response.valid?).to be true
+        new_srf = SurveyResponseForm.new(SurveyResponse.new(response: Ssveh.new))
 
-        sr_form.sync
-        expect(sr_form.model.county_id).to eq(59)
-        expect(sr_form.response.model.county_id).to eq(59)
-        expect(sr_form.model.save).to eq(false)
-        expect(sr_form.model.errors).to eq(true)
+        expect(new_srf.validate(ssveh_param_hash)).to be true
+        expect(new_srf.submit).to eq(true)
 
-
-
-        # expect(sr_form.errors.messages).to eq({})
-        # expect(sr_form.submit).to eq(false)
-        #         expect(sr_form.errors.messages).to eq({})
-
+        ssveh = SurveyResponse.find(new_srf.model.id).response
+        expect(ssveh.ssvehrent).to eq(120)
+        expect(ssveh.ssvehfuel).to eq(123)
       end
     end
   end

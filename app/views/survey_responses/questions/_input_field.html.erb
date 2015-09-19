@@ -12,6 +12,18 @@
         <%= f.check_box "#{question.field}_na", class: "na-checkbox" %> N/A
       </label>
     <% end %>
-    <%= f.input_field question.field, boolean_style: :inline, class: "form-control value-field" %>
+
+    <% if question.boolean? %>
+      <%= f.input_field question.field, as: :boolean, boolean_style: :inline, 
+        class: "form-control value-field" %>
+    <% elsif question.multi_select? %>
+      <div class="caceo_checkbox_group">
+        <% options = "#{question.survey_id}::#{question.field.upcase}".constantize %>
+        <%= f.input_field "#{question.field}_multi_select".to_sym, collection: options, as: :check_boxes %>
+      </div>
+    <% # elsif question.text? %>
+    <% else %>
+      <%= f.input_field question.field, class: "form-control value-field" %>
+    <% end %>
   </div>
 </div>
