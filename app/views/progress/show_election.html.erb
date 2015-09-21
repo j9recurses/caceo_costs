@@ -1,0 +1,43 @@
+
+  <table class="table table-condensed" style="border-collapse:collapse;">
+    <colgroup>
+      <col width="8%"></col>
+      <col width="30%"></col>
+      <col width="15%"></col>
+      <col width="60%"></col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Survey Code</th>
+        <th>Subject</th>
+        <th>Category</th>
+        <th>Completeness</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @surveys.each do |survey| %>
+        <% completeness = SurveyResponse.query_completeness(
+          county: @county, election: @election, survey: survey) 
+        %>
+        <tr>
+          <td><%= survey.id %></td>
+          <td><%= survey.subject %></td>
+          <td><%= survey.category %></td>
+          <td>
+            <div class="progress election-year">
+              <div class="progress-bar" 
+                role="progressbar"
+                aria-valuenow=<%="#{ completeness }"%> 
+                aria-valuemin="0" 
+                aria-valuemax="100" 
+                style="<%="width: #{ completeness }%;" %>"
+                >
+                <%= completeness %>%
+              </div>
+            </div>
+          </td>
+          </a>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

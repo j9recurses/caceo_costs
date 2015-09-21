@@ -1,0 +1,25 @@
+<%= render partial: 'summaries', 
+  locals: {
+    title: "Today's Updates", 
+    range: [@day_time, Time.current], 
+    summaries: @day_activity
+  }
+%>
+
+<%= render partial: 'summaries', 
+  locals: {
+    title: 'One Week Earlier', 
+    range: [@week_time, @day_time],
+    summaries: @week_activity
+  }
+%>
+
+<%= render partial: 'summaries', 
+  locals: {
+    title: 'One Month Earler',
+    range: [@month_time, @week_time],
+    summaries: @month_activity
+  }
+%>
+
+<%= link_to "View All Earlier Activity", activity_earlier_path, class: 'h3' %>

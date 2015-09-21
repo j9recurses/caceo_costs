@@ -34,6 +34,7 @@ class Permission
         allow :activities, [:index, :summary, :earlier]
         allow :reports, [:progress, :responses]
         # allow :data, [:index]
+        allow :progress, [:index, :show]
         allow :announcements, [:new, :create, :destroy]
         allow :faqs, [:new, :create, :edit, :update, :destroy]
       end
