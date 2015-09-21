@@ -6,6 +6,10 @@ class ReportsController < ApplicationController
         render xlsx: "progress_#{Time.current.strftime('%FT%T%:z')}", 
         template: 'reports/progress'
       end
+
+      format.html do
+        render 'progress'
+      end
     end  
   end
 
