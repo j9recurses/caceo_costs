@@ -22,7 +22,7 @@ class Survey < ActiveRecord::Base
   has_many :election_profiles, through: :survey_responses, source: :response, source_type: 'ElectionProfile'
   has_and_belongs_to_many :subsections, join_table: "survey_subsections", class_name: 'Subsection'
   has_and_belongs_to_many :totals_subsections, join_table: "survey_totals_subsections", class_name: 'Subsection'
-  default_scope { order(title: :desc) }
+  default_scope { order(category: :asc, title: :asc) }
 
   self.primary_key = :id
 

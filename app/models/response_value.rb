@@ -1,6 +1,9 @@
 class ResponseValue < ActiveRecord::Base
   belongs_to :survey_response, inverse_of: :values
   belongs_to :question, inverse_of: :values
+  has_one :election, through: :survey_response, class_name: 'ElectionYear'
+  has_one :county, through: :survey_response
+  has_one :survey, through: :survey_response
 
   def data_types
     ['integer', 'text', 'decimal', 'string', 'boolean']

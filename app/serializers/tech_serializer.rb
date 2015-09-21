@@ -1,14 +1,15 @@
 class TechSerializer
   include Enumerable
 
-  def initialize(tech_klass)
+  def initialize(tech_klass, query)
     @klass = tech_klass
+    @query = query
     @fields = tech_klass.column_names - ['id', 'created_at', 'updated_at', 'county_id']
   end
-  attr_reader :klass, :fields
+  attr_reader :klass, :fields, :query
 
   def each
-    klass.find_each do |row|
+    klass.where.not(county_id:59).where(query).find_each do |row|
       fields.each do |field|
         yield TechResponseValue.new(row, field)
       end
@@ -37,6 +38,11 @@ class TechResponseValue
   end
 
   def value
-    obj.send field
+    if obj.class.column_types[field].type == :boolean
+      b_val = obj.send field
+      b_val == true ? 1 : 0
+    else
+      obj.send field
+    end
   end
 end
