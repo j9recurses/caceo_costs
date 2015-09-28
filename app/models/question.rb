@@ -17,6 +17,10 @@ class Question < ActiveRecord::Base
     data_type == 'boolean'
   end
 
+  def multi_select_field
+    field + '_multi_select'
+  end
+
 ########### legacy? 
   def comment?
     question_type == 'comment'
