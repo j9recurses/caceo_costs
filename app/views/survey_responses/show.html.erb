@@ -1,5 +1,5 @@
 <h2 class ="myh2show">
-  <%= "#{@survey_response.survey.title} Summary for the #{ @survey_response.election.year }" %>
+  <%= "#{@survey_response.survey.title} Summary for the #{ @survey_response.election.name }" %>
 </h2>
 
 <% if @survey.subsections.count > 0 %>
@@ -21,7 +21,7 @@
   <%= link_to 'Edit', edit_survey_response_path( @survey_response.id ) %> |
   <%= link_to 'Delete Survey Response', survey_response_path( @survey_response.id ),
         method: :delete, data: { confirm: 'Are you sure?' } %> |
-  <%= link_to "Back to Surveys for #{ @survey_response.election.year }", 
+  <%= link_to "Back to Surveys for #{ @survey_response.election.name }", 
         election_surveys_path( @survey_response.election_id ) %> |
   <%= link_to 'All Elections', elections_path  %>
 </div>

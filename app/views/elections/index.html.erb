@@ -25,7 +25,7 @@
         elections: election) 
       %>
       <tr>
-        <td><%= link_to election.year, election_surveys_path(election) %></td>
+        <td><%= link_to election.name, election_surveys_path(election) %></td>
         <td>
           <div class="progress election-year">
             <div class="progress-bar" 

@@ -29,7 +29,7 @@ class ResponseValueReport
 
   # {
   #   survey_id => [ {
-  #       [survey_response_id, county_name, election_year] => {
+  #       [survey_response_id, county_name, election_name] => {
   #         :stats => [_total_questions, _answered, _total],
   #         field_name => value, field_name => value, ...
   #       }
@@ -46,7 +46,7 @@ class ResponseValueReport
         @responses_hash[s_id] = {}
       end
       self.value_view.each do |e|
-        sr_hash = @responses_hash[e.survey_id][[e.survey_response_id, e.county_name, e.election_year]] ||= {}
+        sr_hash = @responses_hash[e.survey_id][[e.survey_response_id, e.county_name, e.election_name]] ||= {}
         sr_hash[:stats] ||= [e._total_questions, e._answered, e._total]
         sr_hash[e.field] = if e.na_able? && e.na_value
             'N/A'
@@ -145,7 +145,6 @@ class ResponseValueReport
     result = []
     r_hash = responses_hash
     q_hash = question_metadata_hash
-    election_years = ElectionYear.order(election_dt: :asc).pluck(:year)
     survey_ids_titles = Survey.order(id: :asc).pluck(:id, :title)
 
     # survey page
@@ -153,10 +152,10 @@ class ResponseValueReport
       survey_result = []
       sr = r_hash[s_id].keys
       # value row, determined by survey_response_id
-      sr.each do |sr_id, c_name, e_year|
-        s_row = [c_name, e_year].concat(r_hash[s_id][[sr_id, c_name, e_year]][:stats])
+      sr.each do |sr_id, c_name, e_name|
+        s_row = [c_name, e_name].concat(r_hash[s_id][[sr_id, c_name, e_name]][:stats])
         q_hash[[s_id, :field]].each do |q_field|
-          s_row.push r_hash[s_id][[sr_id, c_name, e_year]][q_field]
+          s_row.push r_hash[s_id][[sr_id, c_name, e_name]][q_field]
         end
         survey_result.push s_row
       end

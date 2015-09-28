@@ -22,19 +22,19 @@
 
 <nav>
   <ul class="pagination">
-    <%= @response_form.total_steps.times do |n| %>
-      <li class="<%= 'active' if n == @response_form.current_step %>"><%= n+1 %></li>
+    <%= @sr_form.total_steps.times do |n| %>
+      <li class="<%= 'active' if n == @sr_form.current_step %>"><%= n+1 %></li>
     <% end %>
   </ul>
 </nav>
 
   <div class="form-actions">
-    <% unless @response_form.first_step?  %>
+    <% unless @sr_form.first_step?  %>
       <%= f.submit "Back", name: "back_button" %>
     <% end %>
     
-    <% if @response_form.last_step? %>
-      <%= f.submit "Submit #{ survey.title } Costs for #{ @response_form.model.election.year }" %>
+    <% if @sr_form.last_step? %>
+      <%= f.submit "Submit #{ survey.title } Costs for #{ @sr_form.model.election.name }" %>
     <% else %>
       <%= f.submit "Save and Exit", name: "save_and_exit" %>
       <%= f.submit "Save and Continue", name: "save_and_continue", method: :patch %>

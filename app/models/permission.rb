@@ -7,11 +7,8 @@ class Permission
     allow :messages, [:new, :create]
     if user
       allow :users, [:profile, :logout]
-      allow :election_years, :home
       allow :elections, :index
       allow :surveys, :index
-      allow :categories, :index
-      allow :election_year_profiles, :election_profile_home
       allow :announcements, :index
       allow :faqs, :index
       if user.observer?
@@ -22,7 +19,6 @@ class Permission
         allow_observe :tech_voting_softwares
         allow_observe :survey_responses
       else
-        allow :election_profiles, [:index, :new, :create, :show, :edit, :update, :destroy]
         allow :election_technologies, :index
         allow_respond :tech_voting_machines
         allow_respond :tech_voting_softwares

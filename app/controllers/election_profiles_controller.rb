@@ -1,2 +1,0 @@
-class ElectionProfilesController < GeneralSurveysController
-end

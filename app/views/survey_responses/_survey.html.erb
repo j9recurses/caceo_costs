@@ -1,36 +1,33 @@
-<% if @response_form.errors.any? %>
+<% if @sr_form.errors.any? %>
   <div id="error_explanation">
     <ul>
-      <% @response_form.response.errors.each do |field, msg| %>
+      <% @sr_form.response.errors.each do |field, msg| %>
         <li><%= "Your response to #{Question.find_by(field: field.to_s).label} #{msg}" %></li>
       <% end %>
     </ul>
   </div>
 <% end %>
 
-<%= render partial: 'question_modal', collection: @response_form.current_page %>
+<%= render partial: 'question_modal', collection: @sr_form.current_page %>
 
-<%= simple_form_for @response_form,
+<%= simple_form_for @sr_form,
  html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f| %>
   <%= hidden_field_tag 'survey_id', @survey.id %>
-  <%= f.hidden_field :election_id,  value: @response_form.election_id %>
-  <%= f.hidden_field :county_id,    value: @response_form.county_id %>
-  <%= f.hidden_field :current_step, value: @response_form.current_step %>
+  <%= f.hidden_field :election_id,  value: @sr_form.election_id %>
+  <%= f.hidden_field :county_id,    value: @sr_form.county_id %>
+  <%= f.hidden_field :current_step, value: @sr_form.current_step %>
 
   <%= f.simple_fields_for :response do |r| %>
-    <%= r.hidden_field :election_year_id, value: @response_form.election_id %>
-    <%= r.hidden_field :county_id,        value: @response_form.county_id %>
-
-    <% @response_form.current_page.each do |q| %>
+    <% @sr_form.current_page.each do |q| %>
       <%= render partial: "survey_responses/questions/input_field", locals: { question: q, f: r}  %>
     <% end %>
 
     <div class="form-actions">
-      <% unless @response_form.first_step?  %>
+      <% unless @sr_form.first_step?  %>
         <%= f.submit "Back", name: "back_button" %>
       <% end %>
-      <% if @response_form.last_step? %>
-        <%= f.submit "Submit #{ survey.title } Costs for #{ @response_form.model.election.year }" %>
+      <% if @sr_form.last_step? %>
+        <%= f.submit "Submit #{ survey.title } Costs for #{ @sr_form.model.election.name }" %>
       <% else %>
         <%= f.submit "Save and Exit", name: "save_and_exit" %>
         <%= f.submit "Save and Continue", name: "save_and_continue", method: :patch %>

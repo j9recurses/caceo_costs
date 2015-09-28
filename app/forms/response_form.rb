@@ -11,9 +11,6 @@ class ResponseFormBuilder
     @klass = Class.new(Reform::Form)
 
     @klass.class_eval <<-RUBY
-      property :county_id
-      property :election_year_id
-
       #{properties_with_validations(@survey_id)}
       #{bit_mask_property_list}
     RUBY

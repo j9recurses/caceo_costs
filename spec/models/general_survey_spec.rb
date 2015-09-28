@@ -20,8 +20,8 @@ RSpec.describe GeneralSurvey  do
   end
 
   # describe 'election' do 
-  #   it 'returns an ElectionYear' do
-  #     expect( survey.election.class ).to be ElectionYear
+  #   it 'returns an Election' do
+  #     expect( survey.election.class ).to be Election
   #   end
   # end
 end

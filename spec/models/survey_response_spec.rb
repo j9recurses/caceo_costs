@@ -6,7 +6,7 @@ RSpec.describe SurveyResponse do
   let(:election) { create :election }
 
   describe 'completeness methods' do
-    describe '::relation_completeness' do
+    describe '::percent_complete' do
       before :each do
         @sr = saved_sr_with_values
         @sr_rel = SurveyResponse.where(id: @sr.id)
@@ -16,7 +16,7 @@ RSpec.describe SurveyResponse do
       it 'returns relation completeness relative to questions in relation' do
         expect(@rv_rel.answered).to eq(3)
         expect(@sr.questions.count).to eq(16)
-        expect(@sr_rel.relation_completeness).to eq(19)
+        expect(@sr_rel.percent_complete).to eq(19)
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe SurveyResponse do
         expect(@sr_rel.overall_completeness < 1).to eq(true)
       end
 
-      it 'is continuous with ::relation_completeness when fully specified' do
+      it 'is continuous with ::percent_complete when fully specified' do
         expect(@sr_rel.overall_completeness(
           surveys: @sr.survey, 
           counties: @sr.county,
@@ -45,7 +45,7 @@ RSpec.describe SurveyResponse do
           surveys: @sr.survey,
           counties: @sr.county)
         ).to eq(
-          (((raw_ratio / ElectionYear.count.to_f) * 100).round(0)).to_i
+          (((raw_ratio / Election.count.to_f) * 100).round(0)).to_i
         )
       end
 
@@ -109,7 +109,7 @@ RSpec.describe SurveyResponse do
     let(:int_questions) { Question.where(data_type: 'integer', survey_id: Ssveh) }
     let(:second_saved_sr_with_values) do
       c = FactoryGirl.create(:county)
-      r = Ssveh.new(county: c, election_year_id: election.id)
+      r = Ssveh.new
       sr = SurveyResponse.new(response: r, county_id: c.id, election: election)
       sr.respond(int_questions[2], 100)
       sr.respond(int_questions[1], 900)
@@ -177,7 +177,7 @@ RSpec.describe SurveyResponse do
       end      
 
       it "allows election=" do
-        e = ElectionYear.create!(year: 'New Thing')
+        e = Election.create!(name: 'New Thing')
         survey_response.election = e
         expect(survey_response.election).to eq(e)
       end

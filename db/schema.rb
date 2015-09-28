@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150914212339) do
+ActiveRecord::Schema.define(version: 20150922234537) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -122,9 +122,6 @@ ActiveRecord::Schema.define(version: 20150914212339) do
     t.integer  "eptotsb90c",               limit: 4
     t.integer  "eptotsb90r",               limit: 4
     t.text     "epmandates",               limit: 65535
-    t.boolean  "started",                  limit: 1,                             default: false
-    t.boolean  "complete",                 limit: 1,                             default: false
-    t.string   "current_step",             limit: 255
     t.integer  "county_id",                limit: 4
     t.integer  "election_year_profile_id", limit: 4
     t.datetime "created_at"
@@ -236,9 +233,6 @@ ActiveRecord::Schema.define(version: 20150914212339) do
     t.integer  "election_year_id",         limit: 4
   end
 
-  add_index "election_profiles", ["current_step"], name: "index_election_profiles_on_current_step", using: :btree
-  add_index "election_profiles", ["election_year_id"], name: "index_election_profiles_on_election_year_id", using: :btree
-
   create_table "election_technologies", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -254,8 +248,8 @@ ActiveRecord::Schema.define(version: 20150914212339) do
     t.string   "edate_full",    limit: 255
   end
 
-  create_table "election_years", force: :cascade do |t|
-    t.string   "year",          limit: 255
+  create_table "elections", force: :cascade do |t|
+    t.string   "name",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "election_dt"
@@ -1030,10 +1024,11 @@ ActiveRecord::Schema.define(version: 20150914212339) do
     t.datetime "created_at"
   end
 
-  add_foreign_key "election_profiles", "election_years"
   add_foreign_key "questions", "subsections"
   add_foreign_key "questions", "validation_types"
   add_foreign_key "response_values", "questions", on_delete: :cascade
   add_foreign_key "response_values", "survey_responses", on_delete: :cascade
+  add_foreign_key "survey_responses", "counties"
+  add_foreign_key "survey_responses", "elections"
   add_foreign_key "survey_subsections", "subsections"
 end

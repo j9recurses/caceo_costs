@@ -10,10 +10,7 @@ class DataController < ActionController::Base
 
       format.csv do
         if params[:date]
-          year = params[:date].slice(0,4).to_i
-          month = params[:date].slice(4,2).to_i
-          day = params[:date].slice(6,2).to_i
-          date = Date.new(year, month, day)
+          date = Date.strptime(params[:date], '%Y%m%d')
           rv_date_query = ['DATE(response_values.updated_at) <= ?', date]
           tech_date_query = ['DATE(updated_at) <= ?', date]
         else
@@ -24,12 +21,11 @@ class DataController < ActionController::Base
         self.response_body = Enumerator.new do |response|
           csv = CSV.new(response, row_sep: "\n")
           csv << %w[CountyId Election Survey Question Value]
-
             # .select(<<-SQL
             #   response_values.*,
             #   survey_responses.county_id AS county_id,
             #   survey_responses.response_type AS survey_code,
-            #   election_years.code AS election_code,
+            #   elections.code AS election_code,
             #   questions.field AS field
             # SQL
             # )
@@ -48,13 +44,15 @@ class DataController < ActionController::Base
           end
 
           [TechVotingMachine, TechVotingSoftware].each do |tech_klass|
-            TechSerializer.new(tech_klass, tech_date_query).each do |trv|
+            t_rel = tech_klass.where.not(county_id: 59)
+                              .where(tech_date_query)
+            TechSerializer.new( t_rel ).each do |trv|
               csv << [
                 trv.county_id,
                 trv.election_code,
                 trv.survey_code,
                 trv.field,
-                trv.value
+                trv.data_value
               ]
             end
           end

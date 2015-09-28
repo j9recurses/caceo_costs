@@ -40,7 +40,7 @@ RSpec.describe SurveyResponseForm do
       expect { sr_form.submit }.to raise_error('No Response')
     end
 
-    describe 'booleans', focus: true do
+    describe 'booleans' do
       let(:epf) { SurveyResponseForm.new( create :survey_response_ep ) }
       before(:each) do
         params = { "county_id" => "1", "election_id" => "#{election.id}", 

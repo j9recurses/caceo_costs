@@ -1,5 +1,5 @@
 class SurveyResponse < ActiveRecord::Base
-  belongs_to :election, class_name: "ElectionYear", foreign_key: 'election_id'
+  belongs_to :election
   belongs_to :response, polymorphic: true, autosave: true, dependent: :destroy
   belongs_to :survey, inverse_of: :survey_responses, foreign_key: :response_type
   belongs_to :county, inverse_of: :survey_responses
@@ -69,7 +69,7 @@ class SurveyResponse < ActiveRecord::Base
     end
 
     county_multiplier   = counties  ? Array(counties).size  : 58
-    election_multiplier = elections ? Array(elections).size : ElectionYear.count
+    election_multiplier = elections ? Array(elections).size : Election.count
 
     grand_total = (survey_multiplier * county_multiplier * election_multiplier).to_f
     completed = ResponseValue.where(id: value_ids).answered.to_f
