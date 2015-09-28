@@ -5,7 +5,6 @@ class SurveyResponseForm < Reform::Form
     survey_response.extend Pageable
     super( survey_response )
   end
-  attr_accessor :response_type
   def_delegators :model, *Pageable.instance_methods
   property :county_id
   property :election_id

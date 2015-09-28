@@ -57,7 +57,7 @@ FactoryGirl.define do
       association :response, factory: :sal_response
     end
 
-    factory :survey_response_ep do
+    factory :survey_response_ep, aliases: [:sr_ep] do
       association :response, factory: :ep_response
     end
 
@@ -70,7 +70,7 @@ FactoryGirl.define do
       association :response, factory: :sal_response_with_values
       after(:create) { |sr| ResponseValue.sync_survey_response sr }
     end
-    factory :survey_response_ep_with_values do
+    factory :survey_response_ep_with_values, aliases: [:sr_ep_vals] do
       association :response, factory: :ep_response_with_values
       after(:create) { |sr| ResponseValue.sync_survey_response sr }
     end
