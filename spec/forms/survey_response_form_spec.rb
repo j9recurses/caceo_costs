@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SurveyResponseForm, focus: true do
+RSpec.describe SurveyResponseForm do
   let(:survey_response) { build :survey_response_ss }
   let(:response)        { build :ss_response }
   let(:sr_form) {
@@ -125,19 +125,18 @@ RSpec.describe SurveyResponseForm, focus: true do
         expect(sr.values.where(na_value: true).count).to eq( ep_na_q_count )
       end
 
-      # epppbalpapar true
-      # eprv 20
-      # epbalpage 'elections have profiles'
-
-
-      it 'only affects empties' do
+      it 'ignores RVs with responses' do
+        srf_ep_responded.validate(response: {eplangvra_multi_select: ['Spanish', 'Chinese']})
         srf_ep_responded.empty_na.submit
         sr = SurveyResponse.find(srf_ep_responded.model.id)
         q_ids = Question
-          .where(field: ['epppbalpapar', 'eprv', 'epbalpage'])
+          .where(field: ['epppbalpapar', 'eprv', 'epbalpage', 'eplangvra'])
           .pluck(:id)
-        expect(sr.values.where(na_value: true).count).to eq(ep_na_q_count - 3)
-        expect(sr.values.where(na_value: true, question_id: q_ids).count).to eq(0)
+        ml_id = Question.find_by(field: 'eplangcaec').id
+
+        expect(sr.values.where(na_value: true).count).to eq(ep_na_q_count - 4)
+        expect(sr.values.where(na_value: false, question_id: q_ids).count).to eq(4)
+        expect(sr.values.where(na_value: true, question_id: ml_id).size).to eq(1)
       end
     end
 
