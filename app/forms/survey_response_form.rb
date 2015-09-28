@@ -32,16 +32,20 @@ class SurveyResponseForm < Reform::Form
   end
 
   def empty_na
-    na_qs = Question.where(
-      survey_id: response.model.class, na_able: true).pluck(:field, :na_field)
-    na_qs.each do |q|
-      val = response.send(q[0])
+    Question.where( survey_id: response_type, na_able: true ).each do |q|
+      val = if q.multi_select?
+        response.send q.multi_select_field
+      else
+        response.send q.field
+      end
+
       if val.blank? && !(val==false)
-        response.validate(q[1] => true)
+        response.validate(q.na_field => true)
       end
     end
     self
   end
+
 
   def destroy
     SurveyResponse.transaction do
