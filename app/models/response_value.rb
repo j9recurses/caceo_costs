@@ -72,14 +72,20 @@ class ResponseValue < ActiveRecord::Base
   end
 
   def self.answered
-    where(<<-SQL
+    joins(<<-SQL
+      INNER JOIN questions q
+      ON question_id = q.id
+      AND ( q.question_type != 'comment'
+        OR  q.question_type IS NULL )
+      SQL
+    ).where(<<-SQL
       NOT(
       integer_value IS NULL AND
       decimal_value IS NULL AND
       string_value  IS NULL AND
       text_value    IS NULL AND
       boolean_value IS NULL AND
-      na_value = 0)
+      na_value = 0 )
       SQL
       )
     .count
@@ -91,7 +97,8 @@ class ResponseValue < ActiveRecord::Base
       string_value    == nil &&
       text_value      == nil &&
       boolean_value   == nil &&
-      na_value == false
+      na_value == false      &&
+      question.question_type != 'comment'
       false
     else
       true
