@@ -40,11 +40,14 @@ RSpec.describe ResponseValue, type: :model do
   end
 
   describe '::answered & #answered?' do
-    it 'count questions with values' do
+    it '#answered counts questions with values AND unanswerable questions' do
       answer_count = survey_response.values.inject(0) { |memo, val|
         val.answered? ? memo + 1 : memo
       }
-      expect(answer_count).to eq 3
+      expect(answer_count).to eq 4
+    end
+
+    it '::answered counts ONLY answerable questions with values' do
       expect(survey_response.values.answered).to eq 3
     end
 
@@ -56,13 +59,24 @@ RSpec.describe ResponseValue, type: :model do
       expect(empty_sr.values.answered).to eq 0
     end
 
+    it 'ignores optional comments' do
+      vals = survey_response.values
+      initial = vals.answered
+      expect(Question.find_by(field: 'ssvehcomment').question_type).to eq('comment')
+      survey_response.respond('ssvehcomment', 'Some Commentary')
+      survey_response.save!
+      ResponseValue.sync_survey_response(survey_response)
+
+      expect(survey_response.values.answered).to eq(initial)
+    end
+
     describe '::answered_ratio' do
       it 'works with 0/0' do
         expect(empty_sr.values.answered_ratio).to eq 0.0
       end
 
       it 'works' do
-        expect(survey_response.values.answered_ratio).to eq 0.6
+        expect(survey_response.values.answered_ratio).to eq 0.75
       end
     end
 
@@ -75,7 +89,7 @@ RSpec.describe ResponseValue, type: :model do
 
       it 'returns an integer' do
         perc = survey_response.values.percent_answered
-        expect(perc).to eq 60
+        expect(perc).to eq 75
         expect(perc.is_a? Integer).to be true
       end
     end

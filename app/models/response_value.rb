@@ -1,7 +1,7 @@
 class ResponseValue < ActiveRecord::Base
   belongs_to :survey_response, inverse_of: :values
   belongs_to :question, inverse_of: :values
-  has_one :election, through: :survey_response, class_name: 'ElectionYear'
+  has_one :election, through: :survey_response
   has_one :county, through: :survey_response
   has_one :survey, through: :survey_response
 
@@ -63,7 +63,7 @@ class ResponseValue < ActiveRecord::Base
   end
 
   def self.answered_ratio
-    rat = (answered.to_f / count.to_f).round(2)
+    rat = (answered.to_f / answerable.count.to_f).round(2)
     rat.nan? ? 0 : rat
   end
 
@@ -71,14 +71,18 @@ class ResponseValue < ActiveRecord::Base
     (self.answered_ratio * 100).to_i
   end
 
-  def self.answered
+  def self.answerable
     joins(<<-SQL
       INNER JOIN questions q
       ON question_id = q.id
       AND ( q.question_type != 'comment'
         OR  q.question_type IS NULL )
       SQL
-    ).where(<<-SQL
+    )
+  end
+
+  def self.answered
+    answerable.where(<<-SQL
       NOT(
       integer_value IS NULL AND
       decimal_value IS NULL AND
