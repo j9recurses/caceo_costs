@@ -63,9 +63,9 @@ class SurveyResponse < ActiveRecord::Base
   # optionally narrowed down
   def self.overall_completeness(elections: nil, surveys: nil, counties: nil)
     survey_multiplier = if surveys
-      Question.where(survey_id: Array(surveys)).count
+      Question.where(survey_id: Array(surveys)).completable.count
     else
-      Question.count
+      Question.completable.count
     end
 
     county_multiplier   = counties  ? Array(counties).size  : 58

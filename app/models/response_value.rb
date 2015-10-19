@@ -73,10 +73,9 @@ class ResponseValue < ActiveRecord::Base
 
   def self.answerable
     joins(<<-SQL
-      INNER JOIN questions q
-      ON question_id = q.id
-      AND ( q.question_type != 'comment'
-        OR  q.question_type IS NULL )
+      INNER JOIN questions
+      ON question_id = questions.id
+      AND #{Question.completable_condition}
       SQL
     )
   end

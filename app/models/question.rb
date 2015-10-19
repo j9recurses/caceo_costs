@@ -9,6 +9,17 @@ class Question < ActiveRecord::Base
   scope :multi_select, -> { where(question_type: 'multi_select') }
   scope :no_mask, ->  { where("question_type <> 'multi_select' OR question_type IS NULL") }
 
+  def self.completable_condition
+    <<-SQL
+      ( questions.question_type != 'comment' OR
+        questions.question_type IS NULL )
+    SQL
+  end
+
+  def self.completable
+    where(completable_condition)
+  end
+
   def multi_select?
     question_type == 'multi_select'
   end
