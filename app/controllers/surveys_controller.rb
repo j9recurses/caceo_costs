@@ -3,7 +3,7 @@ class SurveysController < ApplicationController
     respond_to do |format|
       format.json { render json: Survey.all }
       format.html do
-        @election_year = ElectionYear.find(params[:election_id])
+        @election = Election.find(params[:election_id])
         @srs = SurveyResponse.where(
           county: current_user.county,
           election_id: params[:election_id]

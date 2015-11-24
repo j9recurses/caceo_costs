@@ -8,7 +8,7 @@ class SurveyResponseReport
         sr.id             AS survey_response_id,
         sr.response_type  AS survey_id,
         e.election_dt     AS election_date,
-        e.year            AS election_year,
+        e.name            AS election_name,
         c.name            AS county_name,
         s.title           AS survey_title,
         COUNT(rv.id)      AS _answered, 
@@ -17,7 +17,7 @@ class SurveyResponseReport
       FROM survey_responses sr
       INNER JOIN surveys s
       ON sr.response_type = s.id
-      INNER JOIN election_years e
+      INNER JOIN elections e
       ON sr.election_id = e.id
       INNER JOIN (
         SELECT c.id, c.name 
@@ -59,7 +59,7 @@ class SurveyResponseReport
   def self.progress_hash
     @progress_hash = {}
     self.sr_overview.each do |e|
-      @progress_hash[[e.county_name, e.survey_title, e.election_year]] = (
+      @progress_hash[[e.county_name, e.survey_title, e.election_name]] = (
         (e._answered / e._total_questions.to_f).round(2) * 100).to_i
     end
     @progress_hash
@@ -68,15 +68,15 @@ class SurveyResponseReport
   def self.progress_array
     result = []
     hash = self.progress_hash
-    election_years = ElectionYear.order(election_dt: :asc).pluck(:year)
+    election_names = Election.order(election_dt: :asc).pluck(:name)
     survey_titles = Survey.order(id: :asc).pluck(:title)
 
     County.where("name NOT LIKE '%Test%'").order(id: :asc).pluck(:name).each do |c_name|
       county_array = []
       survey_titles.each do |s_title|
         survey_result = [s_title]
-        election_years.each do |e_year|
-          survey_result.push hash[[c_name, s_title, e_year]]
+        election_names.each do |e_name|
+          survey_result.push hash[[c_name, s_title, e_name]]
         end
         county_array.push(survey_result)
       end

@@ -4,7 +4,7 @@ wb = xlsx_package.workbook
   surveys = c.values.first
   wb.add_worksheet(name: county_name) do |sheet|
     sheet.add_row [county_name, Time.current.strftime('%F %T%:z') ]
-    sheet.add_row [''].concat ElectionYear.order(election_dt: :asc).pluck(:year)
+    sheet.add_row [''].concat Election.order(election_dt: :asc).pluck(:name)
     surveys.each do |s|
       sheet.add_row s
     end

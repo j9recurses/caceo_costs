@@ -15,8 +15,6 @@ class SurveyResponseForm < Reform::Form
   def submit
     raise 'No Response' unless response
     sync
-    response.model.county_id        = model.county_id
-    response.model.election_year_id = model.election_id
 
     begin
       SurveyResponse.transaction do

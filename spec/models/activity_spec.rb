@@ -4,14 +4,12 @@ RSpec.describe Activity do
   describe 'time period methods' do
     before :context do
       SurveyResponse.destroy_all
-      ElectionYear.destroy_all
+      Election.destroy_all
       @ss  = create :survey_response_ss
 
       ss_clone = SurveyResponse.new( @ss.attributes )
       ss_clone.id = nil
-      ss_clone.response = Sspw.new(
-        county_id: ss_clone.county_id,
-        election_year_id: ss_clone.election_id)
+      ss_clone.response = Sspw.new
       ss_clone.save!
 
       @sal = create :survey_response_sal
@@ -33,7 +31,7 @@ RSpec.describe Activity do
 
     after :context do
       SurveyResponse.destroy_all
-      ElectionYear.destroy_all
+      Election.destroy_all
     end
 
     describe '#today' do

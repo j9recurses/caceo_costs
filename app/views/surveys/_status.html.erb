@@ -6,7 +6,7 @@
     ) %>
 <% else %>
   <% total = status[:survey_response].total %>
-  <% percent = status[:survey_response].percent_answered %>
+  <% percent = status[:survey_response].percent_complete %>
   <% url = survey_response_path( status[:survey_response].id ) %>
 <% end %>
 

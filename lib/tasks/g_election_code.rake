@@ -1,8 +1,8 @@
 namespace :caceo do
-  desc "generate code from election name (year)"
+  desc "generate code from election name"
   task g_election_code: :environment do
-    ElectionYear.all.each do |e|
-      case e.year
+    Election.all.each do |e|
+      case e.name
       when /(\d+).+General/
         e.code = "#{$1}g"
       when /(\d+).+Special/

@@ -40,34 +40,34 @@ RSpec.describe SurveyResponseForm do
       expect { sr_form.submit }.to raise_error('No Response')
     end
 
-    describe 'booleans', focus: true do
-      let(:epf) { SurveyResponseForm.new( create :survey_response_ep ) }
-      before(:each) do
-        params = { "county_id" => "1", "election_id" => "#{election.id}", 
-          "response_attributes" => { 
-            "eppphwscan"=>"true", "eppphwdre"=>"0", "eppphwmarkd" => "yes", "eppphwpollbk" => "1" 
-          } 
-        }
-        epf.validate( params )
-        epf.submit
-        @ep = ElectionProfile.find(epf.response_id)
-      end
+    # describe 'booleans' do
+    #   let(:epf) { SurveyResponseForm.new( create :survey_response_ep ) }
+    #   before(:each) do
+    #     params = { "county_id" => "1", "election_id" => "#{election.id}", 
+    #       "response_attributes" => { 
+    #         "eppphwscan"=>"true", "eppphwdre"=>"0", "eppphwmarkd" => "yes", "eppphwpollbk" => "1" 
+    #       } 
+    #     }
+    #     epf.validate( params )
+    #     epf.submit
+    #     @ep = ElectionProfile.find(epf.response_id)
+    #   end
 
-      it 'takes "true"' do
-        expect(@ep.eppphwscan).to eq(true)
-      end
+    #   it 'takes "true"' do
+    #     expect(@ep.eppphwscan).to eq(true)
+    #   end
 
-      # This reaches activerecord as text
-      # others must be taken care of by reform.
-      it 'rejects "yes"' do
-        expect(@ep.eppphwmarkd).to eq(false)
-      end
+    #   # This reaches activerecord as text
+    #   # others must be taken care of by reform.
+    #   it 'rejects "yes"' do
+    #     expect(@ep.eppphwmarkd).to eq(false)
+    #   end
 
-      it 'takes 0/1' do
-        expect(@ep.eppphwdre).to eq(false)
-        expect(@ep.eppphwpollbk).to eq(true)
-      end
-    end
+    #   it 'takes 0/1' do
+    #     expect(@ep.eppphwdre).to eq(false)
+    #     expect(@ep.eppphwpollbk).to eq(true)
+    #   end
+    # end
 
     describe 'filled in manually' do
       it 'persists' do
@@ -109,8 +109,38 @@ RSpec.describe SurveyResponseForm do
     end
   end
 
-  context "N/A" do
-    describe 'empty as N/A action' do
+  describe 'empty as N/A action' do
+    context 'EP multi_select' do
+      let(:sr_ep) { build :sr_ep }
+      let(:srf_ep) { SurveyResponseForm.new( sr_ep ) }
+      let(:sr_ep_responded) { build :sr_ep_vals}
+      let(:srf_ep_responded) { SurveyResponseForm.new sr_ep_responded }
+      let(:ep_na_q_count) { 
+        Question.where(survey_id: 'ElectionProfile', na_able: true).count 
+      }
+
+      it 'sets _na to true on empty' do
+        srf_ep.empty_na.submit
+        sr = SurveyResponse.find(srf_ep.model.id)
+        expect(sr.values.where(na_value: true).count).to eq( ep_na_q_count )
+      end
+
+      it 'ignores RVs with responses' do
+        srf_ep_responded.validate(response: {eplangvra_multi_select: ['Spanish', 'Chinese']})
+        srf_ep_responded.empty_na.submit
+        sr = SurveyResponse.find(srf_ep_responded.model.id)
+        q_ids = Question
+          .where(field: ['epppbalpapar', 'eprv', 'epbalpage', 'eplangvra'])
+          .pluck(:id)
+        ml_id = Question.find_by(field: 'eplangcaec').id
+
+        expect(sr.values.where(na_value: true).count).to eq(ep_na_q_count - 4)
+        expect(sr.values.where(na_value: false, question_id: q_ids).count).to eq(4)
+        expect(sr.values.where(na_value: true, question_id: ml_id).size).to eq(1)
+      end
+    end
+
+    context 'SS' do
       it 'sets _na to true on empty' do
         sr_form.empty_na.submit
         na_able_qids = sr_form.model.questions.where(na_able: true).pluck(:id)

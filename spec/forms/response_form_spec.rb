@@ -4,8 +4,7 @@ RSpec.describe ResponseForm do
   let(:sr) { build :survey_response_ss }
   let(:srf){ SurveyResponseForm.new(sr) }
   let(:ep_srf) { SurveyResponseForm.new( build(:survey_response_ep) ) }
-  let(:ssbal) { build :ssbal }
-  let(:ep)    { build :ep }
+  let(:ep)    { ElectionProfile.new }
   let(:ep_rf) { ResponseForm.new( ep ) }
 
   describe '::model' do

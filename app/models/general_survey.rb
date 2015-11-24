@@ -33,7 +33,7 @@ class GeneralSurvey
   def_delegators :response_survey, :title, :table_name, :election_profile?, :salary?, :service_supply?
 
   def election
-    ElectionYear.find( data.election_year_id )
+    Election.find( data.election_year_id )
   end
 
   def title

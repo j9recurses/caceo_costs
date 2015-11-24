@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'SurveyReponseSerializer' do
   let(:sr) do
     sr = create(:survey_response)
-    sr.election.year = '2014 General Election'
+    sr.election.name = '2014 General Election'
     sr.election.save!
     sr
   end
@@ -19,13 +19,13 @@ RSpec.describe 'SurveyReponseSerializer' do
       expect(@relationships.keys.sort).to eq([:county, :election, :survey, :values])
     end
 
-    it 'include correct question' do
-      expect(@relationships[:county][:data]).to eq({type:'counties', id: sr.county.id.to_s})
+    it 'include correct county, by county#key' do
+      expect(@relationships[:county][:data]).to eq({type:'counties', id: sr.county.key})
     end
 
     it 'include correct election index id' do
-      # election_id expected to be ElectionYear#index value
-      expect(@relationships[:election][:data]).to eq({type:'election_years', id: '14'})
+      # election_id expected to be Election#index value
+      expect(@relationships[:election][:data]).to eq({type:'elections', id: '14'})
     end
   end
 

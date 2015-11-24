@@ -1,5 +1,4 @@
 load './app/models/response_value.rb'
-require 'election_year'
 
 FactoryGirl.define do
   factory :user do
@@ -25,10 +24,10 @@ FactoryGirl.define do
     message 'new news!'
   end
 
-  factory :election, class:ElectionYear, aliases: [:election_year] do
+  factory :election do
     sequence(:id)   { |n| n }
-    sequence(:year) { |n| "#{(2000 + n).to_s} General Election" }
-    # initialize_with { ElectionYear.find_or_initialize_by(year: year, id: id) }
+    sequence(:name) { |n| "#{(2000 + n).to_s} General Election" }
+    # initialize_with { Election.find_or_initialize_by(name: name, id: id) }
   end
 
   factory :county do
@@ -37,30 +36,47 @@ FactoryGirl.define do
     initialize_with { County.find_or_initialize_by(id: id, name: name) }
   end
 
+  factory :tech_software, class: TechVotingSoftware do
+    county
+    factory :tech_software_response do
+      purchase_price_software 999
+      labor_costs 1
+    end
+  end
+
+  factory :tech_machine, class: TechVotingMachine do
+    county
+  end
+
   factory :sr, class: SurveyResponse do
     county
     election
-    factory :survey_response_ss  do association :response, factory: :ss_response  end
-    factory :survey_response_sal do association :response, factory: :sal_response end
-    factory :survey_response_ep  do association :response, factory: :ep_response  end
+
+    factory(:survey_response_ss){ association :response, factory: :ss_response }
+    factory :survey_response_sal do
+      association :response, factory: :sal_response
+    end
+
+    factory :survey_response_ep, aliases: [:sr_ep] do
+      association :response, factory: :ep_response
+    end
+
+
     factory :survey_response_ss_with_values do
-      association :response, factory: :ss_response_with_values 
+      association :response, factory: :ss_response_with_values
       after(:create) { |sr| ResponseValue.sync_survey_response sr }
     end
     factory :survey_response_sal_with_values, aliases: [:survey_response] do
-      association :response, factory: :sal_response_with_values 
+      association :response, factory: :sal_response_with_values
       after(:create) { |sr| ResponseValue.sync_survey_response sr }
     end
-    factory :survey_response_ep_with_values do
-      association :response, factory: :ep_response_with_values 
+    factory :survey_response_ep_with_values, aliases: [:sr_ep_vals] do
+      association :response, factory: :ep_response_with_values
       after(:create) { |sr| ResponseValue.sync_survey_response sr }
     end
   end
 
   factory :ss_response, class: Ssveh do
-    county_id 59
-    election_year
-
     factory :ss_response_with_values do
       ssvehfuel 135
       ssvehrent 20
@@ -68,19 +84,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :ssbal, class: Salbal do
-    county_id 59
-    election_year
-  end
-
-  factory :ep, class: ElectionProfile do
-    county_id 59
-    election_year
-  end
-
   factory :sal_response, class: Salbal do
-    county_id 59
-    election_year
     factory :sal_response_with_values do
       salbaldesign 135
       salbaltrans 20
@@ -89,8 +93,6 @@ FactoryGirl.define do
   end
 
   factory :ep_response, class: ElectionProfile do
-    county_id 59
-    election_year
     factory :ep_response_with_values do
       epppbalpapar true
       eprv 20

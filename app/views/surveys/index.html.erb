@@ -1,11 +1,11 @@
-<H2 class="myh2cats"> <%= "Survey Summary for the " + @election_year[:year].to_s %> </H2>
+<H2 class="myh2cats"> <%= "Survey Summary for the " + @election.name %> </H2>
 <h2><small>Click on a Survey to Begin</small></h2>
 
 <%= render partial: 'survey_status_panel', locals: { panel_total: @salary_total, survey_hash: @salary_hash } %>
 <%= render partial: 'survey_status_panel', locals: { panel_total: @supply_total, survey_hash: @supply_hash } %>
 <%= render partial: 'survey_status_panel', locals: { panel_total: nil, survey_hash: @ep_hash } %>
 
-<h3 class="col-sm-9">Total Direct Costs for the <%= @election_year[:year].titleize %></h3>
+<h3 class="col-sm-9">Total Direct Costs for the <%= @election.name.titleize %></h3>
 <h3 class="survey-index-total">$<%= number_with_delimiter( @srs.total ) %></h3>
 
 <div class="category_break"></div>

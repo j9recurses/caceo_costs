@@ -30,7 +30,7 @@
       <% summaries.each do |summary| %>
         <% completeness = SurveyResponse.query_completeness({
             county: County.find_by(name: summary.county_name),
-            election: ElectionYear.find_by(year: summary.election_name) 
+            election: Election.find_by(name: summary.election_name) 
           })
         %>
         <tr>

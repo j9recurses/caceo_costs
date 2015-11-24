@@ -4,7 +4,7 @@ class Activity
       SurveyResponse.order(updated_at: :desc).
         joins(:survey, :county, :election).
         select(<<-SQL)
-          election_years.year AS election_name,
+          elections.name AS election_name,
           surveys.title AS survey_title,
           surveys.category AS survey_category,
           counties.name AS county_name,
