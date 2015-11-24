@@ -15,6 +15,7 @@ CaceoCosts::Application.routes.draw do
   resources :surveys,         only: [:index]
 
   resources :data, only: [:index]
+  resources :progress, only: [:index, :show]
 
   resources :faqs
   resources :announcements
