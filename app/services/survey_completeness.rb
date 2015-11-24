@@ -1,7 +1,7 @@
 class SurveyCompleteness
   def initialize(data = nil)
     @data     = data
-    @relation = data .is_a?(ActiveRecord::Relation) ? true : false
+    @relation = data.is_a?(ActiveRecord::Relation) ? true : false
     @type = case @relation ? data.first : data
     when SurveyResponse then :sr
     when TechVotingSoftware, TechVotingMachine then :tech
