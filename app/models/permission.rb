@@ -13,7 +13,6 @@ class Permission
       allow :faqs, :index
       if user.observer?
         allow :users, :update
-        allow :election_profiles, [:index, :show]
         allow :election_technologies, :index
         allow_observe :tech_voting_machines
         allow_observe :tech_voting_softwares
@@ -25,8 +24,16 @@ class Permission
         allow_respond :survey_responses
       end
 
+      if user.super_user?
+        allow_super :survey_responses
+        allow_super :tech_voting_machines
+        allow_super :tech_voting_softwares
+      end
+
       if user.admin?
         allow [:survey_responses, :response_values, :questions, :counties], [:index]
+        # for drilling down from progress pages
+        allow :survey_responses, :show
         allow :activities, [:index, :summary, :earlier]
         allow :reports, [:progress, :responses]
         # allow :data, [:index]
@@ -34,24 +41,6 @@ class Permission
         allow :announcements, [:new, :create, :destroy]
         allow :faqs, [:new, :create, :edit, :update, :destroy]
       end
-    end
-  end
-
-  def allow_respond(resource)
-    allow resource, [:index, :new]
-    allow resource, [:create] do |session|
-      @user.county.id == session[:county_id].to_i
-    end
-    # only tech surveys have a delete action
-    allow resource, [:show, :edit, :update, :destroy, :delete] do |resource|
-      @user.county.id == resource.county_id
-    end
-  end
-
-  def allow_observe(resource)
-    allow resource, [:index]
-    allow resource, [:show] do |r|
-      @user.county.id == r.county_id
     end
   end
 
@@ -70,6 +59,28 @@ class Permission
       Array(actions).each do |action|
         @allowed_actions[[controller.to_s, action.to_s]] = block || true
       end
+    end
+  end
+
+  def allow_super(resource)
+    allow resource, [:index, :show, :edit, :update]
+  end
+
+  def allow_respond(resource)
+    allow resource, [:index, :new]
+    allow resource, [:create] do |session|
+      @user.county.id == session[:county_id].to_i
+    end
+    # only tech surveys have a delete action
+    allow resource, [:show, :edit, :update, :destroy, :delete] do |resource|
+      @user.county.id == resource.county_id
+    end
+  end
+
+  def allow_observe(resource)
+    allow resource, [:index]
+    allow resource, [:show] do |r|
+      @user.county.id == r.county_id
     end
   end
 end

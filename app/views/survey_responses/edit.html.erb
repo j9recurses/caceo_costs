@@ -5,8 +5,10 @@
 <%= render partial: 'survey_responses/survey', locals: { survey: @survey } %>
 
 <div class="end_link">
-  <%= link_to "Back to Response Summary", survey_response_path( @survey_response.id ) %>|
-  <%= link_to "Surveys for #{ @sr_form.model.election.name }", 
-    election_surveys_path( @sr_form.election_id ) %> |
+  <%= link_to "Back to Response Summary", survey_response_path( @survey_response.id ) %> |
+  <% unless current_user.super_user? %>
+    <%= link_to "Surveys for #{ @sr_form.model.election.name }", 
+        election_surveys_path( @sr_form.election_id ) %> |
     <%= link_to "All Elections", elections_path  %>
+  <% end %>
 </div>

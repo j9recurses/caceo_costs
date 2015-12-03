@@ -1,0 +1,13 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'All Progress', progress_index_path %></li>
+
+  <% if @county %>
+    <li <%= @election ? '' : 'class="active"' %>>
+      <%= link_to @county.name, progress_path(@county) %>
+    </li>
+  <% end %>
+
+  <% if @election %>
+    <li class="active"><%= @election.name %></li>
+  <% end %>
+</ol>

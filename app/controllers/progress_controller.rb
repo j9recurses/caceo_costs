@@ -17,12 +17,12 @@ class ProgressController < ApplicationController
   def show
     if params[:election_id]
       @county   = County.find(params[:county_id])
-      @election = ElectionYear.find(params[:election_id])
+      @election = Election.find(params[:election_id])
       @surveys  = Survey.all
       render :show_election
     else
       @county = County.find(params[:id])
-      @elections = ElectionYear.all
+      @elections = Election.all
     end
   end
 

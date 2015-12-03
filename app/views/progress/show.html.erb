@@ -1,39 +1,47 @@
+<%= render 'progress_breadcrumb'%>
 
-  <table class="table table-condensed" style="border-collapse:collapse;">
-    <colgroup>
-      <col width="20%"></col>
-      <col width="10%"></col>
-      <col width="10%"></col>
-      <col width="60%"></col>
-    </colgroup>
-    <thead>
-      <tr>
-        <th>Election</th>
-        <th>Surveys Started</th>
-        <th>Election Completeness</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @elections.each do |election| %>
-        <% completeness = SurveyResponse.query_completeness(county:@county, election:election) %>
-        <tr>
-          <td><%= link_to election.year, progress_path(county_id:@county.id, election_id:election.id) %></td>
-          <td><%= SurveyResponse.where(county: @county, election:election).count %></td>
-          <td>
-            <div class="progress election-year">
-              <div class="progress-bar" 
-                role="progressbar"
-                aria-valuenow=<%="#{ completeness }"%> 
-                aria-valuemin="0" 
-                aria-valuemax="100" 
-                style="<%="width: #{ completeness }%;" %>"
-                >
-                <%= completeness %>%
-              </div>
+<table class="table table-condensed table-hover" style="border-collapse:collapse;">
+  <colgroup>
+    <col width="20%"></col>
+    <col width="10%"></col>
+    <col width="10%"></col>
+    <col width="60%"></col>
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Election</th>
+      <th>Surveys Started</th>
+      <th>Election Completeness</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @elections.each do |election| %>
+      <% completeness = SurveyResponse.query_completeness(county:@county, election:election) %>
+      <tr 
+        <% if SurveyResponse.find_by(county:@county, election:election) %> 
+          <%= "class=row-link data-link=#{
+            progress_path( county_id:@county.id, election_id:election.id )
+            }"
+          %>
+        <% end %>
+      >
+        <td><%= election.name %></td>
+        <td><%= SurveyResponse.where(county: @county, election:election).count %></td>
+        <td>
+          <div class="progress election-year">
+            <div class="progress-bar" 
+              role="progressbar"
+              aria-valuenow=<%="#{ completeness }"%> 
+              aria-valuemin="0" 
+              aria-valuemax="100" 
+              style="<%="width: #{ completeness }%;" %>"
+              >
+              <%= completeness %>%
             </div>
-          </td>
-          </a>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+          </div>
+        </td>
+        </a>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

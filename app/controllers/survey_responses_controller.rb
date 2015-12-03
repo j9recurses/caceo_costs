@@ -60,6 +60,7 @@ class SurveyResponsesController < ApplicationController
       response:         @response )
     @sr_form = SurveyResponseForm.new @survey_response
     @survey = @survey_response.survey
+    @sr_form.current_step = session[:survey_response][:current_step] if session[:survey_response]
   end
 
   def get_form
@@ -102,11 +103,12 @@ class SurveyResponsesController < ApplicationController
     @sr_form.sync
   end
 
+  # if there is no id, there's an action on an unsaved record b/c wizard
   def current_resource
-    @current_resource ||= SurveyResponse.find(params[:id]) if params[:id]
-  end
-
-  def current_session
-    params['survey_response']
+    @current_resource ||= if params[:id]
+      SurveyResponse.find(params[:id])
+    else
+      params['survey_response']
+    end
   end
 end

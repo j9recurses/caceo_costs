@@ -1,10 +1,10 @@
-<div class="panel panel-default">
-<table class="table">
-  <% values.each do |v| %>
-  <tr>
-    <td><%= v.question.label %></td>
-    <td><%= v.value %></td>
-  </tr>
-  <% end %>
-</table>
+<div class="q2-show-subsection">
+  <table class="table sr-response-table">
+    <% values.each do |v| %>
+    <tr>
+      <td class="col-show-label"><p class="q2-cell-wrap"><%= v.question.label %></p></td>
+      <td class="col-show-response"><p class="q2-cell-wrap"><%= v.value %></p></td>
+    </tr>
+    <% end %>
+  </table>
 </div>

@@ -19,13 +19,6 @@ class ApplicationController < ActionController::Base
   end
 
 private
-  # def print_session
-  #   vars = session.instance_variables
-  #   vars.each do |v|
-  #     puts "#{v}: #{session.instance_variable_get(v)}"
-  #   end
-  # end
-
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
@@ -35,13 +28,8 @@ private
     nil
   end
 
-  def current_session
-    nil
-  end
-
   def authorize
     if current_permissions.allow?(params[:controller], params[:action], current_resource)
-    elsif current_permissions.allow?(params[:controller], params[:action], current_session)
     else
       referrer = request.referrer
       referrer_params = Rails.application.routes.recognize_path( referrer )
@@ -49,11 +37,7 @@ private
         referrer_params[:controller], 
         referrer_params[:action], 
         current_resource
-        ) || 
-        current_permissions.allow?(
-          referrer_params[:controller], 
-          referrer_params[:action], 
-          current_session)
+        )
       if referrer && permitted
         redirect_to :back
       elsif current_user
@@ -72,7 +56,6 @@ private
     AUTHORIZATION--controller: #{params[:controller]}
     AUTHORIZATION--action: #{params[:action]}
     AUTHORIZATION--county: #{current_user ? current_user.county_id : 'not signed in'}
-    AUTHORIZATION--session[:county_id]: #{current_session ? current_session[:county_id].to_s : 'no session' }
     AUTHORIZATION--resource[:county_id]: #{current_resource ? current_resource[:county_id].to_s : 'no resource' }
     TEXT
     end

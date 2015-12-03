@@ -1,18 +1,17 @@
-<div class="panel panel-default">
-  <h3 class="panel-heading panel-title"><%= subsection.title %></h3>
-
-<table class="table sr-response-table">
-  <% subsection.values_for(@survey_response).each do |v| %>
-    <tr>
-      <td class="col-show-label"><%= v.question.label %></td>
-      <td class="col-show-response"><%= v.value %></td>
-    </tr>
-  <% end %>
-  <% if subsection.totalable? %>
-    <tr>
-      <td><strong>Subsection Total:</strong></td>
-      <td><strong><%= @survey_response.values_in_subsection(subsection).total %></strong></td>
-    </tr>
-  <% end %>
-</table>
+<div class="q2-show-subsection">
+  <h4><%= subsection.title %></h4>
+  <table class="table sr-response-table">
+    <% subsection.values_for(@survey_response).each do |v| %>
+      <tr>
+        <td class="col-show-label"><%= v.question.label %></td>
+        <td class="col-show-response"><%= v.value %></td>
+      </tr>
+    <% end %>
+    <% if subsection.totalable? %>
+      <tr>
+        <td><strong>Subsection Total:</strong></td>
+        <td><strong><%= @survey_response.values_in_subsection(subsection).total %></strong></td>
+      </tr>
+    <% end %>
+  </table>
 </div>

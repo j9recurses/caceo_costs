@@ -56,11 +56,9 @@ private
       TechVotingSoftware.find(params[:id])
     elsif params[:tech_voting_software_id]
       TechVotingSoftware.find(params[:tech_voting_software_id])
+    else
+      params['tech_voting_software']
     end
-  end
-
-  def current_session
-    params['tech_voting_software']
   end
 
   # Use callbacks to share common setup or constraints between actions.

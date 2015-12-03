@@ -20,7 +20,11 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    role_names.include?('admin')
+    role_names.include?('admin') || role_names.include?('super_user')
+  end
+
+  def super_user?
+    role_names.include?('super_user')
   end
 
   def role_names

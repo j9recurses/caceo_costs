@@ -11,16 +11,35 @@
   width: 30%;
 }
 
-
 .sr-response-table {
   table-layout: fixed;
   width: 100%;
-  white-space: nowrap;
 }
-.sr-response-table td {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+.q2-cell-wrap {
+  word-wrap: break-word;
+  margin: 0 0;
+}
+
+.q2-show-sr-block {
+  width: 80%;
+}
+
+.q2-show-subsection {
+  padding-top: 10px;
+}
+
+.q2-survey-panel {
+  padding: 15px;
+}
+
+.q2-survey-panel-title {
+  margin: -15px;
+  margin-bottom: 0;
+}
+
+.q2-survey-panel-options {
+  padding-top: 10px;
 }
 
 // /* Column widths are based on these cells */

@@ -1,0 +1,20 @@
+<div class="q2-survey-panel-options">
+  <% if allow? :survey_responses, :edit, @survey_response %>
+    <%= link_to 'Edit Survey', edit_survey_response_path( @survey_response.id ),
+      {class: 'btn btn-default'} %>
+  <% end %>
+
+  <% if allow? :survey_responses, :destroy, @survey_response %>
+    <%= link_to 'Delete Survey', survey_response_path( @survey_response.id ),
+          class: 'btn btn-default',
+          method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+
+  <% if allow? :survey_responses, :edit, @survey_response %>
+    <%= link_to 'Mark all empty fields as N/A', 
+      survey_response_path(@survey_response.id,  empty_na: true),
+      {class: 'btn btn-default', method: :patch,
+        data: { confirm: 'Are you sure ALL empty fields are Not Applicable?' }}
+    %>
+  <% end %>
+</div>

@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'therubyracer', platforms: :ruby
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-turbolinks'
 gem 'autoprefixer-rails'
 gem 'sprockets-rails', '~> 2.2.2'
 gem 'bootstrap-sass'

@@ -1,0 +1,32 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+
+    <% if @sr_form %>
+      <li>
+      <%= link_to "Back to Response Summary", survey_response_path( @survey_response.id ) %>
+      </li>
+    <% end %>
+
+      <% if allow? :survey_responses, :index %>
+        <li><%= link_to 'All Elections', elections_path  %></li>
+        <li><%= link_to "Surveys for the #{ @survey_response.election.name }", 
+              election_surveys_path( @survey_response.election_id ) %></li>
+      <% end %>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <% if allow? :progress, :show %>
+        <li>
+          <%= link_to "Progress: #{
+          @survey_response.county.name.gsub(' County', '')} #{
+          @survey_response.election.name.gsub(' Election', '')}",
+            progress_path(county_id:   @survey_response.county_id,
+                          election_id: @survey_response.election_id),
+                          class: 'bg-info' %>
+        </li>
+      <% end %>
+
+    </ul>
+  </div>
+</nav>

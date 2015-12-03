@@ -1,5 +1,6 @@
+<%= render 'progress_breadcrumb'%>
 
-  <table class="table table-condensed" style="border-collapse:collapse;">
+  <table class="table table-condensed table-hover" style="border-collapse:collapse;">
     <colgroup>
       <col width="8%"></col>
       <col width="30%"></col>
@@ -19,7 +20,15 @@
         <% completeness = SurveyResponse.query_completeness(
           county: @county, election: @election, survey: survey) 
         %>
-        <tr>
+
+        <tr 
+          <%
+            sr = SurveyResponse.find_by(county: @county, election: @election, survey: survey)
+          %>
+          <% if sr %> 
+            <%= "class=row-link data-link=#{survey_response_path(sr.id)}"%>
+          <% end %>
+        >
           <td><%= survey.id %></td>
           <td><%= survey.subject %></td>
           <td><%= survey.category %></td>

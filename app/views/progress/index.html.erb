@@ -1,5 +1,6 @@
+<%= render 'progress_breadcrumb'%>
 
-  <table class="table table-condensed" style="border-collapse:collapse;">
+  <table class="table table-condensed table-hover" style="border-collapse:collapse;">
     <colgroup>
       <col width="20%"></col>
       <col width="10%"></col>
@@ -17,8 +18,8 @@
     <tbody>
       <% @counties.each do |county| %>
         <% completeness = SurveyResponse.query_completeness(county:county) %>
-        <tr>
-          <td><%= link_to county.name.gsub(' County',''), progress_path(county) %></td>
+        <tr class='row-link' data-link="<%= progress_path(county) %>">
+          <td><%= county.name.gsub(' County','') %></td>
           <td><%= SurveyResponse.where(county:county).count %></td>
           <td><%= SurveyResponse.where(county:county).pluck(:election_id).uniq.count %></td>
           <td>

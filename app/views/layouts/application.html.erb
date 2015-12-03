@@ -85,16 +85,8 @@
                   </li>
                 <% end %>
 
-                <% if allow? :categories, :index %>
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
-                      Surveys
-                      <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                      <%= render partial: "layouts/surveys_nav", locals: { session: session } %>
-                    </ul>
-                  </li>
+                <% if allow? :elections, :index %>
+                  <%= render 'layouts/surveys_nav' %>
                 <% end %>
 
                 <% if allow? :activities, :index %>
@@ -104,7 +96,11 @@
                       <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                      <li class="mynav_li"><%= link_to "Survey Activity", activity_summary_path%></li>
+                      <% if allow? :progress, :index %>
+                      <li class="mynav_li"><%= link_to "Overall Progress", progress_index_path %></li>
+                      <% end %>
+                      <li class="mynav_li"><%= link_to "Recent Activity", activity_summary_path %></li>
+
                       <% if allow? :reports, :progress, :responses %>
                         <li class="divider"></li>
                         <li class="mynav_li"><%= link_to "Survey Responses Report", 
