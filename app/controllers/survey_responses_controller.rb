@@ -5,8 +5,14 @@ class SurveyResponsesController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        render json: SurveyResponse.where.not(county_id: 59)
+        @survey_responses = SurveyResponse.meet_threshold
+        render json: @survey_responses
       end
+
+      format.csv do
+        render text: SurveyResponse.to_csv
+      end
+
       format.html do
         if session[:election_id]
           redirect_to election_surveys_path(session[:election_id])

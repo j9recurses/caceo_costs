@@ -96,12 +96,12 @@
                       <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                      <% if allow? :progress, :index %>
+                      <% if false && allow?( :progress, :index ) %>
                       <li class="mynav_li"><%= link_to "Overall Progress", progress_index_path %></li>
                       <% end %>
                       <li class="mynav_li"><%= link_to "Recent Activity", activity_summary_path %></li>
 
-                      <% if allow? :reports, :progress, :responses %>
+                      <% if false && allow?( :reports, :progress, :responses ) %>
                         <li class="divider"></li>
                         <li class="mynav_li"><%= link_to "Survey Responses Report", 
                           responses_report_path(format: :xlsx)%></li>

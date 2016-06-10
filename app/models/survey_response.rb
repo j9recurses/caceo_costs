@@ -1,3 +1,5 @@
+require 'csv'
+
 class SurveyResponse < ActiveRecord::Base
   belongs_to :election
   belongs_to :response, polymorphic: true, autosave: true, dependent: :destroy
@@ -17,6 +19,65 @@ class SurveyResponse < ActiveRecord::Base
     policy: ['Salaries - Tasks', 'Benefits - in Percent', 'Hours Worked'],
     inverse: ['Salaries - Types of Staff and Pay', 'Benefits - in Percent', 'Hours Worked']
   }
+
+  def self.to_csv
+    h = {}
+    County.all.map {|c| h[c.id] = c.key}
+    CSV.open('client_sr.csv', 'wb') do |csv|
+      csv << ['id', 'countyId', 'electionId', 'surveyId', 'total']
+      SurveyResponse.where.not(county_id: 59).find_each do |sr|
+        csv << [sr.id, h[sr.county_id], sr.election_id, sr.response_type, sr.total]
+      end
+    end
+  end
+
+  def self.to_int_id_csv
+    h = {}
+    survey_ids = Survey.all.pluck(:id)
+    survey_ids.each_index {|i| h[survey_ids[i]] = i}
+
+    CSV.open('client_sr.csv', 'wb') do |csv|
+      csv << ['id', 'countyId', 'electionId', 'surveyId', 'total']
+      SurveyResponse.where.not(county_id: 59).find_each do |sr|
+        csv << [sr.id, sr.county_id, sr.election_id, h[sr.response_type], sr.total]
+      end
+    end
+  end
+
+  def self.la_variables_to_csv
+    
+
+  end
+
+  def self.meet_threshold(elections: 9, surveys: 9)
+    SurveyResponse.find_by_sql(<<-SQL)
+      SELECT *
+      FROM survey_responses AS sr
+      INNER JOIN (
+        SELECT
+          county_id,
+          election_id,
+          COUNT(election_id) AS election_count
+        FROM survey_responses
+        GROUP BY county_id, election_id
+      ) AS election_groups
+      ON election_groups.election_id = sr.election_id
+        AND election_groups.county_id = sr.county_id
+      INNER JOIN (
+        SELECT
+          county_id,
+          response_type,
+          COUNT(response_type) AS survey_count
+        FROM survey_responses
+        GROUP BY county_id, response_type
+      ) AS survey_groups
+      ON survey_groups.response_type = sr.response_type
+        AND survey_groups.county_id = sr.county_id
+      WHERE election_count > #{elections}
+        AND survey_count > #{surveys}
+        AND sr.county_id <> 59
+    SQL
+  end
 
   def values_in_subsection(subsection)
     q_ids = Question.where(subsection: subsection, survey_id: response_type).pluck(:id)
