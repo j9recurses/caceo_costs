@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150922234537) do
+ActiveRecord::Schema.define(version: 20160610191526) do
 
   create_table "access_codes", force: :cascade do |t|
     t.string   "user_access_code", limit: 255
@@ -41,8 +41,6 @@ ActiveRecord::Schema.define(version: 20150922234537) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "categories", ["election_year_id"], name: "index_categories_on_election_year_id", using: :btree
 
   create_table "counties", force: :cascade do |t|
     t.string  "name", limit: 255
@@ -949,7 +947,7 @@ ActiveRecord::Schema.define(version: 20150922234537) do
   end
 
   add_index "survey_responses", ["county_id", "election_id", "response_type"], name: "index_survey_responses_on_county_election_and_survey", unique: true, using: :btree
-  add_index "survey_responses", ["election_id"], name: "index_survey_responses_on_election_id", using: :btree
+  add_index "survey_responses", ["election_id"], name: "fk_rails_d8b174e70a", using: :btree
 
   create_table "survey_subsections", force: :cascade do |t|
     t.integer "subsection_id", limit: 4
@@ -1015,8 +1013,6 @@ ActiveRecord::Schema.define(version: 20150922234537) do
     t.datetime "password_reset_sent_at"
     t.datetime "announcements_viewed_at"
   end
-
-  add_index "users", ["county_id"], name: "index_users_on_county_id", using: :btree
 
   create_table "validation_types", force: :cascade do |t|
     t.string   "name",       limit: 255
