@@ -1,5 +1,7 @@
+require 'csv'
+
 class ResponseValueReport
-  def self.value_view_query
+  def self.value_view_query(sr_query: SurveyResponseReport.sr_overview_query)
     <<-SQL
       SELECT
         rv.integer_value,
@@ -15,7 +17,7 @@ class ResponseValueReport
         q.na_able,
         srv.*
       FROM response_values rv
-      INNER JOIN ( #{SurveyResponseReport.sr_overview_query}
+      INNER JOIN ( #{sr_query}
         ) srv
       ON rv.survey_response_id = srv.survey_response_id
       INNER JOIN questions q
@@ -23,8 +25,41 @@ class ResponseValueReport
     SQL
   end
 
-  def self.value_view
-    @value_view ||= ResponseValue.find_by_sql( value_view_query )
+  def self.santa_barbara_report
+    rv = value_view(sr_query: SurveyResponseReport.sr_overview_query(counties: 42))
+    rve = rv.sort do |a,b|
+      Election::YEAR_ORDER[a[:election_name]] <=> Election::YEAR_ORDER[b[:election_name]]
+    end
+    CSV.open(Rails.root + 'sb_report.csv', 'wb+') do |csv|
+      csv << [
+        'survey_response_id',
+        'survey_id',
+        'survey_title',
+        'election_name',
+        'election_id',
+        'question_id',
+        'description',
+        'field',
+        'value'
+      ]
+      rve.each do |row|
+        csv << [
+          row['survey_response_id'],
+          row['survey_id'],
+          row['survey_title'],
+          row['election_name'],
+          row['election_id'],
+          row['question_id'],
+          row['description'],
+          row['field'],
+          row.value
+        ]
+      end
+    end
+  end
+
+  def self.value_view(sr_query: SurveyResponseReport.sr_overview_query )
+    @value_view ||= ResponseValue.find_by_sql( value_view_query( sr_query: sr_query) )
   end
 
   # {

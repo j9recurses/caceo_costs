@@ -20,7 +20,7 @@ class SurveyResponse < ActiveRecord::Base
     inverse: ['Salaries - Types of Staff and Pay', 'Benefits - in Percent', 'Hours Worked']
   }
 
-  def self.to_csv
+  def self.all_to_csv
     h = {}
     County.all.map {|c| h[c.id] = c.key}
     CSV.open('client_sr.csv', 'wb') do |csv|

@@ -1,5 +1,7 @@
 class SurveyResponseReport
-  def self.sr_overview_query
+
+  ## Compile
+  def self.sr_overview_query(counties: nil, surveys: nil, elections: nil)
     <<-SQL
       SELECT 
         sr.response_id,
@@ -22,7 +24,7 @@ class SurveyResponseReport
       INNER JOIN (
         SELECT c.id, c.name 
         FROM counties c
-        WHERE name NOT LIKE '%Test%') c
+        WHERE name NOT LIKE 'Test%') c
       ON sr.county_id = c.id
       INNER JOIN questions q
       ON q.survey_id = sr.response_type
@@ -47,13 +49,23 @@ class SurveyResponseReport
         q.data_type = "integer" AND
         q.sum_able  = true      AND
         (q.na_able  = false OR rvt.na_value = 0) 
+      #{
+        if counties || surveys || elections
+          c = counties ? 'sr.county_id IN (' + [counties].join(',') + ') ' : nil
+          e = elections ? 'sr.election_id IN (' + [elections].join(',')  + ') ' : nil
+          s = surveys ? 'sr.survey_id IN (' + [surveys].join(',') + ') ' : nil
+          stmt = 'WHERE ' + [c,e,s].compact.join(' AND ')
+        else
+          ''
+        end
+      }
       GROUP BY sr.id
       ORDER BY sr.county_id ASC, sr.response_type ASC, e.election_dt ASC
     SQL
   end
 
-  def self.sr_overview
-    @progress_view ||= SurveyResponse.find_by_sql( sr_overview_query )
+  def self.sr_overview(counties: nil, surveys: nil, elections: nil)
+    @progress_view ||= SurveyResponse.find_by_sql( sr_overview_query(counties: counties, surveys: surveys, elections: elections) )
   end
 
   def self.progress_hash

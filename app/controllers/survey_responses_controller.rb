@@ -10,7 +10,7 @@ class SurveyResponsesController < ApplicationController
       end
 
       format.csv do
-        render text: SurveyResponse.to_csv
+        render text: SurveyResponse.all_to_csv
       end
 
       format.html do
