@@ -1,0 +1,17 @@
+wb = xlsx_package.workbook
+
+@county_survey_responses.each do |sr|
+  survey = Survey.find(sr.response_type)
+
+  wb.add_worksheet(name: survey.label) do |sheet|
+
+    sheet.add_row [@election.name, survey.title]
+    sheet.add_row ['Survey Item', 'Response', 'Description']
+
+    values = sr.values
+    values.each do |v|
+      q = Question.find(v.question_id)
+      sheet.add_row [q.label, v.value, q.description]
+    end
+  end
+end

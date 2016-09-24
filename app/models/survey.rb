@@ -26,6 +26,32 @@ class Survey < ActiveRecord::Base
 
   self.primary_key = :id
 
+  LABEL = {
+    "ElectionProfile" => "Election Profile",
+    "Saloth" => "SAL Other",
+    "Salbc" => "SAL Ballot Counting",
+    "Salcan" => "SAL Candidates",
+    "Saldojo" => "SAL DOJ Stakeholders",
+    "Salmed" => "SAL Media",
+    "Salpw" => "SAL Poll Workers",
+    "Salpp" => "SAL Polling Places",
+    "Salbal" => "SAL Ballots",
+    "Salvbm" => "SAL VBM",
+    "Ssbc" => "S&S Ballot Counting",
+    "Ssbal" => "S&S Ballot Printing",
+    "Sscan" => "S&S Candidate",
+    "Ssmed" => "S&S Media",
+    "Ssoth" => "S&S Other",
+    "Sspw" => "S&S Poll Worker",
+    "Sspp" => "S&S Polling Place",
+    "Postage" => "S&S Postage",
+    "Ssveh" => "S&S Vehicle"
+  }
+
+  def label
+    LABEL[id]
+  end
+
   def responses
     send table_name
   end

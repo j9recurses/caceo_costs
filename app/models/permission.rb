@@ -7,7 +7,7 @@ class Permission
     allow :messages, [:new, :create]
     if user
       allow :users, [:profile, :logout]
-      allow :elections, :index
+      allow :elections, [:index, :show]
       allow :surveys, :index
       allow :announcements, :index
       allow :faqs, :index
