@@ -11,6 +11,7 @@ class Permission
       allow :surveys, :index
       allow :announcements, :index
       allow :faqs, :index
+      allow :workshops, :index
       if user.observer?
         allow :users, :update
         allow :election_technologies, :index

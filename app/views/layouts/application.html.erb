@@ -85,6 +85,12 @@
                   </li>
                 <% end %>
 
+                <% if allow? :workshops, :index %>
+                  <li>
+                    <%= link_to 'Fiscal Workshops', workshops_path %>
+                  </li>
+                <% end %>
+
                 <% if allow? :elections, :index %>
                   <%= render 'layouts/surveys_nav' %>
                 <% end %>

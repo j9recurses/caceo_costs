@@ -9,6 +9,7 @@ CaceoCosts::Application.routes.draw do
   resources :survey_responses
 
   # json
+  resources :workshops,       only: [:index]
   resources :questions,       only: [:index]
   resources :response_values, only: [:index]
   resources :counties,        only: [:index]
