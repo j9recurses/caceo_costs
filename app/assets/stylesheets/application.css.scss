@@ -24,8 +24,10 @@
 @import 'survey_response';
 @import 'progress';
 
-
-#mybody {  font-family: 'Muli', sans-serif; }
+.body-text p {
+  padding-bottom:6px;
+  padding-top:6px;
+}
 
 .hiddenRow {
   padding: 0 !important;
@@ -184,16 +186,6 @@ p.intro {
 }
 .rlink a:link {
   color: blue;
-}
-
-
-
-p.intro_bold {
-  font-size:15px;
-  display: flex;
-  padding-bottom:6px;
-  padding-top:6px;
-  font-weight: bold;
 }
 
 .mydiv a:hover{
